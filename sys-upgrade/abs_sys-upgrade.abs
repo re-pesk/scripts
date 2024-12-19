@@ -1,0 +1,47 @@
+#! /usr/bin/env abs
+
+messages = {
+  'en.UTF-8' : {
+    'succ' : "Successfully finished!",
+    'err' : "Error! Script execution was terminated!"
+  },
+  'lt_LT.UTF-8' : {
+    'succ' : "Komanda sėkmingai įvykdyta!",
+    'err' : "Klaida! Scenarijaus vykdymas sustabdytas!"
+  },
+}
+LANG = env("LANG")
+errorMessage = messages[LANG].err
+successMessage = messages[LANG].succ
+
+runCmd = f(cmdArg) {
+
+    # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+    command = "sudo $cmdArg"
+
+    # "-".repeat() - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
+    # command.len() paima komandinės eilutės ilgį
+    separator = "-".repeat(command.len())
+
+    # spausdina separatorių ir komandos eilutę
+    echo("$separator\n$command\n$separator\n")
+
+    # vykdo komandą, komandos vykdymo rezultatą išsaugo į kintamąjį 
+    error = exec(command)
+
+    # tikrina, ar komanda įvykdyta sėkmingai
+    if(error) {
+        exit(99, "\n" + errorMessage + "\n\n") # išeinama iš skripto su klaidos pranešimu
+    }
+
+    echo("\n" + successMessage + "\n")
+    return # grįžtama iš funkcijos
+}
+
+echo()
+
+runCmd("apt-get update")
+runCmd("apt-get upgrade -y")
+runCmd("apt-get autoremove -y")
+runCmd("snap refresh")
+
