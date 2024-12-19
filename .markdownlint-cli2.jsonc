@@ -1,0 +1,8 @@
+{
+  "gitignore": true,
+  "config": {
+    "line-length": false, //MD013
+    "no-inline-html": false, //MD033
+    "first-line-heading": false //MD041
+  }
+}
