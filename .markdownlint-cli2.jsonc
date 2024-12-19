@@ -1,5 +1,5 @@
 {
-  "gitignore": true,
+  "ignores": ["**/*_.md", "**/*.md_"],
   "config": {
     "line-length": false, //MD013
     "no-inline-html": false, //MD033
