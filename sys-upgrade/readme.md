@@ -29,7 +29,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [ ] JavaVM
   
   * [ ] Clojure
-  * [ ] [Groovy](groovy_readme.md)
+  * [X] [Groovy](groovy_readme.md)
 
 * [x] [JS](js_readme.md)
   * [x] Bun
