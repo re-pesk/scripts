@@ -1,5 +1,6 @@
 import Foundation
 
+// Klaidų ir sėkmės pranešimų medis
 let messages: [String: [String: String]] = [
   "en.UTF-8": [
     "err": "Error! Script execution was terminated!",
@@ -11,27 +12,41 @@ let messages: [String: [String: String]] = [
   ],
 ]
 
+// Pranešimai, atitinkantys aplinkos kalbą
 let env: [String: String] = ProcessInfo.processInfo.environment
 let lang: String = env["LANG"] ?? ""
-let langMessages: [String: String] = messages[lang] ?? [:]
+let errorMesage: String = (messages[lang] ?? [:] )["err"] ?? ""
+let successMesage: String = (messages[lang] ?? [:] )["succ"] ?? ""
 
-func runCmd(_ cmdArgs: String) {
-  let command = "sudo \(cmdArgs)"
+// Išorinių komandų iškvietimo funkcija
+func runCmd(_ cmdArg: String) {
+
+  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  let command = "sudo \(cmdArg)"
+
+  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+	// String(repeating: "-", count: n) - simbolio kartojimas, command.count - komandos simbolių skaičius
   let separator = String(repeating: "-", count: command.count)
+  
+  // Išveda komandos eilutę, apsuptą skirtuko eilučių
   print("\(separator)\n\(command)\n\(separator)\n")
 
-  let status: Int32 = system(command)
+  // Įvykdo komandą, išsaugo išėjimo kodą į kintamąjį
+  let exitCode: Int32 = system(command)
 
-  if status != 0 {
-    print("\n\(langMessages["err"] ?? "")\n")
+  // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+  if exitCode != 0 {
+    print("\n\(errorMesage)\n")
     exit(99)
   }
 
-  print("\n\(langMessages["succ"] ?? "")\n")
+  // Kitu atveju išvedamas sėkmės pranešimas
+  print("\n\(successMesage)\n")
 }
 
 print()
 
+// Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
 runCmd("apt-get update")
 runCmd("apt-get upgrade -y")
 runCmd("apt-get autoremove -y")

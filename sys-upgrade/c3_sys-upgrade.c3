@@ -1,57 +1,63 @@
-import std::io;
 import std::collections::elastic_array;
 import std::collections::map;
-import std::core::string;
-import std::os::env;
-import libc;
 
-def LangMessages = HashMap(<String, String>); // Kalbos pranešimai
+def LangMessages = HashMap(<String, String>); // Atskiros kalbos pranešimų tipas
 def Messages = HashMap(<String, LangMessages>); // Bendras pranešimų medis
 def Separator = ElasticArray(<char, 255>); // Dinaminis masyvas, naudojamas separatoriui paruošti
 
-// Separatoriaus užpildymas
-fn void Separator.new(&self, char x, String* str) @dynamic {
+// Separatoriaus užpildymo metodas
+fn void Separator.fill(&self, char x, String* str) @dynamic {
   for (int i = 0; i < str.len; i++) {
     self.push(x);
   }
 }
 
-// Separatoriaus eilutės suformavimas
+// Separatoriaus konvertavimo į tekstinę eilutę metodas
 fn String Separator.toString(&self) @dynamic {
   return (String)(self.entries[0:self.size]);
 }
 
-// Išorinės programso vykdymas, komandos su argumentais, jos pranešimų ir vykdymo rezultatų išvedimas terminale
-fn void runCmd(String cmdStr, LangMessages langMessages) {
-  // Sudaroma komandos eilutė
-  String command = string::join_new({"sudo", cmdStr}, " ");
-  // Sukuriama komandų eilutės ilgio sepratoriaus eilutė
+import libc;
+import std::core::string;
+import std::io;
+
+// Išorinių komandų iškvietimo funkcija
+fn void runCmd(String cmdArg, LangMessages langMessages) {
+
+  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  String command = string::join_new({"sudo", cmdArg}, " ");
+
+  // Sukuriama komandų eilutės ilgio skirtuko eilutė
   Separator sepArray = {};
-  sepArray.new('-', &command);
+  sepArray.fill('-', &command);
   String separator = sepArray.toString();
-  //Terminale išvedama komanda, apsupta separatoriaus eilutėmis
+
+  // Išveda komandos eilutę, apsuptą skirtuko eilučių
   io::printfn("%s\n%s\n%s\n", separator, command, separator);
 
   // Komanda paverčiama į C eilutę
   ZString zCommand = (ZString)command;
 
-  // Vykdoma komanda
-  CInt status = libc::system(zCommand);
+  // Vykdoma komanda, išsaugomas įvykdytos komandos išėjimo kodas
+  CInt exitCode = (uint)libc::system(zCommand);
 
-  uint result = (uint)status;
 
-  // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir išeinama iš programos
-  if (result != 0) {
+  // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiams programos vykdymas
+  if (exitCode != 0) {
     io::printfn("\n%s\n", langMessages["err"] ?? "");
     libc::exit(99);
   }
 
-  // Sėkmės atveju išspausdinamas sėkmės pranešimas
+  // Kitu atveju išvedamas sėkmės pranešimas
   io::printfn("\n%s\n", langMessages["succ"] ?? "");
 }
 
+import std::os::env;
+
+// Pagrindinė funkcija - programos įeigos taškas
 fn void main() {
-  // Kalbos pranešimai
+
+  // Kalbos pranešimų medis
   Messages messages = *Messages{}.new_init_with_key_values(
     "en.UTF-8", *LangMessages{}.new_init_with_key_values(
       "err", "Error! Script execution was terminated!",
@@ -65,12 +71,13 @@ fn void main() {
 
   // Gaunamas sistemos kalbos nustatymas
   String lang = env::get_var("LANG") ?? "";
-  // Paimami kalbą aitinkantys pranešimų tekstai
+  
+  // Išsaugomi pranešimai, atitinkantys aplinkos kalbą
   LangMessages langMessages = messages[lang] ?? LangMessages{};
 
   io::printn("");
 
-  // Vykdomos komandas
+  // Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis ir pranešimais
   runCmd("apt-get update", langMessages);
   runCmd("apt-get upgrade -y", langMessages);
   runCmd("apt-get autoremove -y", langMessages);

@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Elvish shell [&#x2B67;](https://elv.sh/)
 
 ## Diegimas

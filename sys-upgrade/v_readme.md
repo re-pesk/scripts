@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # V [&#x2B67;](https://vlang.io/)
 
 ## Diegimas

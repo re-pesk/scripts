@@ -1,43 +1,48 @@
 #! /usr/bin/env -S zsh
 
-declare -A messages messages=(
+# Klaidų ir sėkmės pranešimų medis
+declare -A messages=(
   [en.UTF-8.err]="Error! Script execution was terminated!"
   [en.UTF-8.succ]="Successfully finished!"
   [lt_LT.UTF-8.err]="Klaida! Scenarijaus vykdymas sustabdytas!"
   [lt_LT.UTF-8.succ]="Komanda sėkmingai įvykdyta!"
 )
 
+# Išsaugomi pranešimai, atitinkantys aplinkos kalbą
 errorMessage="${messages[$LANG.err]}"
 successMessage="${messages[$LANG.succ]}"
 
+# Išorinių komandų iškvietimo funkcija
 runCmd() {
 
   # Sukuria komandos tekstinę eilutę iš funkcijos argumento
   command="sudo $@"
 
-  # generuoja separatorių, visus komandos $command simbolius pakeisdamas "-" simboliu
+  # Generuoja skirtuką, visus komandos simbolius pakeisdamas "-" simboliu
   separator=${command//?/'-'}
 
-  # spausdina separatorių ir komandos eilutę, -- pasako, kad tolimesnis argumentas, prasidedantis '-', nėra raktas
+  # Išveda komandos eilutę, apsuptą skirtuko eilučių
   printf "%s\n%s\n%s\n\n" "$separator" "$command" "$separator"
 
-  # vykdo komandą
+  # Įvykdo komandą
   (sudo $@)
 
-  code="$?"
+  # Išsaugo įvykdytos komandos išėjimo kodą
+  exitCode="$?"
 
-  # tikrina, ar komanda įvykdyta sėkmingai, $? gražina įvykdymo rezultatą
-  if [ $code -gt 0 ]; then
-    printf "\n%s\n\n" "$errorMessage" # išvedamas klaidos pranešimas
-    exit $code                        # išeinama iš skripto
+  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiams programos vykdymas 
+  if [ $exitCode -gt 0 ]; then
+    printf "\n%s\n\n" "$errorMessage"
+    exit $exitCode
   fi
 
+  # Kitu atveju išvedamas sėkmės pranešimas
   printf "\n%s\n\n" "$successMessage"
-  return #grįžtama iš funkcijos
 }
 
 echo
 
+# Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
 runCmd apt-get update
 runCmd apt-get upgrade -y
 runCmd apt-get autoremove -y

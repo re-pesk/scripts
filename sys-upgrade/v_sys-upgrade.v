@@ -1,6 +1,7 @@
 import os
 import strings
 
+// Klaidų ir sėkmės pranešimų medis
 const messages := {
 	"en.UTF-8" : {
 		"err" : "Error! Script execution was terminated!",
@@ -12,27 +13,39 @@ const messages := {
 	},
 }
 
+// Pranešimai, atitinkantys aplinkos kalbą
 const lang := os.getenv("LANG")
 const lang_messages := messages[lang].clone()
 
-fn run_cmd(cmdArgs string) {
-  command := "sudo ${cmdArgs}"
+// Išorinių komandų iškvietimo funkcij
+fn run_cmd(cmdArg string) {
+
+  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  command := "sudo ${cmdArg}"
+
+  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+	// strings.repeat(`-`, n) - simbolio kartojimas, command.len - komandos simbolių skaičius 
   separator := strings.repeat(`-`, command.len)
 
+  // Išveda komandos eilutę, apsuptą skirtuko eilučių
   println("${separator}\n${command}\n${separator}\n")
 
-  status := os.system(command)
+  // Įvykdo komandą, išsaugo išėjimo kodą į kintamąjį
+  exitCode := os.system(command)
 
-  if status != 0 {
+  // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+  if exitCode != 0 {
     println("\n${lang_messages['err']}\n")
     exit(99)
   }
 
+  // Kitu atveju išvedamas sėkmės pranešimas
   println("\n${lang_messages['succ']}\n")
 }
 
 println("")
 
+// Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
 run_cmd("apt-get update")
 run_cmd("apt-get upgrade -y")
 run_cmd("apt-get autoremove -y")

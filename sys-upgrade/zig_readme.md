@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Zig [&#x2B67;](https://ziglang.org/)
 
 ## Diegimas Linuxe (Ubuntu 24.04)

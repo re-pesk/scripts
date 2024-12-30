@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Odin [&#x2B67;](ttps://odin-lang.org/)
 
 ## Diegimas
@@ -17,7 +19,6 @@ arba
 ```bash
 bash odin-install.sh
 ```
-
 
 ## Paleistis
 

@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Bash [&#x2B67;](https://www.gnu.org/software/bash/)
 
 ## Diegimas

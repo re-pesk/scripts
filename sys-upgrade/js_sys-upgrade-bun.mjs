@@ -1,10 +1,6 @@
 #! /usr/bin/env -S bun run
 
-const { spawnSync } = Bun;
-// Node kodo variantas irgi veikia
-// import { spawnSync } from 'node:child_process';
-
-// Klaidų ir sėkmės pranešimų tekstai
+// Klaidų ir sėkmės pranešimų medis
 const messages = {
   'en.UTF-8': {
     'err': "Error! Script execution was terminated!",
@@ -21,47 +17,54 @@ const LANG = process.env.LANG
 const errorMessage = messages[LANG].err
 const successMessage = messages[LANG].succ
 
-// Įvykdo išorinę programą, terminale atspausdindama komandą, jos pranešimus ir vykdymo rezultatus
+const { spawnSync } = Bun;
+// Node kodo variantas
+// import { spawnSync } from 'node:child_process';
+
+// Išorinių komandų iškvietimo funkcija
 const runCmd = (cmdArg) => {
 
   // Sukuria komandos tekstinę eilutę iš funkcijos argumento
   const command = `sudo ${cmdArg}`
 
-  // "-".repeat() - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
-  // command.length paima komandinės eilutės ilgį
+  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  // "-".repeat() - kartoja '-' simbolį
+  // command.length - paima komandinės eilutės ilgį
   const separator = "-".repeat(command.length)
 
-  // spausdina separatorių ir komandos eilutę
+  // Išveda komandos eilutę, apsuptą skirtuko eilučių
   console.log(`${separator}\n${command}\n${separator}\n`)
 
-  // vykdo komandą, komandos vykdymo rezultatą išsaugo į kintamąjį 
-  const child_proc = spawnSync(["sudo", ...cmdArg.split(' ')], {
+  // Įvykdo komandą, procesą išsaugo į kintamąjį 
+  const child_proc = spawnSync(
+    ["sudo", ...cmdArg.split(' ')], {
     stdio: ['inherit', 'inherit', 'inherit'],
     shell: true
   })
-  
-  // veikiantis Nodejs kodo variantas
+
+  // Išsaugo įvykdytos komandos išėjimo kodą
+  const exitCode = child_proc.exitCode
+
+  // Nodejs kodo variantas
   // const child_proc = spawnSync(`sudo ${cmdArg}`, {
   //   stdio: 'inherit',
   //   shell: true
   // })
+  // const exitCode = child_proc.status
 
-  // Jeigu procesas pasibaigė klaida, išveda pranešimą apie klaidą ir išeina iš programos 
-  if (child_proc.exitCode !== 0) {
-    // veikiantis Nodejs kodo variantas
-    // if (child_proc.status !== 0) {
+  // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+  if (exitCode !== 0) {
     console.log(`\n${errorMessage}\n`);
     process.exit(99);
   }
 
-  // Jeigu klaidos nėra, išvedamas sėkmės pranešimas
+  // Kitu atveju išvedamas sėkmės pranešimas
   console.log(`\n${successMessage}\n`)
-
 }
 
 console.log()
 
-// Kviečiamos komandos
+// Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
 runCmd("apt-get update")
 runCmd("apt-get upgrade -y")
 runCmd("apt-get autoremove -y")

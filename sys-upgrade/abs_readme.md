@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Abs [&#x2B67;](https://www.abs-lang.org/)
 
 ## Diegimas

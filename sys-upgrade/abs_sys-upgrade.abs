@@ -1,5 +1,6 @@
 #! /usr/bin/env abs
 
+# Klaidų ir sėkmės pranešimų medis „hash“ struktūroje
 messages = {
   'en.UTF-8' : {
     'succ' : "Successfully finished!",
@@ -10,36 +11,40 @@ messages = {
     'err' : "Klaida! Scenarijaus vykdymas sustabdytas!"
   },
 }
-LANG = env("LANG")
-errorMessage = messages[LANG].err
-successMessage = messages[LANG].succ
 
+# Išsaugomi pranešimai, atitinkantys aplinkos kalbą
+errorMessage = messages[env("LANG")].err
+successMessage = messages[env("LANG")].succ
+
+# Išorinių komandų iškvietimo funkcija
 runCmd = f(cmdArg) {
 
     # Sukuria komandos tekstinę eilutę iš funkcijos argumento
     command = "sudo $cmdArg"
 
+    # Generuoja skirtuką, visus komandos komandos simbolius pakeisdamas "-" simboliu
     # "-".repeat() - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
     # command.len() paima komandinės eilutės ilgį
     separator = "-".repeat(command.len())
 
-    # spausdina separatorių ir komandos eilutę
+    # Išveda komandos eilutę, apsuptą skirtuko eilučių
     echo("$separator\n$command\n$separator\n")
 
-    # vykdo komandą, komandos vykdymo rezultatą išsaugo į kintamąjį 
+    # Įvykdo komandą, komandos vykdymo rezultatą išsaugo į kintamąjį 
     error = exec(command)
 
-    # tikrina, ar komanda įvykdyta sėkmingai
+    # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
     if(error) {
-        exit(99, "\n" + errorMessage + "\n\n") # išeinama iš skripto su klaidos pranešimu
+        exit(99, "\n" + errorMessage + "\n\n")
     }
 
+    # Kitu atveju išvedamas sėkmės pranešimas
     echo("\n" + successMessage + "\n")
-    return # grįžtama iš funkcijos
 }
 
 echo()
 
+# Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
 runCmd("apt-get update")
 runCmd("apt-get upgrade -y")
 runCmd("apt-get autoremove -y")

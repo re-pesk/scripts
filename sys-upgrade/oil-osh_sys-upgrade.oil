@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#! /usr/bin/env osh
 
 # Klaidų ir sėkmės pranešimų medis - asociatyvusis masyvas
 declare -A messages=(
@@ -9,8 +9,8 @@ declare -A messages=(
 )
 
 # Išsaugomi pranešimai, atitinkantys aplinkos kalbą
-errorMessage="${messages[$LANG.err]}"
-successMessage="${messages[$LANG.succ]}"
+errorMessage="${messages["${LANG}.err"]}"
+successMessage="${messages["${LANG}.succ"]}"
 
 # Išorinių komandų iškvietimo funkcija
 runCmd() {
