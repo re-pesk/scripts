@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Carbon [&#x2B67;](https://docs.carbon-lang.dev/)
 
 ## Diegimas

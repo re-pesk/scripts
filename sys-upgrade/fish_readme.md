@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Fish shell [&#x2B67;](https://fishshell.com/)
 
 ## Diegimas

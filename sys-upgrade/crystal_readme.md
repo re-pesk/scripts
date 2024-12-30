@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Crystal [&#x2B67;](https://crystal-lang.org/)
 
 ## Diegimas

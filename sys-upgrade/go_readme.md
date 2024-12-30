@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Go [&#x2B67;](https://go.dev/)
 
 ## Diegimas

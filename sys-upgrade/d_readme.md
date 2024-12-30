@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # D [&#x2B67;](https://dlang.org/)
 
 ## Diegimas
@@ -18,7 +20,7 @@ sudo apt install <atsisiųsto_failo_pavadinimas>.deb
 ## Paleistis
 
 ```bash
-rdmd d-sys-upgrade.d
+rdmd d_sys-upgrade.d
 ```
 
 ## Kompilavimas
