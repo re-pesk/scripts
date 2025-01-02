@@ -25,6 +25,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 
 * [x] [Abs](abs_readme.md)
 * [x] [Dart](dart_readme.md)
+* [x] [Guile](guile_readme.md)
 
 * [ ] JavaVM
   
