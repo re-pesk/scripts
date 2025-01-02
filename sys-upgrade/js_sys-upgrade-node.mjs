@@ -3,12 +3,12 @@
 // Klaidų ir sėkmės pranešimų medis
 const messages = {
   'en.UTF-8': {
-    'succ': "Successfully finished!",
-    'err': "Error! Script execution was terminated!"
+    'err': "Error! Script execution was terminated!",
+    'succ': "Successfully finished!"
   },
   'lt_LT.UTF-8': {
-    'succ': "Komanda sėkmingai įvykdyta!",
-    'err': "Klaida! Scenarijaus vykdymas sustabdytas!"
+    'err': "Klaida! Scenarijaus vykdymas sustabdytas!",
+    'succ': "Komanda sėkmingai įvykdyta!"
   },
 }
 

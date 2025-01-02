@@ -16,7 +16,7 @@ c3c --version
 c3c compile-run -o c3_sys-upgrade.bin c3_sys-upgrade.c3
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 c3c compile -o c3_sys-upgrade.bin c3_sys-upgrade.c3

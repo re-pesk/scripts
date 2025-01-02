@@ -31,7 +31,7 @@ swift --version # Swifto veikimas patikrinamas, išvedant instaliuotos Swift'o v
 swift swift_sys-upgrade.swift
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 swiftc -static-stdlib -o swift_sys-upgrade.bin swift_sys-upgrade.swift

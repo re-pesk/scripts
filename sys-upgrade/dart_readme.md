@@ -35,7 +35,7 @@ bash dart-install.sh
 dart dart_sys-upgrade.dart
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 dart compile exe dart_sys-upgrade.dart -o dart_sys-upgrade.bin

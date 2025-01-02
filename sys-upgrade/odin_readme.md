@@ -26,7 +26,7 @@ bash odin-install.sh
 odin run odin_sys-upgrade.odin -file -out:odin_sys-upgrade.bin
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 odin build odin_sys-upgrade.odin -file -out:odin_sys-upgrade.bin

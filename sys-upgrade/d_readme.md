@@ -23,7 +23,7 @@ sudo apt install <atsisiųsto_failo_pavadinimas>.deb
 rdmd d_sys-upgrade.d
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 rdmd --build-only -release -of=d_sys-upgrade.bin d_sys-upgrade.d
