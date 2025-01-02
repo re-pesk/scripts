@@ -25,7 +25,7 @@ bash zig_instal.sh
 zig run --name zig_sys-upgrade.bin zig_sys-upgrade.zig
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 zig build-exe -O ReleaseSmall -static --name zig_sys-upgrade.bin zig_sys-upgrade.zig && rm zig_sys-upgrade.bin.o

@@ -3,12 +3,12 @@
 // Klaidų ir sėkmės pranešimų medis
 const messages = {
   'en.UTF-8': {
-    'succ': "Successfully finished!",
-    'err': "Error! Script execution was terminated!"
+    'err': "Error! Script execution was terminated!",
+    'succ': "Successfully finished!"
   },
   'lt_LT.UTF-8': {
-    'succ': "Komanda sėkmingai įvykdyta!",
-    'err': "Klaida! Scenarijaus vykdymas sustabdytas!"
+    'err': "Klaida! Scenarijaus vykdymas sustabdytas!",
+    'succ': "Komanda sėkmingai įvykdyta!"
   },
 }
 
@@ -23,9 +23,9 @@ const runCmd = (cmdArg) => {
   // Sukuria komandos tekstinę eilutę iš funkcijos argumento
   let command = `sudo ${cmdArg}`
 
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
-  // "-".repeat() - kartoja '-' simbolį
-  // command.length - paima komandinės eilutės ilgį
+  // Generuojamas skirtukas, visus komandos $command simbolius pakeičiant "-" simboliu
+  // "-".repeat() - kartojamas '-' simbolis
+  // command.length - gaunamas komandos ilgis
   let separator = "-".repeat(command.length)
 
   // Išveda komandos eilutę, apsuptą skirtuko eilučių

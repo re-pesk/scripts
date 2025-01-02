@@ -17,7 +17,7 @@ go version
 go run go_sys-upgrade.go
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 go build -o go_sys-upgrade.bin go_sys-upgrade.go

@@ -30,7 +30,7 @@ arba
 ./julia_sys-upgrade.jl
 ```
 
-<!-- ## Kompilavimas
+<!-- ## Kompiliavimas
 
 ```bash
 julia +nightly juliac.jl --output-exe julia_sys-upgrade.bin --trim julia_sys-upgrade.jl --experimental
