@@ -2,20 +2,20 @@
 
 # Klaidų ir sėkmės pranešimų medis - žodynas (dictionary)
 const messages = {
-  "en.UTF-8.err": \
-    "Error! Script execution was terminated!",
-  "en.UTF-8.succ": \
-    "Successfully finished!",
-  "lt_LT.UTF-8.err": \
-    "Klaida! Scenarijaus vykdymas sustabdytas!",
-  "lt_LT.UTF-8.succ": \
-    "Komanda sėkmingai įvykdyta!"
+  "en.UTF-8" : {
+    "err" : "Error! Script execution was terminated!",
+    "succ" : "Successfully finished!"
+  },
+  "lt_LT.UTF-8" : {
+    "err": "Klaida! Scenarijaus vykdymas sustabdytas!",
+    "succ": "Komanda sėkmingai įvykdyta!"
+  }
 }
 
 # Išsaugomi pranešimai, atitinkantys aplinkos kalbą
 const lang = ENV.LANG
-const errorMessage = messages["$lang.err"]
-const successMessage = messages["$lang.succ"]
+const errorMessage = messages["$lang"]["err"]
+const successMessage = messages["$lang"]["succ"]
 
 # Išorinių komandų iškvietimo funkcija
 proc runCmd(...cmdArgs) {
