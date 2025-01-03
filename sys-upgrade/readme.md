@@ -23,9 +23,9 @@ Naudota operacinė sistema – Ubuntu 24.04
 
 ## Intepretuojamos kalbos ir JIT kompiliatoriai (11)
 
-### JavaVM (1)
+### JavaVM (2)
   
-* [ ] [Clojure](https://clojure.org/) (-)
+* [x] [Clojure](https://clojure.org/) (-)
 * [ ] Java ?
 * [X] [Groovy](groovy_readme.md) (-)
 * [ ] Kotlin ?
