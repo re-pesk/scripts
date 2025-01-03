@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis
+# Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis (31)
 
 Naudota operacinė sistema – Ubuntu 24.04
 
@@ -16,18 +16,18 @@ Naudota operacinė sistema – Ubuntu 24.04
 
 * [x] [Elvish](elvish_readme.md) (?) keista asocijuotųjų masyvų ir funkcijų sintaksė
 * [x] [Fish](fish_readme.md) (-) neturi priemonių medžio tipo struktūroms, nepatogi sintaksė  
-* [x] [Ysh (Oil)](oil-ysh_readme.md) (-) mažai informacijos, prasta dokumentacija
+* [x] [Ysh (Oil)](oil-ysh_readme.md) (-) mažai informacijos, paini dokumentacija
 * [x] [Murex](murex_readme.md) (-) keista sintaksė
 * [x] [Ngs](ngs_readme.md) (?) keistai organizuotas darbas su klaidomis
 * [x] [Nu](nu_readme.md) (?)
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (11)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (12)
 
-### JavaVM (2)
+### JavaVM (3)
   
 * [x] [Clojure](https://clojure.org/) (-)
-* [ ] Java ?
 * [X] [Groovy](groovy_readme.md) (-)
+* [x] [Java](java_readme.md)
 * [ ] Kotlin ?
 
 ### [JS](js_readme.md) (3) daug informacijos internete
