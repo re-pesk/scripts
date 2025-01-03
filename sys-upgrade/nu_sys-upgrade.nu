@@ -20,27 +20,27 @@ let successMessage = $messages | get $lang | get "succ"
 # Išorinių komandų iškvietimo funkcija 
 def runCmd [...cmdArgs] {
 
-    # Sukuria komandos tekstinę eilutę iš funkcijos argumentų
-    let command = ["sudo" ...$cmdArgs] | str join " "
+  # Sukuria komandos tekstinę eilutę iš funkcijos argumentų
+  let command = ["sudo" ...$cmdArgs] | str join " "
 
-    # pakeičia visas eilutės raides "-" simboliu
-    let separator = $command 
-      | str replace --all --regex "." "-"
+  # pakeičia visas eilutės raides "-" simboliu
+  let separator = $command 
+    | str replace --all --regex "." "-"
 
-    # Išveda komandos eilutę, apsuptą skirtuko eilučių
-    print $separator $command $separator ""
+  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  print $separator $command $separator ""
 
-    # Įvykdo komandą
-    run-external "sudo" ...$cmdArgs
+  # Įvykdo komandą
+  run-external "sudo" ...$cmdArgs
 
-    # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
-    if $env.LAST_EXIT_CODE > 0 {
-        print "" $errorMessage ""
-        exit
-    }
+  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+  if $env.LAST_EXIT_CODE > 0 {
+      print "" $errorMessage ""
+      exit
+  }
 
-    # Kitu atveju išvedamas sėkmės pranešimas
-    print "" $successMessage ""
+  # Kitu atveju išvedamas sėkmės pranešimas
+  print "" $successMessage ""
 }
 
 print ""
