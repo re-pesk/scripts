@@ -71,7 +71,7 @@ trukme="$1"
 [[ "$trukme" =~ ^[0-9]+${messages[$LANG.s]}$ ]] && trukme="${1%ek}"
 [[ "$trukme" =~ ^[0-9]+${messages[$LANG.h]}$ ]] && trukme="${1//val/h}"
 
-if [[  ! ( "$trukme" =~ ^[0-9]+(h|m|s)$ ) ]]; then
+if [[ ! ( "$trukme" =~ ^[0-9]+(h|m|s)$ ) ]]; then
 # if [[  "$trukme" != +([0-9])@("h"|"m"|"s"|) ]]; then
   echo "${messages[$LANG.errorDurationFormat]}"
   zenity --error --title "${messages[$LANG.error]}" --text "${messages[$LANG.errorDurationFormat]}: \"$trukme\"!"
@@ -90,28 +90,27 @@ if [[ $(ps -o stat= -p $$) == *+* ]]; then
   exit
 fi
 
-trukme="0"
-case "$1" in
+secs="0"
+case "$trukme" in
 *h)
-  trukme=$((${1%val} * 3600)) # valanda = 3600s
+  secs=$((${1%h} * 3600)) # valanda = 3600s
   ;;
 *m)
-  trukme=$((${1%min} * 60)) #  minutė = 60s
+  secs=$((${1%m} * 60)) #  minutė = 60s
   ;;
 *s)
-  trukme=${1%sek}
+  secs=${1%s}
   ;;
 *)
-  trukme=$((${1%val} * 3600)) # valanda = 3600s
   echo "${messages[$LANG.errorDurationFormat]}"
   zenity --error --title "${messages[$LANG.error]}" --text "${messages[$LANG.errorDurationFormat]}: $trukme"
   exit
   ;;
 esac
 
-sleep $trukme # laukti nurodytą sekundžių skaičių
+sleep $secs # laukti nurodytą sekundžių skaičių
 
 paplay /usr/share/sounds/ubuntu/ringtones/Alarm\ clock.ogg
 
 # Parodyti langą su antrašte ir tekstu
-zenity --info --title "${messages[$LANG.finalInfoTitle]}" --text "$1 ${messages[$LANG.finalInfo]} $2"
+zenity --info --title "${messages[$LANG.finalInfoTitle]}" --text "$trukme ${messages[$LANG.finalInfo]} $2"
