@@ -29,6 +29,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [X] [Groovy](groovy_readme.md) (-)
 * [x] [Java](java_readme.md)
 * [ ] Kotlin ?
+* [ ] Scala
 
 ### [JS](js_readme.md) (3) daug informacijos internete
 
@@ -41,7 +42,9 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :(
 * [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis
 * [x] [Guile](guile_readme.md) (-) Sudėtinga susigaudyti dokumentacijoje, mažai informacijos intenete
-* [x] [Julia](julia_readme.md)
+* [ ] [Io](https://iolanguage.org/index.html)
+* [ ] [Janet](https://janet-lang.org/)
+* [x] [Julia](julia_readme.md) (+-)
 * [x] [PHP](php_readme.md) (+) daug informacijos internete
 * [x] [Python](py_readme.md) (+-) tarpai - sintaksės dalis
 * [ ] Ruby ?
@@ -56,7 +59,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [D](d_readme.md) (+)
 * [x] [Go](go_readme.md) (-)
 * [x] [Odin](odin_readme.md)
-* [ ] [Purescript](purs_readme.md)
+* [ ] [Purescript](purs_readme.md) - transpileris, reikalaujantis papildomų instrumentų
 * [ ] Rust ?
 * [x] [Swift](swift_readme.md) (-) klaidos, dokumentacija orientuota į MacOS
 * [x] [V](v_readme.md) (-) mažai žinoma, daug kritikos

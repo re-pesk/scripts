@@ -19,8 +19,8 @@ echo '#begin groovy init
 [ -z "${JAVA_HOME}" ] \
   && export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
 
-[[ ! ":$PATH:" == *":$HOME/.groovy/bin:"* ]] \
-  && export PATH="$HOME/.groovy/bin${PATH:+:${PATH}}"
+[[ ":$PATH:" == *":$HOME/.groovy/bin:"* ]] \
+  || export PATH="$HOME/.groovy/bin${PATH:+:${PATH}}"
 
 #end groovy init' >> "$HOME/.bashrc"
 

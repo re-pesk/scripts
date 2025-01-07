@@ -14,7 +14,7 @@ read -e -p "Found working $soft installation. Do you want overwrite it? 'y' or e
 [ -d $installdir ] && rm -r $installdir
 
 url="https://download.swift.org/swift-$version-release/ubuntu2404/swift-$version-RELEASE/swift-$version-RELEASE-ubuntu24.04.tar.gz"
-curl -sSLo- $url | tar -xz --transform 'flags=r;s/^swift[^\/]+/.swift/x' --show-transformed-names -C "$HOME"
+curl -sSLo- $url | tar --transform 'flags=r;s/^swift[^\/]+/.swift/x' --show-transformed-names  -xzC "$HOME"
 
 [ ! -d $installdir ] && echo "Directory $installdir is not created!" && exit -1
 

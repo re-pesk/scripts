@@ -15,7 +15,7 @@ Visos failų versijos yra <https://www.swift.org/install/linux/> puslapyje.
 ```bash
 # Atsiunčiams Swifto archyvas, jo turinys išpakuojamas ~/.swift kataloge (pakeskite versijos numerį į jums tinkamą).
 curl -sSLo- "https://download.swift.org/swift-6.0.3-release/ubuntu2404/swift-6.0.3-RELEASE/swift-6.0.3-RELEASE-ubuntu24.04.tar.gz" \
-| tar -xz --transform 'flags=r;s/^swift[^\/]+/.swift/x' --show-transformed-names -C "$HOME"
+| tar --transform 'flags=r;s/^swift[^\/]+/.swift/x' --show-transformed-names -xzC "$HOME"
 
 # Sistemos kelias konfigūraciniame faile papildomas Swifto vykdomųjų failų katalogu
 echo -e "\nexport PATH=$HOME/.swift/usr/bin:\"\${PATH}\"\n" >> $HOME/.bashrc 
