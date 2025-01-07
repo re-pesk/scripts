@@ -47,7 +47,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Julia](julia_readme.md) (+-)
 * [x] [PHP](php_readme.md) (+) daug informacijos internete
 * [x] [Python](py_readme.md) (+-) tarpai - sintaksės dalis
-* [ ] Ruby ?
+* [x] [Ruby](ruby_readme.md) (+-) keistoka sintaksė
 
 ## Kompiliuojamos kalbos (9)
 
@@ -57,9 +57,9 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [ ] [Carbon](carbon_readme.md) - nepavyko sukompiliuoti dokumentacijos pavyzdžio
 * [x] [Crystal](crystal_readme.md) (+)
 * [x] [D](d_readme.md) (+)
-* [x] [Go](go_readme.md) (-)
+* [x] [Go](go_readme.md) (+-) 
 * [x] [Odin](odin_readme.md)
-* [ ] [Purescript](purs_readme.md) - transpileris, reikalaujantis papildomų instrumentų
+* [ ] [Purescript](purs_readme.md) (-) - transpileris, reikalaujantis papildomų instrumentų, generuojantis JS kodą.
 * [ ] Rust ?
 * [x] [Swift](swift_readme.md) (-) klaidos, dokumentacija orientuota į MacOS
 * [x] [V](v_readme.md) (-) mažai žinoma, daug kritikos
