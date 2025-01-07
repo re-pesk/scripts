@@ -6,8 +6,23 @@
 
 ```bash
 curl -fsSo - https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz | tar -xz -C $HOME/.local
-ln -s $HOME/.local/go/bin/go $HOME/.local/bin/go
-ln -s $HOME/.local/go/bin/gofmt $HOME/.local/bin/gofmt
+#----
+sed -i '/#begin go init/,/#end go init/c\' "$HOME/.bashrc"
+#----
+[[ "$( tail -n 1 "$HOME/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "$HOME/.bashrc"
+#----
+echo '#begin go init
+
+[[ ":$PATH:" == *":$HOME/.local/go/bin:"* ]] \
+  || export PATH="$HOME/.local/go/bin${PATH:+:${PATH}}"
+
+[[ ":$PATH:" == *":$HOME/go/bin:"* ]] \
+  || export PATH="$HOME/go/bin${PATH:+:${PATH}}"
+
+#end go init' >> "$HOME/.bashrc"
+#----
+  export PATH="$HOME/go/bin:$HOME/.local/go/bin${PATH:+:${PATH}}"
+#----
 go version
 ```
 
