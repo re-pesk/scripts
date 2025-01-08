@@ -29,7 +29,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [X] [Groovy](groovy_readme.md) (-)
 * [x] [Java](java_readme.md)
 * [ ] Kotlin ?
-* [ ] Scala
+* [x] [Scala](scala_readme.md)
 
 ### [JS](js_readme.md) (3) daug informacijos internete
 
@@ -57,7 +57,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [ ] [Carbon](carbon_readme.md) - nepavyko sukompiliuoti dokumentacijos pavyzdžio
 * [x] [Crystal](crystal_readme.md) (+)
 * [x] [D](d_readme.md) (+)
-* [x] [Go](go_readme.md) (+-) 
+* [x] [Go](go_readme.md) (+-)
 * [x] [Odin](odin_readme.md)
 * [ ] [Purescript](purs_readme.md) (-) - transpileris, reikalaujantis papildomų instrumentų, generuojantis JS kodą.
 * [ ] Rust ?
