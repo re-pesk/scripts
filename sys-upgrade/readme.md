@@ -1,8 +1,8 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis
+# Skriptinimas skirtingomis programavimo kalbomis (37)
 
-Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais (34)
+Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
 Naudota operacinė sistema – Ubuntu 24.04
 
@@ -10,7 +10,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 
 * [x] [Bash](bash_readme.md) (?) asociatyvieji masyvai netinka medžio tipo struktūroms
 * [x] [Dash](dash_readme.md) (-) neturi asociatyviųjų masyvų
-* [x] [Yash](yash_readme.md) (-) mažai informamacijos, neturi asociatyviųjų masyvų
+* [x] [Yash](yash_readme.md) (-) mažai informacijos, neturi asociatyviųjų masyvų
 * [x] [Osh (Oil)](oil-osh_readme.md) (-) mažai informacijos, paini dokumentacija
 * [x] [Zsh](zsh_readme.md) (?) asociatyvieji masyvai netinka medžio tipo struktūroms
   
@@ -23,20 +23,25 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Ngs](ngs_readme.md) (?) keistai organizuotas darbas su klaidomis
 * [x] [Nu](nu_readme.md) (?)
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (14)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (17)
 
-### JavaVM (4)
+### JavaVM (7)
+
+Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
   
 * [x] [Clojure](https://clojure.org/) (-)
 * [X] [Groovy](groovy_readme.md) (-)
 * [x] [Java](java_readme.md) (-)
-* [ ] [Kotlin](kotlin_readme.md) (-)
+* [x] [Kotlin](kotlin_readme.md) (-)
+      3 kodo variantai: intepretuojamas, JVM, ir native
 * [x] [Scala](scala_readme.md) (-)
 
-### [JS](js_readme.md) (3) - daug informacijos internete
+### [JS](js_readme.md) (3)
+
+Daug informacijos internete
 
 * [x] Bun (+)
-* [x] Deno (?) truputį skiriasi nuo kitų variantų
+* [x] Deno (+-) truputį skiriasi nuo kitų variantų
 * [x] Node (+)
 
 ### Kitos (7)

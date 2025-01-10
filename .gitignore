@@ -28,4 +28,6 @@
 **/*_
 
 **/*.bin
+**/*.class
 **/guile*.go
+**/*.kexe
