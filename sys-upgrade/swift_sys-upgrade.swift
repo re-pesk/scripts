@@ -1,3 +1,5 @@
+#! /usr/bin/env -S swift
+
 import Foundation
 
 // Klaidų ir sėkmės pranešimų medis

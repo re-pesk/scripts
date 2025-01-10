@@ -6,8 +6,8 @@ installDir=".local/scala3"
 [[ $(apt list --installed jq 2> /dev/null | wc -l) == 1 ]] && sudo apt-get install jq 
 
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)"
-url="${url//tag/download}/scala3-$(basename -- $url)-${fileNameEnd}"
-curl -sSLo- $url | tar --transform 'flags=r;s/^scala3[^\/]+/scala3/x' --show-transformed-names -xzvC "$HOME/.local"
+curl -sSLo- "${url//tag/download}/scala3-$(basename -- $url)-${fileNameEnd}" \
+| tar --transform 'flags=r;s/^scala3[^\/]+/scala3/x' --show-transformed-names -xzvC "$HOME/.local"
 
 set_path='[[ ":$PATH:" == *":$HOME/.local/scala3/bin:"* ]] \
   || export PATH="$HOME/.local/scala3/bin${PATH:+:${PATH}}"'
