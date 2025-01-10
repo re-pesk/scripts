@@ -1,6 +1,8 @@
 [Atgal](../readme.md)
 
-# Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis (31)
+# Skriptinimas skirtingomis programavimo kalbomis
+
+Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais (34)
 
 Naudota operacinė sistema – Ubuntu 24.04
 
@@ -21,23 +23,23 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Ngs](ngs_readme.md) (?) keistai organizuotas darbas su klaidomis
 * [x] [Nu](nu_readme.md) (?)
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (12)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (14)
 
-### JavaVM (3)
+### JavaVM (4)
   
 * [x] [Clojure](https://clojure.org/) (-)
 * [X] [Groovy](groovy_readme.md) (-)
-* [x] [Java](java_readme.md)
-* [ ] Kotlin ?
-* [x] [Scala](scala_readme.md)
+* [x] [Java](java_readme.md) (-)
+* [ ] [Kotlin](kotlin_readme.md) (-)
+* [x] [Scala](scala_readme.md) (-)
 
-### [JS](js_readme.md) (3) daug informacijos internete
+### [JS](js_readme.md) (3) - daug informacijos internete
 
 * [x] Bun (+)
-* [x] Deno (?) labiau skiriasi nuo kitų variantų
+* [x] Deno (?) truputį skiriasi nuo kitų variantų
 * [x] Node (+)
 
-### Kitos (6)
+### Kitos (7)
 
 * [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :(
 * [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis
@@ -46,7 +48,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [ ] [Janet](https://janet-lang.org/)
 * [x] [Julia](julia_readme.md) (+-)
 * [x] [PHP](php_readme.md) (+) daug informacijos internete
-* [x] [Python](py_readme.md) (+-) tarpai - sintaksės dalis
+* [x] [Python](py_readme.md) (+-) trūkumas - tarpais grįsta sintaksė
 * [x] [Ruby](ruby_readme.md) (+-) keistoka sintaksė
 
 ## Kompiliuojamos kalbos (9)
