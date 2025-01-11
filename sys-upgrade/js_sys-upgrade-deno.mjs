@@ -12,8 +12,10 @@ const messages = {
   },
 }
 
-// Pranešimai pagal aplinkos kalbos nuostatą
+// Aplinkos kalbos nuostata
 const LANG = Deno.env.get("LANG")
+
+// Pranešimai pagal aplinkos kalbos nuostatą
 const errorMessage = messages[LANG].err
 const successMessage = messages[LANG].succ
 
@@ -28,10 +30,10 @@ const runCmd = (cmdArg) => {
   // command.length - gaunamas komandos ilgis
   let separator = "-".repeat(command.length)
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   console.log(`${separator}\n${command}\n${separator}\n`)
 
-  // Įvykdo komandą, procesą išsaugo į kintamąjį 
+  // Įvykdoma komandas, procesas išsaugomas į kintamąjį 
   const child_proc = new Deno.Command('sudo', {
     args: [...cmdArg.split(' ')],
     stdin: 'inherit',
@@ -39,7 +41,7 @@ const runCmd = (cmdArg) => {
     stderr: 'inherit'
   });
 
-  // Išsaugo įvykdytos komandos išėjimo kodą
+  // Išsaugomas įvykdytos komandos išėjimo kodas
   const { code } = child_proc.outputSync();
 
   // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas 
