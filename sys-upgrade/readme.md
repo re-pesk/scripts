@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (37)
+# Skriptinimas skirtingomis programavimo kalbomis (38)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -56,10 +56,10 @@ Daug informacijos internete
 * [x] [Python](py_readme.md) (+-) trūkumas - tarpais grįsta sintaksė
 * [x] [Ruby](ruby_readme.md) (+-) keistoka sintaksė
 
-## Kompiliuojamos kalbos (9)
+## Kompiliuojamos kalbos (10)
 
-* [x] [C](c_readme.md) (+-) - nėra reikiamų funkcijų ir struktūrų standartiėnje bilbiotekoje
-* [ ] C++ ?
+* [x] [C](c_readme.md) (+-) - nėra reikiamų funkcijų ir struktūrų standartinėje bilbiotekoje
+* [x] [C++](c++_readme.md) (+) - žymiai paprasčiau už C, turi reikalingas duomenų struktūras
 * [x] [C3](c3_readme.md)
 * [ ] [Carbon](carbon_readme.md) (-) - nepavyko sukompiliuoti dokumentacijos pavyzdžio
 * [x] [Crystal](crystal_readme.md) (+)
