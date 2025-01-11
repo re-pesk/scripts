@@ -58,14 +58,14 @@ Daug informacijos internete
 
 ## Kompiliuojamos kalbos (9)
 
-* [ ] C ?
+* [x] [C](c_readme.md) (+-) - nėra reikiamų funkcijų ir struktūrų standartiėnje bilbiotekoje
 * [ ] C++ ?
 * [x] [C3](c3_readme.md)
-* [ ] [Carbon](carbon_readme.md) - nepavyko sukompiliuoti dokumentacijos pavyzdžio
+* [ ] [Carbon](carbon_readme.md) (-) - nepavyko sukompiliuoti dokumentacijos pavyzdžio
 * [x] [Crystal](crystal_readme.md) (+)
 * [x] [D](d_readme.md) (+)
 * [x] [Go](go_readme.md) (+-)
-* [x] [Odin](odin_readme.md)
+* [x] [Odin](odin_readme.md) (+)
 * [ ] [Purescript](purs_readme.md) (-) - transpileris, reikalaujantis papildomų instrumentų, generuojantis JS kodą.
 * [ ] Rust ?
 * [x] [Swift](swift_readme.md) (-) klaidos, dokumentacija orientuota į MacOS
