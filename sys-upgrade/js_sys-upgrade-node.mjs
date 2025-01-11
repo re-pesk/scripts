@@ -12,8 +12,10 @@ const messages = {
   },
 }
 
-// Pranešimai pagal aplinkos kalbos nuostatą
+// Aplinkos kalbos nuostata
 const LANG = process.env.LANG
+
+// Pranešimai pagal aplinkos kalbos nuostatą
 const errorMessage = messages[LANG].err
 const successMessage = messages[LANG].succ
 
@@ -22,12 +24,12 @@ import { spawnSync } from 'node:child_process';
 // Išorinių komandų iškvietimo funkcija
 const runCmd = (cmdArg) => {
 
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  // Sukuriamas komandos tekstinė eilutė iš funkcijos argumento
   const command = `sudo ${cmdArg}`
 
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
-  // "-".repeat() - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
-  // command.length paima komandinės eilutės ilgį
+  // Generuojamas skirtukas, visus komandos "command" simbolius pakeičiant "-" simboliu
+  // "-".repeat() - generuojamas komandinės eilutės ilgio separatorius iš '-' simbolių
+  // command.length - paimamas komandinės eilutės ilgis
   const separator = "-".repeat(command.length)
 
   // Išveda komandos eilutę, apsuptą skirtuko eilučių
@@ -39,7 +41,7 @@ const runCmd = (cmdArg) => {
     shell: true
   })
 
-  // Išsaugo įvykdytos komandos išėjimo kodą
+  // Išsaugomas įvykdytos komandos išėjimo kodas
   const exitCode = child_proc.status
 
   // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
@@ -50,7 +52,6 @@ const runCmd = (cmdArg) => {
 
   // Kitu atveju išvedamas sėkmės pranešimas
   console.log(`\n${successMessage}\n`)
-
 }
 
 console.log()
