@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (38)
+# Skriptinimas skirtingomis programavimo kalbomis (39)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -14,7 +14,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Osh (Oil)](oil-osh_readme.md) (-) mažai informacijos, paini dokumentacija
 * [x] [Zsh](zsh_readme.md) (?) asociatyvieji masyvai netinka medžio tipo struktūroms
   
-## Alternatyvios apvalkalo scenarijų kalbos (6)
+## Alternatyvios apvalkalo scenarijų kalbos (7)
 
 * [x] [Elvish](elvish_readme.md) (?) keista asocijuotųjų masyvų ir funkcijų sintaksė
 * [x] [Fish](fish_readme.md) (-) neturi priemonių medžio tipo struktūroms, nepatogi sintaksė  
@@ -22,6 +22,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Murex](murex_readme.md) (-) keista sintaksė
 * [x] [Ngs](ngs_readme.md) (?) keistai organizuotas darbas su klaidomis
 * [x] [Nu](nu_readme.md) (?)
+* [x] [PowerShell](pwsh_readme.md) (-) keista sintaksė
 
 ## Intepretuojamos kalbos ir JIT kompiliatoriai (17)
 
