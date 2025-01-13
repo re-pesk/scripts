@@ -29,7 +29,7 @@ const runCmd = (cmdArg) => {
   // Sukuriama komandos tekstinė eilutė iš funkcijos argumento
   const command = `sudo ${cmdArg}`
 
-  // Generuojamas skirtukas, visus komandos $command simbolius pakeičiant "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // "-".repeat() - kartoja '-' simbolį
   // command.length - paimamas komandinės eilutės ilgis
   const separator = "-".repeat(command.length)

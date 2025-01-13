@@ -23,8 +23,10 @@ function runCmd () {
   # Sukuria argumentą iš fumkcijos parametrų
   cmdArg = ${ $PARAMS -> mjoin " " }
 
-  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   command = "sudo $cmdArg"
+
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   separator = ${ 
     $command -> \
     jsplit "" -> \
@@ -33,7 +35,7 @@ function runCmd () {
   }
   out $separator\n$command\n$separator\n
 
-  # Įvykdo komandą
+  # Vykdoma komanda
   try { exec sudo @PARAMS }
 
   # Jeigu vykdant komandą įvyko klaida, išveda klaidos pranešimą ir nutraukia programos vykdymą

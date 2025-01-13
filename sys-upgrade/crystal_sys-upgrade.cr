@@ -18,20 +18,20 @@ SuccessMessage = Messages[ENV["LANG"]]["succ"]
 # Išorinių komandų iškvietimo funkcija
 def runCmd(cmdArg : String)
 
-  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   command = "sudo " + cmdArg
 
-  # Generuoja skirtuką, visus komandos komandos simbolius pakeisdamas "-" simboliu
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   # "-" * - simbolio kartojimas, command.size - komandos simbolių skaičius
   separator = "-" * command.size
 
-  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
   puts separator, command, separator, ""
 
   # Argumentų eilutė suskaidoma į masyvą
   args = cmdArg.split(' ')
 
-  # Vykdo komandą, komandos vykdymo išėjimo kodą išsaugo į kintamąjį, išvedimas nukreipiamas į pagrindinį proceso
+  # Vykdoma komanda, komandos stausas išsaugomas į kintamąjį, išvedimas nukreipiamas į pagrindinį procesą
   status = Process.run(
     "sudo",
     args,

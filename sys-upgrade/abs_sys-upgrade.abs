@@ -1,6 +1,6 @@
 #! /usr/bin/env abs
 
-# Klaidų ir sėkmės pranešimų medis „hash“ struktūroje
+# Klaidų ir sėkmės pranešimų medis
 messages = {
   'en.UTF-8' : {
     'succ' : "Successfully finished!",
@@ -19,18 +19,18 @@ successMessage = messages[env("LANG")].succ
 # Išorinių komandų iškvietimo funkcija
 runCmd = f(cmdArg) {
 
-    # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+    # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
     command = "sudo $cmdArg"
 
-    # Generuoja skirtuką, visus komandos komandos simbolius pakeisdamas "-" simboliu
+    # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
     # "-".repeat() - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
     # command.len() paima komandinės eilutės ilgį
     separator = "-".repeat(command.len())
 
-    # Išveda komandos eilutę, apsuptą skirtuko eilučių
+    # Išvedama komandos eilutė, apsupta skirtuko eilučių
     echo("$separator\n$command\n$separator\n")
 
-    # Įvykdo komandą, komandos vykdymo rezultatą išsaugo į kintamąjį 
+    # Įvykdoma komanda, vykdymo rezultatas išsaugomas į kintamąjį 
     error = exec(command)
 
     # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

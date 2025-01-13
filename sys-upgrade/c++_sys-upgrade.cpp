@@ -24,7 +24,7 @@ void runCmd(string cmdArg) {
   // Sukuriama komandos tekstinė eilutė iš funkcijos argumento
   string command = "sudo " + cmdArg;
 
-  // Generuojamas skirtukas, visus komandos kopijos simbolius pakeičiant "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // string(n, char) - pakartoja simbolį '-' n kartų
   string separator = string(command.length(), '-'); 
 

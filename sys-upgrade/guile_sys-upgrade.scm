@@ -37,7 +37,7 @@
   ;; Sukuriama komanda iš funkcijos argumento
   (define command (string-append "sudo " cmdArg))
 
-  ;; Generuojamas skirtukas iš "-" simbolių
+  ;; Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   ;; (make-string ... #\-) - kartojamas simbolis '-'
   ;; (string-length command) - gaunamas komandos ilgis
   (define separator (make-string (string-length command) #\- ))

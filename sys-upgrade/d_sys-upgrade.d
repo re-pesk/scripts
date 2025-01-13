@@ -31,20 +31,20 @@ void main()
   // Išorinių komandų iškvietimo funkcija
   void runCmd(string cmdStr)
   {
-    // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+    // Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
     const auto command = "sudo " ~ cmdStr;
 
-    // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+    // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
     // replicate("-", ...) - simbolio kartojimas, command.length - komandos ilgis
     const auto separator = replicate("-", command.length);
 
-    // Išveda komandos eilutę, apsuptą skirtuko eilučių
+    // Išvedama komandos eilutė, apsupta skirtuko eilučių
     writefln("%s\n%s\n%s\n", separator, command, separator);
 
-    // Vykdo komandą
+    // Vykdoma komanda
     auto pipesPid = spawnShell(command);
 
-    // Lauikia proceso pabaigos, išsaugo įvykdytos komandos išėjimo kodą
+    // Laukiama proceso pabaigos, išėjimo kodas isšaugomas į kintamąjį
     const auto exitCode = wait(pipesPid);
 
     // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiams programos vykdymas

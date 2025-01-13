@@ -22,18 +22,18 @@ $successMessage = $messages[$LANG]["succ"];
 function runCmd($cmdArg) {
   global $errorMessage, $successMessage;
 
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   $command = "sudo {$cmdArg}";
 
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // str_repeat("-", n) - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
   // strlen($command) - paima komandinės eilutės ilgį
   $separator = str_repeat("-", strlen($command));
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   echo "{$separator}\n{$command}\n{$separator}\n\n";
 
-  // Įvykdo komandą, išėjimo kodą išsaugo į kintamąjį
+  // Vykdoma komanda, išėjimo kodas išsaugomas į kintamąjį
   $exitCode = null;
   system($command, $exitCode);
 

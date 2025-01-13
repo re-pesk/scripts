@@ -27,7 +27,7 @@
   ;; Sukuriama komanda iš funkcijos argumento
   (def command (str "sudo " cmdArg))
   
-  ;; Generuojamas skirtukas iš "-" simbolių
+  ;; Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   ;; (Str/replace command #"." "-") - sukuria neują eilutę,
   ;; bet kurį "command" eilutės simbolį pakeisdamas "-"
   (def separator (str-replace command #"." "-"))
@@ -35,7 +35,7 @@
   ;; Išvedama komanda, apsupta skirtuko eilučių
   (println (str separator "\n" command "\n" separator "\n"))
 
-  ;; Įvykdoma komanda, proceso statusas išsaugomas į kintamąjį
+  ;; Įvykdoma komanda, proceso išėjimo kodas išsaugomas į kintamąjį
   (def exitCode (-> (ProcessBuilder. (str-split command #" ")) .inheritIO .start .waitFor))
 
   ;; Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
