@@ -27,15 +27,15 @@ const runCmd = (cmdArg) => {
   // Sukuriamas komandos tekstinė eilutė iš funkcijos argumento
   const command = `sudo ${cmdArg}`
 
-  // Generuojamas skirtukas, visus komandos "command" simbolius pakeičiant "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // "-".repeat() - generuojamas komandinės eilutės ilgio separatorius iš '-' simbolių
   // command.length - paimamas komandinės eilutės ilgis
   const separator = "-".repeat(command.length)
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   console.log(`${separator}\n${command}\n${separator}\n`)
 
-  // Įvykdo komandą, procesą išsaugo į kintamąjį
+  // Vykdoma komanda, procesą išsaugo į kintamąjį
   const child_proc = spawnSync(command, {
     stdio: 'inherit',
     shell: true

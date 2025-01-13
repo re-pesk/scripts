@@ -20,13 +20,13 @@ const successMessage = messages["$lang"]["succ"]
 # Išorinių komandų iškvietimo funkcija
 proc runCmd(...cmdArgs) {
 
-  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   var command = "sudo $[cmdArgs => join (' ')]"
   
   # Generuoja skirtuką, visus komandos simbolius pakeisdamas '-'' simboliu
   var separator = command.replace(/./, '-' )
 
-  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
   write -- $separator $command $separator ""
 
   try { sudo @cmdArgs }

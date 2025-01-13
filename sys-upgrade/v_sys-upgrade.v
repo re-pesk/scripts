@@ -20,17 +20,17 @@ const lang_messages := messages[lang].clone()
 // Išorinių komandų iškvietimo funkcij
 fn run_cmd(cmdArg string) {
 
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   command := "sudo ${cmdArg}"
 
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
 	// strings.repeat(`-`, n) - simbolio kartojimas, command.len - komandos simbolių skaičius 
   separator := strings.repeat(`-`, command.len)
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   println("${separator}\n${command}\n${separator}\n")
 
-  // Įvykdo komandą, išsaugo išėjimo kodą į kintamąjį
+  // Vykdoma komanda, išsaugo išėjimo kodą į kintamąjį
   exitCode := os.system(command)
 
   // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

@@ -23,17 +23,18 @@ var successMessage = messages[lang]!['succ'];
 
 // Išorinių komandų iškvietimo funkcija
 runCmd(String cmdArg) async {
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   var command = "sudo $cmdArg";
   
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // "-" * - simbolio kartojimas, command.length - komandos simbolių skaičius
   var separator = "-" * command.length;
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   print("$separator\n$command\n$separator\n");
 
-  // Įvykdo komandą, išvedimo srautus nukreipia į pagrindinį procesą
+  // Įvykdoma komandą, išvedimo srautai nukreipiami į pagrindinį procesą
   var process = await Process.start("sudo", cmdArg.split(' '));
   process.stdout
     .transform(utf8.decoder)
@@ -42,7 +43,7 @@ runCmd(String cmdArg) async {
     .transform(utf8.decoder)
     .forEach(stderr.write);
 
-  // Išsaugo į kintamąjį išėjimo kodą 
+  // išėjimo kodas išsaugomas į kintamąjį 
   var exitCode = await process.exitCode;
 
   // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiams programos vykdymas

@@ -24,18 +24,18 @@ val successMessage = messages(lang)("succ")
 // Išorinių komandų iškvietimo funkcija
 def runCmd(cmdArg: String) : Unit = {
 
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento to 
   val command = s"sudo $cmdArg"
 
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // "-" * - kartoja '-' simbolį
   // command.length() - paima komandinės eilutės ilgį
   val separator = "-" * command.length() 
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   println(s"$separator\n$command\n$separator\n")
 
-  // Įvykdo komandą, išėjimo kodą išsaugo į kintamąjį 
+  // Vykdoma komanda, išėjimo kodas išsaugomas į kintamąjį 
   val exitCode = Process(command).!
 
   // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

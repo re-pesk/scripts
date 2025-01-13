@@ -22,18 +22,18 @@ val successMessage = messages.get(lang)?.get("succ")
 // Išorinių komandų iškvietimo funkcija
 fun runCmd(cmdArg : String) {
 
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   val command = "sudo ${cmdArg}"
 
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // "-".repeat(n) - kartoja '-' simbolį
   // command.length - paima komandinės eilutės ilgį
   val separator = "-".repeat(command.length)
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   println("$separator\n$command\n$separator\n")
 
-  // Įvykdo komandą, išėjimo kodą išsaugo į kintamąjį
+  // Vykdoma komanda, išėjimo kodas išsaugomas į kintamąjį
   val exitCode = ProcessBuilder(command.split(" "))
     .redirectOutput(ProcessBuilder.Redirect.INHERIT)
     .redirectError(ProcessBuilder.Redirect.INHERIT)

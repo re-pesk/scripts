@@ -24,18 +24,18 @@ import subprocess
 ## Išorinių komandų iškvietimo funkcija
 def runCmd(cmdArg):
 
-    # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+    # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
     command = f"sudo {cmdArg}"
     
-    # Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+    # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
     # "-" * - simbolio "-" kartojimas
     # len(command) - komandos eilutės ilgis
     separator = "-" * len(command)
     
-    # Išveda komandos eilutę, apsuptą skirtuko eilučių
+    # Išvedama komandos eilutė, apsupta skirtuko eilučių
     print(f"{separator}\n{command}\n{separator}\n")
 
-    # Vykdo komandą, komandos vykdymo rezultatą išsaugo į kintamąjį 
+    # Vykdoma komanda, komandos vykdymo rezultatą išsaugo į kintamąjį 
     exitCode = subprocess.run(command.split(' ')).returncode
 
     # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

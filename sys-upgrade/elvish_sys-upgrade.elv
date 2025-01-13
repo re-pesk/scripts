@@ -21,18 +21,18 @@ use str
 
 # Išorinių komandų iškvietimo funkcija
 var runCmd = {| @cmdArgs |
-  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   var command = "sudo "(str:join ' ' $cmdArgs)
 
-  # Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   # (count $command) grąžina eilutės ilgį
   # str:repeat  - generuoja seką iš "-" simbolių
   var separator = (str:repeat "-" (count $command) )
   
-  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
   echo $separator"\n"$command"\n"$separator"\n"
   
-  # Įvykdo komandą
+  # Vykdoma komanda
   try {
     sudo $@cmdArgs
   } catch err {

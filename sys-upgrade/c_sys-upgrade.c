@@ -70,7 +70,7 @@ int main() {
     // Sukuriama komandos tekstinė eilutė iš funkcijos argumento
     char* command = strMerge("sudo ", cmdArg);
 
-    // Generuojamas skirtukas, visus komandos kopijos simbolius pakeičiant "-" simboliu
+    // Sukuriamas skirtukas, visus komandos kopijos simbolius pakeičiant "-" simboliu
     char* separator = strReplace(command, '-');
 
     printf("%s\n%s\n%s\n\n", separator, command, separator); 

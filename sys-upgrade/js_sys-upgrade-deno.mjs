@@ -22,10 +22,10 @@ const successMessage = messages[LANG].succ
 // Išorinių komandų iškvietimo funkcija
 const runCmd = (cmdArg) => {
 
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   let command = `sudo ${cmdArg}`
 
-  // Generuojamas skirtukas, visus komandos $command simbolius pakeičiant "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // "-".repeat() - kartojamas '-' simbolis
   // command.length - gaunamas komandos ilgis
   let separator = "-".repeat(command.length)

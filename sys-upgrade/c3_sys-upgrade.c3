@@ -24,21 +24,21 @@ import std::io;
 // Išorinių komandų iškvietimo funkcija
 fn void runCmd(String cmdArg, LangMessages langMessages) {
 
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   String command = string::join_new({"sudo", cmdArg}, " ");
 
-  // Sukuriama komandų eilutės ilgio skirtuko eilutė
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   Separator sepArray = {};
   sepArray.fill('-', &command);
   String separator = sepArray.toString();
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   io::printfn("%s\n%s\n%s\n", separator, command, separator);
 
   // Komanda paverčiama į C eilutę
   ZString zCommand = (ZString)command;
 
-  // Vykdoma komanda, išsaugomas įvykdytos komandos išėjimo kodas
+  // Vykdoma komanda, komandos išėjimo kodas išsaugomas į kintamąjį 
   CInt exitCode = (uint)libc::system(zCommand);
 
 

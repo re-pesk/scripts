@@ -24,7 +24,7 @@ def runCmd(String cmdArg) {
   // Komanda iš funkcijos argumento
   def command = "sudo $cmdArg"
 
-  // Komandos ilgio skirtukas iš "-" simbolių
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // '-'* - kartoja '-' simbolį
   // command.length() - komandos ilgis
   def separator = '-'*command.length()

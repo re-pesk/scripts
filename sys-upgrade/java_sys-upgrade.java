@@ -27,7 +27,7 @@ class Main {
     // Sukuriama komandos tekstinė eilutė iš funkcijos argumento
     String command = String.join(" ", "sudo", cmdArg);
 
-    // Generuojamas skirtukas, "-" simbolius kartojant tiek kartų, koks yra komandos ilgis
+    // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
     String separator = "-".repeat(command.length());
   
     // Išvedama komandos eilutė, apsupta skirtuko eilučių

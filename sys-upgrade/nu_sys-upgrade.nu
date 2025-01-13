@@ -23,14 +23,15 @@ def runCmd [...cmdArgs] {
   # Sukuria komandos tekstinę eilutę iš funkcijos argumentų
   let command = ["sudo" ...$cmdArgs] | str join " "
 
-  # pakeičia visas eilutės raides "-" simboliu
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
+  # Visi komandos eilutės simboliai pakeičiami "-" simboliu
   let separator = $command 
     | str replace --all --regex "." "-"
 
-  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
   print $separator $command $separator ""
 
-  # Įvykdo komandą
+  # Vykdoma komanda
   run-external "sudo" ...$cmdArgs
 
   # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

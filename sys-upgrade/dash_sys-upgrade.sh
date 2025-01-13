@@ -25,21 +25,22 @@ successMessage="$(getMessage "${LANG}.succ")"
 # Išorinių komandų iškvietimo funkcija
 runCmd() {
 
-  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   command="sudo $@"
 
-  # Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
-  # printf "%ns", kur n - tai tarpų skaičius, o ${#command} - komandos eilutės ilgis, generuoja komandos ilgio tarpo simbolių eilutę
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
+  # printf "%ns", kur n - tai tarpų skaičius, o ${#command} - komandos eilutės ilgis, 
+  # generuoja komandos ilgio tarpo simbolių eilutę
   # tr " " "-" tarpus pakeičia brūkšniais
   separator=$(printf "%${#command}s" | tr " " "-")
 
-  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
   printf "%s\n%s\n%s\n\n" "$separator" "$command" "$separator"
 
-  # Įvykdo komandą
+  # Įvykdoma komanda
   (sudo $@)
 
-  # Išsaugo įvykdytos komandos išėjimo kodą
+  # Komandos išėjimo kodas išsaugomas į kintamąjį 
   exitCode="$?"
 
   # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

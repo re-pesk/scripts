@@ -15,19 +15,19 @@ successMessage="${messages[$LANG.succ]}"
 # Išorinių komandų iškvietimo funkcija
 runCmd() {
 
-  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento
   command="sudo $@"
 
-  # Generuoja skirtuką, visus komandos simbolius pakeisdamas "-" simboliu
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   separator=${command//?/'-'}
 
-  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
   printf "%s\n%s\n%s\n\n" "$separator" "$command" "$separator"
 
-  # Įvykdo komandą
+  # Įvykdoma komanda
   (sudo $@)
 
-  # Išsaugo įvykdytos komandos išėjimo kodą
+  # Išsaugomas įvykdytos komandos išėjimo kodas
   exitCode="$?"
 
   # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiams programos vykdymas 

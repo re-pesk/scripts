@@ -22,14 +22,14 @@ import Printf: @printf
 # Išorinių komandų iškvietimo funkcija
 function runCmd(cmdArg)
 
-  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   command = "sudo $cmdArg"
 
-  # Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   # repeat("-", n) - kartoja '-' simbolį, length(command) - paima komandinės eilutės ilgį
   separator = repeat("-", length(command))
 
-  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
   @printf("%s\n%s\n%s\n\n", separator, command, separator)
 
   # Paverčia komandos argumentą masyvu
@@ -38,7 +38,7 @@ function runCmd(cmdArg)
   # Sukuria komandos objektą
   objCmd = Cmd(`sudo $args`, ignorestatus = true)
 
-  # Įvykdo komandą ir išaugo išėjimo kodą
+  # Vykdoma komanda ir išaugo išėjimo kodą
   exitCode = run(objCmd).exitcode
 
   # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
