@@ -1,0 +1,96 @@
+#!/usr/bin/env dash
+
+# substitution of associative array
+echo "$substitution_string1"
+substitution_string1="5::true
+10::true
+15::true and false"
+echo
+
+# iterating on substitution_string1
+echo "iterating on substitution_string1"
+echo "$substitution_string1" | while read -r item; do
+  echo "[${item%::*}]=${item#*::}"
+done
+echo
+
+# function to get item from substitution string by key
+getValueByKey() {
+  key="$2"
+  echo "$1" > /tmp/str
+  while read -r item; do
+    case "$item" in
+      ($2::*)
+        echo "${item#${key}::}"
+        return  
+    esac
+  done < /tmp/str
+}
+
+echo "get value from substitution_string1"
+echo '$(getValueByKey "$substitution_string1" 10) == '"$(getValueByKey "$substitution_string1" 10)"
+echo
+
+setValueByKey() {
+  arr_str="$1"
+  new_item="$2"
+  key="${new_item%::*}"
+  replaced="false"
+  result=""
+
+  echo "$1" > /tmp/str
+  while read item; do
+    if [ "${key}" != "${item%::*}" ];then 
+      result="${result}${item}
+"
+      continue
+    fi
+    replaced="true"
+    result="${result}${new_item}
+"
+  done < /tmp/str
+
+  if [ "$replaced" = "false" ];then
+    result="${result}${new_item}"
+  fi
+
+  echo "${result%
+}"
+}
+
+echo 'substitution_string1=$(setValueByKey "$substitution_string1" "25::false and false")'
+substitution_string1=$(setValueByKey "$substitution_string1" "25::false and false")
+echo "substitution_string1:"
+echo "$substitution_string1"
+echo 
+
+# Second substitution string
+echo "substitution_string2:"
+substitution_string2="20::true
+25::true and true
+Labas vakaras::true"
+echo "$substitution_string2"
+echo
+
+merge_array_strings() {
+  arr_str1="$1"
+  arr_str2="$2"
+  echo "$2" > /tmp/mrgstr2
+  while read item; do
+    arr_str1=$(setValueByKey "$arr_str1" "$item")
+  done < /tmp/mrgstr2
+  echo "$arr_str1"
+}
+
+# merge two substitution strings of associative array
+echo "merged_substitution_string:"
+merged_substitution_string="$(merge_array_strings "$substitution_string1" "$substitution_string2")"
+echo "$merged_substitution_string"
+echo
+
+echo "iterating on merged_substitution_string:"
+echo "$merged_substitution_string" > /tmp/itmrgstr
+while read item; do
+  echo "[${item%::*}]=${item#*::}"
+done < /tmp/itmrgstr
+echo

@@ -66,6 +66,7 @@ Daug informacijos internete
 * [x] [Crystal](crystal_readme.md) (+)
 * [x] [D](d_readme.md) (+)
 * [x] [Go](go_readme.md) (+-)
+* [ ] Haskell
 * [x] [Odin](odin_readme.md) (+)
 * [ ] [Purescript](purs_readme.md) (-) - transpileris, reikalaujantis papildomų instrumentų, generuojantis JS kodą.
 * [ ] Rust ?

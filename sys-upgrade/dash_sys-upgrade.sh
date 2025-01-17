@@ -10,7 +10,7 @@ lt_LT.UTF-8.succ:Komanda sėkmingai įvykdyta!"
 getMessage() {
   echo "$messages" | while read item; do
     case $item in
-    "$1:"*) 
+    ("$1:"*) 
       echo "${item#$1:}"
       return
       ;;

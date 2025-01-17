@@ -17,6 +17,6 @@ eval "declare -A array_both=($array_both_string)"
 declare -p array_both
 
 # iterate on array
-for key in ${!array_both[@]}; do
+for key in "${!array_both[@]}"; do
     echo "array_both[${key}]=${array_both[${key}]}"
 done

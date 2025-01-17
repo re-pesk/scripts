@@ -1,0 +1,18 @@
+#!/usr/bin/env dash
+
+# function returning pseudo-associative array
+get_pseudo_array() {
+  retarr="a::true
+b and 15::true and false"
+  echo -n "${retarr}"
+}
+# create new associative array from returned values
+pseudo_array=$(get_pseudo_array)
+
+# print array
+echo "${pseudo_array}"
+
+# iterate on array
+echo "$pseudo_array" | while read item; do
+  echo "pseudo_array[${item%::*}]=${item#*::}"
+done
