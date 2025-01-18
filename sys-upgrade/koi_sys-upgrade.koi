@@ -1,0 +1,58 @@
+#!/usr/bin/env koi
+
+# Klaidų ir sėkmės pranešimų medis
+let messages = {
+  'en.UTF-8': {
+    'err': "Error! Script execution was terminated!",
+    'succ': "Successfully finished!"
+  },
+  'lt_LT.UTF-8': {
+    'err': "Klaida! Scenarijaus vykdymas sustabdytas!",
+    'succ': "Komanda sėkmingai įvykdyta!"
+  }
+}
+
+# Išsaugomi pranešimai, atitinkantys aplinkos kalbą
+let errorMessage = messages[LANG].err
+let successMessage = messages[LANG].succ
+
+# Išorinių komandų iškvietimo funkcija
+fn runCmd(cmdArg) {
+
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
+  let command = "sudo {cmdArg}"
+
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
+  # 0..command.len() - kuriama seka nuo 0 iki komandos tekstinės eilutės ilgio - 1
+  # separator += '-' - prie separatoriaus tekstinės eilutės pridedamas '-' simbolis
+  let separator=""
+  for i in 0..command.len() {
+    separator += '-' 
+  }
+
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
+  print("{separator}\n{command}\n{separator}\n")
+  
+  # Įvykdoma komanda bash'e, išėjimo kodas išsaugomas į failą 
+  echo "{command}; echo $? > /tmp/exitCode-ljlhh" | bash
+  
+  # Išėjimo kodas iš failo konvertuojamas į skaičių iš išsaugomas kintamajame 
+  let exitCode = $(cat /tmp/exitCode-ljlhh).strip().parseNum()
+
+  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+  if exitCode != 0 {
+    print("\n{errorMessage}\n")
+    exit(99)
+  }
+
+  # Kitu atveju išvedamas sėkmės pranešimas
+  print("\n{successMessage}\n")
+}
+
+print()
+
+# Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
+runCmd("apt-get update")
+runCmd("apt-get upgrade -y")
+runCmd("apt-get autoremove -y")
+runCmd("snap refresh")
