@@ -1,4 +1,4 @@
-#! /usr/bin/env -S kotlinc -script
+#!/usr/bin/env -S kotlinc -script
 
 import kotlin.system.exitProcess
 

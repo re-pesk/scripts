@@ -1,3 +1,5 @@
+#!/usr/bin/env crystal
+
 
 # Klaidų ir sėkmės pranešimų medis
 Messages = {

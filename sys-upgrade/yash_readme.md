@@ -14,3 +14,10 @@ yash --version
 ```bash
 yash yash_sys-upgrade.sh
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env yash
+```
+

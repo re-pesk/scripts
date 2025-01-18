@@ -40,6 +40,12 @@ Failo pavadinimo plėtinys būtinai turi būti „.kts“!
 kotlinc -script kotlin_sys-upgrade.kts
 ```
 
+### Shebang
+
+```shebang
+#!/usr/bin/env -S kotlinc -script
+```
+
 ## Kompiliavimas
 
 Kompiliuojant kodas turi būti pagrindinėje „main“ funkcijoje. Failo pavadinimo plėtinys būtinai turi būti „.kt“!

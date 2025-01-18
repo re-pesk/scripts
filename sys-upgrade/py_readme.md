@@ -14,6 +14,8 @@ python3 py_sys-upgrade.py
 
 arba
 
-```bash
-./py_sys-upgrade.py
+### Shebang
+
+```shebang
+#!/usr/bin/env python3
 ```

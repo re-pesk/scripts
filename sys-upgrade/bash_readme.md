@@ -15,3 +15,9 @@ bash --version
 ```bash
 bash bash_sys-upgrade.sh
 ```
+
+### Shebang
+
+```shebang
+#! /usr/bin/env bash
+```

@@ -22,10 +22,10 @@ bun --version
 bun run js_sys-upgrade-bun.mjs
 ```
 
-arba
+### Shebang
 
-```bash
-./js js_sys-upgrade-bun.mjs
+```shebang
+#!/usr/bin/env -S bun run
 ```
 
 ## Deno
@@ -43,10 +43,10 @@ deno --version
 deno js_sys-upgrade-deno.mjs
 ```
 
-arba
+### Shebang
 
-```bash
-./js_sys-upgrade-deno.mjs
+```shebang
+#!/usr/bin/env -S deno run --allow-run --allow-env
 ```
 
 ## Node
@@ -65,8 +65,8 @@ node --version
 node js_sys-upgrade-node.mjs
 ```
 
-arba
+### Shebang
 
-```bash
-./js_sys-upgrade-node.mjs
+```shebang
+#!/usr/bin/env -S node
 ```

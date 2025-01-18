@@ -14,8 +14,8 @@ sudo apt install zsh
 zsh zsh_sys-upgrade.sh
 ```
 
-arba
+### Sehbang
 
-```bash
-./zsh_sys-upgrade.sh
+```shebang
+#! /usr/bin/env -S zsh
 ```

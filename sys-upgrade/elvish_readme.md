@@ -15,8 +15,8 @@ elvish --version
 elvish elvish_sys-upgrade.elv
 ```
 
-arba
+### Shebang
 
-```bash
-./elvish_sys-upgrade.elv
+```shebang
+#!/usr/bin/env elvish
 ```

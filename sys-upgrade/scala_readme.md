@@ -30,3 +30,9 @@ scala -version
 ```bash
 scala run scala_sys-upgrade.scala
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env -S scala shebang
+```

@@ -9,7 +9,7 @@ curl -fsSL https://install.julialang.org | sh
 julia --version
 ```
 
-<!--Kompiliatorius reikalingas tik kompiliuojant. Ekperimentinė versija <https://jbytecode.github.io/juliac>.
+<!--Kompiliatorius reikalingas tik kompiliuojant. Eksperimentinė versija <https://jbytecode.github.io/juliac>.
 
 ```bash
 juliaup add nightly
@@ -24,10 +24,10 @@ bash juliac_download.sh
 julia julia_sys-upgrade.jl
 ```
 
-arba
+### Shebang
 
-```bash
-./julia_sys-upgrade.jl
+```shebang
+#!/usr/bin/env -S julia
 ```
 
 <!-- ## Kompiliavimas

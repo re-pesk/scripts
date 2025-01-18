@@ -25,3 +25,12 @@ ysh --version # => Oils 0.24.0
 osh oil-osh_sys-upgrade.oil
 ysh oil-ysh_sys-upgrade.oil
 ```
+
+### Shebang
+
+Pagal skripto dialektą:
+
+```shebang
+#!/usr/bin/env osh
+#!/usr/bin/env ysh
+```

@@ -15,3 +15,9 @@ abs --version
 ```bash
 abs abs_sys-upgrade.abs
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env abs
+```

@@ -1,3 +1,5 @@
+#!/usr/bin/env rdmd
+
 module sys_upgrade;
 
 import core.stdc.stdlib;

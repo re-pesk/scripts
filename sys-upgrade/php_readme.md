@@ -22,3 +22,9 @@ bash php_install.sh
 ```bash
 php php_sys-upgrade.php
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env php
+```

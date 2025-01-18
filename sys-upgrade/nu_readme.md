@@ -27,3 +27,9 @@ bash nu_install.sh
 ```bash
 nu nu_sys-upgrade.nu
 ```
+
+### Shebang
+
+```shebang
+#! /usr/bin/env nu
+```

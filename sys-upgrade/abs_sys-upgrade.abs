@@ -1,4 +1,4 @@
-#! /usr/bin/env abs
+#!/usr/bin/env abs
 
 # Klaidų ir sėkmės pranešimų medis
 messages = {

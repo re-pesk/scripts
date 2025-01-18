@@ -1,3 +1,5 @@
+#!./odin-script-loader.sh -file
+
 package main
 
 import "core:c/libc"
