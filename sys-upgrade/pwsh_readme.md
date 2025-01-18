@@ -23,3 +23,9 @@ pwsh -Version
 ```bash
 pwsh pwsh_sys-upgrade.ps1
 ```
+
+### Shebang
+
+```shebang
+#! /usr/bin/env -S pwsh
+```

@@ -13,3 +13,9 @@ sudo apt install ksh93u+m
 ```bash
 ksh ksh_sys-upgrade.sh
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env ksh
+```

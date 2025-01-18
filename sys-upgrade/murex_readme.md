@@ -15,3 +15,9 @@ murex --version
 ```bash
 murex murex_sys-upgrade.murex
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env murex
+```

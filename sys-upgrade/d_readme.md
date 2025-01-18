@@ -23,6 +23,12 @@ sudo apt install <atsisiųsto_failo_pavadinimas>.deb
 rdmd d_sys-upgrade.d
 ```
 
+### Shebang
+
+```shebang
+#!/usr/bin/env rdmd
+```
+
 ## Kompiliavimas
 
 ```bash

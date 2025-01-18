@@ -15,13 +15,20 @@ guild --version
 ## Paleistis
 
 ```bash
-guile --no-auto-compile guile_sys-upgrade.scm
+guile guile_sys-upgrade.scm
 ```
 
 Be automatinio kompiliavimo
 
 ```bash
 guile --no-auto-compile guile_sys-upgrade.scm
+```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env -S guile --no-auto-compile -s 
+!#
 ```
 
 ## Kompiliavimas (į baitkodą)

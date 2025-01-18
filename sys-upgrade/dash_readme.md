@@ -17,3 +17,9 @@ dpkg -s dash | grep '^Version'
 ```bash
 dash dash_sys-upgrade.sh
 ```
+
+### Shebang
+
+```shebang
+#! /usr/bin/env dash
+```

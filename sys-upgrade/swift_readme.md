@@ -31,6 +31,12 @@ swift --version # Swifto veikimas patikrinamas, išvedant instaliuotos Swift'o v
 swift swift_sys-upgrade.swift
 ```
 
+### Shebang
+
+```shebang
+#! /usr/bin/env -S swift
+```
+
 ## Kompiliavimas
 
 ```bash

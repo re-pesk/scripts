@@ -15,6 +15,12 @@ crystal --version
 crystal crystal_sys-upgrade.cr
 ```
 
+### Shebang
+
+```shebang
+#!/usr/bin/env crystal
+```
+
 ## Kompiliavimas
 
 ```bash

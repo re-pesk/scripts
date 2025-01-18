@@ -24,6 +24,12 @@ bash v_install.sh
 v run v_sys-upgrade.v
 ```
 
+### Shebang
+
+```shebang
+#!/usr/bin/env -S v run
+```
+
 ## Kompiliavimas
 
 ```bash

@@ -15,8 +15,8 @@ fish --version
 fish fish_sys-upgrade.fish
 ```
 
-arba
+### Shebang
 
-```bash
-./fish_sys-upgrade.fish
+```shebang
+#! /usr/bin/env -S fish
 ```

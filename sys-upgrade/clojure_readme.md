@@ -15,3 +15,9 @@ clj -version
 ```bash
 clj -M clojure_test.clj
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env -S clojure -M
+```

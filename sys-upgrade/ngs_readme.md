@@ -14,3 +14,9 @@ ngs --version
 ```bash
 ngs ngs_sys-upgrade.ngs
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env ngs
+```

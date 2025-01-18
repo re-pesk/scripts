@@ -35,6 +35,12 @@ bash dart-install.sh
 dart dart_sys-upgrade.dart
 ```
 
+### Shebang
+
+```shebang
+#!/usr/bin/env dart
+```
+
 ## Kompiliavimas
 
 ```bash
