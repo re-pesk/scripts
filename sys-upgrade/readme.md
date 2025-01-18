@@ -1,16 +1,17 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (39)
+# Skriptinimas skirtingomis programavimo kalbomis (40)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
 Naudota operacinė sistema – Ubuntu 24.04
 
-## Tipinės apvalkalo scenarijų (Shell scripting) kalbos (5)
+## Tipinės apvalkalo scenarijų (Shell scripting) kalbos (6)
 
 * [x] [Bash](bash_readme.md) (?) asociatyvieji masyvai netinka medžio tipo struktūroms
 * [x] [Dash](dash_readme.md) (-) neturi asociatyviųjų masyvų
 * [x] [Yash](yash_readme.md) (-) mažai informacijos, neturi asociatyviųjų masyvų
+* [x] [ksh](ksh_readme.md) (+-) turi įterptinius asocijuotuosius masyvus, trūksta parametrų
 * [x] [Osh (Oil)](oil-osh_readme.md) (-) mažai informacijos, paini dokumentacija
 * [x] [Zsh](zsh_readme.md) (?) asociatyvieji masyvai netinka medžio tipo struktūroms
   
