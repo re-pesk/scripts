@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (43)
+# Skriptinimas skirtingomis programavimo kalbomis (44)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -11,7 +11,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Bash](bash_readme.md) (?) asociatyvieji masyvai netinka medžio tipo struktūroms
 * [x] [Dash](dash_readme.md) (-) neturi asociatyviųjų masyvų
 * [x] [Yash](yash_readme.md) (-) mažai informacijos, neturi asociatyviųjų masyvų
-* [x] [ksh](ksh_readme.md) (+-) turi įterptinius asocijuotuosius masyvus, trūksta parametrų
+* [x] [ksh](ksh_readme.md) (+-) turi įterptinius asocijuotuosius masyvus, tačiau trūksta parametrų išplėtimo galimybių
 * [x] [Osh (Oil)](oil-osh_readme.md) (-) mažai informacijos, paini dokumentacija
 * [x] [Zsh](zsh_readme.md) (?) asociatyvieji masyvai netinka medžio tipo struktūroms
   
@@ -32,7 +32,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 
 Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
   
-* [x] [Clojure](https://clojure.org/) (-)
+* [x] [Clojure](https://clojure.org/) (-) Lispo sintaksė
 * [X] [Groovy](groovy_readme.md) (-)
 * [x] [Java](java_readme.md) (-)
 * [x] [Kotlin](kotlin_readme.md) (-)
@@ -47,13 +47,13 @@ Daug informacijos internete
 * [x] Deno (+-) truputį skiriasi nuo kitų variantų
 * [x] Node (+)
 
-### Kitos (7)
+### Kitos (8)
 
 * [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :(
 * [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis
-* [x] [Guile](guile_readme.md) (-) Sudėtinga susigaudyti dokumentacijoje, mažai informacijos intenete
+* [x] [Guile](guile_readme.md) (-) Lispo sintaksė. Sudėtinga susigaudyti dokumentacijoje, mažai informacijos intenete
 * [ ] [Io](https://iolanguage.org/index.html)
-* [ ] [Janet](https://janet-lang.org/)
+* [x] [Janet](janet_readme.md) (?) Lispo sintaksė
 * [x] [Julia](julia_readme.md) (+-)
 * [x] [PHP](php_readme.md) (+) daug informacijos internete
 * [x] [Python](py_readme.md) (+-) trūkumas - tarpais grįsta sintaksė
