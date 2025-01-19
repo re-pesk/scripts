@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (42)
+# Skriptinimas skirtingomis programavimo kalbomis (43)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -59,19 +59,19 @@ Daug informacijos internete
 * [x] [Python](py_readme.md) (+-) trūkumas - tarpais grįsta sintaksė
 * [x] [Ruby](ruby_readme.md) (+-) keistoka sintaksė
 
-## Kompiliuojamos kalbos (11)
+## Kompiliuojamos kalbos (12)
 
 * [x] [C](c_readme.md) (+-) - nėra reikiamų funkcijų ir struktūrų standartinėje bilbiotekoje
 * [x] [C++](c++_readme.md) (+) - žymiai paprasčiau už C, turi reikalingas duomenų struktūras
-* [x] [C3](c3_readme.md)
+* [x] [C3](c3_readme.md) (+-)
 * [ ] [Carbon](carbon_readme.md) (-) - nepavyko sukompiliuoti dokumentacijos pavyzdžio
 * [x] [Crystal](crystal_readme.md) (+)
 * [x] [D](d_readme.md) (+)
 * [x] [Go](go_readme.md) (+-)
 * [x] [Haskell](haskell_readme.md) (-) - labai skiriasi sintaksė ir logika
 * [x] [Odin](odin_readme.md) (+)
-* [ ] [Purescript](purs_readme.md) (-) - transpileris, reikalaujantis papildomų instrumentų, generuojantis JS kodą.
-* [ ] Rust ?
+* [ ] [Purescript](purs_readme.md) (-) - transpileris, generuojantis JS kodą, reikalingas papildomų instrumentų.
+* [x] [Rust](rust_readme.md) (-) reikalauja projekto failo, neaiškūs klaidų pranešimai
 * [x] [Swift](swift_readme.md) (-) klaidos, dokumentacija orientuota į MacOS
 * [x] [V](v_readme.md) (-) mažai žinoma, daug kritikos
 * [x] [Zig](zig_readme.md) (-) pernelyg sudėtinga paprastoms užduotims
