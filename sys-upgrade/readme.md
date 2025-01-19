@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (41)
+# Skriptinimas skirtingomis programavimo kalbomis (42)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -59,7 +59,7 @@ Daug informacijos internete
 * [x] [Python](py_readme.md) (+-) trūkumas - tarpais grįsta sintaksė
 * [x] [Ruby](ruby_readme.md) (+-) keistoka sintaksė
 
-## Kompiliuojamos kalbos (10)
+## Kompiliuojamos kalbos (11)
 
 * [x] [C](c_readme.md) (+-) - nėra reikiamų funkcijų ir struktūrų standartinėje bilbiotekoje
 * [x] [C++](c++_readme.md) (+) - žymiai paprasčiau už C, turi reikalingas duomenų struktūras
@@ -68,7 +68,7 @@ Daug informacijos internete
 * [x] [Crystal](crystal_readme.md) (+)
 * [x] [D](d_readme.md) (+)
 * [x] [Go](go_readme.md) (+-)
-* [ ] Haskell
+* [x] [Haskell](haskell_readme.md) (-) - labai skiriasi sintaksė ir logika
 * [x] [Odin](odin_readme.md) (+)
 * [ ] [Purescript](purs_readme.md) (-) - transpileris, reikalaujantis papildomų instrumentų, generuojantis JS kodą.
 * [ ] Rust ?
