@@ -8,9 +8,9 @@
 # Vėliausią versijos numerį galima rasti https://www.oilshell.org/release/latest/
 
 version="0.24.0"
-curl -sSLo- https://www.oilshell.org/download/oils-for-unix-$version.tar.gz \
+curl -sSLo- https://www.oilshell.org/download/oils-for-unix-${version}.tar.gz \
   | tar -xzv
-cd oils-for-unix-$version
+cd oils-for-unix-${version}
 ./configure --prefix ~/.local --datarootdir ~/.local/share
 _build/oils.sh
 ./install

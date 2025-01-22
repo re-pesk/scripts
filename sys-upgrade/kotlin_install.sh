@@ -6,26 +6,26 @@ kotlin -version
 
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/JetBrains/kotlin/releases/latest)"
 curl -sSLo- "${url//tag/download}/kotlin-native-prebuilt-linux-x86_64-$(basename -- $url).tar.gz" \
-  | tar --transform 'flags=r;s/^kotlin-native[^\/]+/kotlin-native/x' --show-transformed-names -xzvC "$HOME/.local"
+  | tar --transform 'flags=r;s/^kotlin-native[^\/]+/kotlin-native/x' --show-transformed-names -xzvC "${HOME}/.local"
 
-appendToBashrc(appName) {
-  set_path='[[ ":$PATH:" == *":$HOME/.local/$appName/bin:"* ]] \
-    || export PATH="$HOME/.local/$appName/bin${PATH:+:${PATH}}"'
+appendToBashrc(app_name) {
+  set_path='[[ ":${PATH}:" == *":${HOME}/.local/'$app_name'/bin:"* ]] \
+    || export PATH="${HOME}/.local/'$app_name'/bin${PATH:+:${PATH}}"'
     
-  configstrings="#begin $appName init
+  config_strings="#begin ${app_name} init
 
   ${set_path}
 
-  #end $appName init"
+  #end ${app_name} init"
 
   readarray -td '
-  ' configArray <<< "$configstrings"
+  ' config_array <<< "$config_strings"
 
-  sed -i "/${configArray[0]}/,/${configArray[@]: -1:1}/c\\" "$HOME/.bashrc"
+  sed -i "/${config_array[0]}/,/${config_array[@]: -1:1}/c\\" "${HOME}/.bashrc"
 
-  [[ "$( tail -n 1 "$HOME/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "$HOME/.bashrc"
+  [[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
 
-  echo "$configstrings" >> "$HOME/.bashrc"
+  echo "$config_strings" >> "${HOME}/.bashrc"
 
   eval $"$set_path"
 }

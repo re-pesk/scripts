@@ -1,30 +1,42 @@
 #!/usr/bin/env bash
 
 version="6.0.3"
-soft=Swift
-installdir="$HOME/.swift"
+app_name="Swift"
+install_dir="${HOME}/.swift"
 
 install="y"
 
-[ -d $installdir ] && swift --version > /dev/null 2>&1  && 
-read -e -p "Found working $soft installation. Do you want overwrite it? 'y' or exit [Enter]: " install
+[ -d "$install_dir" ] && swift --version > /dev/null 2>&1  && 
+read -e -p "Found working $app_name installation. Do you want overwrite it? 'y' or exit [Enter]: " install
 
 [ "$install" = "y" ] || exit 0
 
-[ -d $installdir ] && rm -r $installdir
+[ -d "$install_dir" ] && rm -r "$install_dir"
 
-url="https://download.swift.org/swift-$version-release/ubuntu2404/swift-$version-RELEASE/swift-$version-RELEASE-ubuntu24.04.tar.gz"
+url="https://download.swift.org/swift-${version}-release/ubuntu2404/swift-${version}-RELEASE/swift-${version}-RELEASE-ubuntu24.04.tar.gz"
 curl -sSLo- $url | tar --transform 'flags=r;s/^swift[^\/]+/.swift/x' --show-transformed-names  -xzC "$HOME"
 
-[ ! -d $installdir ] && echo "Directory $installdir is not created!" && exit -1
+[ ! -d "$install_dir" ] && echo "Directory ${install_dir} is not created!" && exit -1
 
-exportedstring="export PATH=$installdir/usr/bin:\"\${PATH}\""
+set_path='[[ ":${PATH}:" == *":'$install_dir'/usr/bin:"* ]] \
+  || export PATH="'$install_dir'/usr/bin${PATH:+:${PATH}}"'
+  
+config_strings="#begin ${app_name} init
 
-grep -q "$exportedstring" "$HOME/.bashrc" || echo -e "\n$exportedstring\n" >> $HOME/.bashrc
+${set_path}
 
-grep -q "$exportedstring" "$HOME/.bashrc" && source $HOME/.bashrc && $xportedstring
+#end ${app_name} init"
 
-[[ $PATH == *"$HOME/.swift/usr/bin"* ]] || eval $exportedstring
+readarray -td '
+' config_array <<< "$config_strings"
+
+sed -i "/${config_array[0]}/,/${config_array[@]: -1:1}/c\\" "${HOME}/.bashrc"
+
+[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
+
+echo "$config_strings" >> "${HOME}/.bashrc"
+
+eval $"$set_path"
 
 echo 
 

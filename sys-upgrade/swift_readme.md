@@ -17,10 +17,19 @@ Visos failų versijos yra <https://www.swift.org/install/linux/> puslapyje.
 curl -sSLo- "https://download.swift.org/swift-6.0.3-release/ubuntu2404/swift-6.0.3-RELEASE/swift-6.0.3-RELEASE-ubuntu24.04.tar.gz" \
 | tar --transform 'flags=r;s/^swift[^\/]+/.swift/x' --show-transformed-names -xzC "$HOME"
 
+# Jeigu reikia, pridedama tučia eilutė
+[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
+
 # Sistemos kelias konfigūraciniame faile papildomas Swifto vykdomųjų failų katalogu
-echo -e "\nexport PATH=$HOME/.swift/usr/bin:\"\${PATH}\"\n" >> $HOME/.bashrc 
-source $HOME/.bashrc #Iš naujo įkraunams konfigūracinis bash'o failas
-export PATH="$HOME/.swift/usr/bin:${PATH}" # Esamas kelias papildomas Swifto vykdomųjų failų katalogu
+echo '#begin Swift init
+
+[[ ":${PATH}:" == *":${HOME}/.swift/usr/bin:"* ]] \
+  || export PATH="${HOME}/.swift/usr/bin${PATH:+:${PATH}}"
+
+#end Swift init' >> "${HOME}/.bashrc"
+
+# Esamas kelias papildomas Swifto vykdomųjų failų katalogu
+[[ ":${PATH}:" == *":${HOME}/.swift/usr/bin:"* ]] || export PATH="${HOME}/.swift/usr/bin${PATH:+:${PATH}}"
 
 swift --version # Swifto veikimas patikrinamas, išvedant instaliuotos Swift'o versijos numerį
 ```
