@@ -7,25 +7,25 @@ installDir=".local/scala3"
 
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)"
 curl -sSLo- "${url//tag/download}/scala3-$(basename -- $url)-${fileNameEnd}" \
-| tar --transform 'flags=r;s/^scala3[^\/]+/scala3/x' --show-transformed-names -xzvC "$HOME/.local"
+| tar --transform 'flags=r;s/^scala3[^\/]+/scala3/x' --show-transformed-names -xzvC "${HOME}/.local"
 
-set_path='[[ ":$PATH:" == *":$HOME/.local/scala3/bin:"* ]] \
-  || export PATH="$HOME/.local/scala3/bin${PATH:+:${PATH}}"'
+set_path='[[ ":${PATH}:" == *":${HOME}/.local/scala3/bin:"* ]] \
+  || export PATH="${HOME}/.local/scala3/bin${PATH:+:${PATH}}"'
   
-configstrings="#begin scala init
+config_strings="#begin scala init
 
 ${set_path}
 
 #end scala init"
 
 readarray -td '
-' configArray <<< "$configstrings"
+' config_array <<< "$config_strings"
 
-sed -i "/${configArray[0]}/,/${configArray[@]: -1:1}/c\\" "$HOME/.bashrc"
+sed -i "/${config_array[0]}/,/${config_array[@]: -1:1}/c\\" "${HOME}/.bashrc"
 
-[[ "$( tail -n 1 "$HOME/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "$HOME/.bashrc"
+[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
 
-echo "$configstrings" >> "$HOME/.bashrc"
+echo "$config_strings" >> "${HOME}/.bashrc"
 
 eval $"$set_path"
 

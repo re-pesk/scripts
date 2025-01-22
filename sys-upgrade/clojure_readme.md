@@ -6,7 +6,7 @@
 
 ```bash
 curl -Lo- https://github.com/clojure/brew-install/releases/latest/download/linux-install.sh \
-| bash -s -- --prefix $HOME/.local
+| bash -s -- --prefix ${HOME}/.local
 clj -version
 ```
 

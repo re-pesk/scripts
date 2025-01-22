@@ -6,7 +6,7 @@
 
 ```bash
 bash <(curl -fsSL https://www.abs-lang.org/installer.sh)
-mv abs $HOME/.local/bin
+mv abs ${HOME}/.local/bin
 abs --version
 ```
 

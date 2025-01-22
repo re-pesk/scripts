@@ -5,8 +5,8 @@
 ## Diegimas
 
 ```bash
-curl -fsSo - https://github.com/c3lang/c3c/releases/download/latest/c3-ubuntu-20.tar.gz | tar -xzvC $HOME/.local
-ln -s $HOME/.local/c3/c3c $HOME/.local/bin/c3c
+curl -fsSo - https://github.com/c3lang/c3c/releases/download/latest/c3-ubuntu-20.tar.gz | tar -xzvC ${HOME}/.local
+ln -s ${HOME}/.local/c3/c3c ${HOME}/.local/bin/c3c
 c3c --version
 ```
 

@@ -6,9 +6,9 @@
 
 ```bash
 curl -sSL https://github.com/vlang/v/releases/latest/download/v_linux.zip -o /tmp/v_linux.zip
-unzip /tmp/v_linux.zip -d $HOME/.local
+unzip /tmp/v_linux.zip -d ${HOME}/.local
 rm /tmp/v_linux.zip
-ln -fs $HOME/.local/v/v $HOME/.local/bin/v
+ln -fs ${HOME}/.local/v/v ${HOME}/.local/bin/v
 echo "v -v => $(v -v)"
 ```
 

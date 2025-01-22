@@ -5,7 +5,7 @@
 ## Diegimas
 
 ```bash
-curl -so - https://dl.elv.sh/linux-amd64/elvish-v0.21.0.tar.gz | tar -xzvC $HOME/.local/bin
+curl -so - https://dl.elv.sh/linux-amd64/elvish-v0.21.0.tar.gz | tar -xzvC ${HOME}/.local/bin
 elvish --version
 ```
 

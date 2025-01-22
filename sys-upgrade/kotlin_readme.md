@@ -16,18 +16,18 @@ kotlin -version
 ```bash
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/JetBrains/kotlin/releases/latest)"
 curl -sSLo- "${url//tag/download}/kotlin-native-prebuilt-linux-x86_64-$(basename -- $url).tar.gz" \
-  | tar --transform 'flags=r;s/^kotlin-native[^\/]+/kotlin-native/x' --show-transformed-names -xzvC "$HOME/.local"
+  | tar --transform 'flags=r;s/^kotlin-native[^\/]+/kotlin-native/x' --show-transformed-names -xzvC "${HOME}/.local"
 
-[[ "$( tail -n 1 "$HOME/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "$HOME/.bashrc"
+[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
 
 echo '#begin kotlin init
 
-[[ ":$PATH:" == *":$HOME/.local/kotlin-native/bin:"* ]] \
-  || export PATH="$HOME/.local/kotlin-native/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.local/kotlin-native/bin:"* ]] \
+  || export PATH="${HOME}/.local/kotlin-native/bin${PATH:+:${PATH}}"
 
-#end kotlin init' >> "$HOME/.bashrc"
+#end kotlin init' >> "${HOME}/.bashrc"
 
-export PATH="$HOME/.local/kotlin-native/bin${PATH:+:${PATH}}"
+export PATH="${HOME}/.local/kotlin-native/bin${PATH:+:${PATH}}"
 
 kotlinc-native -version  
 ```
