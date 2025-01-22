@@ -61,7 +61,11 @@ fi
 
 if [ "$1" = "" ]; then
   echo "${messages[$LANG.errorDurationNotExists]}"
-  zenity --error --title "${messages[$LANG.error]}" --text "${messages[$LANG.errorDurationNotExists]}"
+  zenity --error \
+    --width=400 \
+    --height=300 \
+    --title "${messages[$LANG.error]}" \
+    --text "${messages[$LANG.errorDurationNotExists]}"
   exit
 fi
 
@@ -74,19 +78,29 @@ trukme="$1"
 if [[ ! ( "$trukme" =~ ^[0-9]+(h|m|s)$ ) ]]; then
 # if [[  "$trukme" != +([0-9])@("h"|"m"|"s"|) ]]; then
   echo "${messages[$LANG.errorDurationFormat]}"
-  zenity --error --title "${messages[$LANG.error]}" --text "${messages[$LANG.errorDurationFormat]}: \"$trukme\"!"
+  zenity \
+    --error \
+    --width=400 \
+    --height=300 \
+    --title "${messages[$LANG.error]}" \
+    --text "${messages[$LANG.errorDurationFormat]}: \"$trukme\"!"
   exit
 fi
 
 if [ "$2" == "" ]; then
   echo "${messages[$LANG.errorMessageIsAbsent]}"
-  zenity --error --title "${messages[$LANG.error]}" --text "${messages[$LANG.errorMessageIsAbsent]}"
+  zenity \
+    --error \
+    --width=400 \
+    --height=300 \
+    --title "${messages[$LANG.error]}" \
+    --text "${messages[$LANG.errorMessageIsAbsent]}"
   exit
 fi
 
 if [[ $(ps -o stat= -p $$) == *+* ]]; then
   echo "Priminti po $trukme: $2"
-  ($0 $trukme $2 &)
+  ($0 "$trukme" "$2" &)
   exit
 fi
 
@@ -103,7 +117,12 @@ case "$trukme" in
   ;;
 *)
   echo "${messages[$LANG.errorDurationFormat]}"
-  zenity --error --title "${messages[$LANG.error]}" --text "${messages[$LANG.errorDurationFormat]}: $trukme"
+  zenity \
+    --error \
+    --width=400 \
+    --height=300 \
+    --title "${messages[$LANG.error]}" \
+    --text "${messages[$LANG.errorDurationFormat]}: $trukme"
   exit
   ;;
 esac
@@ -113,4 +132,9 @@ sleep $secs # laukti nurodytą sekundžių skaičių
 paplay /usr/share/sounds/ubuntu/ringtones/Alarm\ clock.ogg
 
 # Parodyti langą su antrašte ir tekstu
-zenity --info --title "${messages[$LANG.finalInfoTitle]}" --text "$trukme ${messages[$LANG.finalInfo]} $2"
+zenity \
+  --info \
+  --width=400 \
+  --height=300 \
+  --title "${messages[$LANG.finalInfoTitle]}" \
+  --text "$trukme ${messages[$LANG.finalInfo]} $2"
