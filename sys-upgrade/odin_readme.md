@@ -26,25 +26,26 @@ bash odin-install.sh
 odin run odin_sys-upgrade.odin -file -out:odin_sys-upgrade.bin
 ```
 
-### Shebang
+### odin-script.sh
 
-```shebang
-#! ./odin-script-loader.sh -file
-```
-
-Failams paleisti reikalingas pagalbinis failas _odin-script-loader.sh_. Jis turi būti arba tame pačiame kataloge kaip ir leidžiamas failas, arba vianme iš katalogų, nurodytų aplinkos kintamajame `PATH`. Perkėlus pagalbinį failą į tokį katalogą, _shebang_ eilutė turi būti tokia:
-
-```shebang
-#!/usr/bin/env odin-script-loader.sh -file
-```
-
-Pagalbinio failo `odin-script-loader.sh` turinys:
+Odino failų palidimą supaprastina pagalbinis failas _odin-script.sh_. Jis turi būti arba tame pačiame kataloge kaip ir leidžiamas failas, arba viename iš katalogų, nurodytų aplinkos kintamajame `PATH`.
 
 ```bash
-#!/usr/bin/env bash
-last="${@: -1}"
-out="${last%.*}.bin"
-/usr/bin/env -S odin run ${last} -out:${out} ${@:1:$(($#-1))}
+./odin-script.sh odin_sys-upgrade.odin
+```
+
+### Shebang
+
+Kai pagalbinis failas _odin-script.sh_ Odino failo kataloge, _shebang_ eilutė turi būti tokia:
+
+```shebang
+#!./odin-script.sh
+```
+
+Kai _odin-script.sh_ yra viename iš katalogų, nurodytų PATH aplinkos kintamajame, _shebang_ eilutė turi būti tokia:
+
+```shebang
+#!/usr/bin/env odin-script.sh
 ```
 
 ## Kompiliavimas
