@@ -1,4 +1,4 @@
-#!./odin-script-loader.sh -file
+#!./odin-script.sh
 
 package main
 
