@@ -6,7 +6,7 @@ Programavimo žaidimai
 
 * Pandoc konverterio [pagalbinis skriptas](./pandoc/readme.md)
 
-* PHP kodo [paleidimo skriptas](./php-script-loader/readme.md)
+* [Paleidimo skriptai](./script-loaders/readme.md)
 
 * Programavimo kalbų ir jų variklių [diegimas](./install/readme.md)
 
