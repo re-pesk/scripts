@@ -2,12 +2,7 @@
 
 # Fish shell [&#x2B67;](https://fishshell.com/)
 
-## Diegimas
-
-```bash
-sudo apt install fish
-fish --version
-```
+## [Diegimas](../install/fish_readme.md)
 
 ## Paleistis
 

@@ -71,7 +71,7 @@ Daug informacijos internete
 * [x] [Go](go_readme.md) (+-)
 * [x] [Haskell](haskell_readme.md) (-): sintakse ir logika labai skiriasi nuo kitų kalbų
 * [x] [Odin](odin_readme.md) (+): dar vienas C kalbos pakaitalas, verta pasimokyti
-* [ ] [Purescript](purs_readme.md) (-): transpileris, generuojantis JS kodą, reikalingas papildomų instrumentų.
+* [ ] [Purescript](purs_readme.md) (-): transpileris, generuojantis JS kodą, netinka scenarijų kalbos vaidmeniui.
 * [x] [Rust](rust_readme.md) (-): reikalauja projekto failo, neaiškūs klaidų pranešimai
 * [x] [Swift](swift_readme.md) (-) klaidos, dokumentacija orientuota į MacOS
 * [x] [V](v_readme.md) (-): mažai žinoma, daug kritikos dėl neprofesionalių sprendimų

@@ -4,9 +4,7 @@
 
 ## Diegimas
 
-```bash
-sudo apt install zsh
-```
+[Žr.](../install//zsh_readme.md)
 
 ## Paleistis
 

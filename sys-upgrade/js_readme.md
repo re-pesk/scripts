@@ -7,65 +7,41 @@
 * [Learn web development](https://developer.mozilla.org/en-US/docs/Learn)
 * [The Modern JavaScript Tutorial](https://javascript.info/)
 
-## Bun
+## [Diegimas](../install/js_readme.md)
 
-### Diegimas
+## Paleistis
 
-```bash
-curl -fsSL https://bun.sh/install | bash
-bun --version
-```
-
-### Paleistis
+### Bun
 
 ```bash
 bun run js_sys-upgrade-bun.mjs
 ```
 
-### Shebang
+#### Shebang
 
 ```shebang
 #!/usr/bin/env -S bun run
 ```
 
-## Deno
-
-### Diegimas
-
-```bash
-curl -fsSL https://deno.land/install.sh | sh
-deno --version
-```
-
-### Paleistis
+### Deno
 
 ```bash
 deno js_sys-upgrade-deno.mjs
 ```
 
-### Shebang
+#### Shebang
 
 ```shebang
 #!/usr/bin/env -S deno run --allow-run --allow-env
 ```
 
-## Node
-
-### Diegimas
-
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-nvm install --lts
-node --version
-```
-
-### Paleistis
+### Node
 
 ```bash
 node js_sys-upgrade-node.mjs
 ```
 
-### Shebang
+#### Shebang
 
 ```shebang
 #!/usr/bin/env -S node

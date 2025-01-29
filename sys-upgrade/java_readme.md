@@ -2,12 +2,7 @@
 
 # Java [&#x2B67;](https://www.java.com/en/download/help/index.html)
 
-## Diegimas
-
-```bash
-sudo apt install openjdk-21-jdk
-java -version
-```
+## [Diegimas](../install/java_readme.md)
 
 ## Paleistis
 

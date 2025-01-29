@@ -2,15 +2,7 @@
 
 # GNU Guile [&#x2B67;](https://www.gnu.org/software/guile/)
 
-## Diegimas
-
-```bash
-sudo apt-get install guile-3.0
-guile --version
-
-sudo apt-get install guile-3.0-dev
-guild --version
-```
+## [Diegimas](../install/guile_readme.md)
 
 ## Paleistis
 

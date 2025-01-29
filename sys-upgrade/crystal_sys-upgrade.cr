@@ -14,8 +14,9 @@ Messages = {
 }
 
 # Pranešimai pagal aplinkos kalbos nuostatą
-ErrorMessage = Messages[ENV["LANG"]]["err"]
-SuccessMessage = Messages[ENV["LANG"]]["succ"]
+Lang = ENV["LANG"]
+ErrorMessage = Messages[Lang]["err"]
+SuccessMessage = Messages[Lang]["succ"]
 
 # Išorinių komandų iškvietimo funkcija
 def runCmd(cmdArg : String)
