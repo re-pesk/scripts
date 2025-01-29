@@ -2,13 +2,7 @@
 
 # C3 [&#x2B67;](https://c3-lang.org/)
 
-## Diegimas
-
-```bash
-curl -fsSo - https://github.com/c3lang/c3c/releases/download/latest/c3-ubuntu-20.tar.gz | tar -xzvC ${HOME}/.local
-ln -s ${HOME}/.local/c3/c3c ${HOME}/.local/bin/c3c
-c3c --version
-```
+## [Diegimas](../install/c3_readme.md)
 
 ## Paleistis
 
@@ -16,8 +10,15 @@ c3c --version
 c3c compile-run -o c3_sys-upgrade.bin c3_sys-upgrade.c3
 ```
 
+### Vykdomoji eilutė
+
+```bash
+///usr/bin/env c3c compile-run -o "${0%.*}.bin" "$0" -- "$@"; exit $?
+```
+
 ## Kompiliavimas
 
 ```bash
 c3c compile -o c3_sys-upgrade.bin c3_sys-upgrade.c3
+./c3_sys-upgrade.bin
 ```

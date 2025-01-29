@@ -1,3 +1,5 @@
+///usr/bin/env -S gcc -o "${0%.*}.bin" "$0"; "./${0%.*}.bin" "$@"; exit $?
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

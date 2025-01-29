@@ -1,5 +1,5 @@
-#!/usr/bin/env php
-<?php
+///usr/bin/env php -r "$(tail -n +1 "$0")" "$@"; exit "$?"
+//<?php
 
 // Klaidų ir sėkmės pranešimų medis
 $messages = [

@@ -1,3 +1,5 @@
+///usr/bin/env c3c compile-run -o "${0%.*}.bin" "$0" -- "$@"; exit $?
+
 import std::collections::elastic_array;
 import std::collections::map;
 

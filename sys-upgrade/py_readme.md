@@ -2,9 +2,7 @@
 
 # Python [&#x2B67;](https://www.python.org/)
 
-## Diegimas
-
-Instaliuojamas su Ubuntu.
+## [Diegimas](../install/py_readme.md)
 
 ## Paleistis
 

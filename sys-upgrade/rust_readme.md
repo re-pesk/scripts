@@ -1,14 +1,8 @@
 [Atgal](./readme.md)
 
-# Haskell [&#x2B67;](https://www.haskell.org/)
+# Rust [&#x2B67;](https://www.rust-lang.org/)
 
-## Diegimas
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install cargo-script
-rustc --version
-```
+## [Diegimas](../install/rust_readme.md)
 
 ## Paleistis
 
@@ -26,4 +20,5 @@ cargo script rust_sys-upgrade.rs
 
 ```bash
 rustc -o rust_sys-upgrade.bin rust_sys-upgrade.rs
+./rust_sys-upgrade.bin
 ```
