@@ -39,5 +39,9 @@ indent_size = 2
 indent_style = space
 indent_size = 4
 
+[*.rs]
+indent_style = space
+indent_size = 4
+
 [*.txt]
 insert_final_newline = false
