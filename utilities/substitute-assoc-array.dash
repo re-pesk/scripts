@@ -40,7 +40,7 @@ setValueByKey() {
 
   echo "$1" > /tmp/str
   while read item; do
-    if [ "${key}" != "${item%::*}" ];then 
+    if [ "$key" != "${item%::*}" ];then 
       result="${result}${item}
 "
       continue
