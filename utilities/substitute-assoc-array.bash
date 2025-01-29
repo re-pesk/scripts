@@ -42,10 +42,10 @@ setValueByKey() {
   done <<< "$arr_str"
   
   if [[ $replaced == false ]];then
-    result+="${new_item}"
+    result+="$new_item"
   fi
 
-  echo "${result}"
+  echo "$result"
 }
 
 echo 'substitution_string1=$(setValueByKey "$substitution_string1" "25::false and false")'
