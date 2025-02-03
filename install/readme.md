@@ -41,6 +41,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Odin](odin_readme.md)
 * [x] [Osh (Oil)](oil-osh_readme.md)
 * [x] [PHP](php_readme.md)
+* [x] [Phix](phix_readme.md)
 * [x] [Python](py_readme.md)
 * [x] [PowerShell](pwsh_readme.md)
 * [ ] [Purescript](purs_readme.md)
