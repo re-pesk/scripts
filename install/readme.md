@@ -18,6 +18,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Dash](dash_readme.md)
 * [x] [Deno (JS)](js_readme.md)
 * [x] [Elvish](elvish_readme.md)
+* [x] [Euphoria](euph_readme.md)
 * [x] [Fish](fish_readme.md)
 * [x] [Go](go_readme.md)
 * [X] [Groovy (JVM)](groovy_readme.md)

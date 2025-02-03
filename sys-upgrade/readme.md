@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (46)
+# Skriptinimas skirtingomis programavimo kalbomis (47)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -26,7 +26,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Nu](nu_readme.md) (?): dažniau minima, mei kitos alteratyvios apvalkalo scenarijų kalbos
 * [x] [PowerShell](pwsh_readme.md) (-): keista sintaksė, kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (20)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (21)
 
 ### JavaVM (7)
 
@@ -47,10 +47,11 @@ Daug informacijos internete
 * [x] Deno (+-) truputį skiriasi nuo kitų variantų
 * [x] Node (+)
 
-### Kitos (10)
+### Kitos (11)
 
 * [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :(
 * [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis
+* [x] [Euphoria](euph_readme.md) (-) sudėtingas instaliavimas, seniai nebuvo leidimų
 * [x] [Guile](guile_readme.md) (-) Lispo sintaksė. Sudėtinga susigaudyti dokumentacijoje, mažai informacijos intenete
 * [x] [Io](https://iolanguage.org/index.html) (+-) Maža, paprasta kalba su Smaltalk'o sintakse, bet, deja, nevystoma
 * [x] [Janet](janet_readme.md) (?) Lispo sintaksė, pozicionuojama kaip skriptinė kalba
