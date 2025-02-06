@@ -1,4 +1,4 @@
-#! /usr/bin/env -S bun run
+///usr/bin/env -S bun run "$0" "$@"; exit $?
 
 // Klaidų ir sėkmės pranešimų medis
 const messages = {

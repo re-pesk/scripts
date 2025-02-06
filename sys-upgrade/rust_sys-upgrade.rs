@@ -1,4 +1,4 @@
-#!/usr/bin/env -S cargo script
+///usr/bin/env -S cargo script "$0" "$@"; exit $?
 
 use std::env;
 use std::process::{Command, exit};
@@ -43,7 +43,7 @@ fn get_messages(lang: &str) -> &'static Messages {
         .unwrap_or(&DEFAULT_MESSAGES)
 }
 
-fn runCmd(cmd_arg: &str, messages: &Messages) {
+fn run_cmd(cmd_arg: &str, messages: &Messages) {
     // Sukuriama komandos tekstinė eilutė
     let command = format!("sudo {}", cmd_arg);
 
@@ -76,9 +76,9 @@ fn main() {
     println!("");
 
     // Komandų vykdymo funkcijos iškvietimai
-    runCmd("apt-get update", messages);
-    runCmd("apt-get upgrade -y", messages);
-    runCmd("apt-get autoremove -y", messages);
-    runCmd("snap refresh", messages);
+    run_cmd("apt-get update", messages);
+    run_cmd("apt-get upgrade -y", messages);
+    run_cmd("apt-get autoremove -y", messages);
+    run_cmd("snap refresh", messages);
 }
 

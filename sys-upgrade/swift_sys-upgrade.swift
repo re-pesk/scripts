@@ -1,4 +1,4 @@
-#! /usr/bin/env -S swift
+///usr/bin/env -S swift "$0" "$@"; exit $?
 
 import Foundation
 
