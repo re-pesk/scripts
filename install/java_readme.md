@@ -15,8 +15,8 @@ java -version
 java --source 21 --enable-preview java_sys-upgrade.java
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 ///usr/bin/env java --source 21 --enable-preview "$0" "$@"; exit $?
 ```

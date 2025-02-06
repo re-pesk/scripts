@@ -10,8 +10,14 @@
 io io_sys-upgrade.io
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env io
+```
+
+arba
+
+```bash
+///usr/bin/env io "$0" "$@"; exit $?
 ```

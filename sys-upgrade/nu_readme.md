@@ -10,8 +10,8 @@
 nu nu_sys-upgrade.nu
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env nu
 ```

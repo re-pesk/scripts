@@ -10,8 +10,8 @@
 abs abs_sys-upgrade.abs
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env abs
 ```

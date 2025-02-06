@@ -10,10 +10,16 @@
 swift swift_sys-upgrade.swift
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env -S swift
+```
+
+arba
+
+```bash
+///usr/bin/env -S swift "$0" "$@"; exit $?
 ```
 
 ## Kompiliavimas

@@ -12,7 +12,7 @@ lua lua_sys-upgrade.lua
 
 ### Shabang
 
-```shebang
+```bash
 #!/usr/bin/env -S lua
 ```
 

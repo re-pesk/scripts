@@ -43,8 +43,8 @@ bash groovy_install.sh
 groovy kodo-failas.groovy
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env groovy
 ```

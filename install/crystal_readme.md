@@ -15,9 +15,9 @@ crystal --version
 crystal kodo-failas.cr
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env crystal
 ```
 

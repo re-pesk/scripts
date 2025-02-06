@@ -24,9 +24,9 @@ bash juliac_download.sh
 julia kodo-failas.jl
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S julia
 ```
 

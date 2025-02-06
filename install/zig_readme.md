@@ -25,7 +25,7 @@ bash zig_instal.sh
 zig run --name vykdomasis-failas.bin kodo-failas.zig
 ```
 
-### Vykdomoji eilutė
+### Vykdymo instrukcija (shebang)
 
 ```bash
 ///usr/bin/env -S zig run "$0" -- "$@"; exit $?

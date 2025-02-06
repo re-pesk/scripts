@@ -34,7 +34,7 @@ Odino failų palidimą supaprastina pagalbinis failas _odin-script.sh_. Jis turi
 ./odin-script.sh kodo-failas.odin
 ```
 
-### Vykdomiji eiluė
+### Vykdymo eiluė
 
 Norint kodo failą paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti eilutę:
 

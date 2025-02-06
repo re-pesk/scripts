@@ -10,10 +10,16 @@
 cargo script rust_sys-upgrade.rs
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S run-cargo-script
+```
+
+arba
+
+```bash
+///usr/bin/env -S cargo script "$0" "$@"; exit $?
 ```
 
 ## Kompiliavimas

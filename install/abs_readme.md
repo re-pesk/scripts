@@ -16,8 +16,8 @@ abs --version
 abs kodo-failas.abs
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env abs
 ```

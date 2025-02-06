@@ -10,8 +10,8 @@
 ksh ksh_sys-upgrade.sh
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env ksh
 ```

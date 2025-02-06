@@ -31,8 +31,8 @@ scala -version
 scala run scala_sys-upgrade.scala
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S scala shebang
 ```

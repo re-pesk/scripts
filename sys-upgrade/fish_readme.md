@@ -10,8 +10,8 @@
 fish fish_sys-upgrade.fish
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env -S fish
 ```

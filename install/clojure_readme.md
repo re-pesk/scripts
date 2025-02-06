@@ -16,8 +16,8 @@ clj -version
 clj -M kodo-failas.clj
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S clojure -M
 ```

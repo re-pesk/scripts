@@ -10,8 +10,8 @@
 ngs ngs_sys-upgrade.ngs
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env ngs
 ```

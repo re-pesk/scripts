@@ -16,8 +16,8 @@ bash --version
 bash kodo-failas.sh
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env bash
 ```

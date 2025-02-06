@@ -8,7 +8,7 @@ __*gcc*__ instaliuojamas su Ubuntu 24.04 operacine sistema
 
 ## Paleistis
 
-### Vykdomoji eilutė
+### Vykdymo instrukcija (shebang)
 
 ```bash
 ///usr/bin/env -S gcc -o "${0%.*}.bin" "$0"; "./${0%.*}.bin" "$@"; exit $?

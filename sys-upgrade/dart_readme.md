@@ -10,10 +10,16 @@
 dart dart_sys-upgrade.dart
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env dart
+```
+
+arba
+
+```bash
+///usr/bin/env dart "$0" "$@"; exit $?
 ```
 
 ## Kompiliavimas

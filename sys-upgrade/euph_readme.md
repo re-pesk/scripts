@@ -10,9 +10,9 @@
 eui euph_sys-upgrade.ex
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S eui
 ```
 

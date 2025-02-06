@@ -16,9 +16,9 @@ rustc --version
 cargo script rust_sys-upgrade.rs
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S run-cargo-script
 ```
 

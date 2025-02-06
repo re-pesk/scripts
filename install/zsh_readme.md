@@ -14,8 +14,8 @@ sudo apt install zsh
 zsh kodo-failas.sh
 ```
 
-### Sehbang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env -S zsh
 ```

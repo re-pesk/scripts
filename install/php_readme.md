@@ -23,15 +23,15 @@ bash php_install.sh
 php php_sys-upgrade.php
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-Norint *php_sys-upgrade.php* paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti eilutę shebangą:
+Norint *php_sys-upgrade.php* paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti vykdymo instrukciją (shebangą):
 
-```shebang
+```bash
 #!/usr/bin/env php
 ```
 
-arba prieš *<?php* tagą įterpti _bash'o_ kodą
+arba prieš *<?php* tagą įterpti *bash'o* kodą
 
 ```bash
 ///usr/bin/env php -r "$(tail -n +1 "$0")" "$@"; exit "$?"

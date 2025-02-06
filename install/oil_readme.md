@@ -26,11 +26,11 @@ osh oil-osh_sys-upgrade.oil
 ysh oil-ysh_sys-upgrade.oil
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
 Pagal skripto dialektą:
 
-```shebang
+```bash
 #!/usr/bin/env osh
 #!/usr/bin/env ysh
 ```

@@ -15,8 +15,8 @@ elvish --version
 elvish kodo-failas.elv
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env elvish
 ```

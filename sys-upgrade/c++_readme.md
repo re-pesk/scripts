@@ -6,7 +6,7 @@
 
 ## Paleistis
 
-### Vykdomoji eilutė
+### Vykdymo instrukcija (shebang)
 
 ```bash
 ///usr/bin/env -S g++ -Wno-sizeof-array-argument -std=c++2b -o "${0%.*}.bin" "$0"; "./${0%.*}.bin" "$@"; exit $?

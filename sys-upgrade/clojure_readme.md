@@ -10,8 +10,8 @@
 clj -M clojure_sys-upgrade.clj
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S clojure -M
 ```

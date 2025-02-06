@@ -10,8 +10,8 @@
 koi koi_sys-upgrade.koi
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env koi
 ```

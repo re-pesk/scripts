@@ -17,22 +17,10 @@
 bun run js_sys-upgrade-bun.mjs
 ```
 
-#### Shebang
-
-```shebang
-#!/usr/bin/env -S bun run
-```
-
 ### Deno
 
 ```bash
 deno js_sys-upgrade-deno.mjs
-```
-
-#### Shebang
-
-```shebang
-#!/usr/bin/env -S deno run --allow-run --allow-env
 ```
 
 ### Node
@@ -41,8 +29,40 @@ deno js_sys-upgrade-deno.mjs
 node js_sys-upgrade-node.mjs
 ```
 
-#### Shebang
+## Vykdymo instrukcija (shebang)
 
-```shebang
+### Bun
+
+```bash
+#!/usr/bin/env -S bun run
+```
+
+arba
+
+```bash
+///usr/bin/env -S bun run "$0" "$@"; exit $?
+```
+
+### Deno
+
+```bash
+#!/usr/bin/env -S deno run --allow-run --allow-env
+```
+
+arba
+
+```bash
+///usr/bin/env -S deno run --allow-run --allow-env "$0" "$@"; exit $?
+```
+
+### Node
+
+```bash
 #!/usr/bin/env -S node
+```
+
+arba
+
+```bash
+///usr/bin/env -S node "$0" "$@"; exit $?
 ```

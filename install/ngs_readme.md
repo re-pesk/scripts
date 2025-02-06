@@ -15,8 +15,8 @@ ngs --version
 ngs kodo-failas.ngs
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env ngs
 ```

@@ -10,8 +10,8 @@
 pwsh pwsh_sys-upgrade.ps1
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env -S pwsh
 ```

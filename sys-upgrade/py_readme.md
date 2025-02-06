@@ -12,8 +12,8 @@ python3 py_sys-upgrade.py
 
 arba
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env python3
 ```

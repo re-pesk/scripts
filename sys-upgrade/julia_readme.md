@@ -10,9 +10,9 @@
 julia julia_sys-upgrade.jl
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S julia
 ```
 

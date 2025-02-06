@@ -19,8 +19,8 @@ janet --version
 janet kodo-failas.janet
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env janet
 ```

@@ -14,8 +14,8 @@ python3 kodo-failas.py
 
 arba
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env python3
 ```

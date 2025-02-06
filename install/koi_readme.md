@@ -17,8 +17,8 @@ koi --version
 koi kodo-failas.koi
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env koi
 ```

@@ -10,9 +10,9 @@
 crystal crystal_sys-upgrade.cr
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env crystal
 ```
 

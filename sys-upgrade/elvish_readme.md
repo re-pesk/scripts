@@ -10,8 +10,8 @@
 elvish elvish_sys-upgrade.elv
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env elvish
 ```

@@ -12,7 +12,7 @@
 zig run --name zig_sys-upgrade.bin zig_sys-upgrade.zig
 ```
 
-### Vykdomiji eilutė
+### Vykdymo instrukcija (shebang)
 
 ```bash
 ///usr/bin/env -S zig run "$0" -- "$@"; exit $?

@@ -10,8 +10,8 @@
 murex murex_sys-upgrade.murex
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env murex
 ```
