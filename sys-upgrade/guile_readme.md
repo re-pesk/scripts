@@ -16,9 +16,9 @@ Be automatinio kompiliavimo
 guile --no-auto-compile guile_sys-upgrade.scm
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S guile --no-auto-compile -s 
 !#
 ```

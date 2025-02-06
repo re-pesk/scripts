@@ -16,8 +16,8 @@ murex --version
 murex kodo-failas.murex
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env murex
 ```

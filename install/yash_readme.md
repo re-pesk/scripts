@@ -15,9 +15,9 @@ yash --version
 yash kodo-failas.sh
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env yash
 ```
 

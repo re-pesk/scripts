@@ -10,11 +10,11 @@
 p phix_sys-upgrade.exw
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
 Shebangas veikia tik tada, jeigu failas yra `~/phix` kataloge.
 
-```shebang
+```bash
 #!/usr/bin/env -S p
 ```
 

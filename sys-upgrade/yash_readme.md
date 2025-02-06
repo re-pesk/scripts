@@ -10,9 +10,9 @@
 yash yash_sys-upgrade.sh
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env yash
 ```
 

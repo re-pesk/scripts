@@ -10,8 +10,14 @@
 groovy groovy_sys-upgrade.groovy
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env groovy
+```
+
+arba
+
+```bash
+///usr/bin/env groovy "$0" "$@"; exit $?
 ```

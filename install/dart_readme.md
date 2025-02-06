@@ -35,9 +35,9 @@ bash dart-install.sh
 dart kodo-failas.dart
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env dart
 ```
 

@@ -21,8 +21,8 @@ io --version
 io kodo-failas.io
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env io
 ```
