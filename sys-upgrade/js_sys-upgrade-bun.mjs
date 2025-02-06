@@ -19,6 +19,7 @@ const LANG = process.env.LANG
 const errorMessage = messages[LANG].err
 const successMessage = messages[LANG].succ
 
+// Sisteminė komandos vykdymo funkcija
 const { spawnSync } = Bun;
 // Node kodo variantas
 // import { spawnSync } from 'node:child_process';
