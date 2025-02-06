@@ -1,4 +1,4 @@
-#!/usr/bin/env dart
+///usr/bin/env dart "$0" "$@"; exit $?
 
 import 'dart:io';
 import 'dart:convert';

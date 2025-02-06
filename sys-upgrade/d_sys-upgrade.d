@@ -1,4 +1,4 @@
-#!/usr/bin/env rdmd
+///usr/bin/env rdmd "$0" "$@"; exit $?
 
 module sys_upgrade;
 

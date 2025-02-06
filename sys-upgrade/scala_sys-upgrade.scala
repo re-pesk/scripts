@@ -1,4 +1,4 @@
-#!/usr/bin/env -S scala shebang
+///usr/bin/env -S scala shebang "$0" "$@"; exit $?
 
 //> using scala 3.6.2
 import scala.collection.immutable.HashMap

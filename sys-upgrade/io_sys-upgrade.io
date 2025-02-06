@@ -1,4 +1,4 @@
-#!/usr/bin/env io
+///usr/bin/env io "$0" "$@"; exit $?
 
 // Klaidų ir sėkmės pranešimų medis
 messages := Object clone do(

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S v run
+///usr/bin/env -S v run "$0" "$@"; exit $?
 
 import os
 import strings
