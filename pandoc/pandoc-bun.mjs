@@ -1,4 +1,4 @@
-#! /usr/bin/env -S bun run
+///usr/bin/env -S bun run "$0" "$@"; exit $?
 
 // ./pandoc-bun.mjs --opt=įvesties-formatas/išvesties-formatas failo-pavadinimas-be-plėtinio
 
