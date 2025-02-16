@@ -6,9 +6,10 @@
 
 ```bash
 # Pasirinkti archyvą iš https://github.com/carbon-language/carbon-lang/releases
-url="https://github.com/carbon-language/carbon-lang/releases/download/v0.0.0-0.nightly.2024.12.17/carbon_toolchain-0.0.0-0.nightly.2024.12.17.tar.gz"
-curl -fsSLo - $url | tar --transform 'flags=r;s/^carbon[^\/]+/carbon/x' --show-transformed-names -xzvC "${HOME}/.local"
-unset url
+version="$(date -d yesterday +0.0.0-0.nightly.%Y.%m.%d)"
+url="https://github.com/carbon-language/carbon-lang/releases/download/v${version}/carbon_toolchain-${version}.tar.gz"
+curl -fsSLo - $url | tar --transform 'flags=r;s/^(carbon)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.local"
+unset version url
 echo -e '#!/usr/bin/env bash'"\n\n"'${HOME}/.local/carbon/bin/carbon "$@"' > ${HOME}/.local/bin/carbon
 chmod u+x ${HOME}/.local/bin/carbon
 carbon version
@@ -16,4 +17,4 @@ carbon version
 
 ## Paleistis ir kompiliavimas
 
-Pagal instrukcijas suinstaliavus Carbon'o įrankius, dokumentacijoje nurodyta komanda nekompiliuoja ten pat pateikto pavyzdžio. Kitų kalbų projektai, startavę panašiu metu ar vėliau už Carboną, leidžia rašyti veikaintį kodą. Nepanašu, kad šis projektas gyvybingas.
+Pagal instrukcijas suinstaliavus Carbon'o įrankius, dokumentacijoje nurodyta komanda nekompiliuoja ten pat pateikto pavyzdžio. Kitų kalbų projektai, startavę panašiu metu ar vėliau už Carboną, leidžia rašyti veikiantį kodą. Nepanašu, kad šis projektas gyvybingas.

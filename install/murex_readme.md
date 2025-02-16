@@ -6,7 +6,7 @@
 
 ```bash
 curl "https://nojs.murex.rocks/bin/latest/murex-linux-amd64.gz" | gunzip > $home/.local/bin/murex
-chmod +x $home/.local/bin/murex
+chmod u+x $home/.local/bin/murex
 murex --version
 ```
 

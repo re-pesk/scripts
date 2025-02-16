@@ -46,6 +46,12 @@ kotlinc -script kotlin_sys-upgrade.kts
 #!/usr/bin/env -S kotlinc -script
 ```
 
+arba
+
+```bash
+///usr/bin/env -S kotlinc -script "$0" "$@"; exit $?
+```
+
 ## Kompiliavimas
 
 Kompiliuojant kodas turi būti pagrindinėje „main“ funkcijoje. Failo pavadinimo plėtinys būtinai turi būti „.kt“!

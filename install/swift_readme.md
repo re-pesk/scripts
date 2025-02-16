@@ -46,6 +46,12 @@ swift kodo-failas.swift
 #! /usr/bin/env -S swift
 ```
 
+arba
+
+```bash
+///usr/bin/env -S swift "$0" "$@"; exit $?
+```
+
 ## Kompiliavimas
 
 ```bash

@@ -21,6 +21,11 @@ cargo script rust_sys-upgrade.rs
 ```bash
 #!/usr/bin/env -S run-cargo-script
 ```
+arba
+
+```bash
+///usr/bin/env -S cargo script "$0" "$@"; exit $?
+```
 
 ## Kompiliavimas
 

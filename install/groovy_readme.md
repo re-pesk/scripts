@@ -48,3 +48,9 @@ groovy kodo-failas.groovy
 ```bash
 #!/usr/bin/env groovy
 ```
+
+arba
+
+```bash
+///usr/bin/env groovy "$0" "$@"; exit $?
+```

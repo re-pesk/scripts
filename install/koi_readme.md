@@ -7,7 +7,7 @@
 ```bash
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/eliaperantoni/Koi/releases/latest)"
 curl -sSLo "${HOME}/.local/bin/koi"  "${url//tag/download}/koi"
-chmod +x ${HOME}/.local/bin/koi
+chmod u+x ${HOME}/.local/bin/koi
 koi --version
 ```
 

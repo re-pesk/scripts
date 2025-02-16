@@ -36,3 +36,9 @@ scala run scala_sys-upgrade.scala
 ```bash
 #!/usr/bin/env -S scala shebang
 ```
+
+arba
+
+```bash
+///usr/bin/env -S scala shebang "$0" "$@"; exit $?
+```

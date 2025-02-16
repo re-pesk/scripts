@@ -28,6 +28,12 @@ bun run js_sys-upgrade-bun.mjs
 #!/usr/bin/env -S bun run
 ```
 
+arba
+
+```bash
+///usr/bin/env -S bun run "$0" "$@"; exit $?
+```
+
 ## Deno
 
 ### Diegimas
@@ -49,6 +55,12 @@ deno js_sys-upgrade-deno.mjs
 #!/usr/bin/env -S deno run --allow-run --allow-env
 ```
 
+arba
+
+```bash
+///usr/bin/env -S deno run --allow-run --allow-env "$0" "$@"; exit $?
+```
+
 ## Node
 
 ### Diegimas
@@ -58,6 +70,14 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 nvm install --lts
 node --version
 ```
+
+arba (jeigu tenkina sistemos (Ubuntu 24.04) versija `nodejs v18.19`)
+
+```bash
+sudo apt update
+sudo apt install nodejs
+node --version
+```  
 
 ### Paleistis
 
@@ -69,4 +89,10 @@ node js_sys-upgrade-node.mjs
 
 ```bash
 #!/usr/bin/env -S node
+```
+
+arba
+
+```bash
+///usr/bin/env -S node "$0" "$@"; exit $?
 ```

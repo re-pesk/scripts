@@ -31,9 +31,16 @@ Norint *php_sys-upgrade.php* paversti vykdomuoju failu, reikia suteikti jam vykd
 #!/usr/bin/env php
 ```
 
-arba prieš *<?php* tagą įterpti *bash'o* kodą
+arba
 
 ```bash
 ///usr/bin/env php -r "$(tail -n +1 "$0")" "$@"; exit "$?"
 //<?php
+```
+
+arba
+
+```bash
+///usr/bin/env php "$0" -- "$@"; exit "$?"
+<?php
 ```
