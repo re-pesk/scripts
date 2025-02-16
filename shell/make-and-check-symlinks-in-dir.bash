@@ -18,7 +18,7 @@ function make_symbolic_links() {
     # -f - force to remove existing files
     ln -fs "${filename}" "${filename}" "${destination_dir}"
     exit_code="$?"
-    [[ $exit_code > 0 ]] && "Error! Link is not created!" && return $exit_code 
+    [[ $exit_code > 0 ]] && echo "Error! Link is not created!" && return $exit_code 
   done
 }
 
