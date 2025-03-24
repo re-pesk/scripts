@@ -24,6 +24,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [X] [Groovy (JVM)](groovy_readme.md)
 * [x] [Guile](guile_readme.md)
 * [x] [Haskell](haskell_readme.md)
+* [x] [Hilbish](hilbish_readme.md)
 * [x] [Yash](yash_readme.md)
 * [x] [Io](https://iolanguage.org/index.html)
 * [x] [Ysh (Oil)](oil-ysh_readme.md)
