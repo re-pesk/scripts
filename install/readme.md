@@ -40,6 +40,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Node (JS)](js_readme.md)
 * [x] [Nu](nu_readme.md)
 * [x] [Odin](odin_readme.md)
+* [x] [Onyx](onyx_readme.md)
 * [x] [Osh (Oil)](oil-osh_readme.md)
 * [x] [PHP](php_readme.md)
 * [x] [Phix](phix_readme.md)

@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (50)
+# Skriptinimas skirtingomis programavimo kalbomis (51)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -26,7 +26,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Nu](nu_readme.md) (?): dažniau minima, mei kitos alteratyvios apvalkalo scenarijų kalbos
 * [x] [PowerShell](pwsh_readme.md) (-): keista sintaksė, kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (24)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (25)
 
 ### JavaVM (7)
 
@@ -47,7 +47,7 @@ Daug informacijos internete
 * [x] Deno (+-) truputį skiriasi nuo kitų variantų
 * [x] Node (+)
 
-### Kitos (14)
+### Kitos (15)
 
 * [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :(
 * [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis
@@ -60,6 +60,7 @@ Daug informacijos internete
 * [x] [Lua](lua_readme.md) (+) Paprasta kalba
   * [x] [Hilbish](hilbish_readme.md) (+) Apvalkalas (shell) Lua kalbos pagrindu
   * [x] [Pluto](pluto_readme.md) (+) Lua kalbos supersetas su klasėmis
+* [x] [Onyx](onyx_readme.md) (+) kalba, skirta kompiliuoti į Wasm. Turi JIT kompiliatorių (-) nauja kalba, nėra dokumentacijos
 * [x] [PHP](php_readme.md) (+-) daug informacijos internete, kalba pakankamai universali, kad būtų taikoma ne tik web srityje, tačiau sintaksė vis dar orientuota į web skriptinimą
 * [x] [Python](py_readme.md) (+-) pagrindinis trūkumas - tarpais grįsta sintaksė
 * [x] [Ruby](ruby_readme.md) (+-) keistoka sintaksė
