@@ -44,15 +44,19 @@ p --version
 ## Paleistis
 
 ```bash
-osh oil-osh_sys-upgrade.oil
-ysh oil-ysh_sys-upgrade.oil
+p kodo-failas.exw
 ```
 
 ### Vykdymo instrukcija (shebang)
 
-Pagal skripto dialektą:
+Shebangas veikia tik tada, jeigu failas yra `~/phix` kataloge.
 
 ```bash
-#!/usr/bin/env osh
-#!/usr/bin/env ysh
+#!/usr/bin/env -S p
+```
+
+## Kompiliavimas
+
+```bash
+p -c kodo-failas.exw
 ```

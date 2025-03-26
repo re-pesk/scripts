@@ -20,12 +20,12 @@ bash php_install.sh
 ## Paleistis
 
 ```bash
-php php_sys-upgrade.php
+php kodo-failas.php
 ```
 
 ### Vykdymo instrukcija (shebang)
 
-Norint *php_sys-upgrade.php* paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti vykdymo instrukciją (shebangą):
+Norint *kodo-failas.php* paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti vykdymo instrukciją (shebangą):
 
 ```bash
 #!/usr/bin/env php
