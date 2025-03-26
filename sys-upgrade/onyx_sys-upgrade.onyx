@@ -1,0 +1,63 @@
+///usr/bin/env -S onyx run "$0" "$@"; exit $?
+
+use core {*}
+
+// Pagrindinė funkcija
+main :: () {
+
+  // Klaidų ir sėkmės pranešimų medis
+  use messages := Map.literal(str, Map(str, str), .[
+    .{"en.UTF-8", Map.literal(str, str, .[
+      .{"err", "Error! Script execution was terminated!"},
+      .{"succ", "Successfully finished!"},
+    ])},
+    .{"lt_LT.UTF-8", Map.literal(str, str, .[
+      .{"err", "Klaida! Scenarijaus vykdymas sustabdytas!"},
+      .{"succ", "Komanda sėkmingai įvykdyta!"},
+    ])},
+  ])
+
+  // Aplinkos kalbos nuostata
+  use lang := os.env("LANG")?
+
+  // Pranešimai pagal aplinkos kalbos nuostatą
+  use errorMessage := messages->get_ptr(lang)->get("err")?
+  use successMessage := messages->get_ptr(lang)->get("succ")?
+
+  // Išorinių komandų iškvietimo funkcija
+  runCmd := (cmdArg: str) use(errorMessage, successMessage) {
+
+    // Sukuriama komandos tekstinė eilutė iš funkcijos argumento
+    use command := aprintf("sudo {}", cmdArg);
+
+    // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
+    // command->map(x => '-') - pakeičia bet kokį komandos simbolį '-' simboliu
+    use separator := command->map(x => '-');
+
+    // Išvedama komandos eilutė, apsupta skirtuko eilučių
+    printf("{}\n{}\n{}\n\n", separator, command, separator);
+
+    // Įvykdoma komanda, rezultatas išsaugomas į kintamąjį 
+    result := os.command()
+      ->path("sudo")
+      ->args(cmdArg->split(' '))
+      ->run();
+
+    // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+    if result != os.ProcessResult.Success {
+      printf("\n{}\n\n", errorMessage);
+      os.exit(1);
+    }
+  
+    // Kitu atveju išvedamas sėkmės pranešimas
+    printf("\n{}\n\n", successMessage);
+  }
+
+  println("")
+
+  // Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
+  runCmd("apt-get update");
+  runCmd("apt-get upgrade -y");
+  runCmd("apt-get autoremove -y");
+  runCmd("snap refresh");
+}
