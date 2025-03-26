@@ -22,8 +22,8 @@ ysh --version # => Oils 0.24.0
 ## Paleistis
 
 ```bash
-osh oil-osh_sys-upgrade.oil
-ysh oil-ysh_sys-upgrade.oil
+osh osh-kodo-failas.oil
+ysh ysh-kodo-failas.oil
 ```
 
 ### Vykdymo instrukcija (shebang)

@@ -1,6 +1,6 @@
 [Atgal](./readme.md)
 
-# Odin [&#x2B67;](ttps://odin-lang.org/)
+# Odin [&#x2B67;](https://odin-lang.org/)
 
 ## Diegimas
 
