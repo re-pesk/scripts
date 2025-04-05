@@ -25,19 +25,15 @@ def runCmd [...cmdArgs] {
 
   # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   # Visi komandos eilutės simboliai pakeičiami "-" simboliu
-  let separator = $command 
-    | str replace --all --regex "." "-"
+  let separator = $command | str replace --all --regex "." "-"
 
   # Išvedama komandos eilutė, apsupta skirtuko eilučių
   print $separator $command $separator ""
 
-  # Vykdoma komanda
-  run-external "sudo" ...$cmdArgs
-
-  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
-  if $env.LAST_EXIT_CODE > 0 {
-      print "" $errorMessage ""
-      exit
+  # Vykdoma komanda. Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+  try { run-external "sudo" ...$cmdArgs } catch { 
+    print "" $errorMessage ""
+    exit 1
   }
 
   # Kitu atveju išvedamas sėkmės pranešimas

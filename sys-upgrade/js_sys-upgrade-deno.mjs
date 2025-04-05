@@ -47,7 +47,7 @@ const runCmd = (cmdArg) => {
   // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas 
   if (code !== 0) {
     console.log(`\n${errorMessage}\n`);
-    process.exit(99)
+    Deno.exit(99)
   }
 
   // Kitu atveju išvedamas sėkmės pranešimas
