@@ -15,6 +15,6 @@
 ## Kompiliavimas
 
 ```bash
-g++ -Wno-sizeof-array-argument -std=c++2b -o c++_sys-upgrade.bin c++_sys-upgrade.cpp
+g++ -static -Wno-sizeof-array-argument -std=c++2b -o c++_sys-upgrade.bin c++_sys-upgrade.cpp
 ./c++_sys-upgrade.bin
 ```

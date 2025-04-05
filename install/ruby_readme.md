@@ -2,6 +2,8 @@
 
 # Ruby [&#x2B67;](https://www.ruby-lang.org/)
 
+* Paskiausias leidimas: 3.4.2
+
 ## Diegimas (Ubuntu 24.04)
 
 ```bash

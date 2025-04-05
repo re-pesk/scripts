@@ -2,6 +2,9 @@
 
 # Python [&#x2B67;](https://www.python.org/)
 
+* Paskiausias leidimas: 3.13.2
+* Išleista: 2025-02-04
+
 ## Diegimas
 
 Instaliuojamas su Ubuntu.

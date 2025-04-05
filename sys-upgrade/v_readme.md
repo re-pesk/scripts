@@ -25,7 +25,6 @@ arba
 ## Kompiliavimas
 
 ```bash
-v v_sys-upgrade.v
-mv v_sys-upgrade v_sys-upgrade.bin
+v -o v_sys-upgrade.bin v_sys-upgrade.v
 ./v_sys-upgrade.bin
 ```

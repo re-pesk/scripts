@@ -2,6 +2,9 @@
 
 # Abs [&#x2B67;](https://www.abs-lang.org/)
 
+* Vėliausias leidimas: 2.6.0
+* Išleista: 2022-04-15 (nebevystoma)
+
 ## Diegimas
 
 ```bash

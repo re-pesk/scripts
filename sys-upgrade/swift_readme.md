@@ -25,6 +25,6 @@ arba
 ## Kompiliavimas
 
 ```bash
-swiftc -o swift_sys-upgrade.bin swift_sys-upgrade.swift
+swiftc -static-executable swift_sys-upgrade.bin swift_sys-upgrade.swift
 ./swift_sys-upgrade.bin
 ```

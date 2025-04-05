@@ -2,6 +2,8 @@
 
 # Dash [&#x2B67;](https://manned.org/dash.1)
 
+* Paskiausias leidimas: 0.5.12
+
 ## Diegimas
 
 Instaliuojamas su operacine.

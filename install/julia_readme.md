@@ -2,6 +2,8 @@
 
 # Julia [&#x2B67;](https://julialang.org/)
 
+* Paskiausias leidimas: 1.11.4
+
 ## Diegimas
 
 ```bash

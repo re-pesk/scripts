@@ -1,6 +1,6 @@
 [Atgal](./readme.md)
 
-# PureScript [&#x2B67;](hhttps://www.purescript.org/)
+# PureScript [&#x2B67;](https://www.purescript.org/)
 
 ## Diegimas
 

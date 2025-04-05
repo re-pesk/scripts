@@ -2,13 +2,15 @@
 
 # Dart [&#x2B67;](https://dart.dev/)
 
+* Paskiausias leidimas: 3.7.2
+
 ## Diegimas
 
 ```bash
 sudo apt-get update
 
 # Jeigu nėra instaliuotas, instaliuojamas paketas 'apt-transport-https'
-sudo apt-get install apt-transport-https
+(( $(apt list --installed 2>/dev/null | grep -P '^apt-transport-https' | wc -l ) > 0 )) || sudo apt install apt-transport-https
 
 # Diegiamas raktas ir Darto šaltinis
 wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub |\

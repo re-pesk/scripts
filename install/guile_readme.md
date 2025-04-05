@@ -2,6 +2,9 @@
 
 # GNU Guile [&#x2B67;](https://www.gnu.org/software/guile/)
 
+* Paskiausias leidimas: 3.0.10
+* Išleista: 2024-06-24
+
 ## Diegimas
 
 ```bash

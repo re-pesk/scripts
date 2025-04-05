@@ -2,6 +2,9 @@
 
 # Crystal [&#x2B67;](https://crystal-lang.org/)
 
+* Paskiausias leidimas: 1.15.1
+* Išleista: 2025-02-04
+
 ## Diegimas
 
 ```bash

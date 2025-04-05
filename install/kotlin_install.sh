@@ -5,11 +5,12 @@ sudo snap install --classic kotlin
 kotlin -version
 
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/JetBrains/kotlin/releases/latest)"
-curl -sSLo- "${url//tag/download}/kotlin-native-prebuilt-linux-x86_64-$(basename -- $url).tar.gz" \
+version="$(basename -- $url)"
+curl -sSLo- "${url//tag/download}/kotlin-native-prebuilt-linux-x86_64-${version}.tar.gz" \
   | tar --transform 'flags=r;s/^kotlin-native[^\/]+/kotlin-native/x' --show-transformed-names -xzvC "${HOME}/.local"
 
 appendToBashrc(app_name) {
-  set_path='[[ ":${PATH}:" == *":${HOME}/.local/'$app_name'/bin:"* ]] \
+  set_path='[[ ":${PATH}:" == *":${HOME}/.local/kotlin-native/bin:"* ]] \
     || export PATH="${HOME}/.local/'$app_name'/bin${PATH:+:${PATH}}"'
     
   config_strings="#begin ${app_name} init

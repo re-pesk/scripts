@@ -15,6 +15,6 @@
 ## Kompiliavimas
 
 ```bash
-gcc -o c_sys-upgrade.bin c_sys-upgrade.c
+gcc -static -o c_sys-upgrade.bin c_sys-upgrade.c
 ./c_sys-upgrade.bin
 ```

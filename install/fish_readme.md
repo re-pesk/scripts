@@ -2,6 +2,8 @@
 
 # Fish shell [&#x2B67;](https://fishshell.com/)
 
+* Paskiausias leidimas: 3.7.1-2, Ubuntu 24.05 paketas.
+
 ## Diegimas
 
 ```bash

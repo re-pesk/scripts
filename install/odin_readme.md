@@ -2,15 +2,19 @@
 
 # Odin [&#x2B67;](https://odin-lang.org/)
 
+* Paskiausias leidimas: dev-2025-03
+* Išleista: 2025-03-05
+
 ## Diegimas
 
 ```bash
-sudo apt install clang
+(( $(apt list --installed 2>/dev/null | grep -P '^clang' | wc -l ) > 0 )) || sudo apt install clang
 url=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/odin-lang/Odin/releases/latest)
-url="${url//tag/download}/odin-linux-amd64-$(basename -- $url).tar.gz"
-curl -sSLo- $url | tar --transform 'flags=r;s/^odin[^\/]+/odin/x' --show-transformed-names -xzvC "${HOME}/.local"
+version="$(basename -- $url)"
+curl -sSLo- "${url//tag/download}/odin-linux-amd64-${version}.tar.gz" |\
+  tar --transform 'flags=r;s/^odin[^\/]+/odin/x' --show-transformed-names -xzvC "${HOME}/.local"
+unset url version
 ln -s ${HOME}/.local/odin/odin ${HOME}/.local/bin/odin
-unset url
 odin version
 ```
 

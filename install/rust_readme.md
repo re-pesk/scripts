@@ -2,6 +2,9 @@
 
 # Rust [&#x2B67;](https://www.rust-lang.org/)
 
+* Paskiausias leidimas: 1.86.0
+* Išleista: 2025-03-31
+
 ## Diegimas
 
 ```bash
@@ -21,6 +24,7 @@ cargo script rust_sys-upgrade.rs
 ```bash
 #!/usr/bin/env -S run-cargo-script
 ```
+
 arba
 
 ```bash
