@@ -6,16 +6,28 @@ array1="5::true
 
 array2="20::true
 25::true
-30::true"
+30::false"
+
+echo
+
+echo 'Show definition of "arrays":'
+echo "array1=\"${array1}\""
+echo "array2=\"${array2}\""
+
+echo "Size of array1 is $(echo "${array1}" | wc -l)"
+echo "Size of array2 is $(echo "${array2}" | wc -l)"
+echo
 
 # convert both "associative arrays" to new "associative array"
-array_both="${array1}\n${array2}"
+merged_array="${array1}\n${array2}"
 
-# show array
-echo -n "$array_both\n"
+echo 'Show definition of merged "array":'
+echo "merged_array=\"$merged_array\"\n"
+echo "Size of merged_array is $(echo "${merged_array}" | wc -l)"
+echo
 
-# iterate on array
-echo "$array_both" | while read item; do
-  echo "array_both[${item%::*}]=${item#*::}"
+echo 'Iterate on merged "array":'
+echo "$merged_array" | while read -r item; do
+  echo "merged_array[\"${item%::*}\"] = \"${item#*::}\""
 done
-
+echo
