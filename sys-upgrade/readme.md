@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (52)
+# Skriptinimas skirtingomis programavimo kalbomis (53)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -26,7 +26,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Nu](nu_readme.md) (?): dažniau minima, mei kitos alteratyvios apvalkalo scenarijų kalbos
 * [x] [PowerShell](pwsh_readme.md) (-): keista sintaksė, kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (26)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (27)
 
 ### JavaVM (7)
 
@@ -47,24 +47,25 @@ Daug informacijos internete
 * [x] Deno (+-) truputį skiriasi nuo kitų variantų
 * [x] Node (+)
 
-### Kitos (16)
+### Kitos (17)
 
-* [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :(
-* [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis
-* [x] [Euphoria](euph_readme.md) (-) sudėtingas instaliavimas, seniai nebuvo leidimų
+* [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :( (-)
+* [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis (-)
+* [x] [Euphoria](euph_readme.md) (-) sudėtingas instaliavimas (-), seniai nebuvo leidimų (-)
   * [x] [Phix](phix_readme.md) (-) Stipriai modifikuota Euforijos versija, nepavyko paleisti pavyzdžių
-* [x] [Guile](guile_readme.md) (-) Lispo sintaksė. Sudėtinga susigaudyti dokumentacijoje, mažai informacijos intenete
-* [x] [Io](https://iolanguage.org/index.html) (+-) Maža, paprasta kalba su Smaltalk'o sintakse, bet, deja, nevystoma
+* [x] [Guile](guile_readme.md) (-) Lispo sintaksė. Sudėtinga susigaudyti dokumentacijoje (-), mažai informacijos intenete (-)
+* [x] [Haxe](haxe_readme.md) (-) Nepatogi sąsaja tarp pagrindinės klasės ir kodo failo pavadinimo (-). Reikalauja pagrindinės klasės (-).
+* [x] [Io](https://iolanguage.org/index.html) (+-) Maža, paprasta kalba (+) su Smaltalk'o sintakse, bet, deja, nevystoma (-)
 * [x] [Janet](janet_readme.md) (?) Lispo sintaksė, pozicionuojama kaip skriptinė kalba
 * [x] [Julia](julia_readme.md) (+-) Pythono pakaitalas moksliniams skaičiavimams
-* [x] [Lua](lua_readme.md) (+) Paprasta kalba
+* [x] [Lua](lua_readme.md) (+) Paprasta kalba (+)
   * [x] [Hilbish](hilbish_readme.md) (+) Apvalkalas (shell) Lua kalbos pagrindu
   * [x] [Pluto](pluto_readme.md) (+) Lua kalbos supersetas su klasėmis
-* [x] [Onyx](onyx_readme.md) (+) kalba, skirta kompiliuoti į Wasm. Turi JIT kompiliatorių, nauja kalba (-), nėra dokumentacijos
-* [x] [Perl](perl_readme.md) (-) bendros paskirties Unix'o sscenarijų kalba. Savotiška sintaksė (-), daug informacijos ir pavyzdžių (+)
-* [x] [PHP](php_readme.md) (+-) daug informacijos internete, kalba pakankamai universali, kad būtų taikoma ne tik web srityje, tačiau sintaksė vis dar orientuota į web skriptinimą
-* [x] [Python](py_readme.md) (+-) pagrindinis trūkumas - tarpais grįsta sintaksė
-* [x] [Ruby](ruby_readme.md) (+-) keistoka sintaksė
+* [x] [Onyx](onyx_readme.md) (+) kalba, skirta kompiliuoti į Wasm. Turi JIT kompiliatorių, nauja kalba (-), nėra dokumentacijos (-)
+* [x] [Perl](perl_readme.md) (-) bendros paskirties Unix'o scenarijų kalba. Savotiška sintaksė (-), daug informacijos ir pavyzdžių (+)
+* [x] [PHP](php_readme.md) (+-) daug informacijos internete, kalba pakankamai universali, kad būtų taikoma ne tik web srityje (+), tačiau sintaksė vis dar orientuota į web skriptinimą (-)
+* [x] [Python](py_readme.md) (+-) pagrindinis trūkumas - teksto įtraukomis grįsta sintaksė
+* [x] [Ruby](ruby_readme.md) (-) keistoka sintaksė
 
 ## Kompiliuojamos kalbos (12)
 
@@ -72,8 +73,8 @@ Daug informacijos internete
 * [x] [C++](c++_readme.md) (+): kodą rašyti žymiai paprasčiau už C, turi reikalingas duomenų struktūras
 * [x] [C3](c3_readme.md) (+-): C kalbos pakaitalas
 * [ ] [Carbon](carbon_readme.md) (-): nepavyko sukompiliuoti dokumentacijos pavyzdžio
-* [x] [Crystal](crystal_readme.md) (+): kompiliuojama kalba su Ruby sintakse, daugiau prasmės mokytis nei Ruby
-* [x] [D](d_readme.md) (+): išvystyta kalba, bet mažai naudinga be šiukšlių surinktuvo (Garbage Collector)
+* [x] [Crystal](crystal_readme.md) (+): kalba su Ruby sintakse, tačiau kompiliuojama, tad daugiau prasmės mokytis nei Ruby
+* [x] [D](d_readme.md) (+): išvystyta kalba, bet sunkiai panaudojama be šiukšlių surinktuvo (Garbage Collector)
 * [x] [Go](go_readme.md) (+-)
 * [x] [Haskell](haskell_readme.md) (-): sintakse ir logika labai skiriasi nuo kitų kalbų
 * [x] [Odin](odin_readme.md) (+): dar vienas C kalbos pakaitalas, verta pasimokyti
