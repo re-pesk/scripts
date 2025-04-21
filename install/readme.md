@@ -54,6 +54,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Rust](rust_readme.md)
 * [x] [Scala (JVM)](scala_readme.md)
 * [x] [Swift](swift_readme.md)
+* [x] [Tcl](tcl_readme.md)
 * [x] [V](v_readme.md)
 * [x] [Zig](zig_readme.md)
 * [x] [Zsh](zsh_readme.md)
