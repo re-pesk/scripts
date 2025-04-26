@@ -30,7 +30,7 @@ runCmd() {
   # Išsaugomas įvykdytos komandos išėjimo kodas
   exitCode="$?"
 
-  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiams programos vykdymas 
+  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas 
   if (( exitCode > 0 )); then
     printf "\n%s\n\n" "${errorMessage}"
     exit "${exitCode}"
