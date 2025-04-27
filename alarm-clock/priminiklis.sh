@@ -6,8 +6,9 @@ declare -A messages=(
   [en.UTF-8.errorDurationNotExists]="Duration is absent!"
   [en.UTF-8.errorDurationFormat]="Wrong duration format!"
   [en.UTF-8.errorMessageIsAbsent]="No message specified!"
+  [en.UTF-8.startInfo]="Remind after"
   [en.UTF-8.finalInfoTitle]="Reminder"
-  [en.UTF-8.finalInfo]="The specified duration has already expired!"
+  [en.UTF-8.finalInfo]="has already expired!"
   [en.UTF-8.h]="hrs"
   [en.UTF-8.m]="min"
   [en.UTF-8.s]="sec"
@@ -16,6 +17,7 @@ declare -A messages=(
   [lt_LT.UTF-8.errorDurationNotExists]="Nenurodyta trukmė!"
   [lt_LT.UTF-8.errorDurationFormat]="Klaidingas trukmės formatas!"
   [lt_LT.UTF-8.errorMessageIsAbsent]="Nenurodytas pranešimas!"
+  [lt_LT.UTF-8.startInfo]="Priminti po"
   [lt_LT.UTF-8.finalInfoTitle]="Priminimas"
   [lt_LT.UTF-8.finalInfo]="jau praėjo!"
   [lt_LT.UTF-8.h]="val"
@@ -33,7 +35,13 @@ one or more digits, which may be followed by the following without a space
   \"m\" or \"${messages[en.UTF-8.m]}\",
   \"s\" or \"${messages[en.UTF-8.s]}\", 
 
-Message text is in free form."
+Message text is in free form, it is not to be surrounded by quotes.
+
+Usage:
+
+>  priminiklis.sh 1m \"Pranešimo tekstas\"
+
+>  priminiklis.sh 1m Pranešimo tekstas"
 
 messages["lt_LT.UTF-8.info"]="Paleidžiant priminimą, turi būti nurodyti trukmė ir pranešimo tekstas. \
 Tarp trukmės ir pranešimo teksto turi būti tarpas.
@@ -45,7 +53,13 @@ vienas ar keli skaitmenys, po kurių be tarpo gali būti prirašyta
   \"m\" arba \"${messages[lt_LT.UTF-8.m]}\",
   \"s\" arba \"${messages[lt_LT.UTF-8.s]}\", 
 
-Pranešimo tekstas laisvas."
+Pranešimo tekstas laisvas, jis neturi būti įrėmintas kabutėmis.
+
+Naudojimas:
+
+>  priminiklis.sh 1m \"Pranešimo tekstas\"
+
+>  priminiklis.sh 1m Pranešimo tekstas"
 
 if [[ "$@" == "" ]]; then
   text="${messages[$LANG.info]}"
@@ -76,7 +90,6 @@ trukme="$1"
 [[ "$trukme" =~ ^[0-9]+${messages[$LANG.h]}$ ]] && trukme="${1//val/h}"
 
 if [[ ! ( "$trukme" =~ ^[0-9]+(h|m|s)$ ) ]]; then
-# if [[  "$trukme" != +([0-9])@("h"|"m"|"s"|) ]]; then
   echo "${messages[$LANG.errorDurationFormat]}"
   zenity \
     --error \
@@ -87,7 +100,9 @@ if [[ ! ( "$trukme" =~ ^[0-9]+(h|m|s)$ ) ]]; then
   exit
 fi
 
-if [ "$2" == "" ]; then
+text="${@:2}"
+
+if [ "$text" == "" ]; then
   echo "${messages[$LANG.errorMessageIsAbsent]}"
   zenity \
     --error \
@@ -99,8 +114,8 @@ if [ "$2" == "" ]; then
 fi
 
 if [[ $(ps -o stat= -p $$) == *+* ]]; then
-  echo "Priminti po $trukme: $2"
-  ($0 "$trukme" "$2" &)
+  echo "${messages[$LANG.startInfo]} $trukme: $text"
+  ($0 "$trukme" "$text" &)
   exit
 fi
 
@@ -137,4 +152,4 @@ zenity \
   --width=400 \
   --height=300 \
   --title "${messages[$LANG.finalInfoTitle]}" \
-  --text "$trukme ${messages[$LANG.finalInfo]} $2"
+  --text "${trukme} ${messages[$LANG.finalInfo]} $text"
