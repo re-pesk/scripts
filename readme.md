@@ -12,4 +12,4 @@ Programavimo žaidimai
 
 * Ubuntu [atnaujinimo skriptas](./sys-upgrade/readme.md)
 
-* Įvairūs pagalbiniai [skriptai ir pavyzdžiai](./utilities/readme.md)
+* Įvairūs pagalbiniai [skriptai ir pavyzdžiai](./shell/readme.md)
