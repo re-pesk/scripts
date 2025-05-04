@@ -1,0 +1,11 @@
+[Nemo Action]
+Name=Make decription in markdown
+Comment=Create desciption of selected file in Markdown markup 
+Exec=<action_scripts/create-file-description.bash "%F">
+Icon-Name=edit-copy
+Selection=s;
+Extensions=nodirs;
+Dependencies=bash;
+
+Name[lt]=Sukurti aprašymą MD kalba
+Comment[lt]=Sukurti pasirinkto failo aprašymą MD žymėjimo kalba
