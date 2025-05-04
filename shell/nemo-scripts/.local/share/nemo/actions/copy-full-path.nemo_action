@@ -1,0 +1,12 @@
+[Nemo Action]
+Name=Copy full filepath
+Comment=Full Path: %F 
+Exec=sh -c "readlink -f %F | xclip -selection clipboard"
+Icon-Name=edit-copy
+Selection=notnone
+Extensions=nodirs
+Separator=,
+Dependencies=readlink;xclip;
+
+Name[lt]=Kopijuoti visą failo kelią
+Comment[lt]=Visas kelias: %F
