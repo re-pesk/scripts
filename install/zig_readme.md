@@ -14,11 +14,11 @@ url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/ziglang/zig/
 version="$(basename -- $url)"
 [ -d ${HOME}/.local/zig ] && rm -r ${HOME}/.local/zig
 curl -sSLo- https://ziglang.org/download/${version}/zig-linux-x86_64-${version}.tar.xz \
-| tar --transform 'flags=r;s/^zig[^\/]+/zig/x' --show-transformed-names -xJC "${HOME}/.local"
+| tar --transform 'flags=r;s/^zig[^\/]+/zig/x' --show-transformed-names -xJC "${HOME}/.opt"
 unset url version
 
 # Jeigu reikia, pašalinami zig įrašai .bashrc konfigūraciniame faile
-#sed -i '/#begin zig init/,/#end zig init/c\' "${HOME}/.bashrc"
+sed -i '/#begin zig init/,/#end zig init/c\' "${HOME}/.bashrc"
 
 # Jeigu reikia, pridedama tučia eilutė
 [[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
@@ -26,13 +26,13 @@ unset url version
 # Jeigu nėra, pridedami zig įrašai .bashrc konfigūraciniame faile
 (( $(cat $HOME/.bashrc | grep '^#begin zig init' | wc -l) > 0 )) || echo '#begin zig init
 
-[[ ":${PATH}:" == *":${HOME}/.local/zig:"* ]] \
-|| export PATH="${HOME}/.local/zig${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/zig:"* ]] \
+|| export PATH="${HOME}/.opt/zig${PATH:+:${PATH}}"
 
 #end zig init' >> "${HOME}/.bashrc"
 
-[[ ":${PATH}:" == *":${HOME}/.local/zig:"* ]] \
-|| export PATH="${HOME}/.local/zig${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/zig:"* ]] \
+|| export PATH="${HOME}/.opt/zig${PATH:+:${PATH}}"
 
 zig version
 ```

@@ -13,18 +13,20 @@
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)"
 version="$(basename -- $url)"
 curl -sSLo- "${url//tag/download}/scala3-${version}-x86_64-pc-linux.tar.gz" \
-| tar --transform 'flags=r;s/^scala3[^\/]+/scala3/x' --show-transformed-names -xzvC "${HOME}/.local"
+| tar --transform 'flags=r;s/^(scala3)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
 
+sed -i '/#begin scala init/,/#end scala init/c\' "${HOME}/.bashrc"
 [[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
 
 echo '#begin scala init
 
-[[ ":${PATH}:" == *":${HOME}/.local/scala3/bin:"* ]] \
-  || export PATH="${HOME}/.local/scala3/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] \
+|| export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
 
 #end scala init' >> "${HOME}/.bashrc"
 
-eval export PATH="${HOME}/.local/scala3/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] \
+|| export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
 
 scala -version
 ```

@@ -8,7 +8,7 @@
 ## Diegimas
 
 ```bash
-version="0.28.0"
+version="0.29.0"
 curl -sSLo- "https://oils.pub/download/oils-for-unix-${version}.tar.gz" | tar -xzv
 curdir="$PWD"
 
@@ -20,8 +20,8 @@ cd "${curdir}"
 
 unset curdir version
 
-osh --version # => Oils 0.24.0
-ysh --version # => Oils 0.24.0
+osh --version # => Oils 0.29.0
+ysh --version # => Oils 0.29.0
 ```
 
 ## Paleistis

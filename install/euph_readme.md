@@ -23,20 +23,21 @@ json="$(curl -sL https://api.github.com/repos/OpenEuphoria/euphoria/releases/lat
 url="$(echo "$json" | jq -r '.assets[] | select(.name | contains("Linux-x64")) | .browser_download_url' )"
 version="$(echo "$json" | jq -r '.tag_name' )"
 
-rm --recursive --force "${HOME}/.local/euphoria"
+rm --recursive --force "${HOME}/.opt/euphoria"
 
 curl -sSLo - "$url" \
-| tar --transform "flags=r;s/^(euphoria)-$version[^\/]+x64/\1/x" --show-transformed-names -xzC "${HOME}/.local"
+| tar --transform "flags=r;s/^(euphoria)-$version[^\/]+x64/\1/x" --show-transformed-names -xzC "${HOME}/.opt"
 
-touch "${HOME}/.local/euphoria/v${version}.txt"
+touch "${HOME}/.opt/euphoria/v${version}.txt"
+unset json url version
 
-cd "${HOME}/.local/euphoria/source"
+cd "${HOME}/.opt/euphoria/source"
 ./configure
 
 find build -maxdepth 1 -type f -exec mv -t ../bin/ {} \+
 rm --recursive --force build
 
-sed -i 's/source\/build/bin/g' "${HOME}/.local/euphoria/bin/eu.cfg"
+sed -i 's/source\/build/bin/g' "${HOME}/.opt/euphoria/bin/eu.cfg"
 
 for file in *.ex ;do
   [ -f "${file%.*}" ] && continue
@@ -49,13 +50,13 @@ done
 
 echo '#begin euphoria init
 
-[[ ":${PATH}:" == *":${HOME}/.local/euphoria/bin:"* ]] \
-  || export PATH="${HOME}/.local/euphoria/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] \
+  || export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
 
 #end euphoria init' >> "${HOME}/.bashrc"
 
-[[ ":${PATH}:" == *":${HOME}/.local/euphoria/bin:"* ]] \
-  || export PATH="${HOME}/.local/euphoria/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] \
+  || export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
 
 eui --version
 euc --version
@@ -88,20 +89,21 @@ done
 
 cd "/tmp"
 
-[ -d "${HOME}/.local/euphoria" ] && mv -T "${HOME}/.local/euphoria" "${HOME}/.local/euphoria-4.1"
-mv "/tmp/euphoria" $HOME/.local/
+[ -d "${HOME}/.opt/euphoria" ] && mv -T "${HOME}/.opt/euphoria" "${HOME}/.opt/euphoria-4.1"
+mv "/tmp/euphoria" $HOME/.opt/
 
 eui --version
 euc --version
 
-cd "${HOME}/.local/euphoria/source"
+cd "${HOME}/.opt/euphoria/source"
 ./configure
-find build -maxdepth 1 -type f -exec mv -t "${HOME}/.local/euphoria/bin/" {} \+
+find build -maxdepth 1 -type f -exec mv -t "${HOME}/.opt/euphoria/bin/" {} \+
 rm --recursive --force build
-cd "${HOME}/.local/euphoria/bin"
+initial_dir="$PWD"
+cd "${HOME}/.opt/euphoria/bin"
 sed -i 's/source\/build/bin/g' eu.cfg
 
-rm --recursive --force "${HOME}/.local/euphoria-4.1"
+rm --recursive --force "${HOME}/.opt/euphoria-4.1"
 
 cd $initial_dir
 ```
@@ -121,9 +123,10 @@ for addon in addons ;do
   ./configure
   make
   cd "/tmp"
-  mv "/tmp/${addon}/build/${addon}" "${HOME}/.local/euphoria/bin"
+  mv "/tmp/${addon}/build/${addon}" "${HOME}/.opt/euphoria/bin"
   rm --recursive --force "/tmp/${addon}"
 done
+unset addons
 ```
 
 ## Paleistis

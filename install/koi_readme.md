@@ -9,8 +9,8 @@
 
 ```bash
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/eliaperantoni/Koi/releases/latest)"
-curl -sSLo "${HOME}/.local/bin/koi" "${url//tag/download}/koi"
-chmod u+x ${HOME}/.local/bin/koi
+mkdir -p "${HOME}/.opt/koi/bin"; curl -sSLo "${HOME}/.opt/koi/bin/koi" "${url//tag/download}/koi"
+chmod +x ${HOME}/.opt/koi/bin/koi; ln -sf ${HOME}/.opt/koi/bin/koi ${HOME}/.local/bin/koi
 unset url
 koi --version
 ```

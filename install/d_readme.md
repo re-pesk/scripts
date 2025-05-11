@@ -7,11 +7,7 @@
 
 ## Diegimas
 
-```bash
-curl -fsS https://dlang.org/install.sh | bash -s dmd
-```
-
-arba atsisiųsti vėliausią `.deb` failą iš D kalbos leidimų [puslapio](https://downloads.dlang.org/releases/) ir
+Atsisiųsti vėliausią `.deb` failą iš D kalbos leidimų [puslapio](https://downloads.dlang.org/releases/) ir paleisi
 
 ```bash
 sudo apt install atsisiųstas_failas.deb

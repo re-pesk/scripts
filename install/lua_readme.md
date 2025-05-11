@@ -13,26 +13,26 @@ Dabartinės versijos ieškokite [Lua puslapuyje](https://www.lua.org/download.ht
 url="$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/lua/lua/releases/latest")"
 version="$(basename -- $url)"
 curl -LRo - "https://www.lua.org/ftp/lua-${version#v}.tar.gz" | tar -xzC "/tmp"
-[ -d "${HOME}/.lua" ] && rm --recursive "${HOME}/.lua"
+[ -d "${HOME}/.opt/lua" ] && rm --recursive "${HOME}/.opt/lua"
 curdir="$PWD"
 cd "/tmp/lua-${version#v}"
 make all test
-make install INSTALL_TOP="${HOME}/.lua"
+make install INSTALL_TOP="${HOME}/.opt/lua"
 cd $curdir
 rm -r "/tmp/lua-${version#v}"
-unset url version
+unset curdir url version
 
 sed -i "/#begin lua init/,/#end lua init/c\\" "${HOME}/.bashrc"
 [[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
 
 echo '#begin lua init
 
-[[ ":${PATH}:" == *":${HOME}/.lua/bin:"* ]] \
-  || export PATH="${HOME}/.lua/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/lua/bin:"* ]] \
+  || export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
   
 #end lua init' >> "${HOME}/.bashrc"
 
-[[ ":${PATH}:" == *":${HOME}/.lua/bin:"* ]] || export PATH="${HOME}/.lua/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/lua/bin:"* ]] || export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
 lua -v
 ```
 

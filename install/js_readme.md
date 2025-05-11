@@ -74,7 +74,7 @@ nvm install --lts
 node --version
 ```
 
-arba (jeigu tenkina sistemos (Ubuntu 24.04) versija `nodejs v18.19`)
+arba (jeigu patenkina sistemos (Ubuntu 24.04) versija `nodejs v18.19`)
 
 ```bash
 sudo apt update

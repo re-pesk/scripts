@@ -11,7 +11,7 @@
 # Versiją galima rasti http://phix.x10.mx/index.php
 version="1.0.5"
 
-[ -d "${HOME}/.local/phix" ] && rm --recursive "${HOME}/.local/phix"
+[ -d "${HOME}/.opt/phix" ] && rm --recursive "${HOME}/.opt/phix"
 
 cd /tmp
 rm phix*.zip; rm -r phix
@@ -26,7 +26,7 @@ cd phix
 chmod +x p
 ./p -test
 cd ..
-mv phix ${HOME}/.local/phix
+mv phix ${HOME}/.opt/phix
 rm phix*.zip
 
 sed -i "/#begin phix init/,/#end phix init/c\\" "${HOME}/.bashrc"
@@ -35,13 +35,13 @@ sed -i "/#begin phix init/,/#end phix init/c\\" "${HOME}/.bashrc"
 
 echo '#begin phix init
 
-[[ ":${PATH}:" == *":${HOME}/.local/phix:"* ]] \
-  || export PATH="${HOME}/.local/phix${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/phix:"* ]] \
+  || export PATH="${HOME}/.opt/phix${PATH:+:${PATH}}"
 
 #end phix init' >> "${HOME}/.bashrc"
 
-[[ ":${PATH}:" == *":${HOME}/.local/phix:"* ]] \
-  || export PATH="${HOME}/.local/phix${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/phix:"* ]] \
+  || export PATH="${HOME}/.opt/phix${PATH:+:${PATH}}"
 
 p --version
 ```

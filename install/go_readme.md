@@ -8,9 +8,10 @@
 ## Diegimas
 
 ```bash
-versija="1.24.1"
-[ -d ${HOME}/.local/go ] && rm -r ${HOME}/.local/go
-curl -fsSo - https://dl.google.com/go/go${versija}.linux-amd64.tar.gz | tar -xz -C ${HOME}/.local
+versija="1.24.3"
+[ -d ${HOME}/.opt/go ] && rm -r ${HOME}/.opt/go
+curl -fsSLo - https://go.dev/dl/go${versija}.linux-amd64.tar.gz \
+| tar  --transform 'flags=r;s/^(go)/\1/x' --show-transformed-names -xzv -C ${HOME}/.opt
 unset versija
 
 sed -i '/#begin go init/,/#end go init/c\' "${HOME}/.bashrc"
@@ -18,16 +19,16 @@ sed -i '/#begin go init/,/#end go init/c\' "${HOME}/.bashrc"
 
 echo '#begin go init
 
-[[ ":${PATH}:" == *":${HOME}/.local/go/bin:"* ]] \
-  || export PATH="${HOME}/.local/go/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/go/bin:"* ]] \
+  || export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
 
 [[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] \
   || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"
 
 #end go init' >> "${HOME}/.bashrc"
 
-[[ ":${PATH}:" == *":${HOME}/.local/go/bin:"* ]] \
-  || export PATH="${HOME}/.local/go/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/go/bin:"* ]] \
+  || export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
 [[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] \
   || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"
 

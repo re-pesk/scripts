@@ -20,20 +20,21 @@ HashLink virtualios mašinos diegimas (baitkodo vykdymui):
 
 latest=$(curl -s https://github.com/HaxeFoundation/hashlink/releases/tag/latest | xq -q code:first-of-type)
 curl -fsSLo - https://github.com/HaxeFoundation/hashlink/releases/download/latest/hashlink-${latest}-linux-amd64.tar.gz \
-| tar --transform 'flags=r;s/^(hashlink)[^\/]+/\1/x' --show-transformed-names -xzvC ${HOME}/.local
+| tar --transform 'flags=r;s/^(hashlink)[^\/]+/.\1/x' --show-transformed-names -xzvC ${HOME}/.opt
 unset latest
 
-sed -i "/#begin hashlink init/,/#end hashlink init/c\\" "${HOME}/.profile"
-[[ "$( tail -n 1 "${HOME}/.profile" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.profile"
+sed -i "/#begin hashlink init/,/#end hashlink init/c\\" "${HOME}/.bashrc"
+[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
 
+install_dir=".opt/hashlink"
 echo '#begin hashlink init
 
-[[ ":${PATH}:" == *":${HOME}/.local/hashlink:"* ]] \
-  || export PATH="${HOME}/.local/hashlink${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/'${install_dir}':"* ]] \
+  || export PATH="${HOME}/'${install_dir}'${PATH:+:${PATH}}"
   
-#end hashlink init' >> "${HOME}/.profile"
+#end hashlink init' >> "${HOME}/.bashrc"
 
-[[ ":${PATH}:" == *":${HOME}/.local/hashlink:"* ]] || export PATH="${HOME}/.local/hashlink${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/${install_dir}:"* ]] || export PATH="${HOME}/${install_dir}${PATH:+:${PATH}}"
 
 hl --version ; echo
 ```

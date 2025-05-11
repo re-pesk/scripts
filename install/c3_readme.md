@@ -8,10 +8,12 @@
 ## Diegimas
 
 ```bash
-[[ -d ${HOME}/.local/c3 ]] && rm -r ${HOME}/.local/c3
+[[ -d ${HOME}/.opt/c3 ]] && rm -r ${HOME}/.opt/c3
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/c3lang/c3c/releases/latest)"
-curl -fsSLo - "${url//tag/download}/c3-ubuntu-20.tar.gz" | tar -xzvC ${HOME}/.local
-ln -fs ${HOME}/.local/c3/c3c ${HOME}/.local/bin/c3c
+curl -fsSLo - "${url//tag/download}/c3-ubuntu-20.tar.gz" \
+| tar  --transform 'flags=r;s/^(c3)/\1/x' --show-transformed-names -xzvC ${HOME}/.opt
+unset url
+ln -fs ${HOME}/.opt/c3/c3c ${HOME}/.local/bin/c3c
 c3c --version
 ```
 

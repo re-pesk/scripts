@@ -8,11 +8,16 @@
 ## Diegimas
 
 ```bash
-wget -qO- https://calamity-inc.github.io/deb-repo/key.gpg | sudo tee /usr/share/keyrings/calamity-inc.gpg > /dev/null
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/calamity-inc.gpg] https://calamity-inc.github.io/deb-repo/ buster main" \
-| sudo tee /etc/apt/sources.list.d/calamity-inc.list > /dev/null
-sudo apt update
-sudo apt install pluto
+url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/PlutoLang/Pluto/releases/latest)"
+version="$(basename -- ${url})"
+[ -d "${HOME}/.opt/pluto" ] && rm --recursive "${HOME}/.opt/pluto"
+curdir="$PWD"
+mkdir -p $HOME/.opt/pluto; cd $HOME/.opt/pluto
+curl -sSLo "/tmp/pluto.zip" "${url//tag/download}/Linux.X64.zip" 
+unzip -d $HOME/.opt/pluto "/tmp/pluto.zip"
+rm -r "/tmp/pluto.zip"
+cd $curdir
+for filename in $HOME/.opt/pluto/pluto*; do ln -fs $filename -t ${HOME}/.local/bin; done
 pluto -v
 ```
 

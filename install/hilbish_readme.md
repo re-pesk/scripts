@@ -11,9 +11,9 @@
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/Rosettea/Hilbish/releases/latest)"
 version="$(basename -- $url)"
 curl -sSLo - "${url//tag/download}/hilbish-${version}-linux-amd64.tar.gz" |\
-  sudo tar  --transform 'flags=r;s/^/hilbish\//x' --show-transformed-names -xzvC "/usr/local/share"
-sudo ln -s "/usr/local/share/hilbish/hilbish" "/usr/local/bin/hilbish"
-mkdir ${HOME}/.config/hilbish && cp -T /usr/local/share/hilbish/.hilbishrc.lua ${HOME}/.config/hilbish/init.lua
+  sudo tar  --transform 'flags=r;s/^/hilbish\//x' --show-transformed-names -xzvC "$HOME/.opt"
+ln -sf "$HOME/.opt/hilbish/hilbish" "$HOME/.local/bin/hilbish"
+mkdir ${HOME}/.config/hilbish && cp -T $HOME/.opt/hilbish/.hilbishrc.lua ${HOME}/.config/hilbish/init.lua
 echo "hilbish.opts.tips = false" >> ${HOME}/.config/hilbish/init.lua
 unset url version
 hilbish --version
