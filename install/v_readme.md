@@ -11,7 +11,7 @@
 curl -sSL https://github.com/vlang/v/releases/latest/download/v_linux.zip -o /tmp/v_linux.zip
 [ -d ${HOME}/.local/v ] && rm -r ${HOME}/.local/v
 unzip /tmp/v_linux.zip -d ${HOME}/.local
-[ -d /tmp/v_linux.zip ] && rm /tmp/v_linux.zip
+[ -f /tmp/v_linux.zip ] && rm /tmp/v_linux.zip
 ln -fs ${HOME}/.local/v/v ${HOME}/.local/bin/v
 v -v
 ```

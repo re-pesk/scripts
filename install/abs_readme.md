@@ -9,7 +9,8 @@
 
 ```bash
 bash <(curl -fsSL https://www.abs-lang.org/installer.sh)
-mv abs ${HOME}/.local/bin
+mv abs ${HOME}/.opt/abs/bin
+ln -fs ${HOME}/.opt/abs/bin/abs ${HOME}/.local/bin/abs
 abs --version
 ```
 

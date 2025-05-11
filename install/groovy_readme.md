@@ -9,13 +9,14 @@
 
 ```bash
 version="4.0.26"
+install_dir=".opt/groovy"
 # Įrašykite norimą versiją
 # Versijos numerį galima rasti "https://groovy.apache.org/download.html#distro"
 wget -qO "groovy-sdk-${version}.zip" \
   "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-sdk-${version}.zip" 
 
-unzip "groovy-sdk-${version}.zip" -d "$HOME"
-mv -T "${HOME}/groovy-${version}" "${HOME}/.groovy"
+unzip "groovy-sdk-${version}.zip" -d "/tmp"
+mv -T "/tmp/groovy-${version}" "${HOME}/$install_dir"
 rm "groovy-sdk-${version}.zip"
 
 echo '#begin groovy init
@@ -23,13 +24,15 @@ echo '#begin groovy init
 [ -z "$JAVA_HOME" ] \
   && export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
 
-[[ ":${PATH}:" == *":${HOME}/.groovy/bin:"* ]] \
-  || export PATH="${HOME}/.groovy/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/'${install_dir}'/bin:"* ]] \
+  || export PATH="${HOME}/'${install_dir}'/bin${PATH:+:${PATH}}"
 
 #end groovy init' >> "${HOME}/.bashrc"
 
-export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
-export PATH="${HOME}/.groovy/bin${PATH:+:${PATH}}"
+[ -z "$JAVA_HOME" ] \
+&& export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
+[[ ":${PATH}:" == *":${HOME}/${install_dir}/bin:"* ]] \
+export PATH="${HOME}/${install_dir}/bin${PATH:+:${PATH}}"
 
 unset version
 

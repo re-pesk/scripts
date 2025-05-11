@@ -11,10 +11,10 @@
 (( $(apt list --installed 2>/dev/null | grep -P '^clang' | wc -l ) > 0 )) || sudo apt install clang
 url=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/odin-lang/Odin/releases/latest)
 version="$(basename -- $url)"
-curl -sSLo- "${url//tag/download}/odin-linux-amd64-${version}.tar.gz" |\
-  tar --transform 'flags=r;s/^odin[^\/]+/odin/x' --show-transformed-names -xzvC "${HOME}/.local"
+[ -d "${HOME}/.opt/odin" ] && rm --recursive "${HOME}/.opt/odin"
+curl -sSLo - "${url//tag/download}/odin-ubuntu-amd64-${version}.zip" | gunzip -cf |\
+  tar --transform 'flags=r;s/^(odin)[^\/]+/\1/x' --show-transformed-names -xzvC $HOME/.opt
 unset url version
-ln -s ${HOME}/.local/odin/odin ${HOME}/.local/bin/odin
 odin version
 ```
 

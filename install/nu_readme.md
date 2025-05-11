@@ -10,19 +10,13 @@
 ```bash
 url="$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/nushell/nushell/releases/latest")"
 version="$(basename -- "${url}")"
-[ -d "${HOME}/.local/nu" ] && rm --recursive "${HOME}/.local/nu"
+[ -d "${HOME}/.opt/nu" ] && rm --recursive "${HOME}/.opt/nu"
 curl -sSLo- "${url//tag/download}/nu-${version}-x86_64-unknown-linux-gnu.tar.gz" |\
-  tar --transform 'flags=r;s/^(nu)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.local"
+  tar --transform 'flags=r;s/^(nu)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
 unset url version
-for filename in ${HOME}/.local/nu/nu*; do ln -fs ${filename} ${filename//nu\//bin/}; done
+for filename in ${HOME}/.opt/nu/nu*; do ln -fs ${filename} ${filename//.opt\/nu\//.local/bin/}; done
 
-nu -v # => 0.103.0
-```
-
-arba paleiskite failą
-
-```bash
-bash nu_install.sh
+nu -v # => 0.104.0
 ```
 
 ## Paleistis

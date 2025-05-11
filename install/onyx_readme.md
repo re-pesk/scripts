@@ -8,7 +8,7 @@
 ## Diegimas
 
 ```bash
-sh <(curl https://get.onyxlang.io -sSfL)
+ONYX_DIR=$HOME/.opt/onyx sh <(curl https://get.onyxlang.io -sSfL)
 onyx version
 ```
 
