@@ -1,7 +1,7 @@
 #!/usr/bin/env -S bash
 
 app_name="euphoria"
-install_dir="${HOME}/.local/${app_name}"
+install_dir="${HOME}/.opt/${app_name}"
 initial_dir="$PWD"
 tmp_dir="/tmp"
 repo_dir="${tmp_dir}/${app_name}"
@@ -47,7 +47,7 @@ echo -e "Current directory => $PWD\n"
 echo -e "Replacing Euphoria 4.1 with 4.2\n"
 
 [ -d "${install_dir}" ] && mv -T "${install_dir}" "${install_dir}-4.1"
-mv "$repo_dir" $HOME/.local/
+mv "$repo_dir" $HOME/.opt/
 
 echo -e "eui --version => \n"; eui --version
 echo -e "euc --version => \n"; euc --version

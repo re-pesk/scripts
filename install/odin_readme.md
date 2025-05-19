@@ -5,6 +5,10 @@
 * Paskiausias leidimas: dev-2025-03
 * Išleista: 2025-03-05
 
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash
@@ -15,6 +19,7 @@ version="$(basename -- $url)"
 curl -sSLo - "${url//tag/download}/odin-ubuntu-amd64-${version}.zip" | gunzip -cf |\
   tar --transform 'flags=r;s/^(odin)[^\/]+/\1/x' --show-transformed-names -xzvC $HOME/.opt
 unset url version
+ln -fs ${HOME}/.opt/odin/odin ${HOME}/.local/bin/odin
 odin version
 ```
 

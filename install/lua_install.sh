@@ -29,11 +29,11 @@ ${set_path}
 readarray -td '
   ' config_array <<< "$config_strings"
 
-sed -i "/${config_array[0]}/,/${config_array[@]: -1:1}/c\\" "${HOME}/.bashrc"
+sed -i "/${config_array[0]}/,/${config_array[@]: -1:1}/c\\" "${HOME}/.pathrc"
 
-[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
+[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-echo "$config_strings" >> "${HOME}/.bashrc"
+echo "$config_strings" >> "${HOME}/.pathrc"
 
 eval $"$set_path"
 

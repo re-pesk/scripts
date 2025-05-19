@@ -5,6 +5,10 @@
 * Paskiausias leidimas: [0.28.0](https://oils.pub/release/latest/)
 * Išleista: 2025-03-16
 
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash

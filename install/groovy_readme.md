@@ -5,36 +5,55 @@
 * Paskiausias leidimas: 4.0.26
 * Išleista: 2025-02-25
 
+## Parengimas
+
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, į .bashrc failą įterpiama jo įkėlimo komanda
+
+```bash
+[ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
+[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+
+# include .pathrc if it exists
+if [ -f "$HOME/.pathrc" ]; then
+  . "$HOME/.pathrc"
+fi
+
+#end include .pathrc' >> ${HOME}/.bashrc
+```
+
+Jeigu nėra įdiegtos, įdiegiamos [curl](../utils/curl.md) ir [xq](../utils/xq.md)
+
 ## Diegimas
 
 ```bash
-version="4.0.26"
-install_dir=".opt/groovy"
-# Įrašykite norimą versiją
-# Versijos numerį galima rasti "https://groovy.apache.org/download.html#distro"
-wget -qO "groovy-sdk-${version}.zip" \
-  "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-sdk-${version}.zip" 
-
-unzip "groovy-sdk-${version}.zip" -d "/tmp"
-mv -T "/tmp/groovy-${version}" "${HOME}/$install_dir"
-rm "groovy-sdk-${version}.zip"
+# Versijos numerį galima pasitikrinti "https://groovy.apache.org/download.html#distro"
+url="$(
+  curl -s https://groovy.apache.org/download.html#distro \
+  | xq -q 'button[id="big-download-button"]' --attr "onclick" \
+  | sed -r 's/^window.location.href="(.+)"$/\1/'
+)"
+base_name="$(basename -- $url)"
+wget -qO "/tmp/${base_name}" "$url"
+unzip "/tmp/$base_name" -d "/tmp"
+rm "/tmp/$base_name"
+dir_name=$([[ "$base_name" =~ .+(groovy)-.+-([0-9]+\.[0-9]+\.[0-9]+) ]] && echo ${BASH_REMATCH[1]}-${BASH_REMATCH[2]})
+mv -T "/tmp/${dir_name}" "${HOME}/.opt/groovy"
+unset base_name dir_name url
 
 echo '#begin groovy init
 
 [ -z "$JAVA_HOME" ] \
   && export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
 
-[[ ":${PATH}:" == *":${HOME}/'${install_dir}'/bin:"* ]] \
-  || export PATH="${HOME}/'${install_dir}'/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/groovy/bin:"* ]] \
+  || export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"
 
-#end groovy init' >> "${HOME}/.bashrc"
+#end groovy init' >> "${HOME}/.pathrc"
 
 [ -z "$JAVA_HOME" ] \
 && export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
-[[ ":${PATH}:" == *":${HOME}/${install_dir}/bin:"* ]] \
-export PATH="${HOME}/${install_dir}/bin${PATH:+:${PATH}}"
-
-unset version
+[[ ":${PATH}:" == *":${HOME}/.opt/groovy/bin:"* ]] \
+export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"
 
 groovy -version
 ```

@@ -5,6 +5,10 @@
 * Vėliausias leidimas: 2.6.0
 * Išleista: 2022-04-15 (nebevystoma)
 
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash

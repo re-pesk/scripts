@@ -4,6 +4,10 @@
 
 * Paskiausias leidimas: 1.11.4
 
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash

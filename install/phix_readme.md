@@ -5,6 +5,22 @@
 * Paskiausias leidimas: 1.0.5
 * Išleista: 2024-06-01
 
+## Parengimas
+
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo komanda į .bashrc failą
+
+```bash
+[ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
+[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+
+# include .pathrc if it exists
+if [ -f "$HOME/.pathrc" ]; then
+  . "$HOME/.pathrc"
+fi
+
+#end include .pathrc' >> ${HOME}/.bashrc
+```
+
 ## Diegimas
 
 ```bash
@@ -29,16 +45,15 @@ cd ..
 mv phix ${HOME}/.opt/phix
 rm phix*.zip
 
-sed -i "/#begin phix init/,/#end phix init/c\\" "${HOME}/.bashrc"
-
-[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
+sed -i "/#begin phix init/,/#end phix init/c\\" "${HOME}/.pathrc"
+[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
 echo '#begin phix init
 
 [[ ":${PATH}:" == *":${HOME}/.opt/phix:"* ]] \
   || export PATH="${HOME}/.opt/phix${PATH:+:${PATH}}"
 
-#end phix init' >> "${HOME}/.bashrc"
+#end phix init' >> "${HOME}/.pathrc"
 
 [[ ":${PATH}:" == *":${HOME}/.opt/phix:"* ]] \
   || export PATH="${HOME}/.opt/phix${PATH:+:${PATH}}"
