@@ -5,17 +5,20 @@
 * Vėliausias leidimas: 2.3.4
 * Išleista: 2024-12-29
 
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/Rosettea/Hilbish/releases/latest)"
-version="$(basename -- $url)"
-curl -sSLo - "${url//tag/download}/hilbish-${version}-linux-amd64.tar.gz" |\
+curl -sSLo - "${url//tag/download}/hilbish-$(basename -- $url)-linux-amd64.tar.gz" |\
   sudo tar  --transform 'flags=r;s/^/hilbish\//x' --show-transformed-names -xzvC "$HOME/.opt"
+unset url
 ln -sf "$HOME/.opt/hilbish/hilbish" "$HOME/.local/bin/hilbish"
 mkdir ${HOME}/.config/hilbish && cp -T $HOME/.opt/hilbish/.hilbishrc.lua ${HOME}/.config/hilbish/init.lua
 echo "hilbish.opts.tips = false" >> ${HOME}/.config/hilbish/init.lua
-unset url version
 hilbish --version
 ```
 

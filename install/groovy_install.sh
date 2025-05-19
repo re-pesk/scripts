@@ -6,7 +6,7 @@ file="apache-groovy-sdk-${version}.zip"
 tmpfile="/tmp/${file}"
 url="https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/${file}"
 install_dir=".groovy"
-config_file="${HOME}/.bashrc"
+config_file="${HOME}/.pathrc"
 
 groovy -version > /dev/null 2>&1; status="$?"
 [[ "$status" -eq 0 ]] && echo "Groovy's jau įdiegtas!" && exit

@@ -4,6 +4,10 @@
 
 * Paskiausias leidimas: nightly.2025.04.01
 
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash

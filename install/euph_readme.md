@@ -5,6 +5,24 @@
 * Paskiausias leidimas: 4.2 (darbinis)
 * Atnaujintas: 2025-01-24
 
+## Parengimas
+
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo komanda į .bashrc failą
+
+```bash
+[ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
+[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+
+# include .pathrc if it exists
+if [ -f "$HOME/.pathrc" ]; then
+  . "$HOME/.pathrc"
+fi
+
+#end include .pathrc' >> ${HOME}/.bashrc
+```
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 Diegimas trunka keliais etapais:
@@ -18,7 +36,6 @@ sudo apt install build-essential git
 * Įdiegiama 4.1 versija, reikalinga 4.2 versijos kompiliavimui
 
 ```bash
-
 json="$(curl -sL https://api.github.com/repos/OpenEuphoria/euphoria/releases/latest)"
 url="$(echo "$json" | jq -r '.assets[] | select(.name | contains("Linux-x64")) | .browser_download_url' )"
 version="$(echo "$json" | jq -r '.tag_name' )"
@@ -53,7 +70,7 @@ echo '#begin euphoria init
 [[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] \
   || export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
 
-#end euphoria init' >> "${HOME}/.bashrc"
+#end euphoria init' >> "${HOME}/.pathrc"
 
 [[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] \
   || export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"

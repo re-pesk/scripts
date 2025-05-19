@@ -3,7 +3,7 @@
 for addon in $@ ;do
   app_name="$addon"
   euph_dir="euphoria"
-  install_dir="${HOME}/.local/${euph_dir}"
+  install_dir="${HOME}/.opt/${euph_dir}"
   initial_dir="$PWD"
   tmp_dir="${HOME}/Projektai"
   repo_dir="${tmp_dir}/${app_name}"

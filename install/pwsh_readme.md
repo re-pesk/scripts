@@ -30,5 +30,5 @@ pwsh pwsh_sys-upgrade.ps1
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#! /usr/bin/env -S pwsh
+#!/usr/bin/env -S pwsh
 ```

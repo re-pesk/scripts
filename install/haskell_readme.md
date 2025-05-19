@@ -5,6 +5,10 @@
 * Paskiausias leidimas (ghc) 9.12.2
 * Išleista: 2025-03-12
 
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash

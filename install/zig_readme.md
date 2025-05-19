@@ -5,6 +5,24 @@
 * Paskiausias leidimas: 0.14.0
 * Išleista: 2025-03-05
 
+## Parengimas
+
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo komanda į .bashrc failą
+
+```bash
+[ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
+[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+
+# include .pathrc if it exists
+if [ -f "$HOME/.pathrc" ]; then
+  . "$HOME/.pathrc"
+fi
+
+#end include .pathrc' >> ${HOME}/.bashrc
+```
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas Linuxe (Ubuntu 24.04)
 
 ```bash
@@ -17,19 +35,18 @@ curl -sSLo- https://ziglang.org/download/${version}/zig-linux-x86_64-${version}.
 | tar --transform 'flags=r;s/^zig[^\/]+/zig/x' --show-transformed-names -xJC "${HOME}/.opt"
 unset url version
 
-# Jeigu reikia, pašalinami zig įrašai .bashrc konfigūraciniame faile
-sed -i '/#begin zig init/,/#end zig init/c\' "${HOME}/.bashrc"
-
+# Jeigu reikia, pašalinami zig įrašai .pathrc konfigūraciniame faile
+sed -i '/#begin zig init/,/#end zig init/c\' "${HOME}/.pathrc"
 # Jeigu reikia, pridedama tučia eilutė
-[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
+[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-# Jeigu nėra, pridedami zig įrašai .bashrc konfigūraciniame faile
-(( $(cat $HOME/.bashrc | grep '^#begin zig init' | wc -l) > 0 )) || echo '#begin zig init
+# Jeigu nėra, pridedami zig įrašai .pathrc konfigūraciniame faile
+(( $(cat $HOME/.pathrc | grep '^#begin zig init' | wc -l) > 0 )) || echo '#begin zig init
 
 [[ ":${PATH}:" == *":${HOME}/.opt/zig:"* ]] \
 || export PATH="${HOME}/.opt/zig${PATH:+:${PATH}}"
 
-#end zig init' >> "${HOME}/.bashrc"
+#end zig init' >> "${HOME}/.pathrc"
 
 [[ ":${PATH}:" == *":${HOME}/.opt/zig:"* ]] \
 || export PATH="${HOME}/.opt/zig${PATH:+:${PATH}}"

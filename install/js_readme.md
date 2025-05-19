@@ -10,6 +10,10 @@
 * [Learn web development](https://developer.mozilla.org/en-US/docs/Learn)
 * [The Modern JavaScript Tutorial](https://javascript.info/)
 
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Bun
 
 ### Diegimas
