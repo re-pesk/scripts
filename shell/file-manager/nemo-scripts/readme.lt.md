@@ -1,3 +1,5 @@
+[&uArr;](../../readme.md)
+
 # Nemo įskiepiai
 
 Nemo failų naršyklės įskiepiai
@@ -25,20 +27,12 @@ Nemo failų naršyklės įskiepiai
 Kataloge, kuriame yra šis failas, įvykdyti komandas
 
 ```bash
-rm -r $HOME/.local/share/nemo/actions
 cp -r -t $HOME/.local/share/nemo .local/share/nemo/actions
 ```
 
 ### Klaidų sekimas
 
 ```bash
-#############################################
-#### DEBUGGING:
-####
-#### Run Nemo in debug mode using with
-###  NEMO_DEBUG set to include 'Actions'
-####
-#### i.e.    $ nemo --quit
-####         $ NEMO_DEBUG=Actions nemo --debug
-#############################################
+nemo --quit
+NEMO_DEBUG=Actions nemo --debug
 ```
