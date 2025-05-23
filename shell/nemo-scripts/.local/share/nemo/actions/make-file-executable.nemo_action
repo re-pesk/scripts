@@ -6,6 +6,7 @@ Icon-Name=edit-copy
 Selection=notnone
 Extensions=nodirs;
 Dependencies=bash;
+Quote=double
 
 Name[lt]=Suteikti/atimti failo vykdymo teises
 Comment[lt]=Suteikti/atimti failo vykdymo teises

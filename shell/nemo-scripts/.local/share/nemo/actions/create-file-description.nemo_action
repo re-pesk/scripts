@@ -6,6 +6,7 @@ Icon-Name=edit-copy
 Selection=s;
 Extensions=nodirs;
 Dependencies=bash;
+Quote=double
 
 Name[lt]=Sukurti aprašymą MD kalba
 Comment[lt]=Sukurti pasirinkto failo aprašymą MD žymėjimo kalba
