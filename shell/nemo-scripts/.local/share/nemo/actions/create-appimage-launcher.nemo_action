@@ -6,6 +6,7 @@ Icon-Name=edit-copy
 Selection=s;
 Extensions=AppImage;
 Dependencies=bash;
+Quote=double
 
 Name[lt]=Sukurti AppImage failo leidyklę (.sh)
 Comment[lt]=Sukurti bash skriptą AppImage failui paleisti
