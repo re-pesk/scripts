@@ -1,12 +1,7 @@
 #! /usr/bin/env -S bash
 
 options="-2"
-input=($@)
-echo ${input: 2}
-declare -p input
-input=($(printf '%s\n' $@ | sort))
-declare -p input
-exit
+input=($(printf '%s\n' "$@" | sort))
 case "$1" in
   (-i)
     options="-12"
@@ -29,13 +24,8 @@ case "$1" in
     ;;
 esac
 
-packages=($(dpkg --status $(printf '%s\n' ${input[@]} | sort ) 2>/dev/null | grep '^Package' | sed 's/Package: //'))
-echo "packages -> $packages"
-
-exit
-
 regex="($(printf '%s|' $(
-  dpkg --status ${input[@]} 2>/dev/null \
+  dpkg --status ${input[@]} 2> /dev/null \
   | grep -P '^Package' \
   | sed 's/Package: //') | sed 's/|$//'))"
 
