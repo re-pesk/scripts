@@ -1,4 +1,4 @@
-[Atgal](../readme.md)
+[&uArr;](../readme.md)
 
 # Kodo paleidimo skriptai
 

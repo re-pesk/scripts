@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Scala [&#x2B67;](https://scala-lang.org/)
 

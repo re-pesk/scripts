@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Janet [&#x2B67;](https://janet-lang.org/)
 

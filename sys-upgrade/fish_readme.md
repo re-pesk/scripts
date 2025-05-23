@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Fish shell [&#x2B67;](https://fishshell.com/)
 

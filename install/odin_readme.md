@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Odin [&#x2B67;](https://odin-lang.org/)
 

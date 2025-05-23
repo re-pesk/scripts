@@ -10,7 +10,7 @@
 
   * substitute-assoc-array.* - asocijuotų masyvų substitucijos pavyzdžiai
 
-* check-packages/\*.* - skirptai patikrinti, ar Ubuntu sistemoje instaliuoti paketai iš sąrašo
+* check-packages/\*.* - skriptai patikrinti, ar Ubuntu sistemoje instaliuoti paketai iš sąrašo
 
 * file-manager/\*.*
 

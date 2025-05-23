@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Io [&#x2B67;](https://iolanguage.org/)
 

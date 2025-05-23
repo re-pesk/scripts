@@ -1,4 +1,4 @@
-[Atgal](../readme.md)
+[&uArr;](../readme.md)
 
 # Priminimo skriptai
 

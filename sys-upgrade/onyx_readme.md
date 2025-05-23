@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Onyx [&#x2B67;](https://onyxlang.io/)
 

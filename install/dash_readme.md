@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Dash [&#x2B67;](https://manned.org/dash.1)
 

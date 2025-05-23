@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Rust [&#x2B67;](https://www.rust-lang.org/)
 

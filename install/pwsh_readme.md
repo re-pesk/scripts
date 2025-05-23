@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # PowerShell [&#x2B67;](https://learn.microsoft.com/en-us/powershell/)
 
