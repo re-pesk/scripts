@@ -3,15 +3,15 @@
 options="-2"
 input=($(printf '%s\n' "$@" | sort))
 case "$1" in
-  -i)
+  (-i)
     options="-12"
     input=($(printf '%s\n' "${@:2}" | sort))
     ;;
-  -n)
+  (-n)
     options="-3"
     input=($(printf '%s\n' "${@:2}" | sort))
     ;;
-  -*)
+  (-*)
     if [[ ! "$1" =~ ^--help|-h ]]; then
       echo Error! The first arg is wrong! It must be --help, -h, -i, -n or name of package 
     fi

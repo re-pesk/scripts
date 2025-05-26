@@ -4,7 +4,8 @@
 echo "$substitution_string1"
 substitution_string1="5::true
 10::true
-15::true and false"
+15::true and false
+15::penkiolika"
 echo
 
 # iterating on substitution_string1
@@ -16,19 +17,11 @@ echo
 
 # function to get item from substitution string by key
 getValueByKey() {
-  key="$2"
-  echo "$1" > /tmp/str
-  while read -r item; do
-    case "$item" in
-      ($2::*)
-        echo "${item#${key}::}"
-        return  
-    esac
-  done < /tmp/str
+  echo "$1" | grep -P "^$2" | sed -E "s/^$2:://"
 }
 
 echo "get value from substitution_string1"
-echo '$(getValueByKey "$substitution_string1" 10) == '"$(getValueByKey "$substitution_string1" 10)"
+echo '$(getValueByKey "$substitution_string1" 15) == '"$(getValueByKey "$substitution_string1" 15)"
 echo
 
 setValueByKey() {

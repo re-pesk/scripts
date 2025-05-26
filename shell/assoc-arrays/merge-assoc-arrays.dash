@@ -1,0 +1,33 @@
+#!/usr/bin/env dash
+
+array1="5::true
+10::true
+15 and ab::true and false"
+
+array2="20::true
+25::true
+30::false"
+
+echo
+
+echo 'Show definition of "arrays":'
+echo "array1=\"${array1}\""
+echo "array2=\"${array2}\""
+
+echo "Size of array1 is $(echo "${array1}" | wc -l)"
+echo "Size of array2 is $(echo "${array2}" | wc -l)"
+echo
+
+# convert both "associative arrays" to new "associative array"
+merged_array="${array1}\n${array2}"
+
+echo 'Show definition of merged "array":'
+echo "merged_array=\"$merged_array\"\n"
+echo "Size of merged_array is $(echo "${merged_array}" | wc -l)"
+echo
+
+echo 'Iterate on merged "array":'
+echo "$merged_array" | while read -r item; do
+  echo "merged_array[\"${item%::*}\"] = \"${item#*::}\""
+done
+echo

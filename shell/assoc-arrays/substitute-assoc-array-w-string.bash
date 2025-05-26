@@ -1,25 +1,34 @@
 #!/usr/bin/env bash
 
 # substitution of associative array
-substitution_string1="5::true
+substitution_string1=$'5::true
 10::true
-15::true and false"
+15::true and false
+15::penkiolika'
 echo "$substitution_string1"
 echo
 
 # iterating on substitution_string1
-echo "$substitution_string1" | while read item; do
-  echo "[${item%::*}]=${item#*::}"
+echo "$substitution_string1" | while read -r item; do
+  echo "[${item%::*}]=\"${item#*::}\""
 done
 echo
 
 # function to get item from substitution string by key
-getValueByKey() {
-  echo "$1" | while read item; do
-    [[ "$item" == "$2::"* ]] && echo "${item#$2::}" && return
-  done
+getItemByKey() {
+  echo "$1" | grep -P "^$2"
 }
-echo '$(getValueByKey "$substitution_string1" 10) == '"$(getValueByKey "$substitution_string1" 10)"
+
+echo '$(getItemByKey "$substitution_string1" 15) == '"$(getItemByKey "$substitution_string1" 15)"
+echo
+
+# function to get value from substitution string by key
+getValueByKey() {
+  echo "$1" | grep -P "^$2" | sed -E "s/^$2:://"
+}
+
+
+echo '$(getValueByKey "$substitution_string1" 15) == '"\"$(getValueByKey "$substitution_string1" 15)\""
 echo
 
 setValueByKey() {
@@ -29,9 +38,9 @@ setValueByKey() {
   replaced="false"
   result=""
 
-  while read item; do
+  while read -r item; do
 
-    if [[ "$item" != "${key}::"* ]];then 
+    if [[ "$item" != "${key}::"* ]]; then 
       result+="$item
 "
       continue
@@ -41,23 +50,23 @@ setValueByKey() {
     replaced="true"
   done <<< "$arr_str"
   
-  if [[ $replaced == false ]];then
+  if [[ $replaced == false ]]; then
     result+="$new_item"
   fi
 
   echo "$result"
 }
 
-echo 'substitution_string1=$(setValueByKey "$substitution_string1" "25::false and false")'
-substitution_string1=$(setValueByKey "$substitution_string1" "25::false and false")
+echo 'substitution_string1=$(setValueByKey "$substitution_string1" '25::"false and false"')'
+substitution_string1=$(setValueByKey "$substitution_string1" '25::"false and false"')
 echo "substitution_string1:"
 echo "$substitution_string1"
 echo 
 
 # Second substitution string
-substitution_string2="20::true
+substitution_string2=$'20::true
 25::true and true
-Labas vakaras::true"
+Labas vakaras::true'
 echo "substitution_string2:"
 echo "$substitution_string2"
 echo
@@ -66,7 +75,7 @@ echo
 merge_array_strings() {
   arr_str1="$1"
   arr_str2="$2"
-  while read item; do
+  while read -r item; do
     arr_str1=$(setValueByKey "$arr_str1" "$item")
   done <<< "$arr_str2"
   echo "$arr_str1"
@@ -80,7 +89,7 @@ echo
 
 # iterate on merged substitution string
 echo "iterating on merged_substitution_string:"
-while read item; do
+while read -r item; do
   echo "[${item%::*}]=${item#*::}"
 done <<< "$merged_substitution_string"
 echo
