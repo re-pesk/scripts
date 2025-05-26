@@ -2,6 +2,9 @@
 
 # Phix [&#x2B67;](http://phix.x10.mx/index.php)
 
+* Paskiausias leidimas: 1.0.5
+* Išleista: 2024-06-01
+
 ## Diegimas
 
 ```bash
@@ -16,6 +19,8 @@ mkdir phix
 array=("" 1 2 3 4)
 for var in "${array[@]}";do wget "http://phix.x10.mx/phix.1.0.5${var:+.$var}.zip"; done
 for var in "${array[@]}";do unzip "phix.1.0.5${var:+.$var}.zip" -d phix; done
+unset array
+
 wget http://phix.x10.mx/p64; mv p64 phix/p
 cd phix
 chmod +x p

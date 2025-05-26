@@ -2,6 +2,9 @@
 
 # Haskell [&#x2B67;](https://www.haskell.org/)
 
+* Paskiausias leidimas (ghc) 9.12.2
+* Išleista: 2025-03-12
+
 ## Diegimas
 
 ```bash

@@ -2,15 +2,20 @@
 
 # Go [&#x2B67;](https://go.dev/)
 
+* Paskiausias leidimas: 1.24.1
+* Išleista: 2025-03-04
+
 ## Diegimas
 
 ```bash
-curl -fsSo - https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz | tar -xz -C ${HOME}/.local
-#----
+versija="1.24.1"
+[ -d ${HOME}/.local/go ] && rm -r ${HOME}/.local/go
+curl -fsSo - https://dl.google.com/go/go${versija}.linux-amd64.tar.gz | tar -xz -C ${HOME}/.local
+unset versija
+
 sed -i '/#begin go init/,/#end go init/c\' "${HOME}/.bashrc"
-#----
 [[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
-#----
+
 echo '#begin go init
 
 [[ ":${PATH}:" == *":${HOME}/.local/go/bin:"* ]] \
@@ -20,9 +25,12 @@ echo '#begin go init
   || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"
 
 #end go init' >> "${HOME}/.bashrc"
-#----
-  export PATH="${HOME}/go/bin:${HOME}/.local/go/bin${PATH:+:${PATH}}"
-#----
+
+[[ ":${PATH}:" == *":${HOME}/.local/go/bin:"* ]] \
+  || export PATH="${HOME}/.local/go/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] \
+  || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"
+
 go version
 ```
 

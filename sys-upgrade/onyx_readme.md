@@ -22,6 +22,5 @@ Norint kodo failą paversti vykdomuoju failu, reikia suteikti jam vykdymo teises
 
 ```bash
 onyx build -o onyx_sys-upgrade.wasm onyx_sys-upgrade.onyx
-chmod u+x onyx_sys-upgrade.wasm
 onyx run onyx_sys-upgrade.wasm
 ```

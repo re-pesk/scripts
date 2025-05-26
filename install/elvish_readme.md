@@ -2,6 +2,9 @@
 
 # Elvish shell [&#x2B67;](https://elv.sh/)
 
+* Paskiausias leidimas: 0.21.0
+* Išleista: 2024-08-14
+
 ## Diegimas
 
 ```bash

@@ -2,6 +2,9 @@
 
 # JavaScript [&#x2B67;](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
+* Paskiausias leidimas: ES2024
+* Išleista: 2024-06
+
 ## Vadovai
   
 * [Learn web development](https://developer.mozilla.org/en-US/docs/Learn)

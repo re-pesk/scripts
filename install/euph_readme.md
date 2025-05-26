@@ -2,9 +2,12 @@
 
 # Euphoria [&#x2B67;](https://openeuphoria.org/)
 
+* Paskiausias leidimas: 4.2 (darbinis)
+* Atnaujintas: 2025-01-24
+
 ## Diegimas
 
-Diagimas trunka keliais etapais:
+Diegimas trunka keliais etapais:
 
 * Jeigu nėra įdiegti, įdiegiami reikalingi paketai
 
@@ -39,7 +42,7 @@ for file in *.ex ;do
   [ -f "${file%.*}" ] && continue
   ./euc "$file"
   exit_code="$?"
-  if [[ "$exit_code" > 0 ]]; then
+  if [[ "$exit_code" -gt 0 ]]; then
     exit "$exit_code"
   fi 
 done

@@ -2,6 +2,9 @@
 
 # NGS [&#x2B67;](https://ngs-lang.org/)
 
+* Paskiausias leidimas: 0.2.16
+* Išleista: 2023-05-17 (nebevystoma)
+
 ## Diegimas
 
 ```bash

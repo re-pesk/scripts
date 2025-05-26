@@ -4,7 +4,7 @@
 
 Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 
-* [x] [Abs](abs_readme.md)
+* [x] [Abs](abs_readme.md) (nebevystoma)
 * [x] [Bash](bash_readme.md)
 * [x] [Bun (JS)](js_readme.md)
 * [x] [C](c_readme.md)
@@ -26,7 +26,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Haskell](haskell_readme.md)
 * [x] [Hilbish](hilbish_readme.md)
 * [x] [Yash](yash_readme.md)
-* [x] [Io](https://iolanguage.org/index.html)
+* [x] [Io](https://iolanguage.org/index.html) (nebevystoma)
 * [x] [Ysh (Oil)](oil-ysh_readme.md)
 * [x] [Janet](janet_readme.md)
 * [x] [Java](java_readme.md)
@@ -36,7 +36,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [ksh](ksh_readme.md)
 * [x] [Lua](lua_readme.md)
 * [x] [Murex](murex_readme.md)
-* [x] [Ngs](ngs_readme.md)
+* [x] [Ngs](ngs_readme.md) (nebevystoma)
 * [x] [Node (JS)](js_readme.md)
 * [x] [Nu](nu_readme.md)
 * [x] [Odin](odin_readme.md)

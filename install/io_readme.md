@@ -2,6 +2,8 @@
 
 # Io [&#x2B67;](https://iolanguage.org/)
 
+* Paskiausias leidimas: 2017-09-06 (nebevystoma)
+
 ## Diegimas
 
 ```bash

@@ -2,6 +2,9 @@
 
 # Kotlin [&#x2B67;](https://kotlinlang.org/)
 
+* Paskiausias leidimas: 2.1.20
+* Išleista: 2025-03-20
+
 ## Diegimas
 
 ### Kotlin'o
@@ -16,7 +19,7 @@ kotlin -version
 ```bash
 url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/JetBrains/kotlin/releases/latest)"
 curl -sSLo- "${url//tag/download}/kotlin-native-prebuilt-linux-x86_64-$(basename -- $url).tar.gz" \
-  | tar --transform 'flags=r;s/^kotlin-native[^\/]+/kotlin-native/x' --show-transformed-names -xzvC "${HOME}/.local"
+| tar --transform 'flags=r;s/^(kotlin-native)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.local"
 
 [[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
 

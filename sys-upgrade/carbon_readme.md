@@ -4,6 +4,10 @@
 
 ## [Diegimas](../install/carbon_readme.md)
 
-## Paleistis ir kompiliavimas
+## Kompiliavimas
 
-Pagal instrukcijas suinstaliavus Carbon'o įrankius, dokumentacijoje nurodyta komanda nekompiliuoja ten pat pateikto pavyzdžio. Kitų kalbų projektai, startavę panašiu metu ar vėliau už Carboną, leidžia rašyti veikaintį kodą. Nepanašu, kad šis projektas gyvybingas.
+```bash
+carbon compile --output=carbon_sys-upgrade.o carbon_sys-upgrade.carbon
+carbon link --output=carbon_sys-upgrade.bin carbon_sys-upgrade.o
+./carbon_sys-upgrade.bin
+```

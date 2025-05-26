@@ -2,9 +2,13 @@
 
 # C3 [&#x2B67;](https://c3-lang.org/)
 
+* Paskiausias leidimas: 0.7.0
+* Išleista: 2025-03-31
+
 ## Diegimas
 
 ```bash
+[ -d ${HOME}/.local/c3 ] && rm -r ${HOME}/.local/c3
 curl -fsSo - https://github.com/c3lang/c3c/releases/download/latest/c3-ubuntu-20.tar.gz | tar -xzvC ${HOME}/.local
 ln -s ${HOME}/.local/c3/c3c ${HOME}/.local/bin/c3c
 c3c --version

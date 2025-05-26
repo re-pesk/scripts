@@ -2,6 +2,9 @@
 
 # Pluto [&#x2B67;](https://pluto-lang.org/)
 
+* Paskiausias leidimas: 0.10.4
+* Išleista: 2025-02-15
+
 ## Diegimas
 
 ```bash

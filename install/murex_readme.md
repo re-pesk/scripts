@@ -1,12 +1,15 @@
 [Atgal](./readme.md)
 
-# NGS [&#x2B67;](https://ngs-lang.org/)
+# NGS [&#x2B67;](https://nojs.murex.rocks/)
+
+* Paskiausias leidimas: 6.4.2063
+* Išleista: 2025-01-16
 
 ## Diegimas
 
 ```bash
-curl "https://nojs.murex.rocks/bin/latest/murex-linux-amd64.gz" | gunzip > $home/.local/bin/murex
-chmod +x $home/.local/bin/murex
+curl "https://nojs.murex.rocks/bin/latest/murex-linux-amd64.gz" | gunzip -cf - > ${HOME}/.local/bin/murex
+chmod u+x ${HOME}/.local/bin/murex
 murex --version
 ```
 

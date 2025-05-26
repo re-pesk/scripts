@@ -2,18 +2,23 @@
 
 # Oils for Unix [&#x2B67;](https://www.oilshell.org/)
 
+* Paskiausias leidimas: [0.28.0](https://oils.pub/release/latest/)
+* Išleista: 2025-03-16
+
 ## Diegimas
 
 ```bash
-# Vėliausią versijos numerį galima rasti https://www.oilshell.org/release/latest/
+version="0.28.0"
+curl -sSLo- "https://oils.pub/download/oils-for-unix-${version}.tar.gz" | tar -xzv
+curdir="$PWD"
 
-version="0.24.0"
-curl -sSLo- https://www.oilshell.org/download/oils-for-unix-${version}.tar.gz \
-  | tar -xzv
-cd oils-for-unix-${version}
+cd "oils-for-unix-${version}"
 ./configure --prefix ~/.local --datarootdir ~/.local/share
 _build/oils.sh
 ./install
+cd "${curdir}"
+
+unset curdir version
 
 osh --version # => Oils 0.24.0
 ysh --version # => Oils 0.24.0

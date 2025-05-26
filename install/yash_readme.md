@@ -2,6 +2,9 @@
 
 # Yash [&#x2B67;](https://magicant.github.io/yash/)
 
+* Paskiausias leidimas: 2.58.1
+* Išleista : 2025-02-04
+
 ## Diegimas
 
 ```bash

@@ -2,6 +2,9 @@
 
 # Swift [&#x2B67;](https://www.swift.org/)
 
+* Paskiausias leidimas: 6.1
+* Išleista: 2025-03-30
+
 ## Diegimas
 
 Instaliuojami paketai, kurie nebuvo suinstaliuoti kartu su Ubuntu 24.04
@@ -13,23 +16,26 @@ sudo apt install gnupg2 libcurl4-openssl-dev libpython3-dev libstdc++-13-dev
 Visos failų versijos yra <https://www.swift.org/install/linux/> puslapyje.
 
 ```bash
-# Atsiunčiams Swifto archyvas, jo turinys išpakuojamas ~/.swift kataloge (pakeskite versijos numerį į jums tinkamą).
-curl -sSLo- "https://download.swift.org/swift-6.0.3-release/ubuntu2404/swift-6.0.3-RELEASE/swift-6.0.3-RELEASE-ubuntu24.04.tar.gz" \
-| tar --transform 'flags=r;s/^swift[^\/]+/.swift/x' --show-transformed-names -xzC "$HOME"
+# Atsiunčiamas, išpakuojamas ir paleidžiamas swiftly - swift'o diegimo menedžeris
+curl -O https://download.swift.org/swiftly/linux/swiftly-$(uname -m).tar.gz && \
+tar zxf swiftly-$(uname -m).tar.gz && \
+./swiftly init --quiet-shell-followup
 
+# Basho konfigūracinis failas .bashrc išvalomas nuo swifto komandų
+sed -i '/#begin swift init/,/#end swift init/c\' "${HOME}/.bashrc"
 # Jeigu reikia, pridedama tučia eilutė
 [[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
 
-# Sistemos kelias konfigūraciniame faile papildomas Swifto vykdomųjų failų katalogu
-echo '#begin Swift init
+# Basho konfigūracinis failas .bashrc papildomas swift konfigūracinio failo įkėlimo komanda
+echo '#begin swift init
 
-[[ ":${PATH}:" == *":${HOME}/.swift/usr/bin:"* ]] \
-  || export PATH="${HOME}/.swift/usr/bin${PATH:+:${PATH}}"
+. ~/.local/share/swiftly/env.sh
 
-#end Swift init' >> "${HOME}/.bashrc"
+#end swift init' >> "${HOME}/.bashrc"
 
-# Esamas kelias papildomas Swifto vykdomųjų failų katalogu
-[[ ":${PATH}:" == *":${HOME}/.swift/usr/bin:"* ]] || export PATH="${HOME}/.swift/usr/bin${PATH:+:${PATH}}"
+. ~/.local/share/swiftly/env.sh
+
+hash -r
 
 swift --version # Swifto veikimas patikrinamas, išvedant instaliuotos Swift'o versijos numerį
 ```
@@ -55,6 +61,9 @@ arba
 ## Kompiliavimas
 
 ```bash
-swiftc -static-stdlib -o vykdomasis-failas.bin kodo-failas.swift
+# Statinių vykdomųjų failų kompiliavimui Ubuntu 24.04 sistemoje
+sudo ln -fs /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/libstdc++.so
+
+swiftc -static-executable -o vykdomasis-failas.bin kodo-failas.swift
 ./vykdomasis-failas.bin
 ```

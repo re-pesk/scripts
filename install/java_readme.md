@@ -2,6 +2,8 @@
 
 # Java [&#x2B67;](https://www.java.com/en/download/help/index.html)
 
+* Paskiausias LTS leidimas: 21.0.6
+
 ## Diegimas
 
 ```bash
