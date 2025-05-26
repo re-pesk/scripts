@@ -20,16 +20,15 @@ curl -sSLo- $url | tar --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-n
 
 [ ! -d ${HOME}/${install_dir} ] && echo "Directory ${HOME}/${install_dir} is not created!" && exit -1
 
-sed -i "/#begin nushell init/,/#end nushell init/c\\" "${HOME}/.bashrc"
-
-[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
+sed -i "/#begin nushell init/,/#end nushell init/c\\" "${HOME}/.pathrc"
+[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
 echo '#begin nushell init
 
 [[ ":${PATH}:" == *":${HOME}/'${install_dir}':"* ]] \
   || export PATH="${HOME}/'${install_dir}'${PATH:+:${PATH}}"
 
-#end nushell init' >> "${HOME}/.bashrc"
+#end nushell init' >> "${HOME}/.pathrc"
 
 [[ ":${PATH}:" == *":${HOME}/${install_dir}:"* ]] \
   || export PATH="${HOME}/${install_dir}${PATH:+:${PATH}}"

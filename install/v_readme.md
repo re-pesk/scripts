@@ -2,14 +2,22 @@
 
 # V [&#x2B67;](https://vlang.io/)
 
+* Paskiausias leidimas: 0.4.10
+* Išleista: 2025-03-20
+
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash
 curl -sSL https://github.com/vlang/v/releases/latest/download/v_linux.zip -o /tmp/v_linux.zip
-unzip /tmp/v_linux.zip -d ${HOME}/.local
-rm /tmp/v_linux.zip
-ln -fs ${HOME}/.local/v/v ${HOME}/.local/bin/v
-echo "v -v => $(v -v)"
+[ -d ${HOME}/.opt/v ] && rm -r ${HOME}/.opt/v
+unzip /tmp/v_linux.zip -d ${HOME}/.opt
+[ -f /tmp/v_linux.zip ] && rm /tmp/v_linux.zip
+ln -fs ${HOME}/.opt/v/v ${HOME}/.local/bin/v
+v -v
 ```
 
 arba
@@ -39,7 +47,6 @@ arba
 ## Kompiliavimas
 
 ```bash
-v kodo-failas.v
-mv v_sys-upgrade v_sys-upgrade.bin
+v -o vykdomasis-failas.bin kodo-failas.v
 ./vykdomasis-failas.bin
 ```

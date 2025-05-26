@@ -2,6 +2,9 @@
 
 # Bash [&#x2B67;](https://www.gnu.org/software/bash/)
 
+* Paskiausias leidimas: 5.2, patch 37
+* Išleista: 2024-09-23
+
 ## Diegimas
 
 Instaliuojamas su operacine

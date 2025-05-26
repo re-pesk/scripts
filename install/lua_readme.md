@@ -2,28 +2,55 @@
 
 # Lua [&#x2B67;](https://www.lua.org/)
 
-## Diegimas
+* Paskiausias leidimas: 5.4.7
+* Išleista: 2024-06-13
 
-Dabartinės versijos ieškokite [Lua puslapuyje](https://www.lua.org/download.html)
+## Parengimas
+
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo komanda į .bashrc failą
 
 ```bash
-[ -d "${HOME}/.lua" ] && rm --recursive "${HOME}/.lua"
+[ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
+[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
 
-# Vykdydami komandas įrašykite dabartinės versijos numerį
-curl -LRo - https://www.lua.org/ftp/lua-5.4.7.tar.gz | tar xzC "/tmp"
+# include .pathrc if it exists
+if [ -f "$HOME/.pathrc" ]; then
+  . "$HOME/.pathrc"
+fi
+
+#end include .pathrc' >> ${HOME}/.bashrc
+```
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
+## Diegimas
+
+Dabartinės versijos ieškokite [Lua puslapyje](https://www.lua.org/download.html)
+
+```bash
+url="$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/lua/lua/releases/latest")"
+version="$(basename -- $url)"
+curl -LRo - "https://www.lua.org/ftp/lua-${version#v}.tar.gz" | tar -xzC "/tmp"
+[ -d "${HOME}/.opt/lua" ] && rm --recursive "${HOME}/.opt/lua"
 curdir="$PWD"
-cd "/tmp/lua-5.4.7"
+cd "/tmp/lua-${version#v}"
 make all test
-make install INSTALL_TOP="${home/.lua"
+make install INSTALL_TOP="${HOME}/.opt/lua"
 cd $curdir
-rm -r "/tmp/lua-5.4.7"
+rm -r "/tmp/lua-${version#v}"
+unset curdir url version
 
-sed -i "/#begin lua init/,/#end lua init/c\\" "${HOME}/.bashrc"
-[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
-echo -e "#begin lua init\n\n"'[[ ":${PATH}:" == *":${HOME}/.lua/bin:"* ]] \
-  || export PATH="${HOME}/.lua/bin${PATH:+:${PATH}}"'"\n\n#end lua init" >> "${HOME}/.bashrc"
+sed -i "/#begin lua init/,/#end lua init/c\\" "${HOME}/.pathrc"
+[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-[[ ":${PATH}:" == *":${HOME}/.lua/bin:"* ]] || export PATH="${HOME}/.lua/bin${PATH:+:${PATH}}"
+echo '#begin lua init
+
+[[ ":${PATH}:" == *":${HOME}/.opt/lua/bin:"* ]] \
+  || export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
+  
+#end lua init' >> "${HOME}/.pathrc"
+
+[[ ":${PATH}:" == *":${HOME}/.opt/lua/bin:"* ]] || export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
 lua -v
 ```
 

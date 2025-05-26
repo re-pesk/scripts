@@ -2,10 +2,17 @@
 
 # Onyx [&#x2B67;](https://onyxlang.io/)
 
+* Paskiausias leidimas: 0.1.13
+* Išleista: 2024-11-09
+
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash
-sh <(curl https://get.onyxlang.io -sSfL)
+ONYX_DIR=$HOME/.opt/onyx sh <(curl https://get.onyxlang.io -sSfL)
 onyx version
 ```
 

@@ -2,6 +2,9 @@
 
 # C++ [&#x2B67;](https://cplusplus.com/doc/tutorial/)
 
+* Paskiausias leidimas (gcc): 14.2.
+* Išleista: 2024-08-01
+
 ## Diegimas
 
 g++ instaliuojamas su Ubuntu 24.04 operacine sistema
@@ -17,6 +20,6 @@ g++ instaliuojamas su Ubuntu 24.04 operacine sistema
 ## Kompiliavimas
 
 ```bash
-g++ -Wno-sizeof-array-argument -std=c++2b -o vykdomasis-failas.bin kodo-failas.cpp
+g++ -static -Wno-sizeof-array-argument -std=c++2b -o vykdomasis-failas.bin kodo-failas.cpp
 ./vykdomasis-failas.bin
 ```

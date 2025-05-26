@@ -2,6 +2,9 @@
 
 # GNU Guile [&#x2B67;](https://www.gnu.org/software/guile/)
 
+* Paskiausias leidimas: 3.0.10
+* Išleista: 2024-06-24
+
 ## Diegimas
 
 ```bash
@@ -15,13 +18,13 @@ guild --version
 ## Paleistis
 
 ```bash
-guile kodo-failas.scm
+guile mano-modulis.scm
 ```
 
 Be automatinio kompiliavimo
 
 ```bash
-guile --no-auto-compile guile_sys-upgrade.scm
+guile --no-auto-compile mano-modulis.scm
 ```
 
 ### Vykdymo instrukcija (shebang)
@@ -33,10 +36,10 @@ guile --no-auto-compile guile_sys-upgrade.scm
 
 ## Kompiliavimas (į baitkodą)
 
-Įtepti į guile_sys-upgrade.scm failą eilutes:
+Įtepti į kodo-failas.scm failą eilutes:
 
 ```scheme
-(define-module (guile_sys-upgrade)
+(define-module (mano-modulis)
   #:export (main))
 
 (define (main)
@@ -49,11 +52,11 @@ guile --no-auto-compile guile_sys-upgrade.scm
 Kompiliuoti failą
 
 ```bash
-guild compile --output=guile_sys-upgrade.go guile_sys-upgrade.scm
+guild compile --output=mano-modulis.go mano-modulis.scm
 ```
 
 Paleisti sukompiliuotą failą:
 
 ```bash
-guile -C "$PWD" -c "(use-modules (guile_sys-upgrade))"
+guile -C "$PWD" -c "(use-modules (mano-modulis))"
 ```

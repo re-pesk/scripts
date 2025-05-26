@@ -8,12 +8,13 @@ lt_LT.UTF-8.succ:Komanda sėkmingai įvykdyta!"
 
 # Funkcija pranešimui iš masyvo paimti pagal raktą
 getMessage() {
-  echo "$messages" | while read item; do
-    case $item in
+  echo "${messages}" | while read -r item; do
+    case ${item} in
     ("$1:"*) 
-      echo "${item#$1:}"
+      echo "${item#"$1":}"
       return
       ;;
+    (*)
     esac
   done
 }
@@ -26,7 +27,7 @@ successMessage="$(getMessage "${LANG}.succ")"
 runCmd() {
 
   # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
-  command="sudo $@"
+  command="sudo $*"
 
   # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   # printf "%ns", kur n - tai tarpų skaičius, o ${#command} - komandos eilutės ilgis, 
@@ -35,22 +36,22 @@ runCmd() {
   separator=$(printf "%${#command}s" | tr " " "-")
 
   # Išvedama komandos eilutė, apsupta skirtuko eilučių
-  printf "%s\n%s\n%s\n\n" "$separator" "$command" "$separator"
+  printf "%s\n%s\n%s\n\n" "${separator}" "${command}" "${separator}"
 
   # Įvykdoma komanda
-  (sudo $@)
+  sudo "$@"
 
   # Komandos išėjimo kodas išsaugomas į kintamąjį 
   exitCode="$?"
 
   # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
-  if [ $exitCode -gt 0 ]; then
-    printf "\n%s\n\n" "$errorMessage"
-    exit $exitCode                       
+  if [ "${exitCode}" -gt 0 ]; then
+    printf "\n%s\n\n" "${errorMessage}"
+    exit "${exitCode}"                       
   fi
 
   # Kitu atveju išvedamas sėkmės pranešimas
-  printf "\n%s\n\n" "$successMessage" 
+  printf "\n%s\n\n" "${successMessage}" 
 }
 
 echo

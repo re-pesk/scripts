@@ -2,10 +2,17 @@
 
 # JavaScript [&#x2B67;](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
+* Paskiausias leidimas: ES2024
+* Išleista: 2024-06
+
 ## Vadovai
   
 * [Learn web development](https://developer.mozilla.org/en-US/docs/Learn)
 * [The Modern JavaScript Tutorial](https://javascript.info/)
+
+## Parengimas
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 
 ## Bun
 
@@ -71,7 +78,7 @@ nvm install --lts
 node --version
 ```
 
-arba (jeigu tenkina sistemos (Ubuntu 24.04) versija `nodejs v18.19`)
+arba (jeigu patenkina sistemos (Ubuntu 24.04) versija `nodejs v18.19`)
 
 ```bash
 sudo apt update

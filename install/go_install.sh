@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 version="1.23.4"
-install_dir=".local/go"
+install_dir=".opt/go"
 dev_dir="go"
-config_file="${HOME}/.bashrc"
+config_file="${HOME}/.pathrc"
 
-curl -fsSo - https://dl.google.com/go/go${version}.linux-amd64.tar.gz | tar -xz -C ${HOME}/.local
+curl -fsSo - https://dl.google.com/go/go${version}.linux-amd64.tar.gz | tar -xz -C ${HOME}/.opt
 
 set_path='[[ ":${PATH}:" == *":${HOME}/'$install_dir'/bin:"* ]] \
   || export PATH="${HOME}/'$install_dir'/bin${PATH:+:${PATH}}"

@@ -2,27 +2,54 @@
 
 # Go [&#x2B67;](https://go.dev/)
 
+* Paskiausias leidimas: 1.24.1
+* Išleista: 2025-03-04
+
+## Parengimas
+
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo komanda į .bashrc failą
+
+```bash
+[ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
+[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+
+# include .pathrc if it exists
+if [ -f "$HOME/.pathrc" ]; then
+  . "$HOME/.pathrc"
+fi
+
+#end include .pathrc' >> ${HOME}/.bashrc
+```
+
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+
 ## Diegimas
 
 ```bash
-curl -fsSo - https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz | tar -xz -C ${HOME}/.local
-#----
-sed -i '/#begin go init/,/#end go init/c\' "${HOME}/.bashrc"
-#----
-[[ "$( tail -n 1 "${HOME}/.bashrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.bashrc"
-#----
+versija="1.24.3"
+[ -d ${HOME}/.opt/go ] && rm -r ${HOME}/.opt/go
+curl -fsSLo - https://go.dev/dl/go${versija}.linux-amd64.tar.gz \
+| tar  --transform 'flags=r;s/^(go)/\1/x' --show-transformed-names -xzv -C ${HOME}/.opt
+unset versija
+
+sed -i '/#begin go init/,/#end go init/c\' "${HOME}/.pathrc"
+[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+
 echo '#begin go init
 
-[[ ":${PATH}:" == *":${HOME}/.local/go/bin:"* ]] \
-  || export PATH="${HOME}/.local/go/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/go/bin:"* ]] \
+  || export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
 
 [[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] \
   || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"
 
-#end go init' >> "${HOME}/.bashrc"
-#----
-  export PATH="${HOME}/go/bin:${HOME}/.local/go/bin${PATH:+:${PATH}}"
-#----
+#end go init' >> "${HOME}/.pathrc"
+
+[[ ":${PATH}:" == *":${HOME}/.opt/go/bin:"* ]] \
+  || export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] \
+  || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"
+
 go version
 ```
 

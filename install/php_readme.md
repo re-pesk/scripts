@@ -2,6 +2,9 @@
 
 # PHP [&#x2B67;](https://www.php.net/)
 
+* Paskiausias leidimas: 8.4.5
+* Išleista: 2025-03-13
+
 ## Diegimas
 
 ```bash

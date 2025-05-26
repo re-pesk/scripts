@@ -6,8 +6,11 @@ json="$(curl -sL https://api.github.com/repos/${owner}/${app_name}/releases/late
 url="$(echo "$json" | jq -r '.assets[] | select(.name | contains("Linux-x64")) | .browser_download_url' )"
 version="$(echo "$json" | jq -r '.tag_name' )"
 
-install_dir="${HOME}/.local/${app_name}"
-config_file="${HOME}/.bashrc"
+install_dir="${HOME}/.opt/${app_name}"
+
+config_file="${HOME}/.pathrc"
+[ -f "$config_file" ] || touch "config_file"
+# [ -f "$HOME/.pathrc" ] || touch "$HOME/.pathrc"
 initial_dir="$PWD"
 
 echo -e "\nInstalling ${app_name^} ${version}\n"
@@ -18,7 +21,7 @@ echo -e "Getting latest release\n"
 [ -d "$install_dir" ] && rm --recursive --force "$install_dir"
 
 curl -sSLo - "$url" \
-| tar --transform "flags=r;s/^(euphoria)-$version[^\/]+x64/\1/x" --show-transformed-names -xzC "${HOME}/.local"
+| tar --transform "flags=r;s/^(euphoria)-$version[^\/]+x64/\1/x" --show-transformed-names -xzC "${HOME}/.opt"
 
 touch "${install_dir}/v${version}.txt"
 
@@ -44,10 +47,10 @@ done
 
 cd $initial_dir
 
-echo -e "\nWriting path to .bashrc\n"
+echo -e "\nWriting path to .pathrc\n"
 
-set_path='[[ ":${PATH}:" == *":${HOME}/.local/'"${app_name}"'/bin:"* ]] \
-  || export PATH="${HOME}/.local/'"${app_name}"'/bin${PATH:+:${PATH}}"'
+set_path='[[ ":${PATH}:" == *":${HOME}/.opt/'"${app_name}"'/bin:"* ]] \
+  || export PATH="${HOME}/.opt/'"${app_name}"'/bin${PATH:+:${PATH}}"'
 
 config_strings="#begin ${app_name} init
 

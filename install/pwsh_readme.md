@@ -2,6 +2,9 @@
 
 # PowerShell [&#x2B67;](https://learn.microsoft.com/en-us/powershell/)
 
+* Pasiausias leidimas: 7.5.0
+* Išleista: 2025-01-23
+
 ## Diegimas
 
 ```bash
@@ -27,5 +30,5 @@ pwsh pwsh_sys-upgrade.ps1
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#! /usr/bin/env -S pwsh
+#!/usr/bin/env -S pwsh
 ```
