@@ -1,3 +1,5 @@
+[Atgal](../readme.md)
+
 # Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis
 
 Naudota operacinė sistema – Ubuntu 24.04
