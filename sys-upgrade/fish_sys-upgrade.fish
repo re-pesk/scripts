@@ -26,23 +26,23 @@ set -g successMessage (getMessageText "$LANG.succ")
 # Išorinių komandų iškvietimo funkcija
 function runCmd ()
 
-    # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+    # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
     set -l command "sudo $argv"
 
-    # Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+    # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
     # (string length $command) - grąžina eilutės, saugomos $command, ilgį
     # (string repeat --count (string length $command) '-') - generuoja duoto ilgio separatorių iš '-' simbolių
     # set -l separator (string repeat --count (string length $command) '-')
     set -l separator (string replace -a -r '.' '-' $command)
 
-    # Išveda komandos eilutę, apsuptą skirtuko eilučių
+    # Išvedama komandos eilutė, apsupta skirtuko eilučių
     echo -e "$separator\n$command\n$separator\n"
 
-    # Įvykdo komandą
+    # Vykdoma komanda
     sudo $argv
 
     # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
-    # Įvykdymo rezultatas programos kintamasis $status išsaugomas automatiškai
+    # Įvykdymo rezultatas programos kintamajame $status išsaugomas automatiškai
     if test $status -gt 0
       echo -e "\n$errorMessage\n"
       exit 99

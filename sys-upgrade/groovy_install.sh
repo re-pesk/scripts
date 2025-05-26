@@ -4,6 +4,7 @@ version="4.0.24"
 file="apache-groovy-sdk-$version.zip"
 tmpfile="/tmp/$file"
 url="https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/$file"
+install_dir=".groovy"
 configfile="$HOME/.bashrc"
 
 groovy -version > /dev/null 2>&1; status="$?"
@@ -19,19 +20,19 @@ wget --version > /dev/null 2>&1; status="$?"
 wget -qO $tmpfile $url
 [ ! -f "$tmpfile" ] && echo "Failo $file atsiųsti nepavyko!" && exit
 
-[ -d "$HOME/.groovy" ] && rm --recursive "$HOME/.groovy"
+[ -d "$HOME/$install_dir" ] && rm --recursive "$HOME/$install_dir"
 [ -d "$HOME/groovy-$version" ] && rm --recursive "$HOME/groovy-$version"
 
 unzip "$tmpfile" -d "$HOME" > /dev/null
 [ -f "$tmpfile" ] && rm "$tmpfile"
 
-[ -d "$HOME/groovy-$version" ] && mv -T "$HOME/groovy-$version" "$HOME/.groovy"
-[ ! -d "$HOME/.groovy" ] && echo "Katalogas $HOME/.groovy nebuvo sukurtas!" && exit
+[ -d "$HOME/groovy-$version" ] && mv -T "$HOME/groovy-$version" "$HOME/$install_dir"
+[ ! -d "$HOME/$install_dir" ] && echo "Katalogas $HOME/$install_dir nebuvo sukurtas!" && exit
 
 set_java_home='[ -z "${JAVA_HOME}" ] \
   && export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"'
-set_path='[[ ! ":$PATH:" == *":$HOME/.groovy/bin:"* ]] \
-  && export PATH="$HOME/.groovy/bin${PATH:+:${PATH}}"'
+set_path='[[ ! ":$PATH:" == *":$HOME/'$install_dir'/bin:"* ]] \
+  && export PATH="$HOME/'$install_dir'/bin${PATH:+:${PATH}}"'
 
 configstrings="#begin groovy init
 

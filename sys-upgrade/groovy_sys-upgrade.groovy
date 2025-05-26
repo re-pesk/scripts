@@ -15,7 +15,7 @@ def messages = [
 // Aplinkos kintamasis su aplinkos kalbos nuostata
 def lang = System.getenv('LANG')
 
-// Globalūs kintamieji su ranešimais, atitinkančiais aplinkos kalbą, 
+// Globalūs kintamieji su pranešimais, atitinkančiais aplinkos kalbą, 
 errorMessage = messages[lang]['err']
 successMessage = messages[lang]['succ']
 
@@ -24,7 +24,7 @@ def runCmd(String cmdArg) {
   // Komanda iš funkcijos argumento
   def command = "sudo $cmdArg"
 
-  // Komandos ilgio skirtukas iš "-" simbolių
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // '-'* - kartoja '-' simbolį
   // command.length() - komandos ilgis
   def separator = '-'*command.length()

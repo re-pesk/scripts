@@ -8,20 +8,20 @@ import "core:strings"
 // Išorinių komandų iškvietimo funkcija
 runCmd :: proc(cmdArg: string, langMessages: map[string]string) {
 
-  //Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  //Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   command := strings.join({"sudo", cmdArg}, " ")
   
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // strings.repeat("-", ...) - simbolio kartojimas, len(command) - komandos ilgis
   separator := strings.repeat("-", len(command))
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   fmt.printfln("%v\n%v\n%v\n", separator, command, separator)
 
   // Kovertuoja komandos teksto eilutę į C kalbos eilutę
   csCommand := strings.clone_to_cstring(command)
 
-  // Įvykdo komandą, išėjimo kodą išsaugo į kintamąjį
+  // Vykdoma komanda, išėjimo kodas išsaugomas į kintamąjį
   exitCode := libc.system(csCommand);
 
   // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

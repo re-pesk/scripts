@@ -37,7 +37,7 @@
   ;; Sukuriama komanda iš funkcijos argumento
   (define command (string-append "sudo " cmdArg))
 
-  ;; Generuojamas skirtukas iš "-" simbolių
+  ;; Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   ;; (make-string ... #\-) - kartojamas simbolis '-'
   ;; (string-length command) - gaunamas komandos ilgis
   (define separator (make-string (string-length command) #\- ))
@@ -45,7 +45,7 @@
   ;; Išvedama komanda, apsupta skirtuko eilučių
   (display-strings separator "\n" command "\n" separator "\n\n")
 
-  ;; Įvykdoma komanda, procesos statusas išsaugomas į kintamąjį
+  ;; Įvykdoma komanda, proceso statusas išsaugomas į kintamąjį
   (define status (system command))
 
   ;; Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

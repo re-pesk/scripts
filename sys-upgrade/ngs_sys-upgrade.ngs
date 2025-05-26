@@ -19,17 +19,18 @@ succesMessage = messages[ENV.LANG]["succ"]
 # Išorinių komandų iškvietimo funkcija
 F runCmd(cmdArg:Str) {
 
-  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
   command = "sudo ${cmdArg}"
 
-  # "-" * - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
+  # "-" * - kartoja '-' simbolį
   # len(command) paima komandinės eilutės ilgį
   separator = "-" * len(command)
 
-  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
   echo("${separator}\n${command}\n${separator}\n")
 
-  # Įvykdo komandą, išvedimą nukreipdamas į pagrindinį procesą (top_level) ir ignoruodamas vukldomo procesoklaidų pranešimus
+  # Vykdoma komanda, išvedimą nukreipdamas į pagrindinį procesą (top_level) ir ignoruodamas vykdomo proceso klaidų pranešimus
   proc = $(top_level:: ok: sudo $*{cmdArg.split(' ')})
 
   # Išsaugo įvykdytos komandos išėjimo kodą

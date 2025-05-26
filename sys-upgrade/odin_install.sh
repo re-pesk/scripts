@@ -11,7 +11,7 @@ read -e -p "Found working Odin installation. Do you want overwrite it? 'y' or ex
 
 url=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/odin-lang/Odin/releases/latest)
 url="${url//tag/download}/odin-linux-amd64-$(basename -- $url).tar.gz"
-curl -sSLo- $url | tar -xzv --transform 'flags=r;s/^odin[^\/]+/odin/x' --show-transformed-names -C "$HOME/.local"
+curl -sSLo- $url | tar --transform 'flags=r;s/^odin[^\/]+/odin/x' --show-transformed-names -xzvC "$HOME/.local"
 
 [ ! -d $HOME/.local/odin ] && echo "Directory $HOME/.local/odin is not created!" && exit -1
 

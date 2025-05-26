@@ -12,8 +12,10 @@ const messages = {
   },
 }
 
-// Pranešimai pagal aplinkos kalbos nuostatą
+// Aplinkos kalbos nuostata
 const LANG = process.env.LANG
+
+// Pranešimai pagal aplinkos kalbos nuostatą
 const errorMessage = messages[LANG].err
 const successMessage = messages[LANG].succ
 
@@ -24,25 +26,25 @@ const { spawnSync } = Bun;
 // Išorinių komandų iškvietimo funkcija
 const runCmd = (cmdArg) => {
 
-  // Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento
   const command = `sudo ${cmdArg}`
 
-  // Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   // "-".repeat() - kartoja '-' simbolį
-  // command.length - paima komandinės eilutės ilgį
+  // command.length - paimamas komandinės eilutės ilgis
   const separator = "-".repeat(command.length)
 
-  // Išveda komandos eilutę, apsuptą skirtuko eilučių
+  // Išvedama komandos eilutė, apsupta skirtuko eilučių
   console.log(`${separator}\n${command}\n${separator}\n`)
 
-  // Įvykdo komandą, procesą išsaugo į kintamąjį 
+  // Įvykdoma komanda, procesas išsaugomas į kintamąjį 
   const child_proc = spawnSync(
     ["sudo", ...cmdArg.split(' ')], {
     stdio: ['inherit', 'inherit', 'inherit'],
     shell: true
   })
 
-  // Išsaugo įvykdytos komandos išėjimo kodą
+  // Išsaugomas įvykdytos komandos išėjimo kodas
   const exitCode = child_proc.exitCode
 
   // Nodejs kodo variantas
