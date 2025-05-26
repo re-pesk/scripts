@@ -35,7 +35,7 @@ lua kodo-failas.lua
 
 ### Shabang
 
-```shebang
+```bash
 #!/usr/bin/env -S lua
 ```
 

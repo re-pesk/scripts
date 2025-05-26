@@ -10,7 +10,7 @@
 odin run odin_sys-upgrade.odin -file -out:odin_sys-upgrade.bin
 ```
 
-### Vykdomoji eiluė
+### Vykdymo eiluė
 
 Norint *odin_sys-upgrade.odin* paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti eilutę:
 

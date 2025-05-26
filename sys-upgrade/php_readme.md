@@ -10,17 +10,26 @@
 php php_sys-upgrade.php
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-Norint *php_sys-upgrade.php* paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti shebangą:
+Norint *php_sys-upgrade.php* paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti vydymo eilutę.
 
-```shebang
+Įprastinė eilutė:
+
+```bash
 #!/usr/bin/env php
 ```
 
-arba prieš *<?php* tagą įterpti *bash'o* kodo eilutę:
+Bash'o* kodo eilutė:
 
 ```bash
 ///usr/bin/env php -r "$(tail -n +1 "$0")" "$@"; exit "$?"
 //<?php
+```
+
+arba
+
+```bash
+///usr/bin/env php "$0" -- "$@"; exit "$?"
+<?php
 ```

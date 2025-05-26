@@ -12,8 +12,8 @@
 zsh zsh_sys-upgrade.sh
 ```
 
-### Sehbang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env -S zsh
 ```

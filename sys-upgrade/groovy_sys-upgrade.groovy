@@ -1,4 +1,4 @@
-#!/usr/bin/env groovy
+///usr/bin/env groovy "$0" "$@"; exit $?
 
 // Klaidų ir sėkmės pranešimų medis
 def messages = [

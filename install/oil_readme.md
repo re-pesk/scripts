@@ -22,15 +22,15 @@ ysh --version # => Oils 0.24.0
 ## Paleistis
 
 ```bash
-osh oil-osh_sys-upgrade.oil
-ysh oil-ysh_sys-upgrade.oil
+osh osh-kodo-failas.oil
+ysh ysh-kodo-failas.oil
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
 Pagal skripto dialektą:
 
-```shebang
+```bash
 #!/usr/bin/env osh
 #!/usr/bin/env ysh
 ```

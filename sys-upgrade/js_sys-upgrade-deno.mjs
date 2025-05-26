@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-run --allow-env
+///usr/bin/env -S deno run --allow-run --allow-env "$0" "$@"; exit $?
 
 // Klaidų ir sėkmės pranešimų medis
 const messages = {

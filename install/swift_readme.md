@@ -40,10 +40,16 @@ swift --version # Swifto veikimas patikrinamas, išvedant instaliuotos Swift'o v
 swift kodo-failas.swift
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env -S swift
+```
+
+arba
+
+```bash
+///usr/bin/env -S swift "$0" "$@"; exit $?
 ```
 
 ## Kompiliavimas

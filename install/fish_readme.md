@@ -15,8 +15,8 @@ fish --version
 fish kodo-failas.fish
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env -S fish
 ```

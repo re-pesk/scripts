@@ -10,8 +10,8 @@
 janet janet_sys-upgrade.janet
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env janet
 ```

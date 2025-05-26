@@ -14,8 +14,8 @@ sudo apt install ksh93u+m
 ksh kodo-failas.sh
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env ksh
 ```

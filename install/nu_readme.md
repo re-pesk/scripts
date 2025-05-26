@@ -28,8 +28,8 @@ bash nu_install.sh
 nu kodo-failas.nu
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env nu
 ```

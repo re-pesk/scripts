@@ -18,8 +18,8 @@ dpkg -s dash | grep '^Version'
 dash kodo-failas.sh
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #! /usr/bin/env dash
 ```

@@ -24,10 +24,16 @@ bash v_install.sh
 v run v_sys-upgrade.v
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S v run
+```
+
+arba
+
+```bash
+///usr/bin/env -S v run "$0" "$@"; exit $?
 ```
 
 ## Kompiliavimas

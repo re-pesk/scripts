@@ -15,9 +15,9 @@ ghc --version
 runghc -- -- haskell_sys-upgrade.hs
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S runghc -- --
 ```
 

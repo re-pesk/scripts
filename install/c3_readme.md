@@ -16,7 +16,7 @@ c3c --version
 c3c compile-run -o vykdomasis-failas.bin kodo-failas.c3
 ```
 
-### Vykdomoji eilutė
+### Vykdymo instrukcija (shebang)
 
 ```bash
 ///usr/bin/env -S c3c compile-run -o "${0%.*}.bin" "$0" -- "$@"; exit $?

@@ -32,10 +32,10 @@ go version
 go run go_sys-upgrade.go
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
-//usr/bin/env -S go run $0 $@ ; exit
+```bash
+///usr/bin/env -S go run $0 $@ ; exit
 ```
 
 ## Kompiliavimas

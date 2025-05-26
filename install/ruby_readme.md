@@ -14,8 +14,8 @@ sudo snap install ruby --classic
 ruby ruby_sys-upgrade.rb
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S ruby
 ```

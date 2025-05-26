@@ -1,6 +1,6 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (46)
+# Skriptinimas skirtingomis programavimo kalbomis (51)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -26,7 +26,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Nu](nu_readme.md) (?): dažniau minima, mei kitos alteratyvios apvalkalo scenarijų kalbos
 * [x] [PowerShell](pwsh_readme.md) (-): keista sintaksė, kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (20)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (25)
 
 ### JavaVM (7)
 
@@ -47,15 +47,20 @@ Daug informacijos internete
 * [x] Deno (+-) truputį skiriasi nuo kitų variantų
 * [x] Node (+)
 
-### Kitos (10)
+### Kitos (15)
 
 * [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :(
 * [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis
+* [x] [Euphoria](euph_readme.md) (-) sudėtingas instaliavimas, seniai nebuvo leidimų
+  * [x] [Phix](phix_readme.md) (-) Stipriai modifikuota Euforijos versija, nepavyko paleisti pavyzdžių
 * [x] [Guile](guile_readme.md) (-) Lispo sintaksė. Sudėtinga susigaudyti dokumentacijoje, mažai informacijos intenete
 * [x] [Io](https://iolanguage.org/index.html) (+-) Maža, paprasta kalba su Smaltalk'o sintakse, bet, deja, nevystoma
 * [x] [Janet](janet_readme.md) (?) Lispo sintaksė, pozicionuojama kaip skriptinė kalba
 * [x] [Julia](julia_readme.md) (+-) Pythono pakaitalas moksliniams skaičiavimams
 * [x] [Lua](lua_readme.md) (+) Paprasta kalba
+  * [x] [Hilbish](hilbish_readme.md) (+) Apvalkalas (shell) Lua kalbos pagrindu
+  * [x] [Pluto](pluto_readme.md) (+) Lua kalbos supersetas su klasėmis
+* [x] [Onyx](onyx_readme.md) (+) kalba, skirta kompiliuoti į Wasm. Turi JIT kompiliatorių (-) nauja kalba, nėra dokumentacijos
 * [x] [PHP](php_readme.md) (+-) daug informacijos internete, kalba pakankamai universali, kad būtų taikoma ne tik web srityje, tačiau sintaksė vis dar orientuota į web skriptinimą
 * [x] [Python](py_readme.md) (+-) pagrindinis trūkumas - tarpais grįsta sintaksė
 * [x] [Ruby](ruby_readme.md) (+-) keistoka sintaksė

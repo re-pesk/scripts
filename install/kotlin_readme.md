@@ -40,10 +40,16 @@ Failo pavadinimo plėtinys būtinai turi būti „.kts“!
 kotlinc -script kotlin_sys-upgrade.kts
 ```
 
-### Shebang
+### Vykdymo instrukcija (shebang)
 
-```shebang
+```bash
 #!/usr/bin/env -S kotlinc -script
+```
+
+arba
+
+```bash
+///usr/bin/env -S kotlinc -script "$0" "$@"; exit $?
 ```
 
 ## Kompiliavimas
