@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Zsh [&#x2B67;](https://www.zsh.org/)
 

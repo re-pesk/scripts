@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Ruby [&#x2B67;](https://www.ruby-lang.org/)
 

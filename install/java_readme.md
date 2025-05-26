@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Java [&#x2B67;](https://www.java.com/en/download/help/index.html)
 

@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Abs [&#x2B67;](https://www.abs-lang.org/)
 

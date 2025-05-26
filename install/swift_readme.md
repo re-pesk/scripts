@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Swift [&#x2B67;](https://www.swift.org/)
 

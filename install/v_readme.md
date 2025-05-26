@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # V [&#x2B67;](https://vlang.io/)
 

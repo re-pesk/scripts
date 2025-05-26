@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # C3 [&#x2B67;](https://c3-lang.org/)
 

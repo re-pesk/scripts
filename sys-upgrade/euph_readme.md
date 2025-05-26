@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Euphoria [&#x2B67;](https://openeuphoria.org/)
 

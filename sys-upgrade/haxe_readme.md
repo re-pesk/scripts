@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Haxe [&#x2B67;](https://haxe.org/)
 

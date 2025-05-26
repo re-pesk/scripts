@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Julia [&#x2B67;](https://julialang.org/)
 

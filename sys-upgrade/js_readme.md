@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # JavaScript [&#x2B67;](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 

@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # PureScript [&#x2B67;](https://www.purescript.org/)
 

@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Groovy [&#x2B67;](https://groovy-lang.org/)
 

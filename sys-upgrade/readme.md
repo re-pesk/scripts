@@ -1,4 +1,4 @@
-[Atgal](../readme.md)
+[&uArr;](../readme.md)
 
 # Skriptinimas skirtingomis programavimo kalbomis (54)
 

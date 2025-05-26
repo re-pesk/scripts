@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Lua [&#x2B67;](https://www.lua.org/)
 

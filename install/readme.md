@@ -1,4 +1,4 @@
-[Atgal](../readme.md)
+[&uArr;](../readme.md)
 
 # Skirtingų programavimo kalbų ir vykdymo variklių instaliavimas
 

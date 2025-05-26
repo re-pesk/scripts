@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Hilbish [&#x2B67;](https://rosettea.github.io/Hilbish/)
 

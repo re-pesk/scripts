@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # C [&#x2B67;](https://www.gnu.org/software/gnu-c-manual/gnu-c-manual.html)
 

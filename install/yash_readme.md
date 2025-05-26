@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Yash [&#x2B67;](https://magicant.github.io/yash/)
 
