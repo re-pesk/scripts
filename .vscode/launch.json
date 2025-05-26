@@ -5,6 +5,34 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug Node",
+      "type": "node",
+      "cwd": "${fileDirname}",
+      "program": "${file}",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "args": [
+        "--opt=markdown/haddock",
+        "readme"
+      ]
+    },
+    {
+      "name": "Debug Bun",
+      "type": "bun",
+      "runtime": "bun",
+      "request": "launch",
+      "watchMode": false,
+      "stopOnEntry": true,
+      "cwd": "${fileDirname}",
+      "program": "${file}",
+      "args": [
+        "--opt=markdown/haddock",
+        "readme"
+      ]
+    },
+    {
       "name": "Dart",
       "type": "dart",
       "request": "launch",
@@ -17,7 +45,9 @@
       "name": "Bash-Debug (Launch currently open script)",
       "cwd": "${fileDirname}",
       "program": "${file}",
-      "args": []
+      "args": [
+        "sek15"
+      ]
     },
     {
       "name": "Listen for Xdebug",
