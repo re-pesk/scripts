@@ -2,14 +2,16 @@
 
 # Ruby [&#x2B67;](https://www.ruby-lang.org/)
 
-## Diegimas (Ubuntu 24.04)
-
-```bash
-sudo snap install ruby --classic
-```
+## [Diegimas](../install/ruby_readme.md)
 
 ## Paleistis
 
 ```bash
 ruby ruby_sys-upgrade.rb
+```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env -S ruby
 ```

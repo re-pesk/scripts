@@ -2,23 +2,25 @@
 
 # PHP [&#x2B67;](https://www.php.net/)
 
-## Diegimas
-
-```bash
-sudo add-apt-repository ppa:ondrej/php
-sudo apt update
-sudo apt install php8.4 php8.4-mbstring php8.4-curl php8.4-phpdbg php8.4-xdebug -y
-php -v
-```
-
-arba
-
-```bash
-bash php_install.sh
-```
+## [Diegimas](../install/php_readme.md)
 
 ## Paleistis
 
 ```bash
 php php_sys-upgrade.php
+```
+
+### Shebang
+
+Norint *php_sys-upgrade.php* paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti shebangą:
+
+```shebang
+#!/usr/bin/env php
+```
+
+arba prieš *<?php* tagą įterpti *bash'o* kodo eilutę:
+
+```bash
+///usr/bin/env php -r "$(tail -n +1 "$0")" "$@"; exit "$?"
+//<?php
 ```

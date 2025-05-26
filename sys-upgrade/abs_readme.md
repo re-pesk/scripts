@@ -2,16 +2,16 @@
 
 # Abs [&#x2B67;](https://www.abs-lang.org/)
 
-## Diegimas
-
-```bash
-bash <(curl -fsSL https://www.abs-lang.org/installer.sh)
-mv abs $HOME/.local/bin
-abs --version
-```
+## [Diegimas](../install/abs_readme.md)
 
 ## Paleistis
 
 ```bash
 abs abs_sys-upgrade.abs
+```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env abs
 ```

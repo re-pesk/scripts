@@ -2,15 +2,16 @@
 
 # Java [&#x2B67;](https://www.java.com/en/download/help/index.html)
 
-## Diegimas
+## [Diegimas](../install/java_readme.md)
 
-```bash
-sudo apt install openjdk-21-jdk
-java -version
-```
-
-### Paleistis
+## Paleistis
 
 ```bash
 java --source 21 --enable-preview java_sys-upgrade.java
+```
+
+### Shebang
+
+```shebang
+///usr/bin/env java --source 21 --enable-preview "$0" "$@"; exit $?
 ```

@@ -1,3 +1,5 @@
+#!/usr/bin/env -S v run
+
 import os
 import strings
 
@@ -31,10 +33,10 @@ fn run_cmd(cmdArg string) {
   println("${separator}\n${command}\n${separator}\n")
 
   // Vykdoma komanda, išsaugo išėjimo kodą į kintamąjį
-  exitCode := os.system(command)
+  exit_code := os.system(command)
 
   // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
-  if exitCode != 0 {
+  if exit_code != 0 {
     println("\n${lang_messages['err']}\n")
     exit(99)
   }

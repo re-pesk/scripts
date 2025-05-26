@@ -2,18 +2,16 @@
 
 # Dash [&#x2B67;](https://manned.org/dash.1)
 
-## Diegimas
-
-Instaliuojamas su operacine.
-
-Išvesti versiją:
-
-```bash
-dpkg -s dash | grep '^Version'
-```
+## [Diegimas](../install/dash_readme.md)
 
 ## Paleistis
 
 ```bash
 dash dash_sys-upgrade.sh
+```
+
+### Shebang
+
+```shebang
+#! /usr/bin/env dash
 ```

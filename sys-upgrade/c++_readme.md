@@ -2,9 +2,15 @@
 
 # C++ [&#x2B67;](https://cplusplus.com/doc/tutorial/)
 
-## Diegimas
+## [Diegimas](../install/c++_readme.md)
 
-g++ instaliuojamas su Ubuntu 24.04 operacine sistema
+## Paleistis
+
+### Vykdomoji eilutė
+
+```bash
+///usr/bin/env -S g++ -Wno-sizeof-array-argument -std=c++2b -o "${0%.*}.bin" "$0"; "./${0%.*}.bin" "$@"; exit $?
+```
 
 ## Kompiliavimas
 

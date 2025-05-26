@@ -1,3 +1,4 @@
+///usr/bin/env -S odin run "$0" -file -out:"${0%.*}.bin" -- "$@"; exit $?
 package main
 
 import "core:c/libc"

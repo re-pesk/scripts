@@ -2,12 +2,7 @@
 
 # Elvish shell [&#x2B67;](https://elv.sh/)
 
-## Diegimas
-
-```bash
-curl -so - https://dl.elv.sh/linux-amd64/elvish-v0.21.0.tar.gz | tar -xzvC $HOME/.local/bin
-elvish --version
-```
+## [Diegimas](../install/elvish_readme.md)
 
 ## Paleistis
 
@@ -15,8 +10,8 @@ elvish --version
 elvish elvish_sys-upgrade.elv
 ```
 
-arba
+### Shebang
 
-```bash
-./elvish_sys-upgrade.elv
+```shebang
+#!/usr/bin/env elvish
 ```

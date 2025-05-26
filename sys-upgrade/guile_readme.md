@@ -2,26 +2,25 @@
 
 # GNU Guile [&#x2B67;](https://www.gnu.org/software/guile/)
 
-## Diegimas
-
-```bash
-sudo apt-get install guile-3.0
-guile --version
-
-sudo apt-get install guile-3.0-dev
-guild --version
-```
+## [Diegimas](../install/guile_readme.md)
 
 ## Paleistis
 
 ```bash
-guile --no-auto-compile guile_sys-upgrade.scm
+guile guile_sys-upgrade.scm
 ```
 
 Be automatinio kompiliavimo
 
 ```bash
 guile --no-auto-compile guile_sys-upgrade.scm
+```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env -S guile --no-auto-compile -s 
+!#
 ```
 
 ## Kompiliavimas (į baitkodą)

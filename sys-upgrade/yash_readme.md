@@ -2,15 +2,17 @@
 
 # Yash [&#x2B67;](https://magicant.github.io/yash/)
 
-## Diegimas
-
-```bash
-sudo apt-get install yash
-yash --version
-```
+## [Diegimas](../install/yash_readme.md)
 
 ## Paleistis
 
 ```bash
 yash yash_sys-upgrade.sh
 ```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env yash
+```
+

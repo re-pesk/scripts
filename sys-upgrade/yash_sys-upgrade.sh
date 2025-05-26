@@ -1,31 +1,20 @@
 #! /usr/bin/env yash
 
-# Klaidų ir sėkmės pranešimų raktai
-keys=(
-  'en.UTF-8.err'
-  'en.UTF-8.succ'
-  'lt_LT.UTF-8.err'
-  'lt_LT.UTF-8.succ'
-)
-
-# PKlaidų ir sėkmės pranešimų tekstai
-values=(
-  'Error! Script execution was terminated!'
-  'Successfully finished!'
-  'Klaida! Scenarijaus vykdymas sustabdytas!'
-  'Komanda sėkmingai įvykdyta!'
-)
+# Klaidų ir sėkmės pranešimų medis
+messages="en.UTF-8.err:Error! Script execution was terminated!
+en.UTF-8.succ:Successfully finished!
+lt_LT.UTF-8.err:Klaida! Scenarijaus vykdymas sustabdytas!
+lt_LT.UTF-8.succ:Komanda sėkmingai įvykdyta!"
 
 # Funkcija pranešimui iš masyvo paimti pagal raktą
 getMessage() {
-
-  index=0
-  for key in $keys; do
-    index=$((index + 1))
-    if [[ "${key}" = "$1" ]]; then
-      echo "${values[$index]}"
+  echo "$messages" | while read item; do
+    case $item in
+    ("$1:"*) 
+      echo "${item#$1:}"
       return
-    fi
+      ;;
+    esac
   done
 }
 

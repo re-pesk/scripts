@@ -2,15 +2,16 @@
 
 # NGS [&#x2B67;](https://ngs-lang.org/)
 
-## Diegimas
-
-```bash
-curl https://ngs-lang.org/install.sh | bash
-ngs --version
-```
+## [Diegimas](../install/ngs_readme.md)
 
 ## Paleistis
 
 ```bash
 ngs ngs_sys-upgrade.ngs
+```
+
+### Shebang
+
+```shebang
+#!/usr/bin/env ngs
 ```

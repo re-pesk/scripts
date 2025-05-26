@@ -2,9 +2,7 @@
 
 # Python [&#x2B67;](https://www.python.org/)
 
-## Diegimas
-
-Instaliuojamas su Ubuntu.
+## [Diegimas](../install/py_readme.md)
 
 ## Paleistis
 
@@ -14,6 +12,8 @@ python3 py_sys-upgrade.py
 
 arba
 
-```bash
-./py_sys-upgrade.py
+### Shebang
+
+```shebang
+#!/usr/bin/env python3
 ```

@@ -1,4 +1,6 @@
-const std = @import("std");
+///usr/bin/env -S zig run "$0" -- "$@"; exit $?
+
+const std = @import ("std");
 const stdout = std.io.getStdOut().writer();
 const allocPrint = std.fmt.allocPrint;
 const print = std.debug.print;
