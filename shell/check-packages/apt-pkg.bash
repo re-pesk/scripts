@@ -8,22 +8,22 @@ Usage:
 
 ./chk_pkgs.sh -[-aeinp] packageName1 packageName2 ... packageNameN
   Options:
-  -h            - show help
-  -p            - show names and status of all packages
-  -a            - show names of all packages only (without status)
-  -i            - show names of installed packages only
-  -n            - show names of not installed packages only
-  -e            - show names that are not in the list of packages
-  -r            - output content of resulting associative array instead of result string
+  -h            - show [h]elp
+  -p            - show names and status of all [p]ackages
+  -a            - show names of [a]ll packages (names only without status)
+  -i            - show names of [i]nstalled packages only
+  -n            - show names of [n]ot installed packages only
+  -o            - show names that are n[o]t in the package list
+  -r[ainop]     - output content of resulting associative array instead of result string
   -- or none    - show all info
 
   To get output as multiline string to use in other command:
 
-  apt install $(./check-packages-w-apt.bash -[aeinp] packageName1 packageName2 ... packageNameN)
+  apt list $(./apt-pkg.bash -[ainop] packageName1 packageName2 ... packageNameN)
 
   To get output as associative array:
 
-  declare -A associative_array="("$(./check_packages.bash (--|-r[aeinp])? packageName1 packageName2 ... packageNameN)")"
+  declare -A associative_array="("$(./apt-pkg.bash (--|-r[ainop]+)? packageName1 packageName2 ... packageNameN)")"
 
 ' >&2
   exit 1
@@ -41,7 +41,7 @@ if [[ "$1" =~ ^- ]];then
 fi
 
 # Check if options are allowed
-[[ "${options}" =~ ^(-|h|r?[aeinp]{1,5})$ ]] || errorMessage 'Error! Unknown option'
+[[ "${options}" =~ ^(-|h|r[ainop]{1,5}|a|i|n|o|p)$ ]] || errorMessage 'Error! Unknown option'
 
 # Check if option requires to show help message
 [[ "${options}" =~ ^h$ ]] && errorMessage 'This is help message'
@@ -56,49 +56,50 @@ input="$(printf "%s\n" ${input[@]} | sort )"
 # Get package names with installation status by 'apt list' command
 # shellcheck disable=SC2068
 packages=$(apt list ${input[@]} 2> /dev/null | tail +2 | sed -E 's/\/[^\[]+/ /;s/ $/ [not installed]/')
-
-# If there is no package in the list, add all names to not_package list 
+# If there is no package in the list, add all names to non_packages list 
 if [[ "${packages}" == "" ]]; then
-  not_package="${input[*]}"
-else # otherwise get names, lists of installed and not_installed packages, and not_package names to separate lists
+  non_packages="${input[*]}"
+else # otherwise get names, lists of installed and not_installed packages, and non_packages names to separate lists
   names=$(echo "${packages}" | sed -E 's/ \[[^\[]+\]$//')
   installed=$(echo "${packages}" | grep -P "\[installed" | sed -E 's/ \[[^\[]+\]$//')
   not_installed=$(echo "${packages}" | grep -P "\[not installed" | sed -E 's/ \[[^\[]+\]$//')
-  not_package=$(printf "%s\n" "${input[@]}" | grep -vP "${names//$'\n'/|}")
+  non_packages=$(printf "%s\n" "${input[@]}" | grep -vP "${names//$'\n'/|}")
 fi
+
+# Declare associative array 
+declare -A result=()
+
+# Add lists in multiline string format to associative array, if appropriate option was provided
+[[ "{-,p}" =~ [${options}] ]] && result["packages"]="${packages}"
+[[ "{-,a}" =~ [${options}] ]] && result["names"]="${names}"
+[[ "{-,i}" =~ [${options}] ]] && result["installed"]="${installed}"
+[[ "{-,n}" =~ [${options}] ]] && result["not_installed"]="${not_installed}"
+[[ "{-,o}" =~ [${options}] ]] && result["non_packages"]="${non_packages}"
 
 if [[ "{-,r}" =~ [${options}] ]]; then
 
-  # Declare associative array 
-  declare -A result=()
-
-  # Add lists in multiline string format to associative array, if appropriate option was provided
-  [[ "{-,p}" =~ [${options}] ]] && result["packages"]="${packages}"
-  [[ "{-,a}" =~ [${options}] ]] && result["names"]="${names}"
-  [[ "{-,i}" =~ [${options}] ]] && result["installed"]="${installed}"
-  [[ "{-,n}" =~ [${options}] ]] && result["not_installed"]="${not_installed}"
-  [[ "{-,e}" =~ [${options}] ]] && result["not_package"]="${not_package}"
-
   # Print content of associative array to console
-  printf '\n[%s]="%s"\n' "${result[@]@k}"
- 
+  for key in packages names installed not_installed non_packages ;do
+    [[ " ${!result[*]} " =~ [[:space:]]${key}[[:space:]] ]] && printf '\n[%s]="%s"\n' "$key" "${result[$key]}"
+  done
+  
   echo
 
   # To get output as associative array:
-  # declare -A associative_array="("$(./check_packages.bash (--|-r[aeinp])? packageName1 packageName2 ... packageNameN)")"
+  # declare -A associative_array="("$(./apt_pkg.bash (--|-r[ainop]{1,5})? packageName1 packageName2 ... packageNameN)")"
 
 else
 
   case ${options} in
-    ( *[-p]* ) echo "${packages}";;
-    ( *[-a]* ) echo "${names//$'\n'/ }";;
-    ( *[-i]* ) echo "${installed//$'\n'/ }";;
-    ( *[-n]* ) echo "${not_installed//$'\n'/ }";;
-    ( *[-e]* ) echo "${not_package//$'\n'/ }";;
+    ( *[-p]* ) echo ${result["packages"]};;
+    ( *[-a]* ) echo ${result["names"]};;
+    ( *[-i]* ) echo ${result["installed"]};;
+    ( *[-n]* ) echo ${result["not_installed"]};;
+    ( *[-o]* ) echo ${result["non_packages"]};;
     (*) errorMessage "Error! An unknown option";;
   esac
 
   # To get output as multiline string to use in other command:
-  # apt install $(./check-packages-w-apt.bash -[aeinp] packageName1 packageName2 ... packageNameN)
+  # apt install $(./apt-pkg.bash -[ainop] packageName1 packageName2 ... packageNameN)
 
 fi

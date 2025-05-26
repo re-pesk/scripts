@@ -1,0 +1,12 @@
+[Nemo Action]
+Name=Give/remove file excutive rights
+Comment[lt]=Give/remove file excutive rights
+Exec=<action_scripts/make-file-executable.bash "%F">
+Icon-Name=edit-copy
+Selection=notnone
+Extensions=nodirs;
+Dependencies=bash;
+Quote=double
+
+Name[lt]=Suteikti/atimti failo vykdymo teises
+Comment[lt]=Suteikti/atimti failo vykdymo teises
