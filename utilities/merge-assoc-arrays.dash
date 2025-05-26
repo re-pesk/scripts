@@ -1,0 +1,21 @@
+#!/usr/bin/env dash
+
+array1="5::true
+10::true
+15 and ab::true and false"
+
+array2="20::true
+25::true
+30::true"
+
+# convert both "associative arrays" to new "associative array"
+array_both="${array1}\n${array2}"
+
+# show array
+echo -n "$array_both\n"
+
+# iterate on array
+echo "$array_both" | while read item; do
+  echo "array_both[${item%::*}]=${item#*::}"
+done
+
