@@ -4,21 +4,21 @@
 
 ## PHP kodo paleidimo skriptas
 
-Linux sistemose įprastiniai PHP failai gali būti paverčiami vydomaisiais naudojant shebangą:
+Linux sistemose įprastiniai PHP failai gali būti paverčiami vydomaisiais naudojant vykdymo instrukciją (shebangą):
 
-```shebang
+```bash
 #!/usr/bin/env php
 ```
 
-Įkėlimo skriptas _php-script.sh_ leidžia vykdyti PHP kodo failus be `<?php` tago. Tam faile reikalingas šitoks shebangas, jeigu _php-script.sh_ yra kataloge, įtrauktame į sistemos kelią.
+Įkėlimo skriptas _php-script.sh_ leidžia vykdyti PHP kodo failus be `<?php` tago. Jeigu _php-script.sh_ yra kataloge, įtrauktame į sistemos kelią, faile įrašoma šitokia vykdymo instrukcija:
 
-```shebang
+```bash
 #!/usr/bin/env php-script.sh
 ```
 
-Šis shebangas leidžia vykdyti PHP kodo failus be `<?php` tago tame pačiame kataloge, kuriame yra _php-script.sh_:
+Ši vykdymo instrukcija leidžia vykdyti PHP kodo failus be `<?php` tago tame pačiame kataloge, kuriame yra _php-script.sh_:
 
-```shebang
+```bash
 #!./php-script.sh
 ```
 
