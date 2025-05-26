@@ -23,8 +23,8 @@
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
 
-*.bin
+**/*_.*
+**/*.*_
+**/*_
 
-*_.*
-*.*_
-*_
+**/*.bin
