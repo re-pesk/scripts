@@ -18,7 +18,7 @@ for var in "${array[@]}";do wget "http://phix.x10.mx/phix.1.0.5${var:+.$var}.zip
 for var in "${array[@]}";do unzip "phix.1.0.5${var:+.$var}.zip" -d phix; done
 wget http://phix.x10.mx/p64; mv p64 phix/p
 cd phix
-chmod 777 p
+chmod +x p
 ./p -test
 cd ..
 mv phix ${HOME}/.local/phix

@@ -41,6 +41,12 @@ dart kodo-failas.dart
 #!/usr/bin/env dart
 ```
 
+arba
+
+```bash
+///usr/bin/env dart "$0" "$@"; exit $? 
+```
+
 ## Kompiliavimas
 
 ```bash

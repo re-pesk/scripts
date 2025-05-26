@@ -29,6 +29,12 @@ rdmd kodo_failas.d
 #!/usr/bin/env rdmd
 ```
 
+arba
+
+```bash
+///usr/bin/env rdmd "$0" "$@"; exit $?
+```
+
 ## Kompiliavimas
 
 ```bash
