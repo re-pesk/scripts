@@ -1,4 +1,6 @@
-# Zsh [&#x2B67;](https://www.python.org/)
+[Atgal](./readme.md)
+
+# Python [&#x2B67;](https://www.python.org/)
 
 ## Diegimas
 

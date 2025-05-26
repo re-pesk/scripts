@@ -1,0 +1,54 @@
+#!/usr/bin/env ngs
+
+# Pranešimų masyvas - kiekvienas pranešimas naujoje eilutėje
+messages = {
+  'en.UTF-8': {
+    'err': "Error! Script execution was terminated!",
+    'succ': "Successfully finished!"
+  },
+  'lt_LT.UTF-8': {
+    'err': "Klaida! Scenarijaus vykdymas sustabdytas!",
+    'succ': "Komanda sėkmingai įvykdyta!"
+  }
+}
+
+# Išsaugomi pranešimai, atitinkantys aplinkos kalbą
+errorMessage = messages[ENV.LANG]["err"]
+succesMessage = messages[ENV.LANG]["succ"]
+
+# Išorinių komandų iškvietimo funkcija
+F runCmd(cmdArg:Str) {
+
+  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  command = "sudo ${cmdArg}"
+
+  # "-" * - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
+  # len(command) paima komandinės eilutės ilgį
+  separator = "-" * len(command)
+
+  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  echo("${separator}\n${command}\n${separator}\n")
+
+  # Įvykdo komandą, išvedimą nukreipdamas į pagrindinį procesą (top_level) ir ignoruodamas vukldomo procesoklaidų pranešimus
+  proc = $(top_level:: ok: sudo $*{cmdArg.split(' ')})
+
+  # Išsaugo įvykdytos komandos išėjimo kodą
+  exitCode = proc.processes[0].exit_code
+  
+  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiams programos vykdymas
+  if exitCode > 0 {
+    echo("\n${errorMessage}\n")
+    exit(99)
+  }
+
+  # Kitu atveju išvedamas sėkmės pranešimas
+  echo("\n${succesMessage}\n")
+}
+
+echo("")
+
+# Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
+runCmd("apt update")
+runCmd("apt-get upgrade -y")
+runCmd("apt-get autoremove -y")
+runCmd("snap refresh")

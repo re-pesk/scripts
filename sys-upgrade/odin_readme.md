@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Odin [&#x2B67;](ttps://odin-lang.org/)
 
 ## Diegimas
@@ -18,14 +20,13 @@ arba
 bash odin-install.sh
 ```
 
-
 ## Paleistis
 
 ```bash
 odin run odin_sys-upgrade.odin -file -out:odin_sys-upgrade.bin
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 odin build odin_sys-upgrade.odin -file -out:odin_sys-upgrade.bin

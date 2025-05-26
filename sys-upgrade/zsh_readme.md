@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Zsh [&#x2B67;](https://www.zsh.org/)
 
 ## Diegimas

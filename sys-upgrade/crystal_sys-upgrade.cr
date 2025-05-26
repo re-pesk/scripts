@@ -1,5 +1,5 @@
 
-# Klaidų ir sėkmės pranešimų tekstai
+# Klaidų ir sėkmės pranešimų medis
 Messages = {
   "en.UTF-8": {
     "err": "Error! Script execution was terminated!",
@@ -12,30 +12,30 @@ Messages = {
 }
 
 # Pranešimai pagal aplinkos kalbos nuostatą
-Lang = ENV["LANG"]
-ErrorMessage = Messages[Lang]["err"]
-SuccessMessage = Messages[Lang]["succ"]
+ErrorMessage = Messages[ENV["LANG"]]["err"]
+SuccessMessage = Messages[ENV["LANG"]]["succ"]
 
-# Įvykdoma išorinė programa, terminale atspausdinama komanda, jos pranešimai ir vykdymo rezultatai
-def runCmd(cmdArgString : String)
+# Išorinių komandų iškvietimo funkcija
+def runCmd(cmdArg : String)
 
   # Sukuria komandos tekstinę eilutę iš funkcijos argumento
-  command = "sudo " + cmdArgString
+  command = "sudo " + cmdArg
 
-  # Sukuriamas komandų skirtukas, "-" simbolį kartojant tiek kartų, kiek simbolių turi komandos eilutė
+  # Generuoja skirtuką, visus komandos komandos simbolius pakeisdamas "-" simboliu
+  # "-" * - simbolio kartojimas, command.size - komandos simbolių skaičius
   separator = "-" * command.size
 
-  # Išvedama komanda su skirtukais
+  # Išveda komandos eilutę, apsuptą skirtuko eilučių
   puts separator, command, separator, ""
 
   # Argumentų eilutė suskaidoma į masyvą
-  cmdArgs = cmdArgString.split(' ')
+  args = cmdArg.split(' ')
 
-  # Vykdo komandą, komandos vykdymo statusą išsaugo į kintamąj
+  # Vykdo komandą, komandos vykdymo išėjimo kodą išsaugo į kintamąjį, išvedimas nukreipiamas į pagrindinį proceso
   status = Process.run(
     "sudo",
-    cmdArgs,
-    input: Process::Redirect::Inherit,
+    args,
+    input: Process::Redirect::Inherit, 
     output: Process::Redirect::Inherit,
     error: Process::Redirect::Inherit,
   )
@@ -53,6 +53,7 @@ end # def runCmd
 
 puts ""
 
+# Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
 runCmd "apt-get update"
 runCmd "apt-get upgrade -y"
 runCmd "apt-get autoremove -y"

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 import os
-import subprocess
 
-# Klaidų ir sėkmės pranešimų tekstai
+# Klaidų ir sėkmės pranešimų medis
 messages = {
     "en.UTF-8": {
         "err": "Error! Script execution was terminated!",
@@ -20,29 +19,36 @@ lang = os.environ["LANG"]
 errorMessage = messages[lang]['err']
 successMessage = messages[lang]['succ']
 
-# Įvykdo išorinę programą, terminale atspausdindama komandą, jos pranešimus ir vykdymo rezultatus
+import subprocess
+
+## Išorinių komandų iškvietimo funkcija
 def runCmd(cmdArg):
+
     # Sukuria komandos tekstinę eilutę iš funkcijos argumento
     command = f"sudo {cmdArg}"
-    # Generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
+    
+    # Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+    # "-" * - simbolio "-" kartojimas
+    # len(command) - komandos eilutės ilgis
     separator = "-" * len(command)
-    # Spausdina komandą, apsuptą separatorių
+    
+    # Išveda komandos eilutę, apsuptą skirtuko eilučių
     print(f"{separator}\n{command}\n{separator}\n")
 
     # Vykdo komandą, komandos vykdymo rezultatą išsaugo į kintamąjį 
-    result = subprocess.run(command.split(' '))
+    exitCode = subprocess.run(command.split(' ')).returncode
 
-    # Jeigu procesas pasibaigė klaida, išveda klaido pranešimą ir išeina iš programos
-    if(result.returncode != 0):
+    # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+    if(exitCode != 0):
         print(f"\n{errorMessage}\n")
-        exit(result.returncode)
+        exit(exitCode)
 
     # Jeigu klaidos nėra, išveda sėkmės pranešimą
     print(f"\n{successMessage}\n")
 
 print()
 
-# Kviečiamos komandos
+# Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
 runCmd('apt update')
 runCmd("apt-get upgrade -y")
 runCmd("apt-get autoremove -y")

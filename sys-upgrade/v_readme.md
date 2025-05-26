@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # V [&#x2B67;](https://vlang.io/)
 
 ## Diegimas
@@ -22,7 +24,7 @@ bash v_install.sh
 v run v_sys-upgrade.v
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 v v_sys-upgrade.v && mv v_sys-upgrade v_sys-upgrade.bin && ./v_sys-upgrade.bin

@@ -1,52 +1,60 @@
 #!/usr/bin/env -S julia
 
-module sysUpgrade
+# Klaidų ir sėkmės pranešimų medis
+messages = Dict(
+  "en.UTF-8" => Dict(
+    "err" => "Error! Script execution was terminated!",
+    "succ" => "Successfully finished!",
+  ),
+  "lt_LT.UTF-8" => Dict(
+    "err" => "Klaida! Scenarijaus vykdymas sustabdytas!",
+    "succ" => "Komanda sėkmingai įvykdyta!",
+  ),
+)
 
-  import Printf: @printf
+# Pranešimai, atitinkantys aplinkos kalbą
+lang = ENV["LANG"]
+errorMessage = messages[lang]["err"]
+successMessage = messages[lang]["succ"]
 
-  messages = Dict(
-    "en.UTF-8" => Dict(
-      "err" => "Error! Script execution was terminated!",
-      "succ" => "Successfully finished!",
-    ),
-    "lt_LT.UTF-8" => Dict(
-      "err" => "Klaida! Scenarijaus vykdymas sustabdytas!",
-      "succ" => "Komanda sėkmingai įvykdyta!",
-    ),
-  )
+import Printf: @printf
 
-  function runCmd(cmdArgStr, langMessages)
+# Išorinių komandų iškvietimo funkcija
+function runCmd(cmdArg)
 
-    command = "sudo $cmdArgStr"
-    separator = repeat("-", length(command))
-    @printf("%s\n%s\n%s\n\n", separator, command, separator)
+  # Sukuria komandos tekstinę eilutę iš funkcijos argumento
+  command = "sudo $cmdArg"
 
-    cmdArgs = split(cmdArgStr, " ")
-    objCmd = Cmd(`sudo $cmdArgs`, ignorestatus=true)
+  # Generuoja skirtuką, visus komandos $command simbolius pakeisdamas "-" simboliu
+  # repeat("-", n) - kartoja '-' simbolį, length(command) - paima komandinės eilutės ilgį
+  separator = repeat("-", length(command))
 
-    proc = run(objCmd)
-    code = proc.exitcode
+  # Išveda komandos eilutę, apsuptą skirtuko eilučių
+  @printf("%s\n%s\n%s\n\n", separator, command, separator)
 
-    if code != 0
-      @printf("\n%s\n\n", langMessages["err"])
-      exit(code)
-    end
-    
-    @printf("\n%s\n\n", langMessages["succ"])
+  # Paverčia komandos argumentą masyvu
+  args = split(cmdArg, " ")
 
+  # Sukuria komandos objektą
+  objCmd = Cmd(`sudo $args`, ignorestatus = true)
+
+  # Įvykdo komandą ir išaugo išėjimo kodą
+  exitCode = run(objCmd).exitcode
+
+  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+  if exitCode != 0
+    @printf("\n%s\n\n", errorMessage)
+    exit(exitCode)
   end
 
-  Base.@ccallable function main()::Cint
-
-    lang = ENV["LANG"]
-    langMessages = messages[lang]
-
-    println()
-
-    runCmd("apt-get update", langMessages)
-    runCmd("apt-get upgrade -y", langMessages)
-    runCmd("apt-get autoremove -y", langMessages)
-    runCmd("snap refresh", langMessages) 
-  end
-
+  # Kitu atveju išvedamas sėkmės pranešimas
+  @printf("\n%s\n\n", successMessage)
 end
+
+println()
+
+# Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis
+runCmd("apt-get update")
+runCmd("apt-get upgrade -y")
+runCmd("apt-get autoremove -y")
+runCmd("snap refresh")

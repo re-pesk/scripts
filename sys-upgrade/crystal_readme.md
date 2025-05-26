@@ -1,3 +1,5 @@
+[Atgal](./readme.md)
+
 # Crystal [&#x2B67;](https://crystal-lang.org/)
 
 ## Diegimas
@@ -13,7 +15,7 @@ crystal --version
 crystal crystal_sys-upgrade.cr
 ```
 
-## Kompilavimas
+## Kompiliavimas
 
 ```bash
 crystal build --release --progress --static -o crystal_sys-upgrade.bin crystal_sys-upgrade.cr
