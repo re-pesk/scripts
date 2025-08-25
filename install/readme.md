@@ -46,6 +46,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Perl](perl_readme.md)
 * [x] [PHP](php_readme.md)
 * [x] [Phix](phix_readme.md)
+* [x] [Pike](pike_readme.md)
 * [x] [Python](py_readme.md)
 * [x] [Pluto](pluto_readme.md)
 * [x] [PowerShell](pwsh_readme.md)
