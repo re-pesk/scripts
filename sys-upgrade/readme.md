@@ -35,11 +35,11 @@ Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
 * [x] [Clojure](https://clojure.org/) (-) Lispo sintaksė
 * [X] [Groovy](groovy_readme.md) (-)
 * [x] [Java](java_readme.md) (-)
-* [Kotlin](kotlin_readme.md) (-)
-      3 kodo variantai:
-      [x] intepretuojamas
-      [x] JVM
-      [x] ir kompiliuojamas į mašininį kodą
+* [x] [Kotlin](kotlin_readme.md) (-)
+  3 kodo variantai:
+  * [x] intepretuojamas,
+  * [x] JVM,
+  * [x] kompiliuojamas į mašininį kodą.
 * [x] [Scala](scala_readme.md) (-)
 
 ### [JS](js_readme.md) (3)
