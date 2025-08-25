@@ -1,6 +1,6 @@
 [&uArr;](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (54)
+# Skriptinimas skirtingomis programavimo kalbomis (55)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
 
@@ -26,7 +26,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Nu](nu_readme.md) (?): dažniau minima, mei kitos alteratyvios apvalkalo scenarijų kalbos
 * [x] [PowerShell](pwsh_readme.md) (-): keista sintaksė, kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (28)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (29)
 
 ### JavaVM (7)
 
@@ -35,11 +35,11 @@ Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
 * [x] [Clojure](https://clojure.org/) (-) Lispo sintaksė
 * [X] [Groovy](groovy_readme.md) (-)
 * [x] [Java](java_readme.md) (-)
-* [Kotlin](kotlin_readme.md) (-)
-      3 kodo variantai:
-      [x] intepretuojamas
-      [x] JVM
-      [x] ir kompiliuojamas į mašininį kodą
+* [x] [Kotlin](kotlin_readme.md) (-)
+  3 kodo variantai:
+  * [x] intepretuojamas,
+  * [x] JVM,
+  * [x] kompiliuojamas į mašininį kodą.
 * [x] [Scala](scala_readme.md) (-)
 
 ### [JS](js_readme.md) (3)
@@ -50,7 +50,7 @@ Daug informacijos internete
 * [x] Deno (+-) truputį skiriasi nuo kitų variantų
 * [x] Node (+)
 
-### Kitos (18)
+### Kitos (19)
 
 * [x] [Abs](abs_readme.md) (-) patogi kalba, bet nebevystoma :( (-)
 * [x] [Dart](dart_readme.md) (-) nepatogus darbas su išorinėmis komandomis (-)
@@ -67,6 +67,7 @@ Daug informacijos internete
 * [x] [Onyx](onyx_readme.md) (+) kalba, skirta kompiliuoti į Wasm. Turi JIT kompiliatorių, nauja kalba (-), nėra dokumentacijos (-)
 * [x] [Perl](perl_readme.md) (-) bendros paskirties Unix'o scenarijų kalba. Savotiška sintaksė (-), daug informacijos ir pavyzdžių (+)
 * [x] [PHP](php_readme.md) (+-) daug informacijos internete, kalba pakankamai universali, kad būtų taikoma ne tik web srityje (+), tačiau sintaksė vis dar orientuota į web skriptinimą (-)
+* [x] [Pike](pike_readme.md) (+) intepretatorius su C++ kalbos sintakse
 * [x] [Python](py_readme.md) (+-) pagrindinis trūkumas - teksto įtraukomis grįsta sintaksė
 * [x] [Ruby](ruby_readme.md) (-) keistoka sintaksė
 * [x] [Tcl](tcl_readme.md) (+-) sena kalba, kartais keista sintaksė
