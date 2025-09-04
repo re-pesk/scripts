@@ -18,4 +18,6 @@
 
   * nemo-scripts - [Nemo akcijos ir skriptai](./file-manager/nemo-scripts/readme.lt.md)
 
+* fix-php8.4-fpm/\*.* - PHP 8.4 FastCGI proceso (FPM) problemų taisymo skriptas
+
 * get-shell-name/\*.* - gauti apvalkalo, kuriame vykdoma shell programa, pavadinimą
