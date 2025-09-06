@@ -84,7 +84,7 @@ if [ "$1" = "" ]; then
 fi
 
 trukme="$1"
-[[ "$trukme" =~ ^[0-9]+$ ]] && trukme="${1}s"
+[[ "$trukme" =~ ^[0-9]+$ ]] && trukme="${1}m"
 [[ "$trukme" =~ ^[0-9]+${messages[$LANG.m]}$ ]] && trukme="${1%in}"
 [[ "$trukme" =~ ^[0-9]+${messages[$LANG.s]}$ ]] && trukme="${1%ek}"
 [[ "$trukme" =~ ^[0-9]+${messages[$LANG.h]}$ ]] && trukme="${1//val/h}"
@@ -121,25 +121,25 @@ fi
 
 secs="0"
 case "$trukme" in
-*h)
-  secs=$((${1%h} * 3600)) # valanda = 3600s
-  ;;
-*m)
-  secs=$((${1%m} * 60)) #  minutė = 60s
-  ;;
-*s)
-  secs=${1%s}
-  ;;
-*)
-  echo "${messages[$LANG.errorDurationFormat]}"
-  zenity \
-    --error \
-    --width=400 \
-    --height=300 \
-    --title "${messages[$LANG.error]}" \
-    --text "${messages[$LANG.errorDurationFormat]}: $trukme"
-  exit
-  ;;
+  (*h)
+    secs=$((${1%h} * 3600)) # valanda = 3600s
+    ;;
+  (*m)
+    secs=$((${1%m} * 60)) #  minutė = 60s
+    ;;
+  (*s)
+    secs=${1%s}
+    ;;
+  (*)
+    echo "${messages[$LANG.errorDurationFormat]}"
+    zenity \
+      --error \
+      --width=400 \
+      --height=300 \
+      --title "${messages[$LANG.error]}" \
+      --text "${messages[$LANG.errorDurationFormat]}: $trukme"
+    exit
+    ;;
 esac
 
 sleep $secs # laukti nurodytą sekundžių skaičių
