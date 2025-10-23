@@ -19,7 +19,7 @@ ghc --version
 ## Paleistis
 
 ```bash
-runghc -- -- haskell_sys-upgrade.hs
+runghc -- -- kodo-failas.hs
 ```
 
 ### Vykdymo instrukcija (shebang)
