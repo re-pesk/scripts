@@ -4,6 +4,8 @@ import System.Environment (getEnv)
 import System.Exit (exitWith, ExitCode(..))
 import System.Process (spawnProcess, waitForProcess)
 import System.IO (hFlush, stdout)
+import qualified Data.Maybe
+import Data.List (uncons)
 
 -- Klaidų ir sėkmės pranešimų medis
 messages :: [(String, (String, String))]
@@ -16,16 +18,15 @@ messages = [
 -- Funkcija, kuri grąžina pranešimus pagal kalbos nuostatą
 getMessages :: String -> (String, String)
 getMessages lang = 
-  case lookup lang messages of
-    Just msgs -> msgs
-    Nothing   -> ("Error! Unknown language!", "Success!")
+  Data.Maybe.fromMaybe
+  ("Error! Unknown language!", "Success!") (lookup lang messages)
 
 -- Funkcija, kuri suskaido eilutę, naudodamą kaip skirtuką duotą simbolį
 split :: String -> Char -> [String]
 split [] delim = [""]
 split (c:cs) delim
     | c == delim = "" : rest
-    | otherwise = (c : head rest) : tail rest
+    | otherwise = (c : maybe (error "...") fst (uncons rest)) : drop 1 rest
     where
         rest = split cs delim
 
