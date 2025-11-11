@@ -26,24 +26,29 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
+# Failų pavadinimų ieškokite https://github.com/nushell/nushell/releases/latest
+
+[ -d "${HOME}/.opt/nu" ] && rm -r "${HOME}/.opt/nu"
+
 url="$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/nushell/nushell/releases/latest")"
-version="$(basename -- "${url}")"
-[ -d "${HOME}/.opt/nu" ] && rm --recursive "${HOME}/.opt/nu"
-curl -sSLo- "${url//tag/download}/nu-${version}-x86_64-unknown-linux-gnu.tar.gz" |\
-  tar --transform 'flags=r;s/^(nu)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
-unset url version
+url="${url//tag/download}/nu-$(basename -- "${url}")-x86_64-unknown-linux-gnu.tar.gz"
+curl -sSLo- "$url" | tar --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzv -C "${HOME}/.opt"
+
+sed -i "/#begin nushell init/,/#end nushell init/c\\" "${HOME}/.pathrc"
+[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
 echo '#begin nushell init
 
-[[ ":${PATH}:" == *":${HOME}/'${install_dir}':"* ]] \
-  || export PATH="${HOME}/'${install_dir}'${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] \
+  || export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 
 #end nushell init' >> "${HOME}/.pathrc"
 
-[[ ":${PATH}:" == *":${HOME}/${install_dir}:"* ]] \
-  || export PATH="${HOME}/${install_dir}${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] || \
+  export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 
-nu -v # => 0.104.0
+nu -v
+unset url
 ```
 
 ## Paleistis
