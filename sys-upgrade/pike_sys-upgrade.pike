@@ -32,7 +32,6 @@ void runCmd(string cmdArg) {
 
   // Vykdoma komanda, išėjimo kodas išsaugomas į kintamąjį
   int exitCode = Process.system(command);
-  // write ("Exit code: %d\n", exitCode);
 
 // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
   if (exitCode > 0) {
@@ -43,8 +42,6 @@ void runCmd(string cmdArg) {
 // Kitu atveju išvedamas sėkmės pranešimas
   write("\n%s\n\n", successMessage);
 };
-
-// echo "\n";
 
 int main() {
   // Komandų vykdymo funkcijos iškvietimai su vykdomų komandų duomenimis

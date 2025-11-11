@@ -5,6 +5,10 @@
 * Paskiausias leidimas: 2.58.1
 * Išleista : 2025-02-04
 
+## Vadovas
+
+Yash vadovas [&#x2B67;](https://magicant.github.io/yash/doc/yash.html)
+
 ## Diegimas
 
 ```bash
@@ -23,4 +27,3 @@ yash kodo-failas.sh
 ```bash
 #!/usr/bin/env yash
 ```
-
