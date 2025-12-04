@@ -19,27 +19,27 @@ successMessage = messages[env("LANG")].succ
 # Išorinių komandų iškvietimo funkcija
 runCmd = f(cmdArg) {
 
-    # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
-    command = "sudo $cmdArg"
+  # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
+  command = "sudo $cmdArg"
 
-    # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
-    # "-".repeat() - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
-    # command.len() paima komandinės eilutės ilgį
-    separator = "-".repeat(command.len())
+  # Sukuriamas komandos ilgio skirtukas iš "-" simbolių
+  # "-".repeat() - generuoja komandinės eilutės ilgio separatorių iš '-' simbolių
+  # command.len() paima komandinės eilutės ilgį
+  separator = "-".repeat(command.len())
 
-    # Išvedama komandos eilutė, apsupta skirtuko eilučių
-    echo("$separator\n$command\n$separator\n")
+  # Išvedama komandos eilutė, apsupta skirtuko eilučių
+  echo("$separator\n$command\n$separator\n")
 
-    # Įvykdoma komanda, vykdymo rezultatas išsaugomas į kintamąjį 
-    error = exec(command)
+  # Įvykdoma komanda, vykdymo rezultatas išsaugomas į kintamąjį 
+  error = exec(command)
 
-    # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
-    if(error) {
-        exit(99, "\n" + errorMessage + "\n\n")
-    }
+  # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
+  if(error) {
+      exit(99, "\n" + errorMessage + "\n\n")
+  }
 
-    # Kitu atveju išvedamas sėkmės pranešimas
-    echo("\n" + successMessage + "\n")
+  # Kitu atveju išvedamas sėkmės pranešimas
+  echo("\n" + successMessage + "\n")
 }
 
 echo()

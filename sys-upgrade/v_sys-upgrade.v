@@ -5,14 +5,14 @@ import strings
 
 // Klaidų ir sėkmės pranešimų medis
 const messages := {
-	"en.UTF-8" : {
-		"err" : "Error! Script execution was terminated!",
-		"succ" : "Successfully finished!",
-	},
-	"lt_LT.UTF-8" : {
-		"err" : "Klaida! Scenarijaus vykdymas sustabdytas!",
-		"succ" : "Komanda sėkmingai įvykdyta!",
-	},
+  "en.UTF-8" : {
+    "err" : "Error! Script execution was terminated!",
+    "succ" : "Successfully finished!",
+  },
+  "lt_LT.UTF-8" : {
+    "err" : "Klaida! Scenarijaus vykdymas sustabdytas!",
+    "succ" : "Komanda sėkmingai įvykdyta!",
+  },
 }
 
 // Pranešimai, atitinkantys aplinkos kalbą
@@ -26,7 +26,7 @@ fn run_cmd(cmdArg string) {
   command := "sudo ${cmdArg}"
 
   // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
-	// strings.repeat(`-`, n) - simbolio kartojimas, command.len - komandos simbolių skaičius 
+  // strings.repeat(`-`, n) - simbolio kartojimas, command.len - komandos simbolių skaičius 
   separator := strings.repeat(`-`, command.len)
 
   // Išvedama komandos eilutė, apsupta skirtuko eilučių
