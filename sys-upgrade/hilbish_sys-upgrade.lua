@@ -16,11 +16,11 @@ local messages = {
 local lang = os.getenv("LANG")
 
 -- Pranešimai pagal aplinkos kalbos nuostatą
-errorMessage = messages[lang].err
-successMessage = messages[lang].succ
+local errorMessage = messages[lang].err
+local successMessage = messages[lang].succ
 
 -- Išorinių komandų iškvietimo funkcija
-function runCmd (cmdArg)
+local function runCmd (cmdArg)
 
   -- Sukuriama komandos tekstinė eilutė iš funkcijos argumento
   local command = "sudo " .. cmdArg
