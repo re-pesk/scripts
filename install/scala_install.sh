@@ -1,32 +1,23 @@
 #!/usr/bin/env bash
 
-fileNameEnd="x86_64-pc-linux.tar.gz"
-installDir=".local/scala3"
-
 [[ $(apt list --installed jq 2> /dev/null | wc -l) == 1 ]] && sudo apt-get install jq 
 
-url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)"
-curl -sSLo- "${url//tag/download}/scala3-$(basename -- $url)-${fileNameEnd}" \
-| tar --transform 'flags=r;s/^scala3[^\/]+/scala3/x' --show-transformed-names -xzvC "${HOME}/.local"
+URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)"
+VERSION="$(basename -- ${URL})"
+curl -sSLo- "${URL//tag/download}/scala3-${VERSION}-x86_64-pc-linux.tar.gz" \
+| tar --transform 'flags=r;s/^(scala3)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
 
-set_path='[[ ":${PATH}:" == *":${HOME}/.local/scala3/bin:"* ]] \
-  || export PATH="${HOME}/.local/scala3/bin${PATH:+:${PATH}}"'
-  
-config_strings="#begin scala init
-
-${set_path}
-
-#end scala init"
-
-readarray -td '
-' config_array <<< "$config_strings"
-
-sed -i "/${config_array[0]}/,/${config_array[@]: -1:1}/c\\" "${HOME}/.pathrc"
-
+sed -i '/#begin scala init/,/#end scala init/c\' "${HOME}/.pathrc"
 [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-echo "$config_strings" >> "${HOME}/.pathrc"
+echo '#begin scala init
 
-eval $"$set_path"
+[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] \
+|| export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
+
+#end scala init' >> "${HOME}/.pathrc"
+
+[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] \
+|| export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
 
 scala -version

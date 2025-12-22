@@ -43,15 +43,14 @@ unset latest
 sed -i "/#begin hashlink init/,/#end hashlink init/c\\" "${HOME}/.pathrc"
 [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-install_dir=".opt/hashlink"
 echo '#begin hashlink init
 
-[[ ":${PATH}:" == *":${HOME}/'${install_dir}':"* ]] \
-  || export PATH="${HOME}/'${install_dir}'${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/hashlink:"* ]] \
+  || export PATH="${HOME}/.opt/hashlink${PATH:+:${PATH}}"
   
 #end hashlink init' >> "${HOME}/.pathrc"
 
-[[ ":${PATH}:" == *":${HOME}/${install_dir}:"* ]] || export PATH="${HOME}/${install_dir}${PATH:+:${PATH}}"
+[[ ":${PATH}:" == *":${HOME}/.opt/hashlink:"* ]] || export PATH="${HOME}/.opt/hashlink${PATH:+:${PATH}}"
 
 hl --version ; echo
 ```

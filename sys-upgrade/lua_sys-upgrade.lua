@@ -16,34 +16,33 @@ local messages = {
 local lang = os.getenv("LANG")
 
 -- Pranešimai pagal aplinkos kalbos nuostatą
-errorMessage = messages[lang].err
-successMessage = messages[lang].succ
+local errorMessage = messages[lang].err
+local successMessage = messages[lang].succ
 
 -- Išorinių komandų iškvietimo funkcija
-function runCmd (cmdArg)
-
+local function runCmd(cmdArg)
   -- Sukuriama komandos tekstinė eilutė iš funkcijos argumento
   local command = "sudo " .. cmdArg
 
   -- Sukuriamas komandos ilgio skirtukas iš "-" simbolių
   -- #command - komandinės eilutės ilgis
   -- string.rep("-",  n) - kartojamas '-' simbolis
-  local separator = string.rep("-",  #command)
+  local separator = string.rep("-", #command)
 
   -- Išvedama komandos eilutė, apsupta skirtuko eilučių
-  print (separator .. "\n" .. command .. "\n" .. separator .. "\n") 
+  print(separator .. "\n" .. command .. "\n" .. separator .. "\n")
 
   -- vykdoma komanda, statusas ir išėjimo kodas išsaugomi
-  local status, _, exitCode = os.execute (command)
+  local status, _, exitCode = os.execute(command)
 
   -- Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
   if (not status) and exitCode > 0 then
-    print ("\n" .. errorMessage .. "\n")
-    os.exit (exitCode)
+    print("\n" .. errorMessage .. "\n")
+    os.exit(exitCode)
   end
 
   -- Kitu atveju išvedamas sėkmės pranešimas
-  print ("\n" .. successMessage .. "\n")
+  print("\n" .. successMessage .. "\n")
 end
 
 print ""

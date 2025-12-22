@@ -12,15 +12,14 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/PlutoLang/Pluto/releases/latest)"
-version="$(basename -- ${url})"
-[ -d "${HOME}/.opt/pluto" ] && rm --recursive "${HOME}/.opt/pluto"
-curdir="$PWD"
-mkdir -p $HOME/.opt/pluto; cd $HOME/.opt/pluto
-curl -sSLo "/tmp/pluto.zip" "${url//tag/download}/Linux.X64.zip" 
-unzip -d $HOME/.opt/pluto "/tmp/pluto.zip"
-rm -r "/tmp/pluto.zip"
-cd $curdir
+[ -d "${HOME}/.opt/pluto" ] && rm -r "${HOME}/.opt/pluto"
+URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/PlutoLang/Pluto/releases/latest)"
+TMP_DIR="$(mktemp -d)"
+curl -sSLo "${TMP_DIR}/pluto.zip" "${URL//tag/download}/Linux.X64.zip" 
+mkdir -p $HOME/.opt/pluto
+unzip -d $HOME/.opt/pluto "${TMP_DIR}/pluto.zip"
+rm -r "${TMP_DIR}"
+unset TMP_DIR URL
 for filename in $HOME/.opt/pluto/pluto*; do ln -fs $filename -t ${HOME}/.local/bin; done
 pluto -v
 ```

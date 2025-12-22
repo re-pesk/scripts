@@ -12,7 +12,6 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-https://github.com/HaxeFoundation/hashlink/releases/latest
 [ -d ${HOME}/.opt/janet ] && rm -r ${HOME}/.opt/janet
 curl -sSLo - "${url//tag/download}/janet-$(basename -- $url)-linux-x64.tar.gz" \
 | tar --transform 'flags=r;s/^\.\/(janet)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
