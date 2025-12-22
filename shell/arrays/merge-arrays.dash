@@ -1,0 +1,35 @@
+#!/usr/bin/env dash
+
+array1="one
+two
+three"
+
+array2="four
+five
+sixth item"
+
+echo
+
+echo 'Show definition of "arrays":'
+echo "array1=\"${array1}\""
+echo "array2=\"${array2}\""
+
+echo "Size of array1 is $(echo "${array1}" | wc -l)"
+echo "Size of array2 is $(echo "${array2}" | wc -l)"
+echo
+
+# convert both "associative arrays" to new "associative array"
+merged_array="${array1}\n${array2}"
+
+echo 'Show definition of merged "array":'
+echo "merged_array=\"$merged_array\"\n"
+echo "Size of merged_array is $(echo "${merged_array}" | wc -l)"
+echo
+
+echo 'Iterate on merged "array":'
+count=1
+echo "$merged_array" | while read -r item; do
+  echo "merged_array['${count}'] = '${item}'"
+  count=$((count + 1))
+done
+echo
