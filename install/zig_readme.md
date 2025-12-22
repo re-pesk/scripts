@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Zig [&#x2B67;](https://ziglang.org/)
 
@@ -26,14 +26,15 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas Linuxe (Ubuntu 24.04)
 
 ```bash
-# Pakeiskite ${version} versijos numeriu, tarkim, 0.13.0
 # Vėliausią versijos numerį galima rasti https://ziglang.org/download/
-url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/ziglang/zig/releases/latest)"
-version="$(basename -- $url)"
-[ -d ${HOME}/.local/zig ] && rm -r ${HOME}/.local/zig
-curl -sSLo- https://ziglang.org/download/${version}/zig-linux-x86_64-${version}.tar.xz \
+VERSION="$(curl -Lso - https://ziglang.org/download/index.json \
+| jq -r 'keys - ["master"] | sort_by(split(".") | map(tonumber)) | last')"
+
+[ -d "${HOME}/.opt/zig" ] && rm -rf "${HOME}/.opt/zig"
+curl -sSLo- "https://ziglang.org/download/${VERSION}/zig-x86_64-linux-${VERSION}.tar.xz" \
 | tar --transform 'flags=r;s/^zig[^\/]+/zig/x' --show-transformed-names -xJC "${HOME}/.opt"
-unset url version
+
+unset VERSION
 
 # Jeigu reikia, pašalinami zig įrašai .pathrc konfigūraciniame faile
 sed -i '/#begin zig init/,/#end zig init/c\' "${HOME}/.pathrc"
@@ -41,7 +42,7 @@ sed -i '/#begin zig init/,/#end zig init/c\' "${HOME}/.pathrc"
 [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
 # Jeigu nėra, pridedami zig įrašai .pathrc konfigūraciniame faile
-(( $(cat $HOME/.pathrc | grep '^#begin zig init' | wc -l) > 0 )) || echo '#begin zig init
+(( $(cat "$HOME/.pathrc" | grep '^#begin zig init' | wc -l) > 0 )) || echo '#begin zig init
 
 [[ ":${PATH}:" == *":${HOME}/.opt/zig:"* ]] \
 || export PATH="${HOME}/.opt/zig${PATH:+:${PATH}}"
@@ -54,7 +55,7 @@ sed -i '/#begin zig init/,/#end zig init/c\' "${HOME}/.pathrc"
 zig version
 ```
 
-arba pakeiskite reikalingą versijos numerį `zig_instal.sh` faile ir pleiskite isntaliaciją
+arba paleislite `zig_instal.sh` failą
 
 ```bash
 bash zig_instal.sh

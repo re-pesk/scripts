@@ -1,55 +1,56 @@
 #!/usr/bin/env bash
 
-# Versijos numerį galima rasti "https://groovy.apache.org/download.html#distro"
-version="4.0.24"
-file="apache-groovy-sdk-${version}.zip"
-tmpfile="/tmp/${file}"
-url="https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/${file}"
-install_dir=".groovy"
-config_file="${HOME}/.pathrc"
+java --version > /dev/null 2>&1
+[[ "$?" -gt 0 ]] && echo "Pirmiau įdiekite Javą!" && exit 1
 
-groovy -version > /dev/null 2>&1; status="$?"
-[[ "$status" -eq 0 ]] && echo "Groovy's jau įdiegtas!" && exit
+# Versijos numerį galima pasitikrinti "https://groovy.apache.org/download.html#distro"
+install="t"
+VERSION="$(
+  curl -s https://groovy.apache.org/download.html#distro \
+  | xq -q 'button[id="big-download-button"]' --attr "onclick" \
+  | sed -r 's/^.+=".+-(.+)\.zip"$/\1/'
+)"
+RESULT="$([[ "$(groovy --version 2> /dev/null)" =~ "Groovy Version: "([0-9]+\.[0-9]+\.[0-9]+) ]] \
+  && echo "${BASH_REMATCH[1]}")"
+[[ "$?" -eq 0 ]] && [[ "${RESULT}" == "${VERSION}" ]] \
+  && read -p "Groovy's v${VERSION} jau įdiegtas! Ar norite įdiegti dar kartą? 't/y' arba išeiti [Įvesti/Enter]: " install
+[[ "$install" =~ [yt] ]] || exit 0
+unset install RESULT
 
-java -version > /dev/null 2>&1; status="$?"
-[[ "$status" -gt 0 ]] && echo "Pirmiau įdiekite Javą!" && exit
+URL="https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-sdk-${VERSION}.zip"
 
-wget --version > /dev/null 2>&1; status="$?"
-[[ "$status" -gt 0 ]] && echo "Pirmiau įdiekite Wget!" && exit
+curl -sSLo "/tmp/groovy-sdk-${VERSION}.zip" "${URL}"
+TMP_DIR="$(mktemp -d)"
+unzip "/tmp/groovy-sdk-${VERSION}.zip" -d "${TMP_DIR}"
+rm "/tmp/groovy-sdk-${VERSION}.zip"
 
-[ -f "$tmpfile" ] && rm ${tmpfile}
-wget -qO ${tmpfile} $url
-[ ! -f "$tmpfile" ] && echo "Failo ${file} atsiųsti nepavyko!" && exit
+[[ -d "${HOME}/.opt/groovy" ]] && rm -rf "${HOME}/.opt/groovy"
+mv -T "${TMP_DIR}/groovy-${VERSION}" "${HOME}/.opt/groovy"
+rm -rf "${TMP_DIR}"
+unset TMP_DIR URL
 
-[ -d "${HOME}/${install_dir}" ] && rm --recursive "${HOME}/${install_dir}"
-[ -d "${HOME}/groovy-${version}" ] && rm --recursive "${HOME}/groovy-${version}"
+cp -T "${HOME}/.pathrc" "${HOME}/.pathrc.$(date +"%Y%m%d.%H%M%S.%3N")"
+sed -i '/#begin groovy init/,/#end groovy init/c\' "${HOME}/.pathrc"
 
-unzip "$tmpfile" -d "$HOME" > /dev/null
-[ -f "$tmpfile" ] && rm "$tmpfile"
+echo '
+#begin groovy init
 
-[ -d "${HOME}/groovy-${version}" ] && mv -T "${HOME}/groovy-${version}" "${HOME}/${install_dir}"
-[ ! -d "${HOME}/${install_dir}" ] && echo "Katalogas ${HOME}/${install_dir} nebuvo sukurtas!" && exit
+[ -z "$JAVA_HOME" ] \
+  && export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
 
-set_java_home='[ -z "$JAVA_HOME" ] \
-  && export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"'
-set_path='[[ ! ":${PATH}:" == *":${HOME}/'$install_dir'/bin:"* ]] \
-  && export PATH="${HOME}/'$install_dir'/bin${PATH:+:${PATH}}"'
+[[ ":${PATH}:" == *":${HOME}/.opt/groovy/bin:"* ]] \
+  || export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"
 
-config_strings="#begin groovy init
+#end groovy init
+' >> "${HOME}/.pathrc"
 
-${set_java_home}
+cat -s "${HOME}/.pathrc" > "${HOME}/.pathrc.new"
+cp -T "${HOME}/.pathrc.new" "${HOME}/.pathrc"
 
-${set_path}
+[ -z "$JAVA_HOME" ] \
+&& export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
+[[ ":${PATH}:" == *":${HOME}/.opt/groovy/bin:"* ]] \
+export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"
 
-#end groovy init"
+groovy --version
 
-readarray -td '
-' PATTERN <<< "$config_strings"
-
-sed -i "/${PATTERN[0]}/,/${PATTERN[@]: -1:1}/c\\" "$config_file"
-echo "$config_strings" >> "$config_file"
-
-eval $"$set_java_home"
-eval $"$set_path"
-
-groovy -version

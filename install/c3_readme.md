@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # C3 [&#x2B67;](https://c3-lang.org/)
 
@@ -12,11 +12,11 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
+URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/c3lang/c3c/releases/latest)"
 [[ -d ${HOME}/.opt/c3 ]] && rm -r ${HOME}/.opt/c3
-url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/c3lang/c3c/releases/latest)"
-curl -fsSLo - "${url//tag/download}/c3-ubuntu-20.tar.gz" \
+curl -fsSLo - "${URL//tag/download}/c3-ubuntu-20.tar.gz" \
 | tar  --transform 'flags=r;s/^(c3)/\1/x' --show-transformed-names -xzvC ${HOME}/.opt
-unset url
+unset URL
 ln -fs ${HOME}/.opt/c3/c3c ${HOME}/.local/bin/c3c
 c3c --version
 ```

@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Scala [&#x2B67;](https://scala-lang.org/)
 
@@ -28,9 +28,9 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ```bash
 [[ $(apt list --installed jq 2> /dev/null | wc -l) == 1 ]] && sudo apt-get install jq 
 
-url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)"
-version="$(basename -- $url)"
-curl -sSLo- "${url//tag/download}/scala3-${version}-x86_64-pc-linux.tar.gz" \
+URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)"
+VERSION="$(basename -- ${URL})"
+curl -sSLo- "${URL//tag/download}/scala3-${VERSION}-x86_64-pc-linux.tar.gz" \
 | tar --transform 'flags=r;s/^(scala3)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
 
 sed -i '/#begin scala init/,/#end scala init/c\' "${HOME}/.pathrc"

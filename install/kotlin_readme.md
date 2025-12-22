@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Kotlin [&#x2B67;](https://kotlinlang.org/)
 
@@ -35,8 +35,8 @@ kotlin -version
 ### Kotlin Native
 
 ```bash
-url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/JetBrains/kotlin/releases/latest)"
-curl -sSLo- "${url//tag/download}/kotlin-native-prebuilt-linux-x86_64-$(basename -- $url).tar.gz" \
+URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/JetBrains/kotlin/releases/latest)"
+curl -sSLo- "${URL//tag/download}/kotlin-native-prebuilt-linux-x86_64-$(basename -- $URL).tar.gz" \
 | tar --transform 'flags=r;s/^(kotlin-native)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
 
 sed -i '/#begin kotlin init/,/#end kotlin init/c\' "${HOME}/.pathrc"

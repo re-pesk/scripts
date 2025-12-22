@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
 install="y"
-
 [ -d ${HOME}/.opt/v ] && [ -e "${HOME}/.opt/bin/v" ] && v -v 2> /dev/null && 
 read -e -p "Found working V installation. Do you want overwrite it? 'y' or exit [Enter]: " install
-
 [ "$install" = "y" ] || exit
+unset install
 
 curl -sSL https://github.com/vlang/v/releases/latest/download/v_linux.zip -o /tmp/v_linux.zip
 [ ! -f /tmp/v_linux.zip ] && echo "File /tmp/v_linux.zip is not downloaded!" && exit

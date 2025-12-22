@@ -1,41 +1,35 @@
 #!/usr/bin/env -S bash
 
-owner="OpenEuphoria"
-app_name="euphoria"
-json="$(curl -sL https://api.github.com/repos/${owner}/${app_name}/releases/latest)"
-url="$(echo "$json" | jq -r '.assets[] | select(.name | contains("Linux-x64")) | .browser_download_url' )"
-version="$(echo "$json" | jq -r '.tag_name' )"
+URL="$(curl -sL -o /dev/null -w %{url_effective} https://github.com/OpenEuphoria/euphoria/releases/latest)"
+VERSION="$(basename $URL)"
+URL="$(curl -sL https://api.github.com/repos/OpenEuphoria/euphoria/releases/latest | grep -o 'https.*Linux-x64.*tar.gz')"
 
-install_dir="${HOME}/.opt/${app_name}"
+[ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
+INIT_DIR="$PWD"
 
-config_file="${HOME}/.pathrc"
-[ -f "$config_file" ] || touch "config_file"
-# [ -f "$HOME/.pathrc" ] || touch "$HOME/.pathrc"
-initial_dir="$PWD"
-
-echo -e "\nInstalling ${app_name^} ${version}\n"
-echo -e "Current directory => ${initial_dir}\n"
+echo -e "\nInstalling Euphoria ${VERSION}\n"
+echo -e "Current directory => ${INIT_DIR}\n"
 
 echo -e "Getting latest release\n"
 
-[ -d "$install_dir" ] && rm --recursive --force "$install_dir"
+[ -d "${HOME}/.opt/euphoria" ] && rm --recursive --force "${HOME}/.opt/euphoria"
 
-curl -sSLo - "$url" \
-| tar --transform "flags=r;s/^(euphoria)-$version[^\/]+x64/\1/x" --show-transformed-names -xzC "${HOME}/.opt"
+curl -sSLo - "${URL}" \
+| tar --transform "flags=r;s/^(euphoria)-${VERSION}[^\/]+x64/\1/x" --show-transformed-names -xzC "${HOME}/.opt"
 
-touch "${install_dir}/v${version}.txt"
+touch "${HOME}/.opt/euphoria/v${VERSION}.txt"
 
 echo -e "Updating config file\n"
 
-cd "${install_dir}/source"
+cd "${HOME}/.opt/euphoria/source"
 ./configure
 find build -maxdepth 1 -type f -exec mv -t ../bin/ {} \+
 rm --recursive --force build
-cd "${install_dir}/bin"
+
+cd "${HOME}/.opt/euphoria/bin"
 sed -i 's/source\/build/bin/g' eu.cfg
 
 echo -e "Compiling files\n"
-
 for file in *.ex ;do
   [ -f "${file%.*}" ] && continue
   ./euc "$file"
@@ -45,35 +39,29 @@ for file in *.ex ;do
   fi 
 done
 
-cd $initial_dir
+cd ${INIT_DIR}
 
 echo -e "\nWriting path to .pathrc\n"
 
-set_path='[[ ":${PATH}:" == *":${HOME}/.opt/'"${app_name}"'/bin:"* ]] \
-  || export PATH="${HOME}/.opt/'"${app_name}"'/bin${PATH:+:${PATH}}"'
+sed -i "/#begin euphoria init/,/#end euphoria init/c\\" "${HOME}/.pathrc"
+[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-config_strings="#begin ${app_name} init
+echo '#begin euphoria init
 
-${set_path}
+[[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] \
+  || export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
 
-#end ${app_name} init"
+#end euphoria init' >> "${HOME}/.pathrc"
 
-readarray -td '
-' PATTERN <<< "$config_strings"
-
-sed -i "/${PATTERN[0]}/,/${PATTERN[@]: -1:1}/c\\" "$config_file"
-
-[[ "$( tail -n 1 "$config_file" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "$config_file"
-
-echo "$config_strings" >> "$config_file"
-
-eval $"$set_path"
+[[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] \
+  || export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
 
 echo -e "eui --version => "; eui --version
 echo -e "\neuc --version => "; euc --version
 
-cd $initial_dir
+cd ${INIT_DIR}
 
 echo -e "\nCurrent directory => $PWD\n"
 
-echo -e "${app_name^} ${version} is installed!\n"
+echo -e "Euphoria ${VERSION} is installed!\n"
+unset INIT_DIR URL VERSION

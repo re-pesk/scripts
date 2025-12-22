@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Swift [&#x2B67;](https://www.swift.org/)
 
@@ -35,9 +35,9 @@ Visos failų versijos yra <https://www.swift.org/install/linux/> puslapyje.
 
 ```bash
 # Atsiunčiamas, išpakuojamas ir paleidžiamas swiftly - swift'o diegimo tvarkyklė
-mkdir swiftly && \
+mkdir swiftly
 curl -o - https://download.swift.org/swiftly/linux/swiftly-$(uname -m).tar.gz \
-| tar xzxC ./swiftly && \
+| tar xzxC ./swiftly
 ./swiftly/swiftly init --quiet-shell-followup && \
 . ${SWIFTLY_HOME_DIR:-${HOME}/.local/share/swiftly}/env.sh && \
 hash -r
