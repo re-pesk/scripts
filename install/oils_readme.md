@@ -1,4 +1,5 @@
-[Atgal](./readme.md)
+<!-- markdownlint-disable-file no-hard-tabs -->
+[&uArr;](./readme.md)
 
 # Oils for Unix [&#x2B67;](https://www.oilshell.org/)
 
@@ -12,20 +13,25 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-version="0.29.0"
-curl -sSLo- "https://oils.pub/download/oils-for-unix-${version}.tar.gz" | tar -xzv
-curdir="$PWD"
+# VERSION="$(curl -s https://oils.pub/release/latest/ | grep -o '<title>.*</title>' | sed 's/<\/\?title>//g;s/^Oils //g')"
+VERSION="$(curl -sSLo - https://raw.githubusercontent.com/oils-for-unix/oils/refs/heads/master/oils-version.txt | head -n 1)"
+curl -sSLo- "https://oils.pub/download/oils-for-unix-${VERSION}.tar.gz" | tar -xzv
+INIT_DIR="$PWD"
 
-cd "oils-for-unix-${version}"
-./configure --prefix ~/.local --datarootdir ~/.local/share
+cd "oils-for-unix-${VERSION}"
+./configure --prefix "${HOME}/.opt/oils" --datarootdir "${HOME}/.opt/oils/share"
 _build/oils.sh
+[ -d "${HOME}/.opt/oils" ] && rm -rf "${HOME}/.opt/oils"
 ./install
-cd "${curdir}"
+ln -sf "${HOME}/.opt/oils/bin/oils-for-unix" "${HOME}/.local/bin/osh"
+ln -sf "${HOME}/.opt/oils/bin/oils-for-unix" "${HOME}/.local/bin/ysh"
+cd "${INIT_DIR}"
+rm -rf "oils-for-unix-${VERSION}"
 
-unset curdir version
+unset INIT_DIR VERSION
 
-osh --version # => Oils 0.29.0
-ysh --version # => Oils 0.29.0
+osh --version | head -n 1 # => Oils ${VERSION}             https://oils.pub/
+ysh --version | head -n 1 # => Oils ${VERSION}             https://oils.pub/
 ```
 
 ## Paleistis
@@ -40,6 +46,6 @@ ysh ysh-kodo-failas.oil
 Pagal skripto dialektą:
 
 ```bash
-#!/usr/bin/env osh
-#!/usr/bin/env ysh
+#!/usr/bin/env -S osh
+#!/usr/bin/env -S ysh
 ```
