@@ -17,3 +17,5 @@
   * nautilus-scripts - [Nautilaus skriptai](./file-manager/nautilus-scripts/readme.lt.md)
 
   * nemo-scripts - [Nemo akcijos ir skriptai](./file-manager/nemo-scripts/readme.lt.md)
+
+* get-shell-name/\*.* - gauti apvalkalo, kuriame vykdoma shell programa, pavadinimą
