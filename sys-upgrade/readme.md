@@ -1,8 +1,8 @@
 [Atgal](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (55)
+# Skriptinimas skirtingomis programavimo kalbomis (56)
 
-Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais
+Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais.
 
 Tikslas - patikrinti, kaip skirtingos kalbos tinka rašyti operacijų sistemos valdymo skriptus.
 
@@ -136,7 +136,7 @@ Daug informacijos internete
   (+) sena, žinoma kalba
   (-) kartais keista sintaksė
 
-## Kompiliuojamos kalbos (12)
+## Kompiliuojamos kalbos (13)
 
 * [x] [C](c_readme.md) (-)
   (+) greita
@@ -149,6 +149,11 @@ Daug informacijos internete
 * [ ] [Carbon](carbon_readme.md) (-)
   (+) kuriama kaip C kalbos pakaitalas
   (-) nepakankamai iįvystyta, nepavyko sukompiliuoti dokumentacijos pavyzdžio
+* [x] [Chapel](chapel_readme.md) (?)
+  (+) kalba su C sintakse
+  (+) paralelinė
+  (-) pernelyg nauja, nedaug informacijos
+  (-) nelabai patogi dokumentacija
 * [x] [Crystal](crystal_readme.md) (+)
   (+) kalba su Ruby sintakse, tačiau kompiliuojama, tad daugiau prasmės mokytis nei Ruby
 * [x] [D](d_readme.md) (+)
