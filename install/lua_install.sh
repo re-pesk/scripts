@@ -1,51 +1,28 @@
 #!/usr/bin/env bash
 
-version="5.4.7"
-install_dir_str='${HOME}/.lua'
-install_dir="$(eval "echo ${install_dir_str}")"
-tmp_dir="/tmp/lua-${version}"
-
-# echo "$install_dir_str"
-# echo "$install_dir"
-
-[ -d "$install_dir" ] && rm --recursive "$install_dir"
-
-curl -LRo - https://www.lua.org/ftp/lua-${version}.tar.gz | tar xzC "/tmp"
-curdir="$PWD"
-cd "${tmp_dir}"
+VERSION="$(basename -- "$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/lua/lua/releases/latest")")"
+curl -LRo - "https://www.lua.org/ftp/lua-${VERSION#v}.tar.gz" | tar -xzC "/tmp"
+[ -d "${HOME}/.opt/lua" ] && rm --recursive "${HOME}/.opt/lua"
+INIT_DIR="$PWD"
+cd "/tmp/lua-${VERSION#v}"
 make all test
-make install INSTALL_TOP="$install_dir"
-cd $curdir
-rm -r "${tmp_dir}"
-set_path='[[ ":${PATH}:" == *":'$install_dir_str'/bin:"* ]] \
-  || export PATH="'$install_dir_str'/bin${PATH:+:${PATH}}"'
-    
-config_strings="#begin lua init
+make install INSTALL_TOP="${HOME}/.opt/lua"
+cd $INIT_DIR
+rm -r "/tmp/lua-${VERSION#v}"
+unset INIT_DIR VERSION
 
-${set_path}
-
-#end lua init"
-
-readarray -td '
-  ' config_array <<< "$config_strings"
-
-sed -i "/${config_array[0]}/,/${config_array[@]: -1:1}/c\\" "${HOME}/.pathrc"
-
+sed -i "/#begin lua init/,/#end lua init/c\\" "${HOME}/.pathrc"
 [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-echo "$config_strings" >> "${HOME}/.pathrc"
+echo '#begin lua init
 
-eval $"$set_path"
+[[ ":${PATH}:" == *":${HOME}/.opt/lua/bin:"* ]] \
+  || export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
+  
+#end lua init' >> "${HOME}/.pathrc"
 
-echo
+[[ ":${PATH}:" == *":${HOME}/.opt/lua/bin:"* ]] || export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
+
+echo ""
 
 lua -v
-
-echo '
-Po instaliavimo norėdami naudoti lua, komandinėje eilutėje įvykdykite komandą
-
-[[ ":${PATH}:" == *":${HOME}/.lua/bin:"* ]] \
-  || export PATH="${HOME}/.lua/bin${PATH:+:${PATH}}"
-
-arba išeikite iš savo paskyros ir prisijunkite iš naujo.
-'
