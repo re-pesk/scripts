@@ -25,30 +25,42 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 
 ## Diegimas
 
+Paleidžiamas diegimo skriptas `nu_install.sh`. Pabaigus diegimą, įvykdoma komanda
+
+```bash
+[[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] || \
+  export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
+```
+
+Arba terminale vykdomos komandos
+
 ```bash
 # Failų pavadinimų ieškokite https://github.com/nushell/nushell/releases/latest
 
-[ -d "${HOME}/.opt/nu" ] && rm -r "${HOME}/.opt/nu"
+VERSION="$(basename "$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/nushell/nushell/releases/latest")")"
+rm -rf "${HOME}/.opt/nu"
+URL="https://github.com/nushell/nushell/releases/download/${VERSION}/nu-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+curl -sSLo- "${URL}" | tar --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzv -C "${HOME}/.opt"
+unset VERSION URL
 
-url="$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/nushell/nushell/releases/latest")"
-url="${url//tag/download}/nu-$(basename -- "${url}")-x86_64-unknown-linux-gnu.tar.gz"
-curl -sSLo- "$url" | tar --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzv -C "${HOME}/.opt"
+[[ "$(grep 'export PATH="\${HOME}/.opt/nu\$' < ${HOME}/.pathrc | wc -l)" > 0 ]] || {
+  sed --in-place=".$(date +"%Y%m%d-%H%M%S-%3N")" '/#begin nushell init/,/#end nushell init/d'  "${HOME}/.pathrc"
+  sed --in-place '/^[[:space:]]*$/N; /^\n$/D' "${HOME}/.pathrc"
+  [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-sed -i "/#begin nushell init/,/#end nushell init/c\\" "${HOME}/.pathrc"
-[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
-
-echo '#begin nushell init
+  echo '#begin nushell init
 
 [[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] \
   || export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 
 #end nushell init' >> "${HOME}/.pathrc"
+}
 
 [[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] || \
   export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 
-nu -v
-unset url
+nu -v # => echo ${VERSION}
+unset VERSION URL
 ```
 
 ## Paleistis

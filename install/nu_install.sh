@@ -2,33 +2,43 @@
 
 # Failų pavadinimų ieškokite https://github.com/nushell/nushell/releases/latest
 
-install="y"
+CURRENT_VERSION="$(nu -v 2> /dev/null)"
+VERSION="$(basename "$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/nushell/nushell/releases/latest")")"
+[[ "${VERSION}" == "${CURRENT_VERSION}" ]] && {
+  printf "\n%s\n\n" "Nushell version is up to date!"
+  exit 0
+}
 
-[ -d "${HOME}/.opt/nu" ] && [ -e "${HOME}/.opt/nu/nu" ] && nu -v > /dev/null 2>&1  && \
-  read -e -p "Found working Nushell installation. Do you want overwrite it? Print 'y' to overwrite. Print 'n' or [Enter] to exit: " install
+TO_INSTALL="y"
+[[ "${CURRENT_VERSION}" != "" ]] && [[ -d "${HOME}/.opt/nu" ]] && {
+  echo
+  printf "Nushell v${CURRENT_VERSION} is installed. Do you want overwrite it?
+Print 'y' to overwrite. Print 'n' or <Enter> to exit: \e[s"
+  read -r TO_INSTALL
+  [[ "${TO_INSTALL}" == "" ]] && printf "\e[u<Enter>\n"
+  [[ "${TO_INSTALL}" != "y" ]] && { printf "\nNushell version is not up to date!\n\n"; exit 0; }
 
-[ "$install" = "y" ] || { unset install; exit 0; }
+}
 
-[ -d "${HOME}/.opt/nu" ] && rm -r "${HOME}/.opt/nu"
+rm -rf "${HOME}/.opt/nu"
+URL="https://github.com/nushell/nushell/releases/download/${VERSION}/nu-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+curl -sSLo- "${URL}" | tar --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzv -C "${HOME}/.opt"
 
-url="$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/nushell/nushell/releases/latest")"
-url="${url//tag/download}/nu-$(basename -- "${url}")-x86_64-unknown-linux-gnu.tar.gz"
-curl -sSLo- "$url" | tar --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzv -C "${HOME}/.opt"
+[[ "$(grep 'export PATH="\${HOME}/.opt/nu\$' < ${HOME}/.pathrc | wc -l)" > 0 ]] || {
+  sed --in-place=".$(date +"%Y%m%d-%H%M%S-%3N")" '/#begin nushell init/,/#end nushell init/d'  "${HOME}/.pathrc"
+  sed --in-place '/^[[:space:]]*$/N; /^\n$/D' "${HOME}/.pathrc"
+  [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
 
-sed -i "/#begin nushell init/,/#end nushell init/c\\" "${HOME}/.pathrc"
-[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
-
-echo '#begin nushell init
+  printf '#begin nushell init
 
 [[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] \
   || export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 
-#end nushell init' >> "${HOME}/.pathrc"
+#end nushell init\n\n' >> "${HOME}/.pathrc"
+}
 
 [[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] || \
   export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 
-nu -v
-[ $? -ne 0 ] && { echo "Error! Nushell is not working as expected!"; exit -1; }
-echo "Nushell is succesfully installed"
-unset install url
+[[ "$(nu -v 2> /dev/null )" == "${VERSION}" ]] || { echo "Nushell version is not up to date!"; exit 1; }
+printf "\nNushell v${VERSION} is succesfully installed\n\n"
