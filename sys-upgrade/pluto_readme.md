@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Pluto [&#x2B67;](https://pluto-lang.org/)
 

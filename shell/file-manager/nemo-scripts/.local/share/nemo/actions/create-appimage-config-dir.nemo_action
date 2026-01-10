@@ -1,0 +1,12 @@
+[Nemo Action]
+Name=Create AppImage.config directory
+Comment=Create .config directory to load AppImage
+Exec=<action_scripts/create-appimage-config-dir.bash "%F">
+Icon-Name=edit-copy
+Selection=s;
+Extensions=AppImage;
+Dependencies=bash;
+Quote=double
+
+Name[lt]=Sukurti AppImage.config katalogą
+Comment[lt]=Sukurti konfigūracinį katalogą AppImage failui

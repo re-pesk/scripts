@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # D [&#x2B67;](https://dlang.org/)
 

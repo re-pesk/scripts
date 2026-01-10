@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Köi [&#x2B67;](https://koi-lang.dev/)
 

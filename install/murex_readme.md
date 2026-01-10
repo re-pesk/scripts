@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # NGS [&#x2B67;](https://nojs.murex.rocks/)
 

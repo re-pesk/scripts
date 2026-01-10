@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Nushell [&#x2B67;](https://www.nushell.sh/)
 

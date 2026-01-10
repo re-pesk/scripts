@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;]](./readme.md)
 
 # Zig [&#x2B67;](https://ziglang.org/)
 

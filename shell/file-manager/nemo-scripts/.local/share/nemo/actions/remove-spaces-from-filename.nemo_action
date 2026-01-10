@@ -1,0 +1,11 @@
+[Nemo Action]
+Name=Remove spaces in filename
+Comment=Replace all occurences of " " by "_": %F
+Exec=sh -c "echo %F | tr ' ' '_' | xargs -I '{}' mv %F {} "
+Icon-Name=edit-copy
+Selection=notnone
+Extensions=nodirs
+Dependencies=bash;
+
+Name[lt]=Pašalinti tarpus failo pavadinime
+Comment[lt]=Pakeisti tarpus į "_" failo pavadinime: %F

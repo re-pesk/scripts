@@ -1,4 +1,4 @@
-[Atgal](./readme.md)
+[&uArr;](./readme.md)
 
 # Haskell [&#x2B67;](https://www.haskell.org/)
 

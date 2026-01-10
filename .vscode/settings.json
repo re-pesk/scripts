@@ -1,4 +1,14 @@
 {
   "php.version": "8.4.1",
-  "workbench.view.alwaysShowHeaderActions": true
+  "workbench.view.alwaysShowHeaderActions": true,
+  "files.associations": {
+    "*.go": "go",
+    "optional": "c",
+    "system_error": "c",
+    "array": "c",
+    "functional": "c",
+    "tuple": "c",
+    "type_traits": "c",
+    "utility": "c"
+  }
 }
