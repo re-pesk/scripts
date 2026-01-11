@@ -23,12 +23,7 @@
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
 
+# Ignore all files and folders with names ending with underscore
 **/*_.*
 **/*.*_
 **/*_
-
-**/*.bin
-**/*.class
-**/guile*.go
-**/*.kexe
-**/*.wasm

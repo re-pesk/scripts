@@ -7,7 +7,9 @@
 
 ## Parengimas
 
-Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo komanda į .bashrc failą
+Operacinė sistema – Ubuntu 24.04
+
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas ir įterpiama jo įkėlimo komanda į .bashrc failą
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
@@ -25,29 +27,55 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 
 ## Diegimas
 
+Paleidžiamas diegimo skriptas `scala_install.sh`. Pabaigus diegimą, įvykdoma komanda
+
 ```bash
-[[ $(apt list --installed jq 2> /dev/null | wc -l) == 1 ]] && sudo apt-get install jq 
-
-URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)"
-VERSION="$(basename -- ${URL})"
-curl -sSLo- "${URL//tag/download}/scala3-${VERSION}-x86_64-pc-linux.tar.gz" \
-| tar --transform 'flags=r;s/^(scala3)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
-
-sed -i '/#begin scala init/,/#end scala init/c\' "${HOME}/.pathrc"
-[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
-
-echo '#begin scala init
-
-[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] \
-|| export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
-
-#end scala init' >> "${HOME}/.pathrc"
-
-[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] \
-|| export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
-
-scala -version
+[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] || \
+  export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
 ```
+
+Arba įvykdomos komandos terminale
+
+```bash
+# Gauti paskutinės programos versijos numerį iš interneto
+VERSION="$(basename -- "$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)")"
+
+# Patikrinti, ar kompiuteryje įdiegta kuri nors programos versija. Sulyginti versijas
+printf "Vėliausia versija v${VERSION}\n"
+printf "Instaliuota versija v$(scala version 2> /dev/null | tail -n 1 | sed 's/.*: //')\n"
+
+# Jeigu vėliausia versija nėra naujesnė nei įdiegtoji, diegimą nutraukti
+
+# Vėliausio leidimo adresas
+URL="https://github.com/scala/scala3/releases/download/${VERSION}/scala3-${VERSION}-x86_64-pc-linux.tar.gz"
+
+# Atsisiųsti failus iš interneto
+curl -sSLo "scala3-${VERSION}-x86_64-pc-linux.tar.gz" "${URL}"
+curl -sSLo "scala3-${VERSION}-x86_64-pc-linux.tar.gz.sha256" "${URL}.sha256"
+
+# Išvesti įterminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
+sha256sum "scala3-${VERSION}-x86_64-pc-linux.tar.gz" | awk '{print $1}'
+cat "scala3-${VERSION}-x86_64-pc-linux.tar.gz.sha256" | awk '{print $1}'
+
+# Jeigu kontrolinės sumos nesutampa, diegimą nutraukti
+
+# Ištrinti esamą versiją. Išskleisti atsisiųstą archyvą. 
+# Ištrinti atsisiųstus failus
+rm -rf "${HOME}/.opt/scala3"
+tar --file="scala3-${VERSION}-x86_64-pc-linux.tar.gz" \
+  --transform='flags=r;s/^(scala3)[^\/]+/\1/x' \
+  --show-transformed-names -xzvC "${HOME}/.opt"
+rm -f scala3-${VERSION}-x86_64-pc-linux.tar.gz*
+
+# Jeigu reikia, papildyti esamo terminalo kelią
+[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] \
+|| export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
+
+scala version
+unset URL VERSION
+```
+
+Baigę diegti, pakeiskite konfigūracinius failus, kad `${HOME}/.opt/scala3/bin` būtų automatiškai įtraukiamas į sistemos `PATH` kintamąjį.
 
 ## Paleistis
 

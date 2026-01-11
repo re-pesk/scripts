@@ -1,0 +1,10 @@
+**/*.bin
+**/*.class
+**/guile*.go
+**/*.kexe
+**/*.wasm
+**/*.jar
+
+# Scala build
+.bsp/
+.scala-build/
