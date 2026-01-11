@@ -1,4 +1,4 @@
-///usr/bin/env php -r "$(tail -n +1 "$0")" -- "$0" "$@"; exit "$?"
+///usr/bin/env -S php -r "$(tail -n +1 "$0")" -- "$0" "$@"; exit "$?"
 //<?php # - This tag is here only for syntax highlighting, this script can be run without it
 var_dump($argv);
 
