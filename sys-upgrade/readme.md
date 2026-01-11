@@ -1,6 +1,6 @@
 [&uArr;](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (56)
+# Skriptinimas skirtingomis programavimo kalbomis (57)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais.
 
@@ -54,14 +54,19 @@ Naudota operacinė sistema – Ubuntu 24.04
   (-) keista sintaksė
   (-) kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (29)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (30)
 
-### JavaVM (7)
+### JavaVM (8)
 
 Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
   
-* [x] [Clojure](https://clojure.org/) (-)
+* [x] [Clojure](clojure_readme.md) (-)
   ( ) Lispo sintaksė
+* [x] [Ballerina](ballerina_readme.md) (-)
+  (-) ribotos išorinių komandų iškvietimo funkcijos
+  (-) sudėtingas klaidų apdrojimas
+  (-) skurdi dokumentacija
+  (-) mažai informacijos internete
 * [X] [Groovy](groovy_readme.md) (-)
 * [x] [Java](java_readme.md) (-)
 * [x] [Kotlin](kotlin_readme.md) (-)
@@ -136,7 +141,7 @@ Daug informacijos internete
   (+) sena, žinoma kalba
   (-) kartais keista sintaksė
 
-## Kompiliuojamos kalbos (13)
+## Kompiliuojamos kalbos (13, 2 neveikia)
 
 * [x] [C](c_readme.md) (-)
   (+) greita

@@ -5,6 +5,7 @@
 Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 
 * [x] [Abs](abs_readme.md) (nebevystoma)
+* [x] [Ballerina](ballerina_readme.md)
 * [x] [Bash](bash_readme.md)
 * [x] [Bun (JS)](js_readme.md)
 * [x] [C](c_readme.md)
