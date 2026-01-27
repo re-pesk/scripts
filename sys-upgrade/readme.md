@@ -88,7 +88,7 @@ Daug informacijos internete
 
 * [x] [Abs](abs_readme.md) (-)
   (+) patogi kalba
-  (-) nebevystoma :frowning:
+  (?) nebevystoma? :frowning:, atnaujinta 2025-04
 * [x] [Dart](dart_readme.md) (-)
   (-) nepatogus darbas su išorinėmis komandomis
 * [x] [Euphoria](euph_readme.md) (-)
