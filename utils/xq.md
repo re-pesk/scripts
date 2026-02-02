@@ -2,25 +2,39 @@
 
 Command-line XML and HTML beautifier and content extractor.
 
+* Pradinis kodas [&#x2B67;](https://github.com/sibprogrammer/xq)
+
+## Pasirengimas
+
+Įdiegti `curl` į sistemą.
+
 ## Diegimas
 
-* Naujausios versijos
+### Naujausios versijos diegimas iš repozitorijos
 
-  ```bash
-  (( $(which xq | wc -l ) > 0 )) || {
-    url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/sibprogrammer/xq/releases/latest)"
-    version="$(basename -- $url)"
-    curl -fsSLo - "${url//tag/download}/xq_${version#v}_linux_amd64.tar.gz" |\
-      tar  --transform 'flags=r;s/^(.+)/xq\/\1/x' --show-transformed-names -xzvC ${HOME}/.opt
-    ln -sf "${HOME}/.opt/xq/xq" ${HOME}/.local/bin/xq
-    unset url version
-    xq --version
-  }
-  ```
+```bash
+if ! command -v curl &> /dev/null; then
+  printf '\n%s\n\n' "Curl neįdiegta! Įdiekite prieš tęsdami!"
+fi
 
-* Versijos iš oficialios Ubuntu repozitorijos
+LATEST="$(curl -sSLo /dev/null -w "%{url_effective}" "https://github.com/sibprogrammer/xq/releases/latest" | xargs basename)"
 
-  ```bash
-  (( $(apt list --installed 2>/dev/null | grep -P 'xq' | wc -l ) > 0 )) || \
-  sudo apt install xq
-  ```
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$( xq --version  | awk '{print $3}')"
+
+rm -rf "${HOME}/.opt/xq"
+curl -fsSLo - "https://github.com/sibprogrammer/xq/releases/download/${LATEST}/xq_${LATEST#v}_linux_amd64.tar.gz" \
+| tar --transform 'flags=r;s/^(.+)$/xq\/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
+ln -sf "${HOME}/.opt/xq/xq" "${HOME}/.local/bin/"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$( xq --version  | awk '{print $3}')"
+
+unset LATEST
+```
+
+### Oficialios Ubuntu versijos diegimas
+
+```bash
+dpkg -s xq &>/dev/null || sudo apt install xq -y
+```
