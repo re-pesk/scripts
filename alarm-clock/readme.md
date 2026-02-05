@@ -7,3 +7,7 @@ Priminimo skriptai: paleidus iš komandinės eilutės, programa veikia „pogrin
 * priminiklis.sh - pagrindinis skriptas. Paleistas foregrounde, perleidžia save backgrounde
 
 * kiti paleidimo skriptai - pavyzdžiai, kaip turėtų būti naudojamas pagrindinis skriptas
+
+## Diegimas
+
+Įkelti į pasirinktą paaplankį ${HOME} aplanke, ir po to sukurti nuorodas į juos ${HOME}/.local/bin/ aplanke, arba kopijuoti tiesiai į ${HOME}/.local/bin/ aplanką.
