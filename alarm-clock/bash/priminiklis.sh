@@ -1,34 +1,37 @@
 #!/usr/bin/env -S bash
 
-declare -A messages=(
-  [en.UTF-8.infoTitle]="Starting reminder"
-  [en.UTF-8.error]="Error!"
-  [en.UTF-8.errorDurationNotExists]="Duration is absent!"
-  [en.UTF-8.errorDurationFormat]="Wrong duration format!"
-  [en.UTF-8.errorMessageIsAbsent]="No message specified!"
-  [en.UTF-8.startInfo]="Remind after"
-  [en.UTF-8.finalInfoTitle]="Reminder"
-  [en.UTF-8.finalInfo]="has already expired!"
-  [en.UTF-8.h]="hrs"
-  [en.UTF-8.m]="min"
-  [en.UTF-8.s]="sec"
-  [lt_LT.UTF-8.infoTitle]="Programos paleidimas"
-  [lt_LT.UTF-8.error]="Klaida!"
-  [lt_LT.UTF-8.errorDurationNotExists]="Nenurodyta trukmė!"
-  [lt_LT.UTF-8.errorDurationFormat]="Klaidingas trukmės formatas!"
-  [lt_LT.UTF-8.errorMessageIsAbsent]="Nenurodytas pranešimas!"
-  [lt_LT.UTF-8.startInfo]="Priminti po"
-  [lt_LT.UTF-8.finalInfoTitle]="Priminimas"
-  [lt_LT.UTF-8.finalInfo]="jau praėjo!"
-  [lt_LT.UTF-8.h]="val"
-  [lt_LT.UTF-8.m]="min"
-  [lt_LT.UTF-8.s]="sek"
-) 
+declare -A messages="(
+  'en.UTF-8.infoTitle' 'Starting reminder'
+  'en.UTF-8.error' 'Error!'
+  'en.UTF-8.errorDurationNotExists' 'Duration is absent!'
+  'en.UTF-8.errorDurationFormat' 'Wrong duration format!'
+  'en.UTF-8.errorMessageIsAbsent' 'No message specified!'
+  'en.UTF-8.startInfo' 'Remind after'
+  'en.UTF-8.finalInfoTitle' 'Reminder'
+  'en.UTF-8.finalInfo' 'has already expired!'
+  'en.UTF-8.h' 'hrs'
+  'en.UTF-8.m' 'min'
+  'en.UTF-8.s' 'sec'
+  'lt_LT.UTF-8.infoTitle' 'Programos paleidimas'
+  'lt_LT.UTF-8.error' 'Klaida!'
+  'lt_LT.UTF-8.errorDurationNotExists' 'Nenurodyta trukmė!'
+  'lt_LT.UTF-8.errorDurationFormat' 'Klaidingas trukmės formatas!'
+  'lt_LT.UTF-8.errorMessageIsAbsent' 'Nenurodytas pranešimas!'
+  'lt_LT.UTF-8.startInfo' 'Priminti po'
+  'lt_LT.UTF-8.finalInfoTitle' 'Priminimas'
+  'lt_LT.UTF-8.finalInfo' 'jau praėjo!'
+  'lt_LT.UTF-8.h' 'val'
+  'lt_LT.UTF-8.m' 'min'
+  'lt_LT.UTF-8.s' 'sek'
+)"
 
-messages["en.UTF-8.info"]="When a reminder is starting, the duration and the text of the message must be specified. \
+declare -A messages="(
+  ${messages[*]@K}
+  'en.UTF-8.info' 'When a reminder is starting, the duration and the text of the message must be specified. \
 There must be a space between the duration and the message text.
   
-The duration shall follow the following format: 
+The duration shall follow the following format:
+
 one or more digits, which may be followed by the following without a space 
 
   \"h\" or \"${messages[en.UTF-8.h]}\",
@@ -39,14 +42,15 @@ Message text is in free form, it is not to be surrounded by quotes.
 
 Usage:
 
->  priminiklis.sh 1m \"Pranešimo tekstas\"
+>  priminiklis.sh 1m \"Text of the message\"
 
->  priminiklis.sh 1m Pranešimo tekstas"
+>  priminiklis.sh 1m Text of the message'
 
-messages["lt_LT.UTF-8.info"]="Paleidžiant priminimą, turi būti nurodyti trukmė ir pranešimo tekstas. \
+  'lt_LT.UTF-8.info' 'Paleidžiant priminimą, turi būti nurodyti trukmė ir pranešimo tekstas. \
 Tarp trukmės ir pranešimo teksto turi būti tarpas.
   
-Trukmė turi atitikti tokį formatą: 
+Trukmė turi atitikti tokį formatą:
+
 vienas ar keli skaitmenys, po kurių be tarpo gali būti prirašyta 
 
   \"h\" arba \"${messages[lt_LT.UTF-8.h]}\",
@@ -59,25 +63,34 @@ Naudojimas:
 
 >  priminiklis.sh 1m \"Pranešimo tekstas\"
 
->  priminiklis.sh 1m Pranešimo tekstas"
+>  priminiklis.sh 1m Pranešimo tekstas'
+)"
 
-if [[ "$@" == "" ]]; then
-  text="${messages[$LANG.info]}"
-  
-  echo "$text"
+path_name="$(realpath "$0")"
+
+if [[ "$*" == "" ]]; then
+  if [[ $(ps -o stat= -p $$) == *+* ]]; then
+    printf '%s\n\n' "${messages[$LANG.info]}"
+    "${path_name}" &
+    exit
+  fi
   zenity --info \
     --title "${messages[$LANG.infoTitle]}" \
     --width=400 \
     --height=300 \
-    --text "$text"
+    --text "${messages[$LANG.info]}"
   exit
 fi
 
 if [ "$1" = "" ]; then
-  echo "${messages[$LANG.errorDurationNotExists]}"
+  if [[ $(ps -o stat= -p $$) == *+* ]]; then
+    printf '\n%s\n\n' "${messages[$LANG.errorDurationNotExists]}"
+    "${path_name}" "$@" &
+    exit
+  fi
   zenity --error \
     --width=400 \
-    --height=300 \
+    --height=100 \
     --title "${messages[$LANG.error]}" \
     --text "${messages[$LANG.errorDurationNotExists]}"
   exit
@@ -90,32 +103,41 @@ trukme="$1"
 [[ "$trukme" =~ ^[0-9]+${messages[$LANG.h]}$ ]] && trukme="${1//val/h}"
 
 if [[ ! ( "$trukme" =~ ^[0-9]+(h|m|s)$ ) ]]; then
-  echo "${messages[$LANG.errorDurationFormat]}"
+  if [[ $(ps -o stat= -p $$) == *+* ]]; then
+    printf '\n%s\n\n' "${messages[$LANG.errorDurationFormat]}"
+    "${path_name}" "$trukme" &
+    exit
+  fi
   zenity \
     --error \
     --width=400 \
-    --height=300 \
+    --height=100 \
     --title "${messages[$LANG.error]}" \
     --text "${messages[$LANG.errorDurationFormat]}: \"$trukme\"!"
   exit
 fi
 
-text="${@:2}"
+text="${*:2}"
 
 if [ "$text" == "" ]; then
-  echo "${messages[$LANG.errorMessageIsAbsent]}"
+  if [[ $(ps -o stat= -p $$) == *+* ]]; then
+    printf '\n%s\n\n' "${messages[$LANG.errorMessageIsAbsent]}"
+    "${path_name}" "$trukme" "$text" &
+    exit
+  fi
   zenity \
     --error \
     --width=400 \
-    --height=300 \
+    --height=100 \
     --title "${messages[$LANG.error]}" \
     --text "${messages[$LANG.errorMessageIsAbsent]}"
   exit
 fi
 
 if [[ $(ps -o stat= -p $$) == *+* ]]; then
-  echo "${messages[$LANG.startInfo]} $trukme: $text"
-  ($0 "$trukme" "$text" &)
+  # printf '\n%s\n\n%s\n\n' "$(dirname "$0" | xargs dirname)/sounds/Alarm_clock.ogg" "${messages[$LANG.startInfo]} $trukme: $text"
+  printf '\n%s\n\n' "${messages[$LANG.startInfo]} $trukme: $text"
+  "${path_name}" "$trukme" "$text" &
   exit
 fi
 
@@ -131,7 +153,6 @@ case "$trukme" in
     secs=${1%s}
     ;;
   (*)
-    echo "${messages[$LANG.errorDurationFormat]}"
     zenity \
       --error \
       --width=400 \
@@ -142,9 +163,10 @@ case "$trukme" in
     ;;
 esac
 
-sleep $secs # laukti nurodytą sekundžių skaičių
+sleep "$secs" # laukti nurodytą sekundžių skaičių
 
 paplay /usr/share/sounds/ubuntu/ringtones/Alarm\ clock.ogg
+# paplay $(dirname "${path_name}")/../sounds/Alarm\ clock.ogg
 
 # Parodyti langą su antrašte ir tekstu
 zenity \
