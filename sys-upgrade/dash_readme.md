@@ -13,5 +13,5 @@ dash dash_sys-upgrade.sh
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#! /usr/bin/env dash
+#! /usr/bin/env -S dash
 ```

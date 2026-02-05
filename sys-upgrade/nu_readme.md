@@ -13,5 +13,5 @@ nu nu_sys-upgrade.nu
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#! /usr/bin/env nu
+#! /usr/bin/env -S nu
 ```

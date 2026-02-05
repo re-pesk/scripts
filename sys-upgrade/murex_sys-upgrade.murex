@@ -2,11 +2,11 @@
 
 # Klaidų ir sėkmės pranešimų medis
 messages = %{
-  en.UTF-8 : %{
+  en.UTF-8 : {
     err: "Error! Script execution was terminated!",
     succ: "Successfully finished!"
   },
-  lt_LT.UTF-8: %{
+  lt_LT.UTF-8: {
     err: "Klaida! Scenarijaus vykdymas sustabdytas!",
     succ: "Komanda sėkmingai įvykdyta!"
   }
@@ -20,7 +20,7 @@ global successMessage = $messages[[/$lang/succ]]
 # Išorinių komandų iškvietimo funkcija
 function runCmd () {
 
-  # Sukuria argumentą iš fumkcijos parametrų
+  # Sukuria argumentą iš funkcijos parametrų
   cmdArg = ${ $PARAMS -> mjoin " " }
 
   # Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
@@ -40,12 +40,12 @@ function runCmd () {
 
   # Jeigu vykdant komandą įvyko klaida, išveda klaidos pranešimą ir nutraukia programos vykdymą
   catch {
-    out \n$errorMessage\n
+    err \n$errorMessage\n
     exit
   }
   
   # Kitu atveju išvedamas sėkmės pranešimas
-  out \n$successMessage\n
+  out \n{GREEN}$successMessage{RESET}\n
 }
 
 out

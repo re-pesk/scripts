@@ -1,4 +1,4 @@
-#! /usr/bin/env nu
+#! /usr/bin/env -S nu
 
 # Klaidų ir sėkmės pranešimų medis
 let messages = {

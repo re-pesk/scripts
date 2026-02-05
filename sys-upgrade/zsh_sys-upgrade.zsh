@@ -22,7 +22,7 @@ runCmd() {
   separator=${command//?/'-'}
 
   # Išvedama komandos eilutė, apsupta skirtuko eilučių
-  printf "%s\n%s\n%s\n\n" "$separator" "$command" "$separator"
+  printf '%s\n%s\n%s\n\n' "$separator" "$command" "$separator"
 
   # Vykdoma komanda
   (sudo $@)
@@ -32,12 +32,12 @@ runCmd() {
 
   # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiams programos vykdymas 
   if [ $exitCode -gt 0 ]; then
-    printf "\n%s\n\n" "$errorMessage"
+    printf '\n\033[31m%s\033[0m\n\n' "$errorMessage" 2>&1
     exit $exitCode
   fi
 
   # Kitu atveju išvedamas sėkmės pranešimas
-  printf "\n%s\n\n" "$successMessage"
+  printf '\n\033[32m%s\033[0m\n\n' "$successMessage"
 }
 
 echo

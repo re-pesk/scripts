@@ -1,4 +1,4 @@
-#! /usr/bin/env elvish
+#! /usr/bin/env -S elvish
 
 # Klaidų ir sėkmės pranešimų medis
 var messages = [

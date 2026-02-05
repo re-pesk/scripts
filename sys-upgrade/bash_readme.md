@@ -13,5 +13,5 @@ bash bash_sys-upgrade.sh
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#! /usr/bin/env bash
+#! /usr/bin/env -S bash
 ```

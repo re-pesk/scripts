@@ -15,4 +15,3 @@ yash yash_sys-upgrade.sh
 ```bash
 #!/usr/bin/env yash
 ```
-

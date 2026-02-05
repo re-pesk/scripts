@@ -1,5 +1,5 @@
-#! /usr/bin/env yash
-# shellcheck shell=bash
+#! /usr/bin/env -S yash
+# shellcheck shell=ksh
 
 # Klaidų ir sėkmės pranešimų masyvas - kiekvienas pranešimas naujoje eilutėje
 messages="en.UTF-8.err:Error! Script execution was terminated!
@@ -34,7 +34,7 @@ runCmd() {
   separator=${command//?/'-'}
 
   # Išvedama komandos eilutė, apsupta skirtuko eilučių
-  printf "%s\n%s\n%s\n\n" "${separator}" "${command}" "${separator}"
+  printf '%s\n%s\n%s\n\n' "${separator}" "${command}" "${separator}"
 
   # Įvykdoma komanda
   sudo "$@"
@@ -44,12 +44,12 @@ runCmd() {
 
   # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
   if [[ "${exitCode}" -gt 0 ]]; then
-    printf "\n%s\n\n" "${errorMessage}"
-    exit "${exitCode}"                       
+    printf '\n\033[31m%s\033[0m\n\n' "${errorMessage}" 1>&2
+    exit "${exitCode}"
   fi
 
   # Kitu atveju išvedamas sėkmės pranešimas
-  printf "\n%s\n\n" "${successMessage}" 
+  printf '\n\033[32m%s\033[0m\n\n' "${successMessage}"
 }
 
 echo

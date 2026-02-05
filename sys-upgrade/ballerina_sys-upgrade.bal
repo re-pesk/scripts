@@ -50,7 +50,7 @@ function runCmd(string cmdArg) returns int {
     return 1;
   }
 
-  // Sulaukiama, kol procesas pasibaigs, išėjimo kodas išasugomas kintamajame
+  // Sulaukiama, kol procesas pasibaigs, išėjimo kodas išsaugomas kintamajame
   int|os:Error exitCode = process.waitForExit();
   
   // Jeigu išėjimo kodas yra klaidos tipo (proceso vykdymas nepavyko),
