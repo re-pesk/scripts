@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Ruby [&#x2B67;](https://www.ruby-lang.org/)
+# Ruby [<sup>&#x2B67;</sup>](https://www.ruby-lang.org/)
 
 ## [Diegimas](../install/ruby_readme.md)
 

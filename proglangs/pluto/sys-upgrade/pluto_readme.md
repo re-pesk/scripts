@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Pluto [&#x2B67;](https://pluto-lang.org/)
+# Pluto [<sup>&#x2B67;</sup>](https://pluto-lang.org/)
 
 ## [Diegimas](../install/pluto_readme.md)
 

@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md).md)
 
-# Go [&#x2B67;](https://go.dev/)
+# Go [<sup>&#x2B67;</sup>](https://go.dev/)
 
 ## [Diegimas](../install/go_readme.md)
 

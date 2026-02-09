@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md).md)
 
-# GNU Guile [&#x2B67;](https://www.gnu.org/software/guile/)
+# GNU Guile [<sup>&#x2B67;</sup>](https://www.gnu.org/software/guile/)
 
 ## [Diegimas](../install/guile_readme.md)
 

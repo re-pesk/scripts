@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Python [&#x2B67;](https://www.python.org/)
+# Python [<sup>&#x2B67;</sup>](https://www.python.org/)
 
 ## [Diegimas](../install/py_readme.md)
 

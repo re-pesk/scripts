@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Nushell [&#x2B67;](https://www.nushell.sh/)
+# Nushell [<sup>&#x2B67;</sup>](https://www.nushell.sh/)
 
 ## [Diegimas](../install/nu_readme.md)
 

@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Köi [&#x2B67;](https://koi-lang.dev/)
+# Köi [<sup>&#x2B67;</sup>](https://koi-lang.dev/)
 
 ## [Diegimas](../install/koi_readme.md)
 

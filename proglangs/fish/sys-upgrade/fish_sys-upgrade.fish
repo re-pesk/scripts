@@ -36,7 +36,7 @@ function runCmd ()
     set -l separator (string replace -a -r '.' '-' $command)
 
     # Išvedama komandos eilutė, apsupta skirtuko eilučių
-    echo -e "$separator\n$command\n$separator\n"
+    printf '%s\n' "$separator\n$command\n$separator\n"
 
     # Vykdoma komanda
     sudo $argv
@@ -44,12 +44,12 @@ function runCmd ()
     # Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
     # Įvykdymo rezultatas programos kintamajame $status išsaugomas automatiškai
     if test $status -gt 0
-      echo -e "\n$errorMessage\n"
+      printf '%s\n' "\n$errorMessage\n"
       exit 99
     end
 
     # Kitu atveju išvedamas sėkmės pranešimas
-    echo -e "\n$successMessage\n"
+    printf '%s\n' "\n$successMessage\n"
 end
 
 echo ""

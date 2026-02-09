@@ -1,6 +1,6 @@
-[[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# PureScript [&#x2B67;](hhttps://www.purescript.org/)
+# PureScript [<sup>&#x2B67;</sup>](hhttps://www.purescript.org/)
 
 ## [Diegimas](../install/purs_readme.md)
 

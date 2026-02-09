@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Lua [&#x2B67;](https://www.lua.org/)
+# Lua [<sup>&#x2B67;</sup>2934;</sup>](https://www.lua.org/)
 
 ## [Diegimas](../install/lua_readme.md)
 

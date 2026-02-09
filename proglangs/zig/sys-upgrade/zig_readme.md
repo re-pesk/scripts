@@ -1,6 +1,6 @@
-[&uArr;]](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Zig [&#x2B67;](https://ziglang.org/)
+# Zig [<sup>&#x2B67;</sup>](https://ziglang.org/)
 
 ## Diegimas Linuxe (Ubuntu 24.04)
 

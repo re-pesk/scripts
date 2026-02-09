@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md).md)
 
-# Hilbish shell [&#x2B67;](https://rosettea.github.io/Hilbish/)
+# Hilbish shell [<sup>&#x2B67;</sup>](https://rosettea.github.io/Hilbish/)
 
 ## [Diegimas](../install/hilbish_readme.md)
 

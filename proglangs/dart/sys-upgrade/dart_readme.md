@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Dart [&#x2B67;](https://dart.dev/)
+# Dart [<sup>&#x2B67;</sup>](https://dart.dev/)
 
 ## [Diegimas](../install/dart_readme.md)
 

@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Bash [&#x2B67;](https://www.gnu.org/software/bash/)
+# Bash [<sup>&#x2B67;</sup>](https://www.gnu.org/software/bash/)
 
 ## [Diegimas](../install/bash_readme.md)
 

@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Rust [&#x2B67;](https://www.rust-lang.org/)
+# Rust [<sup>&#x2B67;</sup>](https://www.rust-lang.org/)
 
 ## [Diegimas](../install/rust_readme.md)
 

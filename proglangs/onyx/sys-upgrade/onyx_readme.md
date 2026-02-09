@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Onyx [&#x2B67;](https://onyxlang.io/)
+# Onyx [<sup>&#x2B67;</sup>](https://onyxlang.io/)
 
 ## [Diegimas](../install/onyx_readme.md)
 

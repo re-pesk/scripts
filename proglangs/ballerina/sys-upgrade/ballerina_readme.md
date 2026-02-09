@@ -1,6 +1,6 @@
-[&uArr](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Ballerina [&#x2B67;](https://ballerina.io/)
+# Ballerina [<sup>&#x2B67;</sup>](https://ballerina.io/)
 
 ## [Diegimas](../install/ballerina_readme.md)
 

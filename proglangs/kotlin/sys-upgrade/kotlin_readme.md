@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md).md)
 
-# Kotlin [&#x2B67;](https://kotlinlang.org/)
+# Kotlin [<sup>&#x2B67;</sup>](https://kotlinlang.org/)
 
 ## Diegimas
 

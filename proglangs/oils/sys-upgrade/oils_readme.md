@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Oils for Unix [&#x2B67;](https://www.oilshell.org/)
+# Oils for Unix [<sup>&#x2B67;</sup>](https://www.oilshell.org/)
 
 ## [Diegimas](../install/oil_readme.md)
 

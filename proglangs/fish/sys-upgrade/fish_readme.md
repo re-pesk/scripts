@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md).md)
 
-# Fish shell [&#x2B67;](https://fishshell.com/)
+# Fish shell [<sup>&#x2B67;</sup>](https://fishshell.com/)
 
 ## [Diegimas](../install/fish_readme.md)
 

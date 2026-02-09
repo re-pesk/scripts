@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Yash [&#x2B67;](https://magicant.github.io/yash/)
+# Yash [<sup>&#x2B67;</sup>](https://magicant.github.io/yash/)
 
 ## [Diegimas](../install/yash_readme.md)
 

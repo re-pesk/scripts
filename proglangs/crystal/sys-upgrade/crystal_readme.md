@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Crystal [&#x2B67;](https://crystal-lang.org/)
+# Crystal [<sup>&#x2B67;</sup>](https://crystal-lang.org/)
 
 ## [Diegimas](../install/crystal_readme.md)
 

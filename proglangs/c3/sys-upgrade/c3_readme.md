@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# C3 [&#x2B67;](https://c3-lang.org/)
+# C3 [<sup>&#x2B67;</sup>](https://c3-lang.org/)
 
 ## [Diegimas](../install/c3_readme.md)
 

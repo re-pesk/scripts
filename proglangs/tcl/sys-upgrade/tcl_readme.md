@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Tcl [&#x2B67;](https://www.tcl-lang.org/)
+# Tcl [<sup>&#x2B67;</sup>](https://www.tcl-lang.org/)
 
 ## [Diegimas](../install/tcl_readme.md)
 

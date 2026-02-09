@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Haxe [&#x2B67;](https://haxe.org/)
+# Haxe [<sup>&#x2B67;</sup>](https://haxe.org/)
 
 * Paskiausias leidimas: 4.3.6
 * Išleista: 2024-08-07

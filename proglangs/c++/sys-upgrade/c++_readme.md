@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# C++ [&#x2B67;](https://cplusplus.com/doc/tutorial/)
+# C++ [<sup>&#x2B67;</sup>](https://cplusplus.com/doc/tutorial/)
 
 ## [Diegimas](../install/c++_readme.md)
 

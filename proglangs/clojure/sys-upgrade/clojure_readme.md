@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Clojure [&#x2B67;](https://clojure.org/index)
+# Clojure [<sup>&#x2B67;</sup>](https://clojure.org/index)
 
 ## [Diegimas](../install/clojure_readme.md)
 

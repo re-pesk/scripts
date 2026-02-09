@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Euphoria [&#x2B67;](http://phix.x10.mx/)
+# Euphoria [<sup>&#x2B67;</sup>](http://phix.x10.mx/)
 
 ## [Diegimas](../install/phix_readme.md)
 

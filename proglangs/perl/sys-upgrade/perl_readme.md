@@ -1,6 +1,6 @@
-[&uArr;]](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Perl [&#x2B67;](https://www.perl.org/)
+# Perl [<sup>&#x2B67;</sup>](https://www.perl.org/)
 
 ## [Diegimas](../install/perl_readme.md)
 

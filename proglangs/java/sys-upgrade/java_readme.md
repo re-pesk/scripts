@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Java [&#x2B67;](https://www.java.com/en/download/help/index.html)
+# Java [<sup>&#x2B67;</sup>](https://www.java.com/en/download/help/index.html)
 
 ## [Diegimas](../install/java_readme.md)
 

@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Io [&#x2B67;](https://iolanguage.org/)
+# Io [<sup>&#x2B67;</sup>](https://iolanguage.org/)
 
 ## [Diegimas](../install/io_readme.md)
 

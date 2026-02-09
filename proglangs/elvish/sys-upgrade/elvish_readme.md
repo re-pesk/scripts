@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Elvish shell [&#x2B67;](https://elv.sh/)
+# Elvish shell [<sup>&#x2B67;</sup>](https://elv.sh/)
 
 ## [Diegimas](../install/elvish_readme.md)
 

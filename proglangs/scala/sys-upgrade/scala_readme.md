@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md).md)
 
-# Scala [&#x2B67;](https://scala-lang.org/)
+# Scala [<sup>&#x2B67;</sup>](https://scala-lang.org/)
 
 ## [Diegimas](../install/scala_readme.md)
 

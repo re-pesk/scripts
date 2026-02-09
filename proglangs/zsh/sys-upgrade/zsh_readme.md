@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Zsh [&#x2B67;](https://www.zsh.org/)
+# Zsh [<sup>&#x2B67;</sup>](https://www.zsh.org/)
 
 ## Diegimas
 

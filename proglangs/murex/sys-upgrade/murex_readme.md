@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md).md)
 
-# NGS [&#x2B67;](https://ngs-lang.org/)
+# NGS [<sup>&#x2B67;</sup>](https://ngs-lang.org/)
 
 ## [Diegimas](../install/murex_readme.md)
 

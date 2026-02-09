@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Carbon [&#x2B67;](https://docs.carbon-lang.dev/)
+# Carbon [<sup>&#x2B67;</sup>](https://docs.carbon-lang.dev/)
 
 ## [Diegimas](../install/carbon_readme.md)
 

@@ -1,4 +1,4 @@
-[&uArr;](../readme.md)
+[&#x2BA2;](../readme.md)
 
 # Skriptinimas skirtingomis programavimo kalbomis (57)
 
@@ -10,50 +10,50 @@ Naudota operacinė sistema – Ubuntu 24.04
 
 ## Tipinės apvalkalo scenarijų (Shell scripting) kalbos (6)
 
-* [x] [Bash](bash_readme.md) (±)\
+* [x] [Bash](bash/sys-upgrade/bash_readme.md) (±)\
   (–) asociatyvieji masyvai netinka medžio tipo struktūroms\
   (+) labai paplitusi, daug informacijos
-* [x] [Dash](dash_readme.md) (–)\
+* [x] [Dash](dash/sys-upgrade/dash_readme.md) (–)\
   (+) greita\
   (–) neturi asociatyviųjų masyvų\
   (–) daug kitų apribojimų
-* [x] [Yash](yash_readme.md) (–)\
+* [x] [Yash](yash/sys-upgrade/yash_readme.md) (–)\
   (–) mažai informacijos\
   (–) neturi asociatyviųjų masyvų
-* [x] [ksh](ksh_readme.md) (±)\
+* [x] [ksh](kash/sys-upgrade/ksh_readme.md) (±)\
   (+) turi įterptinius asocijuotuosius masyvus\
   (–) trūksta parametrų išplėtimo (Parameter Expansion) galimybių
-* [x] [Osh (Oil)](oil-osh_readme.md) (–)\
+* [x] [Osh (Oils)](oils/sys-upgrade/oils_readme.md) (–)\
   (–) mažai informacijos\
   (–) paini dokumentacija
-* [x] [Zsh](zsh_readme.md) (±)\
+* [x] [Zsh](zsh/sys-upgrade/zsh_readme.md) (±)\
   (–) asociatyvieji masyvai netinka medžio tipo struktūroms\
   (+) pakankamai paplitusi, daug informacijos
   
 ## Alternatyvios apvalkalo scenarijų (Shell scripting) kalbos (9)
 
-* [x] [Abs](abs_readme.md) (–)\
+* [x] [Abs](abs/sys-upgrade/abs_readme.md) (–)\
   (+) patogi kalba\
   (?) nebevystoma? :frowning:, atnaujinta 2025-04
-* [x] [Elvish](elvish_readme.md) (?)\
+* [x] [Elvish](elvish/sys-upgrade/elvish_readme.md) (?)\
   (–) keista asocijuotųjų masyvų ir funkcijų sintaksė\
   (+) dažniau minima, nei kitos alteratyvios apvalkalo scenarijų kalbos
-* [x] [Fish](fish_readme.md) (–)\
+* [x] [Fish](fish/sys-upgrade/fish_readme.md) (–)\
   (–) neturi priemonių medžio tipo struktūroms\
   (–) nepatogi sintaksė
-* [x] [Ysh (Oil)](oil-ysh_readme.md) (–)\
+* [x] [Ysh (Oils)](oils/sys-upgrade/oils_readme.md) (–)\
   (–) mažai informacijos\
   (–) paini dokumentacija
-* [x] [Koi](koi_readme.md) (–)\
+* [x] [Koi](koi/sys-upgrade/koi_readme.md) (–)\
   (–) neužbaigta kalba\
   (–) trūksta reikalingų apvalkalo kalboms ypatybių
-* [x] [Murex](murex_readme.md) (–)\
+* [x] [Murex](murex/sys-upgrade/murex_readme.md) (–)\
   (–) keista sintaksė
-* [x] [Ngs](ngs_readme.md) (?)\
+* [x] [Ngs](ngs/sys-upgrade/ngs_readme.md) (?)\
   (–) keistai organizuotas darbas su klaidomis
-* [x] [Nu](nu_readme.md) (?)\
+* [x] [Nu](nu/sys-upgrade/nu_readme.md) (?)\
   (+) dažniau minima, nei kitos alteratyvios apvalkalo scenarijų kalbos
-* [x] [PowerShell](pwsh_readme.md) (–)\
+* [x] [PowerShell](pwsh/sys-upgrade/pwsh_readme.md) (–)\
   (–) keista sintaksė\
   (–) kilmė iš Microsoft'o
 
@@ -63,23 +63,23 @@ Naudota operacinė sistema – Ubuntu 24.04
 
 Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
   
-* [x] [Clojure](clojure_readme.md) (–)\
+* [x] [Clojure](clojure/sys-upgrade/clojure_readme.md) (–)\
   (&ensp;) Lispo sintaksė
-* [x] [Ballerina](ballerina_readme.md) (–)\
+* [x] [Ballerina](ballerina/sys-upgrade/ballerina_readme.md) (–)\
   (–) ribotos išorinių komandų iškvietimo funkcijos\
   (–) sudėtingas klaidų apdrojimas\
   (–) skurdi dokumentacija\
   (–) mažai informacijos internete
-* [X] [Groovy](groovy_readme.md) (–)
-* [x] [Java](java_readme.md) (–)
-* [x] [Kotlin](kotlin_readme.md) (–)
+* [X] [Groovy](groovy/sys-upgrade/groovy_readme.md) (–)
+* [x] [Java](java/sys-upgrade/java_readme.md) (–)
+* [x] [Kotlin](kotlin/sys-upgrade/kotlin_readme.md) (–)
   3 kodo variantai:
   * [x] intepretuojamas,
   * [x] JVM,
   * [x] kompiliuojamas į mašininį kodą.
-* [x] [Scala](scala_readme.md) (–)
+* [x] [Scala](scala/sys-upgrade/scala_readme.md) (–)
 
-### [JS](js_readme.md) (3)
+### [JS](js/sys-upgrade/js_readme.md) (3)
 
 Daug informacijos internete
 
@@ -89,98 +89,98 @@ Daug informacijos internete
 
 ### Kitos (18)
 
-* [x] [Dart](dart_readme.md) (–)\
+* [x] [Dart](dart/sys-upgrade/dart_readme.md) (–)\
   (–) nepatogus darbas su išorinėmis komandomis
-* [x] [Euphoria](euph_readme.md) (–)\
+* [x] [Euphoria](euph/sys-upgrade/euph_readme.md) (–)\
   (–) sudėtingas instaliavimas\
   (–) seniai nebuvo leidimų
-  * [x] [Phix](phix_readme.md) - stipriai modifikuota Euforijos versija (–)\
+  * [x] [Phix](phix/sys-upgrade/phix_readme.md) - stipriai modifikuota Euforijos versija (–)\
     (–) nepavyko paleisti visų pavyzdžių
-* [x] [Guile](guile_readme.md) (–)\
+* [x] [Guile](guile/sys-upgrade/guile_readme.md) (–)\
   (&ensp;) Lispo sintaksė\
   (–) sudėtinga susigaudyti dokumentacijoje\
   (–) mažai informacijos intenete
-* [x] [Haxe](haxe_readme.md) (–)\
+* [x] [Haxe](haxe/sys-upgrade/haxe_readme.md) (–)\
   (–) pagrindinės klasė nepatogiai susieta su kodo failo pavadinimu\
   (–) reikalauja pagrindinės klasės
-* [x] [Io](https://iolanguage.org/index.html) (±)\
+* [x] [Io](io/sys-upgrade/io_readme.md) (±)\
   (+) maža, paprasta kalba\
   (&ensp;) Smaltalk'o sintaksė\
   (–) nebevystoma
-* [x] [Janet](janet_readme.md) (?)\
+* [x] [Janet](janet/sys-upgrade/janet_readme.md) (?)\
   (&ensp;) Lispo sintaksė\
   (+) pozicionuojama kaip skriptinė kalba
-* [x] [Julia](julia_readme.md) (±)\
+* [x] [Julia](julia/sys-upgrade/julia_readme.md) (±)\
   (&ensp;) Pythono pakaitalas moksliniams skaičiavimams
-* [x] [Lua](lua_readme.md) (+)\
+* [x] [Lua](lua/sys-upgrade/lua_readme.md) (+)\
   (+) paprasta kalba
-  * [x] [Hilbish](hilbish_readme.md) Apvalkalas (shell) Lua kalbos pagrindu (+)
-  * [x] [Pluto](pluto_readme.md) Lua kalbos supersetas su klasėmis (+)
-* [x] [Onyx](onyx_readme.md) - kalba, skirta kompiliuoti į Wasm (±)\
+  * [x] [Hilbish](hilbish/sys-upgrade/hilbish_readme.md) Apvalkalas (shell) Lua kalbos pagrindu (+)
+  * [x] [Pluto](pluto/sys-upgrade/pluto_readme.md) Lua kalbos supersetas su klasėmis (+)
+* [x] [Onyx](onyx/sys-upgrade/onyx_readme.md) - kalba, skirta kompiliuoti į Wasm (±)\
   (+) turi JIT kompiliatorių\
   (–) visiškai nauja kalba\
   (–) nėra dokumentacijos
-* [x] [Perl](perl_readme.md) bendros paskirties Unix'o scenarijų kalba (–)\
+* [x] [Perl](perl/sys-upgrade/perl_readme.md) bendros paskirties Unix'o scenarijų kalba (–)\
   (–) nepatogi ir keista sintaksė\
   (+) daug informacijos ir pavyzdžių
-* [x] [PHP](php_readme.md) (±)\
+* [x] [PHP](php/sys-upgrade/php_readme.md) (±)\
   (+) daug informacijos internete\
   (+) kalba pakankamai universali, kad būtų taikoma ne tik web srityje\
   (–) sintaksė vis dar orientuota į web skriptinimą („<?php“ failo pradžioje)
-* [x] [Pike](pike_readme.md) (+)\
+* [x] [Pike](pike/sys-upgrade/pike_readme.md) (+)\
   (+) C++ kalbos sintakse\
   (–) mažai naudojama
-* [x] [Python](py_readme.md) (±)\
+* [x] [Python](py/sys-upgrade/py_readme.md) (±)\
   (+) plačiai naudojamas\
   (+) daug informacijos internete\
   (–) teksto įtraukomis grįsta sintaksė
-* [x] [Ruby](ruby_readme.md) (–)\
+* [x] [Ruby](ruby/sys-upgrade/ruby_readme.md) (–)\
   (–) keistoka sintaksė\
   (–) lėtas, išnaudoja tik vieną branduolį
-* [x] [Tcl](tcl_readme.md) (±)\
+* [x] [Tcl](tcl/sys-upgrade/tcl_readme.md) (±)\
   (+) sena, žinoma kalba\
   (–) kartais keista sintaksė
 
 ## Kompiliuojamos kalbos (13, dar 2 neveikia)
 
-* [x] [C](c_readme.md) (–)\
+* [x] [C](c/sys-upgrade/c_readme.md) (–)\
   (+) greita\
   (–) nėra reikiamų funkcijų ir struktūrų standartinėje bibliotekoje
-* [x] [C++](c++_readme.md) (+)\
+* [x] [C++](c++/sys-upgrade/c++_readme.md) (+)\
   (+) kodą rašyti žymiai paprasčiau už C\
   (+) turi reikalingas duomenų struktūras
-* [x] [C3](c3_readme.md) (±)\
+* [x] [C3](c3/sys-upgrade/c3_readme.md) (±)\
   (+) sukurta kaip C kalbos pakaitalas
-* [ ] [Carbon](carbon_readme.md) (–)\
+* [ ] [Carbon](carbon/sys-upgrade/carbon_readme.md) (–)\
   (+) kuriama kaip C kalbos pakaitalas\
   (–) nepakankamai iįvystyta, nepavyko sukompiliuoti dokumentacijos pavyzdžio
-* [x] [Chapel](chapel_readme.md) (?)\
+* [x] [Chapel](chapel/sys-upgrade/chapel_readme.md) (?)\
   (+) kalba su C sintakse\
   (+) paralelinė\
   (–) pernelyg nauja, nedaug informacijos\
   (–) nelabai patogi dokumentacija
-* [x] [Crystal](crystal_readme.md) (+)\
+* [x] [Crystal](crystal/sys-upgrade/crystal_readme.md) (+)\
   (+) kalba su Ruby sintakse, tačiau kompiliuojama, tad daugiau prasmės mokytis nei Ruby
-* [x] [D](d_readme.md) (+)\
+* [x] [D](d/sys-upgrade/d_readme.md) (+)\
   (+) išvystyta kalba\
   (–) sunkiai panaudojama be šiukšlių surinktuvo (Garbage Collector)
-* [x] [Go](go_readme.md) (±)
-* [x] [Haskell](haskell_readme.md) (–)\
+* [x] [Go](go/sys-upgrade/go_readme.md) (±)
+* [x] [Haskell](haskell/sys-upgrade/haskell_readme.md) (–)\
   (–) sintakse ir logika labai skiriasi nuo kitų kalbų
-* [x] [Odin](odin_readme.md) (+)\
+* [x] [Odin](odin/sys-upgrade/odin_readme.md) (+)\
   (+) dar vienas C kalbos pakaitalas\
   (+) paprastesnė už Zig, verta pasimokyti
-* [ ] [Purescript](purs_readme.md) (–)\
+* [ ] [Purescript](purs/sys-upgrade/purs_readme.md) (–)\
   (–) transpileris, generuojantis JS kodą\
   (–) netinka scenarijų kalbos vaidmeniui
-* [x] [Rust](rust_readme.md) (–)\
+* [x] [Rust](rust/sys-upgrade/rust_readme.md) (–)\
   (–) reikalauja projekto failo\
   (–) neaiškūs klaidų pranešimai
-* [x] [Swift](swift_readme.md) (–)\
+* [x] [Swift](swift/sys-upgrade/swift_readme.md) (–)\
   (–) klaidos\
   (–) dokumentacija orientuota į MacOS
-* [x] [V](v_readme.md) (–)\
+* [x] [V](v/sys-upgrade/v_readme.md) (–)\
   (–) mažai žinoma\
-  (–)daug kritikos dėl neprofesionalių sprendimų
-* [x] [Zig](zig_readme.md) (–)\
+  (–) daug kritikos dėl neprofesionalių sprendimų
+* [x] [Zig](zig/sys-upgrade/zig_readme.md) (–)\
   (–) pernelyg sudėtinga paprastoms užduotims

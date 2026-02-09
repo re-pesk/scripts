@@ -1,6 +1,6 @@
-[&uArr;]](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Odin [&#x2B67;](ttps://odin-lang.org/)
+# Odin [<sup>&#x2B67;</sup>](ttps://odin-lang.org/)
 
 ## [Diegimas](../install/odin_readme.md)
 

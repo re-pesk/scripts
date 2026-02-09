@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](../../readme.md)
 
-# Groovy [&#x2B67;](https://groovy-lang.org/)
+# Groovy [<sup>&#x2B67;</sup>](https://groovy-lang.org/)
 
 ## [Diegimas](../install/groovy_readme.md)
 
