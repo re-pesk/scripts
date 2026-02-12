@@ -10,6 +10,6 @@ Programavimo žaidimai
 
 * Programavimo kalbų ir jų variklių [diegimas](./install/readme.md)
 
-* Ubuntu [atnaujinimo skriptas](./sys-upgrade/readme.md)
+* Ubuntu [atnaujinimo skriptas](./proglangs/readme.md)
 
 * Įvairūs pagalbiniai [skriptai ir pavyzdžiai](./shell/readme.md)
