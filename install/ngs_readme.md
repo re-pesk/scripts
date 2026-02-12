@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# NGS [&#x2B67;](https://ngs-lang.org/)
+# NGS [<sup>&#x2B67;</sup>](https://ngs-lang.org/)
 
 * Paskiausias leidimas: 0.2.16
 * Išleista: 2023-05-17 (nebevystoma)

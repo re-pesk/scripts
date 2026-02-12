@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# C [&#x2B67;](https://www.gnu.org/software/gnu-c-manual/gnu-c-manual.html)
+# C [<sup>&#x2B67;</sup>](https://www.gnu.org/software/gnu-c-manual/gnu-c-manual.html)
 
 * Paskiausias leidimas (gcc): 14.2.
 * Išleista: 2024-08-01

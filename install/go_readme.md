@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Go [&#x2B67;](https://go.dev/)
+# Go [<sup>&#x2B67;</sup>](https://go.dev/)
 
 * Paskiausias leidimas: 1.24.1
 * Išleista: 2025-03-04

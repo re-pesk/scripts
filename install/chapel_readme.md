@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Chapel [&#x2B67;](https://chapel-lang.org/)
+# Chapel [<sup>&#x2B67;</sup>](https://chapel-lang.org/)
 
 ## Parengimas
 

@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# D [&#x2B67;](https://dlang.org/)
+# D [<sup>&#x2B67;</sup>](https://dlang.org/)
 
 * Paskiausias leidimas: 2.111.0
 * Išleista: 2025-02-04

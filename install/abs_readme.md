@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Abs [&#x2B67;](https://www.abs-lang.org/)
+# Abs [<sup>&#x2B67;</sup>](https://www.abs-lang.org/)
 
 * Vėliausias leidimas: 2.7.2
 * Išleista: 2025-04-25

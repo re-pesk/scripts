@@ -1,4 +1,4 @@
-[&uArr;](../readme.md)
+[&#x2BA2;](../readme.md)
 
 # Pandoc konverterio naudojimas
 

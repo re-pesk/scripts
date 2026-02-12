@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# PureScript [&#x2B67;](https://www.purescript.org/)
+# PureScript [<sup>&#x2B67;</sup>](https://www.purescript.org/)
 
 ## Pairengimas
 

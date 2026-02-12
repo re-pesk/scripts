@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# V [&#x2B67;](https://vlang.io/)
+# V [<sup>&#x2B67;</sup>](https://vlang.io/)
 
 * Paskiausias leidimas: 0.4.10
 * Išleista: 2025-03-20

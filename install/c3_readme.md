@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# C3 [&#x2B67;](https://c3-lang.org/)
+# C3 [<sup>&#x2B67;</sup>](https://c3-lang.org/)
 
 * Paskiausias leidimas: 0.7.0
 * Išleista: 2025-03-31

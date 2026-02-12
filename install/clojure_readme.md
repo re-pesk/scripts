@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Clojure [&#x2B67;](https://clojure.org/index)
+# Clojure [<sup>&#x2B67;</sup>](https://clojure.org/index)
 
 * Paskiausias leidimas: 1.12.0.1530
 * Išleista: 2025-03-06

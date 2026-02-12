@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Scala [&#x2B67;](https://scala-lang.org/)
+# Scala [<sup>&#x2B67;</sup>](https://scala-lang.org/)
 
 * Paskiausias leidimas: 3.6.4
 * Išleista: 2025-03-07

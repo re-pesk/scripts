@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Kotlin [&#x2B67;](https://kotlinlang.org/)
+# Kotlin [<sup>&#x2B67;</sup>](https://kotlinlang.org/)
 
 * Paskiausias leidimas: 2.1.20
 * Išleista: 2025-03-20

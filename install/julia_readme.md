@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Julia [&#x2B67;](https://julialang.org/)
+# Julia [<sup>&#x2B67;</sup>](https://julialang.org/)
 
 * Paskiausias leidimas: 1.11.4
 

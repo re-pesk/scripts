@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Janet [&#x2B67;](https://janet-lang.org/)
+# Janet [<sup>&#x2B67;</sup>](https://janet-lang.org/)
 
 * Paskiausias leidimas: 1.38.0
 * Išleista: 2025-03-19

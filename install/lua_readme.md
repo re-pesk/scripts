@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Lua [&#x2B67;](https://www.lua.org/)
+# Lua [<sup>&#x2B67;</sup>](https://www.lua.org/)
 
 * Paskiausias leidimas: 5.4.7
 * Išleista: 2024-06-13

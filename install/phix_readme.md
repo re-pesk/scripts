@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Phix [&#x2B67;](http://phix.x10.mx/index.php)
+# Phix [<sup>&#x2B67;</sup>](http://phix.x10.mx/index.php)
 
 * Paskiausias leidimas: 1.0.5
 * Išleista: 2024-06-01

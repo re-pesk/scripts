@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# GNU Guile [&#x2B67;](https://www.gnu.org/software/guile/)
+# GNU Guile [<sup>&#x2B67;</sup>](https://www.gnu.org/software/guile/)
 
 * Paskiausias leidimas: 3.0.10
 * Išleista: 2024-06-24

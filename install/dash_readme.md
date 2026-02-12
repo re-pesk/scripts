@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Dash [&#x2B67;](https://manned.org/dash.1)
+# Dash [<sup>&#x2B67;</sup>](https://manned.org/dash.1)
 
 * Paskiausias leidimas: 0.5.12
 

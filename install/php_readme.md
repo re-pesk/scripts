@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# PHP [&#x2B67;](https://www.php.net/)
+# PHP [<sup>&#x2B67;</sup>](https://www.php.net/)
 
 * Paskiausias leidimas: 8.4.5
 * Išleista: 2025-03-13

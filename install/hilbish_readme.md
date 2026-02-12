@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Hilbish [&#x2B67;](https://rosettea.github.io/Hilbish/)
+# Hilbish [<sup>&#x2B67;</sup>](https://rosettea.github.io/Hilbish/)
 
 * Vėliausias leidimas: 2.3.4
 * Išleista: 2024-12-29

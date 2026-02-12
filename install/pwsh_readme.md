@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# PowerShell [&#x2B67;](https://learn.microsoft.com/en-us/powershell/)
+# PowerShell [<sup>&#x2B67;</sup>](https://learn.microsoft.com/en-us/powershell/)
 
 * Pasiausias leidimas: 7.5.0
 * Išleista: 2025-01-23

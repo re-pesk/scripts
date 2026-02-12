@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Ksh93 [&#x2B67;](http://www.kornshell.com/) [(man.1)](https://linux.die.net/man/1/ksh93)
+# Ksh93 [<sup>&#x2B67;</sup>](http://www.kornshell.com/) [(man.1)](https://linux.die.net/man/1/ksh93)
 
 * Paskiausias leidimas: 93u+m/1.0.10-2
 * Išleista: 2024-08-02

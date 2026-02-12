@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Euphoria [&#x2B67;](https://openeuphoria.org/)
+# Euphoria [<sup>&#x2B67;</sup>](https://openeuphoria.org/)
 
 * Paskiausias leidimas: 4.2 (darbinis)
 * Atnaujintas: 2025-01-24

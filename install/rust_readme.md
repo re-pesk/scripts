@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Rust [&#x2B67;](https://www.rust-lang.org/)
+# Rust [<sup>&#x2B67;</sup>](https://www.rust-lang.org/)
 
 * Paskiausias leidimas: 1.86.0
 * Išleista: 2025-03-31

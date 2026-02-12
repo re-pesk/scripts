@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# NGS [&#x2B67;](https://nojs.murex.rocks/)
+# NGS [<sup>&#x2B67;</sup>](https://nojs.murex.rocks/)
 
 * Paskiausias leidimas: 6.4.2063
 * Išleista: 2025-01-16

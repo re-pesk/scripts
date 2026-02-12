@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Odin [&#x2B67;](https://odin-lang.org/)
+# Odin [<sup>&#x2B67;</sup>](https://odin-lang.org/)
 
 * Paskiausias leidimas: dev-2025-03
 * Išleista: 2025-03-05

@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Haskell [&#x2B67;](https://www.haskell.org/)
+# Haskell [<sup>&#x2B67;</sup>](https://www.haskell.org/)
 
 * Paskiausias leidimas (ghc) 9.12.2
 * Išleista: 2025-03-12

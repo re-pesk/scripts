@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# JavaScript [&#x2B67;](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+# JavaScript [<sup>&#x2B67;</sup>](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 * Paskiausias leidimas: ES2024
 * Išleista: 2024-06

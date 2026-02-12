@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Pike [&#x2B67;](https://pike.lysator.liu.se/)
+# Pike [<sup>&#x2B67;</sup>](https://pike.lysator.liu.se/)
 
 * Paskiausia stabili versija: v8.0.1956
 

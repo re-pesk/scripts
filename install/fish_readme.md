@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Fish shell [&#x2B67;](https://fishshell.com/)
+# Fish shell [<sup>&#x2B67;</sup>](https://fishshell.com/)
 
 * Paskiausias leidimas: 4.0.2
 * Išleista: 2025-04-20

@@ -1,6 +1,6 @@
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Swift [&#x2B67;](https://www.swift.org/)
+# Swift [<sup>&#x2B67;</sup>](https://www.swift.org/)
 
 * Paskiausias leidimas: 6.1
 * Išleista: 2025-03-30

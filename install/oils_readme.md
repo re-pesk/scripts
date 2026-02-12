@@ -1,7 +1,7 @@
 <!-- markdownlint-disable-file no-hard-tabs -->
-[&uArr;](./readme.md)
+[&#x2BA2;](./readme.md)
 
-# Oils for Unix [&#x2B67;](https://www.oilshell.org/)
+# Oils for Unix [<sup>&#x2B67;</sup>](https://www.oilshell.org/)
 
 * Paskiausias leidimas: [0.28.0](https://oils.pub/release/latest/)
 * Išleista: 2025-03-16
