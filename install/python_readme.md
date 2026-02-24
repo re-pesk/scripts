@@ -2,8 +2,8 @@
 
 # Python [<sup>&#x2B67;</sup>](https://www.python.org/)
 
-* Paskiausias leidimas: 3.13.2
-* Išleista: 2025-02-04
+* Paskiausias leidimas: 3.14.3
+* Išleista: 2026-02-03
 
 ## Diegimas
 
@@ -20,5 +20,5 @@ arba
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#!/usr/bin/env python3
+#!/usr/bin/env -S python3
 ```

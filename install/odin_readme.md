@@ -12,21 +12,39 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-(( $(apt list --installed 2>/dev/null | grep -P '^clang' | wc -l ) > 0 )) || sudo apt install clang
-url=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/odin-lang/Odin/releases/latest)
-version="$(basename -- $url)"
-[ -d "${HOME}/.opt/odin" ] && rm --recursive "${HOME}/.opt/odin"
-curl -sSLo - "${url//tag/download}/odin-ubuntu-amd64-${version}.zip" | gunzip -cf |\
-  tar --transform 'flags=r;s/^(odin)[^\/]+/\1/x' --show-transformed-names -xzvC $HOME/.opt
-unset url version
-ln -fs ${HOME}/.opt/odin/odin ${HOME}/.local/bin/odin
-odin version
+dpkg -s clang &>/dev/null || sudo apt install clang
+
+LATEST="$(curl -sSLo /dev/null -w "%{url_effective}" "https://github.com/odin-lang/Odin/releases/latest" | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(odin version 2> /dev/null | awk -F'[ -]' '{print $3"-"$4"-"$5}')"
+
+curl -sSLO "https://github.com/odin-lang/Odin/releases/download/${LATEST}/odin-linux-amd64-${LATEST}.tar.gz"
+
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "odin-linux-amd64-${LATEST}.tar.gz" | awk '{print $1}')" \
+  "$(curl -sSLo - "https://github.com/odin-lang/Odin/releases/expanded_assets/${LATEST}" \
+  | xq -q "li > div:has(a span:contains('odin-linux-amd64-${LATEST}.tar.gz')) ~ div > div > span > span" \
+  | awk -F':' '{print $NF}')"
+
+rm -rf "${HOME}/.opt/odin"
+tar --file "odin-linux-amd64-${LATEST}.tar.gz" \
+  --transform 'flags=r;s/^(odin)[^\/]+/\1/x' \
+  --show-transformed-names -xzC "${HOME}/.opt"
+rm -f "odin-linux-amd64-${LATEST}.tar.gz"
+
+ln -fs "${HOME}/.opt/odin/odin" "${HOME}/.local/bin/"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(odin version 2> /dev/null | awk -F'[ -]' '{print $3"-"$4"-"$5}')"
+
+unset LATEST
 ```
 
 arba
 
 ```bash
-bash odin-install.sh
+bash odin_install.sh
 ```
 
 ## Paleistis
@@ -37,7 +55,7 @@ odin run kodo-failas.odin -file -out:vykdomasis-failas.bin
 
 ### odin-script.sh
 
-Odino failų palidimą supaprastina pagalbinis failas _odin-script.sh_. Jis turi būti arba tame pačiame kataloge kaip ir leidžiamas failas, arba viename iš katalogų, nurodytų aplinkos kintamajame `PATH`.
+Odino failų paleidimą supaprastina pagalbinis failas _odin-script.sh_. Jis turi būti arba tame pačiame kataloge kaip ir leidžiamas failas, arba viename iš katalogų, nurodytų aplinkos kintamajame `PATH`.
 
 ```bash
 ./odin-script.sh kodo-failas.odin

@@ -12,14 +12,31 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/Rosettea/Hilbish/releases/latest)"
-curl -sSLo - "${url//tag/download}/hilbish-$(basename -- $url)-linux-amd64.tar.gz" |\
-  sudo tar  --transform 'flags=r;s/^/hilbish\//x' --show-transformed-names -xzvC "$HOME/.opt"
-unset url
-ln -sf "$HOME/.opt/hilbish/hilbish" "$HOME/.local/bin/hilbish"
-mkdir ${HOME}/.config/hilbish && cp -T $HOME/.opt/hilbish/.hilbishrc.lua ${HOME}/.config/hilbish/init.lua
-echo "hilbish.opts.tips = false" >> ${HOME}/.config/hilbish/init.lua
-hilbish --version
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" https://github.com/Rosettea/Hilbish/releases/latest | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(hilbish --version 2> /dev/null | head -n 1 | awk '{print $2}')"
+
+curl -sSLO "https://github.com/sammy-ette/Hilbish/releases/download/${LATEST}/hilbish-${LATEST}-linux-amd64.tar.gz"
+printf '%s\n%s\n\n' \
+  "$(md5sum "hilbish-${LATEST}-linux-amd64.tar.gz" | awk '{print $1}')" \
+  "$(curl -sSL "https://github.com/sammy-ette/Hilbish/releases/download/${LATEST}/hilbish-${LATEST}-linux-amd64.tar.gz.md5")"
+
+rm -rf "${HOME}/.opt/hilbish"
+tar --file="hilbish-${LATEST}-linux-amd64.tar.gz" \
+  --transform 'flags=r;s/^/hilbish\//x' --show-transformed-names -xzvC "${HOME}/.opt"
+rm -f "hilbish-${LATEST}-linux-amd64.tar.gz"
+
+ln -sf "${HOME}/.opt/hilbish/hilbish" "${HOME}/.local/bin/"
+
+mkdir "${HOME}/.config/hilbish"
+cp -T "${HOME}/.opt/hilbish/.hilbishrc.lua" "${HOME}/.config/hilbish/init.lua"
+echo "hilbish.opts.tips = false" >> "${HOME}/.config/hilbish/init.lua"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(hilbish --version 2> /dev/null | head -n 1 | awk '{print $2}')"
+
+unset LATEST
 ```
 
 ## Paleistis

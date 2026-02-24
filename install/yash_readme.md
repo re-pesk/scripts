@@ -7,14 +7,45 @@
 
 ## Vadovas
 
-Yash vadovas [&#x2B67;](https://magicant.github.io/yash/doc/yash.html)
+Yash vadovas [<sup>&#x2B67;</sup>](https://magicant.github.io/yash/doc/yash.html)
 
 ## Diegimas
 
 ```bash
-sudo apt-get install yash
-yash --version
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/magicant/yash/releases/latest" | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(yash --version 2> /dev/null | head -n 1 | awk '{print $NF}')"
+
+curl -sSLO "https://github.com/magicant/yash/releases/download/${LATEST}/yash-${LATEST}.tar.gz"
+
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "yash-${LATEST}.tar.gz" | awk '{print $1}')" \
+  "$(curl -sSL "https://github.com/magicant/yash/releases/expanded_assets/${LATEST}" \
+| xq -q "li > div:has(a span:contains('yash-${LATEST}.tar.gz')) ~ div > div > span > span" \
+| awk -F':' '{print $NF}')"
+
+tar --file="yash-${LATEST}.tar.gz" -xzv
+cd "yash-${LATEST}" || exit 1
+./configure --prefix="${HOME}/.opt/yash"
+make
+make install
+cd ..
+rm -rf yash-${LATEST}*
+
+ln -sf "${HOME}/.opt/yash/bin/yash" "${HOME}/.local/bin"
+
+[[ -d "${HOME}/.opt/yash/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/yash/bin:"* ]] \
+  && export PATH="${HOME}/.opt/yash/bin${PATH:+:${PATH}}"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(yash --version 2> /dev/null | head -n 1 | awk '{print $NF}')"
+
+unset LATEST
 ```
+
+Baigę diegti, pakeiskite konfigūracinius failus, kad kelias `${HOME}/.opt/yash/bin` būtų automatiškai įtraukiamas į sistemos `PATH` kintamąjį.
 
 ## Paleistis
 

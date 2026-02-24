@@ -2,16 +2,31 @@
 
 # PHP [<sup>&#x2B67;</sup>](https://www.php.net/)
 
-* Paskiausias leidimas: 8.4.5
-* Išleista: 2025-03-13
+* Paskiausias leidimas: 8.5.3
+* Išleista: 2026-02-12
 
 ## Diegimas
 
 ```bash
-sudo add-apt-repository ppa:ondrej/php
-sudo apt update
-sudo apt install php8.4 php8.4-mbstring php8.4-curl php8.4-phpdbg php8.4-xdebug -y
-php -v
+if (( $(add-apt-repository -L ondrej/php | grep -c "ondrej/php") < 1 )); then
+  sudo add-apt-repository ppa:ondrej/php
+  sudo apt update
+fi
+
+LATEST="$(curl -sSLo /dev/null -w "%{url_effective}" "https://github.com/php/php-src/releases/latest" \
+| xargs basename | sed 's/^php-//')"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(php -v 2> /dev/null | head -n 1 | awk '{print $2}')"
+
+MINOR="${LATEST%.*}"
+
+sudo apt install "php${MINOR} php${MINOR}-mbstring php${MINOR}-curl php${MINOR}-phpdbg php${MINOR}-xdebug" -y
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(php -v 2> /dev/null | head -n 1 | awk '{print $2}')"
+
+unset LATEST
 ```
 
 arba

@@ -11,11 +11,12 @@ Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo koma
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
@@ -28,40 +29,43 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 Paleidžiamas diegimo skriptas `nu_install.sh`. Pabaigus diegimą, įvykdoma komanda
 
 ```bash
-[[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] || \
-  export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
+[[ -d "${HOME}/.opt/nu" ]] && \
+  [[ ":${PATH}:" != *":${HOME}/.opt/nu:"* ]] && \
+    export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 ```
 
 Arba terminale vykdomos komandos
 
 ```bash
-# Failų pavadinimų ieškokite https://github.com/nushell/nushell/releases/latest
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/nushell/nushell/releases/latest" | xargs basename)"
 
-VERSION="$(basename "$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/nushell/nushell/releases/latest")")"
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(nu -v 2> /dev/null)"
+
+curl -sSLO "https://github.com/nushell/nushell/releases/download/${LATEST}/nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz"
+
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz" | awk '{print $1}')" \
+  "$(curl -sSL "https://github.com/nushell/nushell/releases/expanded_assets/${LATEST}" |\
+  xq -q "li > div:has(a span:contains('nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz')) ~ div > div > span > span" |\
+  awk -F ':' '{print $NF}')"
+
 rm -rf "${HOME}/.opt/nu"
-URL="https://github.com/nushell/nushell/releases/download/${VERSION}/nu-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-curl -sSLo- "${URL}" | tar --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzv -C "${HOME}/.opt"
-unset VERSION URL
+tar --file="nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz" \
+  --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzv -C "${HOME}/.opt"
+rm -f "nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz"
 
-[[ "$(grep 'export PATH="\${HOME}/.opt/nu\$' < ${HOME}/.pathrc | wc -l)" > 0 ]] || {
-  sed --in-place=".$(date +"%Y%m%d-%H%M%S-%3N")" '/#begin nushell init/,/#end nushell init/d'  "${HOME}/.pathrc"
-  sed --in-place '/^[[:space:]]*$/N; /^\n$/D' "${HOME}/.pathrc"
-  [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+[[ -d "${HOME}/.opt/nu" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/nu:"* ]] \
+    && export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 
-  echo '#begin nushell init
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(nu -v 2> /dev/null)"
 
-[[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] \
-  || export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
-
-#end nushell init' >> "${HOME}/.pathrc"
-}
-
-[[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] || \
-  export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
-
-nu -v # => echo ${VERSION}
-unset VERSION URL
+unset LATEST
 ```
+
+Baigę diegti, pakeiskite konfigūracinius failus, kad kelias `${HOME}/.opt/nu` būtų įtraukiamas į sistemos `PATH` kintamąjį.
 
 ## Paleistis
 
@@ -72,5 +76,5 @@ nu kodo-failas.nu
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#! /usr/bin/env nu
+#! /usr/bin/env -S nu
 ```

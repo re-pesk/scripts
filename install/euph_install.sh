@@ -1,17 +1,23 @@
 #!/usr/bin/env -S bash
 
-echo -e "Checking required packages\n"
+echo ""
 
-[ $(apt list build-essential 2> /dev/null | wc -l) > 1 ] || sudo apt install build-essential
-[ $(apt list git 2> /dev/null | wc -l) > 1 ] || sudo apt install git
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs; then
+  exit 1
+fi
 
-echo -e "\nInstalling Euphoria\n"
+printf '%s\n' "Checking required packages\n"
 
-INIT_DIR="$(dirname "$0")"
+[ "$(apt list --installed 2> /dev/null | grep -cP '^build-essential\/')" -gt 1 ] || sudo apt install build-essential
+[ "$(apt list --installed 2> /dev/null | grep -cP '^git\/')" -gt 1 ] || sudo apt install git
+
+printf '%s\n' "\nInstalling Euphoria\n"
+
+INIT_DIR="$PWD"
 
 "${INIT_DIR}/euph_install-4.1.sh"
 "${INIT_DIR}/euph_install-4.2.sh"
 "${INIT_DIR}/euph_install-addon.sh" eudoc creole
 
-unset INIT_DIR
-echo -e "Installation is completed!\n"
+printf '%s\n' "Installation is completed!\n"

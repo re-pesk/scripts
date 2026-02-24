@@ -2,8 +2,8 @@
 
 # Crystal [<sup>&#x2B67;</sup>](https://crystal-lang.org/)
 
-* Paskiausias leidimas: 1.15.1
-* Išleista: 2025-02-04
+* Paskiausias leidimas: 1.19.1
+* Išleista: 2026-01-20
 
 ## Parengimas
 

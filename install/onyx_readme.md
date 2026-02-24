@@ -12,7 +12,7 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-ONYX_DIR=$HOME/.opt/onyx sh <(curl https://get.onyxlang.io -sSfL)
+ONYX_DIR=${HOME}/.opt/onyx sh <(curl https://get.onyxlang.io -sSfL)
 onyx version
 ```
 

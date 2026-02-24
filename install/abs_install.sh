@@ -3,13 +3,22 @@
 # Įkelti pagalbines funkcijas
 . ./_helpers.sh
 
+echo ""
+
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs; then
+  exit 1
+fi
+
 # Vėliausią versiją galima rasti https://github.com/abs-lang/abs/releases/latest
 # Gauti programos paskutinės versijos numerį iš repozitorijos
 # Gauti įdiegtos programos versijos numerį
 # Pasirinkti, ar įdiegti naujausią versiją
-LATEST="$(curl -Ls -o /dev/null -w "%{url_effective}" "https://github.com/abs-lang/abs/releases/latest" | xargs basename)"
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/abs-lang/abs/releases/latest" | xargs basename)"
 CURRENT="$(abs --version 2> /dev/null)"
-ask_to_install "${CURRENT}" "${LATEST}" "Abs" "${HOME}/.opt/abs"
+if ! ask_to_install "${LATEST}" "${CURRENT}" "abs" "${HOME}/.opt/abs"; then
+  exit 1
+fi
 
 # Ištrinti įdiegtą versiją.
 # Parsiųsti naujausią programos failą.
@@ -22,7 +31,7 @@ ln -fs "${HOME}/.opt/abs/abs" "${HOME}/.local/bin"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! abs --version > /dev/null 2>&1; then
-  printf "Error! Abs is not working as expected!\n\n"
+  printf '%s\n\n' "Error! Abs is not working as expected!"
   exit 1
 fi
 

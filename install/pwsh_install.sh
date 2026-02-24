@@ -1,64 +1,47 @@
-#! /usr/bin/env bash
+#! /usr/bin/env -S bash
 
-echo
-sudo apt-get update && sudo apt-get upgrade -y
-echo
-required=(wget apt-transport-https software-properties-common)
-aptList=$(apt list "${required[@]}" 2>/dev/null | tail +2 )
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
 
-# Funkcija, tikrinanti, ar paketas suinstaliuotas
-# (1 - suinstaliuotas, 0 - ne)
-isInList() {
-  echo "$(grep "^$1" 2>/dev/null 2>/dev/null <<<"$aptList" | wc -l )"
-}
+echo ""
 
-# Funkcija, tikrinanti, ar paketas suinstaliuotas
-# (1 - suinstaliuotas, 0 - ne)
-isInstalled() {
-  echo "$(grep "^$1.*installed" 2>/dev/null <<<"$aptList" | wc -l )"
-}
-
-# Funkcija, grąžinanti nesuinstaliuotų paketų sąrašą 
-getNotInstalledList() {
-  local notinstalled=()
-  input=($(printf '%s\n' ${required[@]} | sort))
-  for var in "${input[@]}";do
-    checkResult="$(isInList "$var")"
-    if [[ $checkResult < 1 ]];then
-      echo -e "\nKlaida! Paketo $var nėra galimų instaliuoti paketų sąraše!\n"
-      exit
-    fi
-    checkResult="$(isInstalled "$var")" 
-    if [[ $checkResult < 1 ]];then
-      notinstalled+=("$var")
-    fi
-  done
-  echo "${notinstalled[@]}"
-}
-
-notInstalledList=$(getNotInstalledList)
-sudo apt-get install -y "${notInstalledList[@]}"
-echo 
-
-if [ "$?" -ne 0 ]; then
-  echo -e "\nKlaida instaliuojant ${notInstalledList[@]}!\n"
-  exit $exitCode
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs; then
+  exit 1
 fi
 
-if [[ "$(isInstalled packages-microsoft-prod)" < 1 ]];then
-  VERSION_ID="$( cat /etc/os-release | grep 'VERSION_ID' | sed -r 's/^VERSION_ID="([^"]+)"$/\1/' )"
-  wget -q https://packages.microsoft.com/config/ubuntu/${VERSION_ID}/packages-microsoft-prod.deb
+# Įdiegti trūkstamus paketus
+( 
+  readarray -t NOT_INSTALLED < <(get_packages_to_install wget apt-transport-https software-properties-common)
+  (( ${#NOT_INSTALLED[@]} > 0 )) && sudo apt-get install -y "${NOT_INSTALLED[@]}"
+)
+
+# Įdiegti pagrindinį Microsoft paketą
+dpkg -s packages-microsoft-prod &> /dev/null || (
+  # Gauti operacinės sistemos pavadinimą ir versiją
+  source /etc/os-release
+
+  # Atsisiųsti Microsoft'o repositorijos raktus
+  wget -q "https://packages.microsoft.com/config/${NAME,,}/${VERSION_ID}/packages-microsoft-prod.deb"
+
+  # Įdiegti raktus
   sudo dpkg -i packages-microsoft-prod.deb
-  rm packages-microsoft-prod.deb
-  echo
-fi
 
+  # Ištrinti raktų failą
+  rm -f packages-microsoft-prod.deb
+)
+
+# Atnaujinti paketų sąrašą po packages.microsoft.com pridėjimo
 sudo apt-get update
 
-echo
+# Įdiegti PowerShell
+dpkg -s powershell &> /dev/null || sudo apt-get install -y powershell
 
-[[ "$(isInList powershell)" == 1 && "$(isInstalled powershell)" < 1 ]] && sudo apt-get install -y powershell && echo
+# Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+if ! pwsh -Version > /dev/null 2>&1; then
+  printf '%s\n\n' "Error! PowerShell is not working as expected!"
+  exit 1
+fi
 
-pwsh -Version
-
-echo
+# Išvesti sėkmės pranešimą
+printf '%s\n\n' "PowerShell v$(pwsh -Version | awk '{print $2}') is installed!"

@@ -1,28 +1,70 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
-install="y"
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
 
-[ -d ${HOME}/.local/odin ] && [ -e "${HOME}/.local/bin/odin" ] && odin version > /dev/null 2>&1  && 
-read -e -p "Found working Odin installation. Do you want overwrite it? 'y' or exit [Enter]: " install
+echo ""
 
-[ "$install" = "y" ] || exit 0
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs xq; then
+  exit 1
+fi
 
-[ -d ${HOME}/.local/odin ] && rm -r ${HOME}/.local/odin
+# Vėliausią versiją galima rasti puslapyje https://github.com/odin-lang/Odin/releases/latest
+# Gauti vėliausios programos versijos numerį iš repozitorijos.
+# Gauti įdiegtos programos versijos numerį
+# Pasirinkti, ar įdiegti naujausią versiją
+LATEST="$(curl -sSLo /dev/null -w "%{url_effective}" "https://github.com/odin-lang/Odin/releases/latest" | xargs basename)"
+CURRENT="$(odin version 2> /dev/null | cut -c 14-24)"
+if ! ask_to_install "${LATEST}" "${CURRENT}" "odin" "${HOME}/.opt/odin"; then
+  exit 1
+fi
 
-url=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/odin-lang/Odin/releases/latest)
-url="${url//tag/download}/odin-linux-amd64-$(basename -- $url).tar.gz"
-curl -sSLo- $url | tar --transform 'flags=r;s/^odin[^\/]+/odin/x' --show-transformed-names -xzvC "${HOME}/.local"
+# Sukurti laikiną aplanką.
+# Nutatyti automainį laikino aplanko trynimą išeinant iš skripto.
+INIT_DIR="$PWD"
+TMP_DIR="$( mktemp -p . -d -t odin.XXXXXXXX | xargs realpath )"
+trap cleanup EXIT
 
-[ ! -d ${HOME}/.local/odin ] && echo "Directory ${HOME}/.local/odin is not created!" && exit -1
+# Atsisiųsti į laikiną aplanką programos failą ir patikros sumą.
+cd "${TMP_DIR}" || exit 1
+curl -sSLO "https://github.com/odin-lang/Odin/releases/download/${LATEST}/odin-linux-amd64-${LATEST}.tar.gz"
+curl -sSLo - "https://github.com/odin-lang/Odin/releases/expanded_assets/${LATEST}" \
+  | xq -q "li > div:has(a span:contains('odin-linux-amd64-${LATEST}.tar.gz')) ~ div > div > span > span" \
+  | awk -F':' '{print $NF}' > "odin-linux-amd64-${LATEST}.tar.gz.sha256"
 
-ln -fs ${HOME}/.local/odin/odin ${HOME}/.local/bin/odin
+# Jeigu patikros sumos nesutampa, nutraukti diegimą
+if ! check_sha256 "odin-linux-amd64-${LATEST}.tar.gz" \
+  "odin-linux-amd64-${LATEST}.tar.gz.sha256"; then
+  printf '%s\n\n' "Installation failed!"
+  exit 1
+fi
 
-[ ! -e "${HOME}/.local/bin/odin" ] && echo "The symlink is not created or is broken." && exit -1
+# Ištrinti įdiegtą versiją.
+# Išskleisti iš repozitorijos atsisiųstą archyvą į diegimo katalogą.
+# Jeigu nesėkmė, nutraukti diegimą.
+rm -rf "${HOME}/.opt/odin"
+if ! tar --file "odin-linux-amd64-${LATEST}.tar.gz" \
+  --transform 'flags=r;s/^(odin)[^\/]+/\1/x' \
+  --show-transformed-names -xzC "${HOME}/.opt"; then
+  printf '%s\n\n' "Installation failed!"
+  exit 1
+fi
 
-echo 
+# Sukurti simbolinę nuorodą į vykdomąjį failą.
+ln -fs "${HOME}/.opt/odin/odin" "${HOME}/.local/bin/"
 
-odin version > /dev/null 2>&1
-[ $? -ne 0 ] && echo "Error! Odin compiler is not working as expected!" && exit -1
+# Jeigu programa neveikia, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+if ! odin version > /dev/null 2>&1; then
+  printf "Error! Odin compiler is not working as expected!\n\n"
+  exit 1
+fi
 
-printf "odin version\n=> %s\n" $(odin version)
-echo "Odin compiler is succesfully installed"
+# Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
+CURRENT="$(odin version 2> /dev/null | awk -F'[ -]' '{print $3"-"$4"-"$5}')"
+[[ "${CURRENT}" == "${LATEST}" ]] || { 
+  printf '%s\n\n' "Odin ${CURRENT} is not up to date!"
+  exit 1
+}
+printf '%s\n\n' "Odin ${LATEST} is succesfully installed"
+

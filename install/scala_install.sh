@@ -1,34 +1,81 @@
 #!/usr/bin/env bash
 
-. ./helpers.sh
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
 
-CURRENT_VERSION="$(scala version 2> /dev/null | tail -n 1 | sed 's/.*: //')"
-VERSION="$(basename -- "$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/scala/scala3/releases/latest)")"
-ask_to_install "${CURRENT_VERSION}" "${VERSION}" "Scala" "${HOME}/.opt/scala3"
+echo ""
 
-TMP_DIR="$(mktemp -d)"
-FILE_NAME="scala3-${VERSION}-x86_64-pc-linux.tar.gz"
-URL="https://github.com/scala/scala3/releases/download/${VERSION}/${FILE_NAME}"
-curl -sSLo "${TMP_DIR}/${FILE_NAME}" "${URL}"
-curl -sSLo "${TMP_DIR}/${FILE_NAME}.sha256" "${URL}.sha256"
-compare_sha256 "${TMP_DIR}/${FILE_NAME}" "${TMP_DIR}/${FILE_NAME}.sha256"
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs; then
+  exit 1
+fi
 
+# Vėliausią versiją galima rasti https://github.com/scala/scala3/releases/latest
+# Gauti įdiegtos programos versijos numerį
+# Pasirinkti, ar įdiegti naujausią versiją
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/scala/scala3/releases/latest" | xargs basename)"
+CURRENT="$(scala version 2> /dev/null | tail -n +2 | awk '{print $NF}')"
+if ! ask_to_install "${LATEST}" "${CURRENT}" "scala" "${HOME}/.opt/scala3"; then
+  exit 1
+fi
+
+# Sukurti laikiną aplanką.
+# Sukurti funkciją, ištrinančią jį iš disko.
+# Nustatyti, jog ji bus paleista, kai bus nutrauktas šio skripto vykdymas.
+TMP_DIR="$( mktemp -d )"
+trap cleanup EXIT
+
+# Atsisųsti į laikiną aplanką programos ir patikros sumos failus.
+curl -sSLo "${TMP_DIR}/scala3-${LATEST}-x86_64-pc-linux.tar.gz" \
+  "https://github.com/scala/scala3/releases/download/${LATEST}/scala3-${LATEST}-x86_64-pc-linux.tar.gz"
+curl -sSLo "${TMP_DIR}/scala3-${LATEST}-x86_64-pc-linux.tar.gz.sha256" \
+  "https://github.com/scala/scala3/releases/download/${LATEST}/scala3-${LATEST}-x86_64-pc-linux.tar.gz.sha256"
+
+# Sulyginti failo patikros sumą su patikros suma iš tinklalapio.
+# Jeigu patikros sumos nesutampa, nutraukti diegimą
+if ! check_sha256 \
+  "${TMP_DIR}/scala3-${LATEST}-x86_64-pc-linux.tar.gz" \
+  "${TMP_DIR}/scala3-${LATEST}-x86_64-pc-linux.tar.gz.sha256"; then
+  printf '%s\n\n' "Installation failed!"
+  exit 1
+fi
+
+# Ištrinti įdiegtą versiją.
+# Išskleisti iš repozitorijos atsisiųstą archyvą į diegimo katalogą.
+# Ištrinti laikiną aplanką.
 rm -rf "${HOME}/.opt/scala3"
-tar --file="${TMP_DIR}/${FILE_NAME}" --transform='flags=r;s/^(scala3)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
+tar --file="${TMP_DIR}/scala3-${LATEST}-x86_64-pc-linux.tar.gz" \
+  --transform='flags=r;s/^(scala3)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
 rm -rf "${TMP_DIR}"
 
-insert_path '${HOME}/.opt/scala3/bin' 'scala' "${HOME}/.pathrc"
+# Įtraukti įdiegtos programos kelius į sistemos kintamąjį
+[[ -d "${HOME}/.opt/scala3/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/scala3/bin:"* ]] \
+  && export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
 
-[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] || \
-  export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
+# Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+if ! scala --version > /dev/null 2>&1; then
+  printf "Error! Scala is not working as expected!\n\n"
+  exit 1
+fi
 
-CURRENT_VERSION="$(scala version 2> /dev/null | tail -n 1 | sed 's/.*: //')"
-[[ "${CURRENT_VERSION}" == "${VERSION}" ]] || { 
+# Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
+CURRENT="$(scala version 2> /dev/null | tail -n +2 | awk '{print $NF}')"
+[[ "${CURRENT}" == "${LATEST}" ]] || { 
   echo "Scala were not updated!"
   exit 1
 }
-printf "\nScala v${VERSION} is succesfully installed.\n\n"
-printf 'To use without relogging, execute the following command in the terminal:
+printf '\n%s\n\n' "Scala v${LATEST} is succesfully installed"
 
-[[ ":${PATH}:" == *":${HOME}/.opt/scala3/bin:"* ]] || \
-  export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"\n\n'
+# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
+# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
+# shellcheck disable=SC2016
+printf '%s\n\n' 'To use without relogging, execute the following commands in the terminal:
+
+[[ -d "${HOME}/.opt/scala3/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/scala3/bin:"* ]] \
+  && export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"'
+
+# Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
+# shellcheck disable=SC2016
+insert_path "${HOME}/.pathrc" 'Scala' '${HOME}/.opt/scala3/bin'

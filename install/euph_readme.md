@@ -11,11 +11,12 @@ Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo koma
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
@@ -36,17 +37,24 @@ sudo apt install build-essential git
 * Įdiegiama 4.1 versija, reikalinga 4.2 versijos kompiliavimui
 
 ```bash
-URL="$(curl -sL -o /dev/null -w %{url_effective} https://github.com/OpenEuphoria/euphoria/releases/latest)"
-VERSION="$(basename $URL)"
-URL="$(curl -sL https://api.github.com/repos/OpenEuphoria/euphoria/releases/latest | grep -o 'https.*Linux-x64.*tar.gz')"
+LATEST="$(curl -sL -o /dev/null -w "%{url_effective}" "https://github.com/OpenEuphoria/euphoria/releases/latest" | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: v%s\n  Instaliuota: %s\n\n' \
+  "${LATEST}" "$(eui --version | head -n 1 | awk '{print $3}')"
+
+FILE_NAME="$(curl -sL "https://api.github.com/repos/OpenEuphoria/euphoria/releases/latest" |\
+  jq -r '.assets[].name | match("^euphoria-'"${LATEST}"'-Linux-x64-.*\\.tar\\.gz$") | .string'
+)"
+
+curl -sSLO "https://github.com/OpenEuphoria/euphoria/releases/download/${LATEST}/${FILE_NAME}"
+
 
 [ -d "${HOME}/.opt/euphoria" ] && rm -rf "${HOME}/.opt/euphoria"
 
 curl -sSLo - "${URL}" \
-| tar --transform "flags=r;s/^(euphoria)-${VERSION}[^\/]+x64/\1/x" --show-transformed-names -xzC "${HOME}/.opt"
+| tar --transform "flags=r;s/^(euphoria)-${LATEST}[^\/]+x64/\1/x" --show-transformed-names -xzC "${HOME}/.opt"
 
-touch "${HOME}/.opt/euphoria/v${VERSION}.txt"
-unset URL VERSION
+touch "${HOME}/.opt/euphoria/v${LATEST}.txt"
 
 cd "${HOME}/.opt/euphoria/source"
 ./configure
@@ -62,37 +70,24 @@ for file in *.ex ; do
   ./euc "$file"
   exit_code="$?"
   if [[ "$exit_code" -gt 0 ]]; then
-
     exit "$exit_code"
   fi 
 done
 
-cp -T "${HOME}/.pathrc" "${HOME}/.pathrc.$(date +"%Y%m%d.%H%M%S.%3N")"
-sed -i "/#begin euphoria init/,/#end euphoria init/c\\" "${HOME}/.pathrc"
-
-echo '
-#begin euphoria init
-
-[[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] \
-  || export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
-
-#end euphoria init
-' >> "${HOME}/.pathrc"
-
-cat -s "${HOME}/.pathrc" > "${HOME}/.pathrc.new"
-cp -T "${HOME}/.pathrc.new" "${HOME}/.pathrc"
-
-[[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] \
-  || export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
+[[ -d "${HOME}/.opt/euphoria/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/euphoria/bin:"* ]] \
+  && export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
 
 eui --version
 euc --version
+
+unset LATEST URL
 ```
 
-* Diegiamas veliausias 4.2 versijos kodas.
+* Diegiamas vėliausias 4.2 versijos kodas.
 
 ```bash
-[ -d "/tmp/euphoria" ] && rm --recursive --force "/tmp/euphoria"
+rm -rf "/tmp/euphoria"
 
 cd "/tmp"
 
@@ -117,7 +112,7 @@ done
 cd "/tmp"
 
 [ -d "${HOME}/.opt/euphoria" ] && mv -T "${HOME}/.opt/euphoria" "${HOME}/.opt/euphoria-4.1"
-mv "/tmp/euphoria" $HOME/.opt/
+mv "/tmp/euphoria" ${HOME}/.opt/
 
 eui --version
 euc --version
@@ -146,7 +141,7 @@ for addon in ADDONS ;do
 
   git clone https://github.com/OpenEuphoria/${addon}
   cd "/tmp/${addon}"
-  echo -e "\nCurrent directory: $PWD\n"
+  printf '%s\n' "\nCurrent directory: $PWD\n"
   ./configure
   make
   cd "/tmp"

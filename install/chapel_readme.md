@@ -6,38 +6,45 @@
 
 Operacinė sistema – Ubuntu 24.04
 
-Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+Jeigu nėra įdiegta, įdiekite [curl](../utils/curl.md) ir xargs (findutils).
 
 ## Diegimas
 
 ```bash
-TO_INSTALL="y"
+# Gauti paskutinės programos versijos numerį iš repozitorijos
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/chapel-lang/chapel/releases/latest" | xargs basename)"
 
-INSTALLED="$(chpl --version 2>/dev/null | head -n 1)"
-INSTALLED="${INSTALLED//chpl version }"
+# Patikrinti, ar kompiuteryje įdiegta kuri nors programos versija. Sulyginti versijas
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(chpl --version 2>/dev/null | head -n 1 | awk '{print $NF}')"
 
-[[ "${INSTALLED}" != "" ]] && \
-  read -e -p "Chapel v${INSTALLED} is installed. Do you want overwrite it? Print 'y' to overwrite. Print 'n' or [Enter] to exit: " TO_INSTALL
-[[ "${TO_INSTALL}" == "y" ]] || { unset TO_INSTALL INSTALLED; exit 0; }
-unset TO_INSTALL
+# Atsisiųsti failą iš repozitorijos
+curl -sSLO "https://github.com/chapel-lang/chapel/releases/download/${LATEST}/chapel-${LATEST}-1.ubuntu24.amd64.deb"
 
-VERSION="$(basename -- "$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/chapel-lang/chapel/releases/latest")")"
-TMP_DIR="$(mktemp -d)"
-curl -sSLo "${TMP_DIR}/chapel-${VERSION}-1.ubuntu24.amd64.deb" \
-  "https://github.com/chapel-lang/chapel/releases/download/${VERSION}/chapel-${VERSION}-1.ubuntu24.amd64.deb"
-sudo apt install "${TMP_DIR}/chapel-${VERSION}-1.ubuntu24.amd64.deb"
-rm -r "${TMP_DIR}"
-unset TMP_DIR
+# Sulyginti failo patikros sumą su tinklalapio patikros suma.
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "chapel-${LATEST}-1.ubuntu24.amd64.deb" | awk '{print $1}')" \
+  "$(curl -sL "https://github.com/chapel-lang/chapel/releases/expanded_assets/${LATEST}" |\
+    xq -q "li > div:has(a span:contains('chapel-${LATEST}-1.ubuntu24.amd64.deb')) ~ div > div > span > span" |\
+    awk -F ':' '{print $NF}')"
 
+# Jeigu patikros sumos nesutampa, ištrinti atsisiųstą failą ir nutraukti diegimą
+
+# Instaliuoti Chapel. Ištrinti atsisiųstą archyvą.
+sudo dpkg -i "chapel-${LATEST}-1.ubuntu24.amd64.deb"
+sudo apt-get install -f
+rm -f "chapel-${LATEST}-1.ubuntu24.amd64.deb"
+
+# Pataisyti failų privilegijas
 sudo chown root:root /usr/bin/chpl*
 sudo chown -R root:root /usr/share/chapel
 
-chpl --version 2> /dev/null
-[[ "$?" > 0 ]] && echo "Error! Chapel is not working as expected!"
-INSTALLED="$(chpl --version 2>/dev/null | head -n 1)"
-INSTALLED="${INSTALLED//chpl version }"
-[[ "${INSTALLED}" != "${VERSION}" ]] && echo "Chapel v${VERSION} is not installed!" || echo "Chapel v${VERSION} is succesfully installed"
-unset INSTALLED VERSION
+# Patikrinti, ar kompiuteryje įdiegta Chapel versija yra vėliausia
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(chpl --version 2>/dev/null | head -n 1 | awk '{print $NF}')"
+
+# Ištrinti kintamuosius
+unset LATEST
 ```
 
 ## Paleistis

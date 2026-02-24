@@ -1,29 +1,37 @@
 #!/usr/bin/env -S bash
 
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
+
+echo ""
+
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs; then
+  exit 1
+fi
+
+# Išsaugoti pradinį aplanką
+# Sukurti laikiną aplanką
+# Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
+TMP_DIR="$( mktemp -p . -d -t euph.XXXXXXXX | xargs realpath )"
+trap cleanup EXIT
 
-TMP_DIR="$(mktemp -p . -d)"
-cd "${TMP_DIR}"
+cd "${TMP_DIR}" || exit 1
 
-for addon in $@ ;do
-  echo -e "\nCompiling ${addon^}\n"
-  echo -e "Current directory => $PWD\n"
+echo ""
 
-  [ -d "${TMP_DIR}/${addon}" ] && rm -rf "${TMP_DIR}/${addon}"
+# shellcheck disable=SC2068
+for addon in $@ ; do
+  printf '%s\n\n' "Compiling ${addon^}\n"
 
   git clone "https://github.com/OpenEuphoria/${addon}"
-  cd "${TMP_DIR}/${addon}"
-  echo -e "\nCurrent directory: $PWD\n"
+  cd "${TMP_DIR}/${addon}" || exit 1
   ./configure
   make
   mv "${TMP_DIR}/${addon}/build/${addon}" "${HOME}/.opt/euphoria/bin"
-  cd "${TMP_DIR}"
-  rm -rf "${TMP_DIR}/${addon}"
+  cd "${TMP_DIR}" || exit 1
+  rm -rf "${TMP_DIR}/${addon:?}"
 
-  echo -e "\nCurrent directory: $PWD\n"
-  echo -e "${addon^} is installed!"
+  printf '%s\n\n' "${addon^} is installed!"
 done
-
-cd "${INIT_DIR}"
-rm -rf "${TMP_DIR}"
-unset INIT_DIR TMP_DIR

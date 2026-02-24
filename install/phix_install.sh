@@ -1,42 +1,100 @@
 #!/usr/bin/env bash
 
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
+
+echo ""
+
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs xq; then
+  exit 1
+fi
+
 # Versiją galima rasti http://phix.x10.mx/index.php
-version="1.0.5"
+# Gauti programos paskutinės versijos numerį iš tinklalapio
+# Gauti įdiegtos programos versijos numerį
+# Pasirinkti, ar įdiegti naujausią versiją
+LATEST="$(curl http://phix.x10.mx/download.php 2> /dev/null | \
+  xq -nq 'body > div#wrap > div#content > div#left > p:first-of-type' | \
+  head -n 1 | awk '{print $3}')"
+CURRENT="$(p -version 2> /dev/null)"
+if ! ask_to_install "${LATEST}" "${CURRENT}" "phix" "${HOME}/.opt/phix"; then
+  exit 1
+fi
 
-[ -d "${HOME}/.local/phix" ] && rm --recursive "${HOME}/.local/phix"
+# Išsaugoti esamą aplanką
+# Sukurti laikiną aplanką
+# Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
+# shellcheck disable=SC2034
+INIT_DIR="$PWD"
+TMP_DIR="$( mktemp -p . -d -t phix.XXXXXXXX | xargs realpath )"
+trap cleanup EXIT
 
-cd /tmp
-rm phix*.zip; rm -r phix
-mkdir phix
-array=("" 1 2 3 4)
-for var in "${array[@]}";do wget "http://phix.x10.mx/phix.${version}${var:+.$var}.zip"; done
-for var in "${array[@]}";do unzip "phix.${version}${var:+.$var}.zip" -d phix; done
-wget http://phix.x10.mx/p64; mv p64 phix/p
-cd phix
-chmod +x p
-./p -test
-cd ..
-mv phix ${HOME}/.local/phix
-rm phix*.zip
+# Pereiti į laikiną aplanką
+cd "${TMP_DIR}" || exit 1
 
-set_path='[[ ":${PATH}:" == *":${HOME}/.local/phix:"* ]] \
-  || export PATH="${HOME}/.local/phix${PATH:+:${PATH}}"'
+# Sukurti zip failų pavadinimo dalių sąrašą
+# Atsisiųsti zip failus į laikiną aplanką
+# Išskleisti zip failus į phix aplanką
+part_array=("" 1 2 3 4)
+for part in "${part_array[@]}";do wget "http://phix.x10.mx/phix.${LATEST}${part:+.$part}.zip"; done
+for part in "${part_array[@]}";do unzip "phix.${LATEST}${part:+.$part}.zip" -d phix; done
 
-config_strings="#begin phix init
+# Atsisiųsti p64 ir p32 failus į phix aplanką
+# Suteikti p64 ir p32 failams vykdymo privilegijas
+# Perkelti p64 ir p32 failus į phix aplanką
+wget http://phix.x10.mx/p64
+wget http://phix.x10.mx/p32
+chmod 777 p64
+chmod 777 p32
+mv p64 phix/p
+mv p32 phix/p32
 
-${set_path}
+# Sukurti phix diegimo aplanką
+# Perkelti phix failą į phix diegimo aplanką
+mkdir -p "${HOME}/.opt/phix/bin"
+mv phix "${HOME}/.opt/phix/"
 
-#end phix init"
+# Perkelti katalogus į phix/bin aplanką 
+mv -T "${HOME}/.opt/phix/phix/builtins" "${HOME}/.opt/phix/bin/builtins"
+mv -T "${HOME}/.opt/phix/phix/test" "${HOME}/.opt/phix/bin/test"
+mv -T "${HOME}/.opt/phix/phix/demo" "${HOME}/.opt/phix/bin/demo"
 
-readarray -td '
-' config_array <<< "$config_strings"
+# SUkurt phix/bin aplanke simbolines nuorodas
+cd "${HOME}/.opt/phix/bin" || exit 1
+find "${HOME}/.opt/phix" -type f -executable -exec ln -s {} \;
 
-sed -i "/${config_array[0]}/,/${config_array[@]: -1:1}/c\\" "${HOME}/.pathrc"
+# Įtraukti phix/bin aplanką į sistemos PATH kintamąjį
+[[ -d "${HOME}/.opt/phix/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/phix/bin:"* ]] \
+    && export PATH="${HOME}/.opt/phix/bin${PATH:+:${PATH}}"
 
-[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+# Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+if ! p -version > /dev/null 2>&1; then
+  printf "Error! Phix is not working as expected!\n\n"
+  exit 1
+fi
 
-echo "$config_strings" >> "${HOME}/.pathrc"
+# Įvykdyti phix testus
+p -test
 
-eval $"$set_path"
+# Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
+CURRENT="$(p -version 2> /dev/null)"
+if [[ "${CURRENT}" == "${LATEST}" ]]; then
+  printf '%s\n\n' "Phix ${CURRENT} is not up to date!"
+  exit 1
+fi
+printf '%s\n\n' "Phix ${LATEST} is succesfully installed"
 
-p --version
+# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
+# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
+# shellcheck disable=SC2016
+printf '%s\n\n' 'To use without relogging, execute the following command in the terminal:
+
+[[ -d "${HOME}/.opt/phix/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/phix/bin:"* ]] \
+  && export PATH="${HOME}/.opt/phix/bin${PATH:+:${PATH}}"'
+
+# Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
+# shellcheck disable=SC2016
+insert_path "${HOME}/.pathrc" 'phix' '${HOME}/.opt/phix/bin'

@@ -11,11 +11,12 @@ Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo koma
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
@@ -24,42 +25,43 @@ fi
 ## Diegimas
 
 ```bash
-# Versiją galima rasti http://phix.x10.mx/index.php
-version="1.0.5"
+LATEST="$(curl http://phix.x10.mx/download.php 2> /dev/null | \
+  xq -nq 'body > div#wrap > div#content > div#left > p:first-of-type' | \
+  head -n 1 | awk '{print $3}')"
 
-[ -d "${HOME}/.opt/phix" ] && rm --recursive "${HOME}/.opt/phix"
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(p -version 2> /dev/null)"
 
-cd /tmp
-rm phix*.zip; rm -r phix
-mkdir phix
-array=("" 1 2 3 4)
-for var in "${array[@]}";do wget "http://phix.x10.mx/phix.1.0.5${var:+.$var}.zip"; done
-for var in "${array[@]}";do unzip "phix.1.0.5${var:+.$var}.zip" -d phix; done
-unset array
+part_array=("" 1 2 3 4)
+for part in "${part_array[@]}";do wget "http://phix.x10.mx/phix.${LATEST}${part:+.$part}.zip"; done
+for part in "${part_array[@]}";do unzip "phix.${LATEST}${part:+.$part}.zip" -d tmp.phix; done
+wget http://phix.x10.mx/p64; chmod 777 p64; mv p64 tmp.phix/p
+wget http://phix.x10.mx/p32; chmod 777 p32; mv p32 tmp.phix/p32
 
-wget http://phix.x10.mx/p64; mv p64 phix/p
-cd phix
-chmod +x p
-./p -test
-cd ..
-mv phix ${HOME}/.opt/phix
-rm phix*.zip
+mkdir -p "${HOME}/.opt/phix/bin"
+mv -T tmp.phix "${HOME}/.opt/phix/phix"
+mv -T "${HOME}/.opt/phix/phix/builtins" "${HOME}/.opt/phix/bin/builtins"
+mv -T "${HOME}/.opt/phix/phix/test" "${HOME}/.opt/phix/bin/test"
+mv -T "${HOME}/.opt/phix/phix/demo" "${HOME}/.opt/phix/bin/demo"
 
-sed -i "/#begin phix init/,/#end phix init/c\\" "${HOME}/.pathrc"
-[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+cd "${HOME}/.opt/phix/bin" || exit 1
+find "${HOME}/.opt/phix" -type f -executable -exec ln -s {} \;
 
-echo '#begin phix init
+[[ -d "${HOME}/.opt/phix/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/phix/bin:"* ]] \
+    && export PATH="${HOME}/.opt/phix/bin${PATH:+:${PATH}}"
 
-[[ ":${PATH}:" == *":${HOME}/.opt/phix:"* ]] \
-  || export PATH="${HOME}/.opt/phix${PATH:+:${PATH}}"
+# Įvykdyti phix testus
+p -test
 
-#end phix init' >> "${HOME}/.pathrc"
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(p -version 2> /dev/null)"
 
-[[ ":${PATH}:" == *":${HOME}/.opt/phix:"* ]] \
-  || export PATH="${HOME}/.opt/phix${PATH:+:${PATH}}"
-
-p --version
+rm -f phix.*.zip
+unset LATEST
 ```
+
+Baigę diegti, pakeiskite konfigūracinius failus, kad kelias `${HOME}/.opt/phix/bin` būtų automatiškai įtraukiamas į sistemos `PATH` kintamąjį.
 
 ## Paleistis
 
@@ -68,8 +70,6 @@ p kodo-failas.exw
 ```
 
 ### Vykdymo instrukcija (shebang)
-
-Shebangas veikia tik tada, jeigu failas yra `~/phix` kataloge.
 
 ```bash
 #!/usr/bin/env -S p

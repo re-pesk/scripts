@@ -22,5 +22,5 @@ bash kodo-failas.sh
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#! /usr/bin/env bash
+#! /usr/bin/env -S bash
 ```

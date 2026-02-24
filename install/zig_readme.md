@@ -2,8 +2,8 @@
 
 # Zig [<sup>&#x2B67;</sup>](https://ziglang.org/)
 
-* Paskiausias leidimas: 0.14.0
-* Išleista: 2025-03-05
+* Paskiausias leidimas: 0.15.2
+* Išleista: 2025-10-11
 
 ## Parengimas
 
@@ -11,11 +11,12 @@ Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo koma
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
@@ -27,35 +28,48 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 
 ```bash
 # Vėliausią versijos numerį galima rasti https://ziglang.org/download/
-VERSION="$(curl -Lso - https://ziglang.org/download/index.json \
-| jq -r 'keys - ["master"] | sort_by(split(".") | map(tonumber)) | last')"
+# Gauti įdiegtos programos versijos numerį.
+LATEST="$(curl -Lso - https://ziglang.org/download/index.json |\
+  jq -r 'keys - ["master"] | sort_by(split(".") | map(tonumber)) | last')"
+
+# Patikrinti, ar kompiuteryje įdiegta kuri nors programos versija.
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(zig version 2> /dev/null)"
+
+# Jeigu vėliausia programos versija nėra naujesnė nei įdiegtoji, diegimą nutraukti.
+
+# Parsiųsti instaliacinio archyvo duomenis iš tinklalapio į asociatyvų masyvą
+declare -A DATA="($(
+  curl -s "https://ziglang.org/download/index.json" |\
+  jq -r '.[] | select(.version == "'${LATEST}'") | .["x86-linux"] | "[tarball]=" + .tarball + " [shasum]=" + .shasum'
+))"
+URL="${DATA["tarball"]}"
+
+# Atsisiųsti failą iš tinklalapio
+curl -sSLo "zig-x86_64-linux-${LATEST}.tar.xz" "${URL}"
+
+# Išvesti į terminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
+# Jeigu kontrolinės sumos nesutampa, diegimą nutraukti, atsisiųstus failus ištrinti.
+sha256sum "zig-x86_64-linux-${LATEST}.tar.xz" | awk '{print "\n"$1}'; \
+printf '%s\n\n' "${DATA["shasum"]}"
 
 [ -d "${HOME}/.opt/zig" ] && rm -rf "${HOME}/.opt/zig"
-curl -sSLo- "https://ziglang.org/download/${VERSION}/zig-x86_64-linux-${VERSION}.tar.xz" \
-| tar --transform 'flags=r;s/^zig[^\/]+/zig/x' --show-transformed-names -xJC "${HOME}/.opt"
+tar --file="zig-x86_64-linux-${LATEST}.tar.xz" \
+  --transform='flags=r;s/^zig[^\/]+/zig/x' \
+  --show-transformed-names -xJC "${HOME}/.opt"
+rm -f "zig-x86_64-linux-${LATEST}.tar.xz"
 
-unset VERSION
+# Sukurti nuorodą į vykdomąjį failą.
+ln -fs "${HOME}/.opt/zig/zig" "${HOME}/.local/bin"
 
-# Jeigu reikia, pašalinami zig įrašai .pathrc konfigūraciniame faile
-sed -i '/#begin zig init/,/#end zig init/c\' "${HOME}/.pathrc"
-# Jeigu reikia, pridedama tučia eilutė
-[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+# Patikrinti, ar kompiuteryje įdiegta vėliausia programos versija.
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(zig version 2> /dev/null)"
 
-# Jeigu nėra, pridedami zig įrašai .pathrc konfigūraciniame faile
-(( $(cat "$HOME/.pathrc" | grep '^#begin zig init' | wc -l) > 0 )) || echo '#begin zig init
-
-[[ ":${PATH}:" == *":${HOME}/.opt/zig:"* ]] \
-|| export PATH="${HOME}/.opt/zig${PATH:+:${PATH}}"
-
-#end zig init' >> "${HOME}/.pathrc"
-
-[[ ":${PATH}:" == *":${HOME}/.opt/zig:"* ]] \
-|| export PATH="${HOME}/.opt/zig${PATH:+:${PATH}}"
-
-zig version
+unset DATA URL LATEST
 ```
 
-arba paleislite `zig_instal.sh` failą
+Arba galite įdiegti automatiniu būdu, paleisdami skriptą `zig_instal.sh`.
 
 ```bash
 bash zig_instal.sh

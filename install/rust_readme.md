@@ -2,8 +2,8 @@
 
 # Rust [<sup>&#x2B67;</sup>](https://www.rust-lang.org/)
 
-* Paskiausias leidimas: 1.86.0
-* Išleista: 2025-03-31
+* Paskiausias leidimas: 1.93.1
+* Išleista: 2026-02-11
 
 ## Parengimas
 
@@ -15,6 +15,12 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install cargo-script
 rustc --version
+```
+
+## Atnaujinimas
+
+```bash
+rustup update
 ```
 
 ## Paleistis

@@ -12,11 +12,21 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-url="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/eliaperantoni/Koi/releases/latest)"
-mkdir -p "${HOME}/.opt/koi/bin"; curl -sSLo "${HOME}/.opt/koi/bin/koi" "${url//tag/download}/koi"
-chmod +x ${HOME}/.opt/koi/bin/koi; ln -sf ${HOME}/.opt/koi/bin/koi ${HOME}/.local/bin/koi
-unset url
-koi --version
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" https://github.com/eliaperantoni/Koi/releases/latest | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(koi --version 2> /dev/null | awk '{print $NF}')"
+
+rm -rf "${HOME}/.opt/koi"
+mkdir -p "${HOME}/.opt/koi"
+curl -sSLo "${HOME}/.opt/koi/koi" "https://github.com/eliaperantoni/Koi/releases/download/v1.8.0/koi"
+chmod +x "${HOME}/.opt/koi/koi"
+ln -sf "${HOME}/.opt/koi/koi" "${HOME}/.local/bin/"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(koi --version 2> /dev/null | awk '{print $NF}')"
+
+unset LATEST
 ```
 
 ## Paleistis
@@ -28,5 +38,5 @@ koi kodo-failas.koi
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#!/usr/bin/env koi
+#!/usr/bin/env -S koi
 ```

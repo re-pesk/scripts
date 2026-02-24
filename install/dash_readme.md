@@ -23,5 +23,5 @@ dash kodo-failas.sh
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#! /usr/bin/env dash
+#! /usr/bin/env -S dash
 ```

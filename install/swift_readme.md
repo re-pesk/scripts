@@ -11,11 +11,12 @@ Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo koma
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
@@ -34,21 +35,29 @@ sudo apt install gnupg2 libcurl4-openssl-dev libpython3-dev libstdc++-13-dev
 Visos failų versijos yra <https://www.swift.org/install/linux/> puslapyje.
 
 ```bash
-# Atsiunčiamas, išpakuojamas ir paleidžiamas swiftly - swift'o diegimo tvarkyklė
-mkdir swiftly
+# Atsiunčiama, išpakuojama ir paleidžiama swiftly - swift'o diegimo tvarkyklė
+TMP_DIR=$(mktemp -p . -d -t swiftly.XXXXXXXXXX)
 curl -o - https://download.swift.org/swiftly/linux/swiftly-$(uname -m).tar.gz \
-| tar xzxC ./swiftly
-./swiftly/swiftly init --quiet-shell-followup && \
-. ${SWIFTLY_HOME_DIR:-${HOME}/.local/share/swiftly}/env.sh && \
+| tar xzxC "${TMP_DIR}"
+export SWIFTLY_HOME_DIR="${HOME}/.opt/swiftly"
+export SWIFTLY_BIN_DIR="${HOME}/.opt/swiftly/bin"
+export SWIFTLY_TOOLCHAINS_DIR="${HOME}/.opt/swiftly/toolchains"
+"${TMP_DIR}/swiftly" init
+. "${HOME}/.opt/swiftly/env.sh"
 hash -r
+rm -rf "$TMP_DIR"
 
-rm -r ./swiftly
-
-# Swifto diegimo tvarkyklės veikimas patikrinamas, išvedant instaliuotos Swift'o versijos numerį
 swiftly --version
-swiftly install latest --use
+swift --version
 
-swift --version # Swifto veikimas patikrinamas, išvedant instaliuotos Swift'o versijos numerį
+unset TMP_DIR
+```
+
+## Atnaujinimas
+
+```bash
+swiftly self-update
+swiftly update
 ```
 
 ## Paleistis

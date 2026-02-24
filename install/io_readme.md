@@ -7,13 +7,15 @@
 ## Diegimas
 
 ```bash
-git clone --recursive https://github.com/IoLanguage/io.git
-cd io/           # To get into the cloned folder
-mkdir build      # To contain the CMake data
-cd build/
-cmake ..         # This populates the build folder with a Makefile and all of the related things necessary to begin building
+INIT_DIR="$PWD"
+git clone --recursive https://github.com/IoLanguage/io.git tmp.io
+mkdir -p tmp.io/build
+cd tmp.io/build/
+cmake ..
 make
 sudo make install
+cd "${INIT_DIR}"
+rm -rf tmp.io
 io --version
 ```
 
@@ -26,5 +28,5 @@ io kodo-failas.io
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#!/usr/bin/env io
+#!/usr/bin/env -S io
 ```

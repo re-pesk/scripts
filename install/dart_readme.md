@@ -10,7 +10,7 @@
 sudo apt-get update
 
 # Jeigu nėra instaliuotas, instaliuojamas paketas 'apt-transport-https'
-(( $(apt list --installed 2>/dev/null | grep -P '^apt-transport-https' | wc -l ) > 0 )) || sudo apt install apt-transport-https
+dpkg -s apt-transport-https &>/dev/null || sudo apt install apt-transport-https
 
 # Diegiamas raktas ir Darto šaltinis
 wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub |\
@@ -22,7 +22,9 @@ echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/dart.gpg] https://storage.go
 sudo apt-get update && sudo apt-get install dart
 
 # Tikrinamas Darto veikimas
-echo ; dart --version
+echo ""
+
+dart --version
 ```
 
 arba

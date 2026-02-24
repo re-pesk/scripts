@@ -2,61 +2,75 @@
 
 # Go [<sup>&#x2B67;</sup>](https://go.dev/)
 
-* Paskiausias leidimas: 1.24.1
-* Išleista: 2025-03-04
+* Paskiausias leidimas: 1.25.5
+* Išleista: 2025-12-02
 
 ## Parengimas
 
-Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo komanda į .bashrc failą
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, į .bashrc failą įterpiama jo įkėlimo komanda.
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
 ```
 
-Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
+Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md), xargs (findutils) ir [xq](../utils/xq.md).
 
 ## Diegimas
 
 ```bash
-[ -d "${HOME}/.opt/go" ] && rm -rf "${HOME}/.opt/go"
-URL="$(curl -sL https://go.dev/dl/ | grep -e 'downloadBox' | grep -o '[^\/]*linux-amd64.tar.gz')"
-curl -fsSLo- "https://go.dev/dl/${URL}" | tar -xz -C "${HOME}/.opt"
-unset URL
+# Gauti programos paskutinės versijos failo pavadinimą iš repozitorijos
+LATEST="$(curl -sSL https://go.dev/dl/ \
+| xq -q "a.downloadBox[href$='.linux-amd64.tar.gz']" --attr href \
+| xargs basename | sed -E 's/^(go[0-9\.]+)\..+$/\1/')"
 
-cp -T "${HOME}/.pathrc" "${HOME}/.pathrc.$(date +"%Y%m%d.%H%M%S.%3N")"
-sed -i '/#begin go init/,/#end go init/c\' "${HOME}/.pathrc"
-# [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+# Patikrinti, ar kompiuteryje įdiegta kuri nors programos versija. Sulyginti versijas
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(go version 2> /dev/null | awk '{print $3}')"
 
-echo '
-#begin go init
+# Jeigu vėliausia programos versija nėra naujesnė nei įdiegtoji, diegimą nutraukti
 
+# Atsisiųsti failą iš svetainės
+curl -sSLO "https://go.dev//dl/${LATEST}.linux-amd64.tar.gz"
+
+# Sulyginti failo patikros sumą su tinklalapio patikros suma.
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "${LATEST}.linux-amd64.tar.gz" | awk '{print $1}')" \
+  "$(curl -sL https://go.dev/dl/ | xq -q "td:has(a:contains('${LATEST}.linux-amd64.tar.gz')) ~ td:last-of-type tt")"
+
+# Jeigu patikros sumos nesutampa, diegimą nutraukti
+
+# Ištrinti įdiegtą versiją.
+# Išskleisti iš atsisiųstą archyvą į diegimo katalogą.
+# Ištrinti archyvą.
+rm -rf "${HOME}/.opt/go"
+tar -f "${LATEST}.linux-amd64.tar.gz" -xz -C "${HOME}/.opt"
+rm -f "${LATEST}.linux-amd64.tar.gz"
+
+# Įtraukti įdiegtos programos kelius į sistemos kintamąjį
 [[ ":${PATH}:" == *":${HOME}/.opt/go/bin:"* ]] \
   || export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
 
 [[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] \
   || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"
 
-#end go init
-' >> "${HOME}/.pathrc"
+# Patikrinti, ar kompiuteryje įdiegta vėliausia programos versija - sulyginti versijas.
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(go version 2> /dev/null | awk '{print $3}')"
 
-cat -s "${HOME}/.pathrc" > "${HOME}/.pathrc.new"
-cp -T "${HOME}/.pathrc.new" "${HOME}/.pathrc"
-
-[[ ":${PATH}:" == *":${HOME}/.opt/go/bin:"* ]] \
-  || export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
-[[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] \
-  || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"
-
-go version
+# Ištrinti kintamuosius
+unset LATEST
 ```
+
+Baigę diegti, pakeiskite konfigūracinius failus, kad keliai `${HOME}/.opt/go/bin` ir `${HOME}/go/bin` būtų automatiškai įtraukiami į sistemos `PATH` kintamąjį.
 
 ## Paleistis
 

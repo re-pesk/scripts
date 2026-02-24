@@ -1,9 +1,18 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
-sudo apt-get update
-# Jeigu nėra instaliuotas, instaliuojamas paketas 'apt-transport-https'
-[[ $(apt list --installed 2>/dev/null | grep -P '^apt-transport-https' | wc -l ) -gt 0 ]] || \
-  sudo apt-get install apt-transport-https
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
+
+echo ""
+
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command gpg tee wget; then
+  exit 1
+fi
+
+if ! check_package apt-transport-https; then
+  exit 1
+fi
 
 # Diegiamas raktas ir Darto šaltinis
 [ -s "/usr/share/keyrings/dart.gpg" ] || \
@@ -14,11 +23,17 @@ sudo apt-get update
   sudo tee /etc/apt/sources.list.d/dart_stable.list
 
 # Instaliuojamas Dartas 
-sudo apt-get update && ( 
-  (( $(apt list --installed 2>/dev/null | grep -P '^dart' | wc -l ) > 0 )) \
-  || sudo apt-get install dart
-)
+sudo apt-get update && { 
+  dpkg -s dart &>/dev/null || sudo apt-get install dart
+}
 
 # Tikrinamas Darto veikimas
-echo ; dart --version
+echo ""
+
+if ! dart --version > /dev/null 2>&1; then  
+  printf 'Error! Dart is not working as expected!\n\n'
+  exit 1
+fi
+
+dart --version
 

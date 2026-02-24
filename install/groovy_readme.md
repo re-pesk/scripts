@@ -2,7 +2,7 @@
 
 # Groovy [<sup>&#x2B67;</sup>](https://groovy-lang.org/)
 
-* Paskiausias leidimas: 4.0.26
+* Paskiausias leidimas: 5.0.4
 * Išleista: 2025-02-25
 
 ## Parengimas
@@ -11,64 +11,70 @@ Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, į .bashrc failą įterpiama 
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
 ```
 
-Jeigu nėra įdiegtos, įdiegiamos [curl](../utils/curl.md) ir [xq](../utils/xq.md)
+Jeigu nėra įdiegtos, įdiegiamos [curl](../utils/curl.md), unzip ir [xq](../utils/xq.md)
 
 ## Diegimas
 
 ```bash
 # Versijos numerį galima pasitikrinti "https://groovy.apache.org/download.html#distro"
-VERSION="$(
-  curl -s https://groovy.apache.org/download.html#distro |\
-  xq -q 'button[id="big-download-button"]' --attr "onclick" |\
-  sed -r 's/^.+=".+-(.+)\.zip"$/\1/'
-)"
-URL="https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-sdk-${VERSION}.zip"
+LATEST="$( curl -s https://groovy.apache.org/download.html#distro \
+  | xq -q "button[id='big-download-button']" --attr "onclick" \
+  | awk -F'["-]' '{print $(NF-1)}' | sed 's/\.zip$//' )"
 
-curl -sSLo "/tmp/groovy-sdk-${VERSION}.zip" "${URL}"
-TMP_DIR="$(mktemp -d)"
-unzip "/tmp/groovy-sdk-${VERSION}.zip" -d "${TMP_DIR}"
-rm "/tmp/groovy-sdk-${VERSION}.zip"
+# Patikrinti, ar kompiuteryje įdiegta kuri nors programos versija, sulyginant versijas
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(groovy --version 2> /dev/null | awk '{print $3}')"
 
-[[ -d "${HOME}/.opt/groovy" ]] && rm -rf "${HOME}/.opt/groovy"
-mv -T "${TMP_DIR}/groovy-${VERSION}" "${HOME}/.opt/groovy"
-rm -rf "${TMP_DIR}"
-unset TMP_DIR VERSION URL
+# Jeigu vėliausia programos versija nėra naujesnė nei įdiegtoji, diegimą nutraukti.
 
-cp -T "${HOME}/.pathrc" "${HOME}/.pathrc.$(date +"%Y%m%d.%H%M%S.%3N")"
-sed -i '/#begin groovy init/,/#end groovy init/c\' "${HOME}/.pathrc"
+# Atsisiųsti failą iš svetainės
+curl -sSLO "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-sdk-${LATEST}.zip"
 
-echo '
-#begin groovy init
+# Išvesti į terminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
+# Jeigu kontrolinės sumos nesutampa, diegimą nutraukti ir ištrinti atsisiųstus failus.
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "apache-groovy-sdk-${LATEST}.zip" | awk '{print $1}')" \
+  "$(curl -sSL "https://downloads.apache.org/groovy/${LATEST}/distribution/apache-groovy-sdk-${LATEST}.zip.sha256" |\
+  tr -d '\r')"
 
-[ -z "$JAVA_HOME" ] \
-  && export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
+# Išskleisti iš svetainės atsisiųstą failą.
+# Ištrinti įdiegtą versiją.
+# Perkelti išarchyvuotą katalogą į diegimo katalogą.
+# Ištrinti atsisiųstą failą
+unzip "groovy-sdk-${LATEST}.zip"
+rm -rf "${HOME}/.opt/groovy"
+mv -T "groovy-${LATEST}" "${HOME}/.opt/groovy"
+rm -f "groovy-sdk-${LATEST}.zip"
 
-[[ ":${PATH}:" == *":${HOME}/.opt/groovy/bin:"* ]] \
-  || export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"
+# Sukurti sistemos kintamąjį, jeigu jo nėra
+# Įtraukti įdiegtos programos kelią į sistemos kintamąjį
+[ -z "$JAVA_HOME" ] && {
+  JAVA_HOME="$(which java | xargs readlink -f | xargs dirname | xargs dirname)"
+  export JAVA_HOME
+}
 
-#end groovy init
-' >> "${HOME}/.pathrc"–
+[[ -d "${HOME}/.opt/groovy/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/groovy/bin:"* ]] \
+  && export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"
 
-cat -s "${HOME}/.pathrc" > "${HOME}/.pathrc.new"
-cp -T "${HOME}/.pathrc.new" "${HOME}/.pathrc"
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(groovy --version 2> /dev/null | awk '{print $3}')"
 
-[ -z "$JAVA_HOME" ] \
-&& export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
-[[ ":${PATH}:" == *":${HOME}/.opt/groovy/bin:"* ]] \
-export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"
-
-groovy --version
+unset LATEST
 ```
+
+Baigę diegti, pakeiskite konfigūracinius failus, kad būtų automatiškai kuriamas `JAVA_HOME` kintamasis, o kelias `${HOME}/.opt/groovy/bin` būtų įtraukiamas į sistemos `PATH` kintamąjį.
 
 arba
 
@@ -85,7 +91,7 @@ groovy kodo-failas.groovy
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#!/usr/bin/env groovy
+#!/usr/bin/env -S groovy
 ```
 
 arba

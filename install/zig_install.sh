@@ -1,34 +1,68 @@
-#!/usr/bin/env -S ysh
+#!/usr/bin/env -S bash
 
-install="y"
-[ -d "${HOME}/.opt/zig" ] && [ -e "${HOME}/.opt/zig/zig" ] && zig version > /dev/null 2>&1 &&\
-  read -p "Found working Zig installation. Do you want overwrite it? 'y' or exit [Enter]: " install
-[ "$install" == "y" ] || exit 0
-unset install
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
 
-VERSION="$(
-  curl -Lso - https://ziglang.org/download/index.json |\
-    jq -r 'keys - ["master"] | sort_by(split(".") | map(tonumber)) | last'
-)"
+echo ""
 
-[[ "$(zig version)" == "${VERSION}" ]] && echo "Zig v${VERSION} is already installed!" && exit 0
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl jq xargs; then
+  exit 1
+fi
 
-[ -d "${HOME}/.opt/zig" ] && rm -r "${HOME}/.opt/zig"
+# Vėliausią versijos numerį galima rasti https://ziglang.org/download/
+# Gauti įdiegtos programos versijos numerį.
+LATEST="$(curl -Lso - https://ziglang.org/download/index.json |\
+  jq -r 'keys - ["master"] | sort_by(split(".") | map(tonumber)) | last')"
+CURRENT="$(zig version 2> /dev/null)"
+if ! ask_to_install "${LATEST}" "${CURRENT}" "zig" "${HOME}/.opt/zig"; then
+  exit 1
+fi
 
-curl -sSLo- "https://ziglang.org/download/${VERSION}/zig-x86_64-linux-${VERSION}.tar.xz" \
-| tar --transform 'flags=r;s/^zig[^\/]+/zig/x' --show-transformed-names -xJC "${HOME}/.opt"
-unset VERSION
+# Parsiųsti instaliacinio archyvo duomenis iš tinklalapio į asociatyvų masyvą
+# shellcheck disable=SC2155
+declare -A DATA="($(
+  curl -s "https://ziglang.org/download/index.json" |\
+  jq -r '.[] | select(.version == "'"${LATEST}"'") | .["x86-linux"] | "[tarball]=" + .tarball + " [shasum]=" + .shasum'
+))"
+URL="${DATA["tarball"]}"
 
-[ ! -d "${HOME}/.opt/zig" ] && echo "Directory ${HOME}/.opt/zig is not created!" && exit 1
+# Atsisiųsti failą iš tinklalapio
+TMP_DIR="$( mktemp -d )"
+trap cleanup EXIT
 
-ln -fs "${HOME}/.opt/zig/zig" "${HOME}/.local/bin/zig"
 
-[ ! -e "${HOME}/.local/bin/zig" ] && echo "The symlink is not created or is broken." && exit 1
+curl -sSLo "${TMP_DIR}/zig-x86_64-linux-${LATEST}.tar.xz" "${URL}"
 
-echo
+# Išvesti į terminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
+# Jeigu kontrolinės sumos nesutampa, diegimą nutraukti, atsisiųstus failus ištrinti.
+if ! check_sha256_str "${TMP_DIR}/zig-x86_64-linux-${LATEST}.tar.xz" "${DATA["shasum"]}"; then
+  printf '%s\n\n' "Installation failed!"
+  exit 1
+fi
 
-zig version > /dev/null 2>&1
-[ $? -ne 0 ] && echo "Error! Zig compiler is not working as expected!" && exit 1
+# Ištrinti įdiegtą versiją.
+# Išskleisti iš repozitorijos atsisiųstą archyvą į diegimo katalogą.
+# Ištrinti laikiną aplanką.
+rm -rf "${HOME}/.opt/zig"
+tar --file="${TMP_DIR}/zig-x86_64-linux-${LATEST}.tar.xz" \
+  --transform='flags=r;s/^zig[^\/]+/zig/x' \
+  --show-transformed-names -xJC "${HOME}/.opt"
 
-printf "zig version => %s\n" $(zig version)
-echo "Zig compiler is succesfully installed"
+# Sukurti nuorodą į vykdomąjį failą.
+ln -fs "${HOME}/.opt/zig/zig" "${HOME}/.local/bin"
+
+echo ""
+
+# Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+if ! zig --version > /dev/null 2>&1; then
+  printf "Error! Zig is not working as expected!\n\n"
+  exit 1
+fi
+# Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
+CURRENT="$(zig version 2> /dev/null)"
+[[ "${CURRENT}" == "${LATEST}" ]] || { 
+  printf '\n%s\n\n' "Zig is not up to date!"
+  exit 1
+}
+printf '\n%\n\n' "Zig v${LATEST} is succesfully installed"

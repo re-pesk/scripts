@@ -11,11 +11,12 @@ Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo koma
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
@@ -28,30 +29,39 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 Dabartinės versijos ieškokite [Lua puslapyje](https://www.lua.org/download.html)
 
 ```bash
-VERSION="$(basename -- "$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/lua/lua/releases/latest")")"
-curl -LRo - "https://www.lua.org/ftp/lua-${VERSION#v}.tar.gz" | tar -xzC "/tmp"
-[ -d "${HOME}/.opt/lua" ] && rm --recursive "${HOME}/.opt/lua"
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/lua/lua/releases/latest" | xargs basename | sed 's/^v//')"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(lua -v 2> /dev/null | awk '{print $2}')"
+
+curl -sSLRO "https://www.lua.org/ftp/lua-${LATEST}.tar.gz"
+
+printf 'sha256 kontrolinės sumos:\n%s\n%s\n\n' \
+  "$(sha256sum "lua-${LATEST}.tar.gz")" \
+  "$(curl -sL https://lua.org/ftp/ | \
+    xq -q "body > table:first-of-type td.name:has(a:contains('lua-${LATEST}.tar.gz')) ~ td.sum")  https://lua.org/ftp/"
+
+tar --file "lua-${LATEST}.tar.gz" -xz
+
 INIT_DIR="$PWD"
-cd "/tmp/lua-${VERSION#v}"
+cd "lua-${LATEST}"
 make all test
+rm -rf "${HOME}/.opt/lua"
 make install INSTALL_TOP="${HOME}/.opt/lua"
 cd $INIT_DIR
-rm -r "/tmp/lua-${VERSION#v}"
-unset INIT_DIR VERSION
+rm -rf lua-${LATEST}*
 
-sed -i "/#begin lua init/,/#end lua init/c\\" "${HOME}/.pathrc"
-[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+[[ -d "${HOME}/.opt/lua/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/lua/bin:"* ]] \
+  && export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
 
-echo '#begin lua init
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(lua -v 2> /dev/null | awk '{print $2}')"
 
-[[ ":${PATH}:" == *":${HOME}/.opt/lua/bin:"* ]] \
-  || export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
-  
-#end lua init' >> "${HOME}/.pathrc"
-
-[[ ":${PATH}:" == *":${HOME}/.opt/lua/bin:"* ]] || export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
-lua -v
+unset INIT_DIR LATEST
 ```
+
+Baigę diegti, pakeiskite konfigūracinius failus, kad kelias `${HOME}/.opt/lua/bin` būtų automatiškai įtraukiamas į sistemos `PATH` kintamąjį.
 
 ## Paleistis
 

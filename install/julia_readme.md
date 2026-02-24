@@ -2,7 +2,7 @@
 
 # Julia [<sup>&#x2B67;</sup>](https://julialang.org/)
 
-* Paskiausias leidimas: 1.11.4
+* Paskiausias leidimas: 1.12.4
 
 ## Parengimas
 

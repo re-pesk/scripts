@@ -12,16 +12,28 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-[ -d "${HOME}/.opt/pluto" ] && rm -r "${HOME}/.opt/pluto"
-URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/PlutoLang/Pluto/releases/latest)"
-TMP_DIR="$(mktemp -d)"
-curl -sSLo "${TMP_DIR}/pluto.zip" "${URL//tag/download}/Linux.X64.zip" 
-mkdir -p $HOME/.opt/pluto
-unzip -d $HOME/.opt/pluto "${TMP_DIR}/pluto.zip"
-rm -r "${TMP_DIR}"
-unset TMP_DIR URL
-for filename in $HOME/.opt/pluto/pluto*; do ln -fs $filename -t ${HOME}/.local/bin; done
-pluto -v
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/PlutoLang/Pluto/releases/latest" | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(pluto -v 2> /dev/null | head -n 1 | awk -F',? ' '{print $2}')"
+
+curl -sSLo "tmp.pluto-${LATEST}-linux-x64.zip" "https://github.com/PlutoLang/Pluto/releases/download/${LATEST}/Linux.X64.zip"
+
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "tmp.pluto-${LATEST}-linux-x64.zip" | awk '{print $1}')" \
+  "$(curl -sSL "https://github.com/PlutoLang/Pluto/releases/expanded_assets/${LATEST}" |\
+  xq -nq 'li:has(a[href$="Linux.X64.zip"]) clipboard-copy' --attr=value | awk -F':' '{printf $NF}')"
+  
+rm -r "${HOME}/.opt/pluto"
+mkdir -p "${HOME}/.opt/pluto"
+unzip -d "${HOME}/.opt/pluto" "tmp.pluto-${LATEST}-linux-x64.zip"
+rm -f "tmp.pluto-${LATEST}-linux-x64.zip"
+for filename in ${HOME}/.opt/pluto/pluto*; do ln -fs "$filename" -t "${HOME}/.local/bin"; done
+
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(pluto -v 2> /dev/null | head -n 1 | awk -F',? ' '{print $2}')"
+
+unset LATEST
 ```
 
 ## Paleistis

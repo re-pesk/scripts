@@ -14,6 +14,7 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 ghc --version
+ghcup tui
 ```
 
 ## Paleistis

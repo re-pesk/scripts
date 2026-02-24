@@ -20,5 +20,5 @@ perl kodo-failas.pl
 Norint kodo failą paversti vykdomuoju failu, reikia suteikti jam vykdymo teises ir failo pradžioje įrašyti eilutę:
 
 ```bash
-#!/usr/bin/env perl
+#!/usr/bin/env -S perl
 ```

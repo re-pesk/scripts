@@ -4,7 +4,7 @@
 
 Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 
-* [x] [Abs](abs_readme.md) (atnaujinta 2025-04)
+* [x] [Abs](abs_readme.md) (atnaujinta 2025-04-27)
 * [x] [Ballerina](ballerina_readme.md)
 * [x] [Bash](bash_readme.md)
 * [x] [Bun (JS)](js_readme.md)
@@ -39,7 +39,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [ksh](ksh_readme.md)
 * [x] [Lua](lua_readme.md)
 * [x] [Murex](murex_readme.md)
-* [x] [Ngs](ngs_readme.md) (nebevystoma)
+* [x] [Ngs](ngs_readme.md) (atnaujinta 2025-04-05)
 * [x] [Node (JS)](js_readme.md)
 * [x] [Nu](nu_readme.md)
 * [x] [Odin](odin_readme.md)

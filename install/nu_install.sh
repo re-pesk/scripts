@@ -1,44 +1,82 @@
-#! /usr/bin/env bash
+#! /usr/bin/env -S bash
 
-# Failų pavadinimų ieškokite https://github.com/nushell/nushell/releases/latest
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
 
-CURRENT_VERSION="$(nu -v 2> /dev/null)"
-VERSION="$(basename "$(curl -Ls -o /dev/null -w %{url_effective} "https://github.com/nushell/nushell/releases/latest")")"
-[[ "${VERSION}" == "${CURRENT_VERSION}" ]] && {
-  printf "\n%s\n\n" "Nushell version is up to date!"
-  exit 0
-}
+echo ""
 
-TO_INSTALL="y"
-[[ "${CURRENT_VERSION}" != "" ]] && [[ -d "${HOME}/.opt/nu" ]] && {
-  echo
-  printf "Nushell v${CURRENT_VERSION} is installed. Do you want overwrite it?
-Print 'y' to overwrite. Print 'n' or <Enter> to exit: \e[s"
-  read -r TO_INSTALL
-  [[ "${TO_INSTALL}" == "" ]] && printf "\e[u<Enter>\n"
-  [[ "${TO_INSTALL}" != "y" ]] && { printf "\nNushell version is not up to date!\n\n"; exit 0; }
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs xq; then
+  exit 1
+fi
 
-}
+# Gauti programos paskutinės versijos numerį iš repozitorijos
+# Vėliausią versiją galima rasti https://github.com/nushell/nushell/releases/latest
+# Gauti įdiegtos programos versijos numerį
+# Pasirinkti, ar įdiegti naujausią versiją
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/nushell/nushell/releases/latest" | xargs basename)"
+CURRENT="$(nu -v 2> /dev/null)"
+if ! ask_to_install "${LATEST}" "${CURRENT}" "nu" "${HOME}/.opt/nu"; then
+  exit 1
+fi
 
+# Sukurti laikiną aplanką ir atsisųsti į jį programos failą.
+# Sukurti failą su patikros suma iš tinklalapio.
+INIT_DIR="$PWD"
+TMP_DIR="$( mktemp -d )"
+trap cleanup EXIT
+
+cd "${TMP_DIR}" || exit 1
+curl -sSLO \
+  "https://github.com/nushell/nushell/releases/download/${LATEST}/nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz"
+curl -sSL "https://github.com/nushell/nushell/releases/expanded_assets/${LATEST}" \
+  | xq -q "li > div:has(a span:contains('nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz')) ~ div > div > span > span" \
+  | awk -F ':' '{print $NF}' \
+  > "nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz.sha256"
+
+# Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
+if ! check_sha256 \
+  "nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz" \
+  "nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz.sha256"; then
+  printf '%s\n\n' "Installation failed!"
+  exit 1
+fi
+
+# Ištrinti įdiegtą versiją.
+# Išskleisti iš repozitorijos atsisiųstą archyvą į diegimo katalogą.
+# Ištrinti laikiną aplanką.
 rm -rf "${HOME}/.opt/nu"
-URL="https://github.com/nushell/nushell/releases/download/${VERSION}/nu-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-curl -sSLo- "${URL}" | tar --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzv -C "${HOME}/.opt"
+tar --file="${TMP_DIR}/nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz" \
+  --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzvC "${HOME}/.opt"
 
-[[ "$(grep 'export PATH="\${HOME}/.opt/nu\$' < ${HOME}/.pathrc | wc -l)" > 0 ]] || {
-  sed --in-place=".$(date +"%Y%m%d-%H%M%S-%3N")" '/#begin nushell init/,/#end nushell init/d'  "${HOME}/.pathrc"
-  sed --in-place '/^[[:space:]]*$/N; /^\n$/D' "${HOME}/.pathrc"
-  [[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+# Įtraukti įdiegtos programos kelią į sistemos kintamąjį
+[[ -d "${HOME}/.opt/nu" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/nu:"* ]] \
+    && export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
 
-  printf '#begin nushell init
+# Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+if ! nu -v > /dev/null 2>&1; then
+  printf "Error! Nushell is not working as expected!\n\n"
+  exit 1
+fi
 
-[[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] \
-  || export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
-
-#end nushell init\n\n' >> "${HOME}/.pathrc"
+# Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą.
+CURRENT="$(nu -v 2> /dev/null)"
+[[ "${CURRENT}" == "${LATEST}" ]] || { 
+  printf '\n%s\n\n' "Nushell ${CURRENT} is not up to date!"
+  exit 1
 }
+printf '%s\n\n' "Nushell ${LATEST} is succesfully installed"
 
-[[ ":${PATH}:" == *":${HOME}/.opt/nu:"* ]] || \
-  export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
+# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
+# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
+# shellcheck disable=SC2016
+printf '%s\n\n' 'To use without relogging, execute the following command in the terminal:
 
-[[ "$(nu -v 2> /dev/null )" == "${VERSION}" ]] || { echo "Nushell version is not up to date!"; exit 1; }
-printf "\nNushell v${VERSION} is succesfully installed\n\n"
+[[ -d "${HOME}/.opt/nu" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/nu:"* ]] \
+    && export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"'
+
+# Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
+# shellcheck disable=SC2016
+insert_path "${HOME}/.pathrc" 'Nushell' '${HOME}/.opt/nu'

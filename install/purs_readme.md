@@ -9,28 +9,26 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-curl -sSLo- "$(
-  curl -Ls -o /dev/null -w %{url_effective} \
-  "https://github.com/purescript/purescript/releases/latest" \
-  | sed "s/tag/download/"
-)/linux64.tar.gz" | tar -xzv -C "${HOME}}/.opt"
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/purescript/purescript/releases/latest" | xargs basename)"
 
-ln -fs "${HOME}/.opt/purescript/purs" "${HOME}/.local/bin/purs"
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "v$(purs --version 2> /dev/null)"
 
-purs --version
+curl -sSLo tmp.purs.linux64.tar.gz "https://github.com/purescript/purescript/releases/download/${LATEST}/linux64.tar.gz"
+curl -sSLo tmp.purs.linux64.sha "https://github.com/purescript/purescript/releases/download/${LATEST}/linux64.sha"
 
-echo "purs v$(purs --version) instaliuotas!"
+printf 'sha1 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha1sum "tmp.purs.linux64.tar.gz" | awk '{print $1}')" \
+  "$(cat "tmp.purs.linux64.sha" | awk '{print $1}')"
 
-curl -sSLo- "$(
-  curl -Ls -o /dev/null -w %{url_effective} https://github.com/purescript/spago/releases/latest \
-  | sed "s/tag/download/"
-)/Linux.tar.gz" | tar -xzv -C "$HOME/.opt/purescript"
+rm -rf "${HOME}/.opt/purescript"
+tar -f "tmp.purs.linux64.tar.gz" -xzvC "${HOME}/.opt"
+rm -f tmp.purs.linux64.*
 
-ln -fs "$HOME/.opt/purescript/spago" "$HOME/.local/bin/spago"
+ln -fs "${HOME}/.opt/purescript/purs" -t "${HOME}/.local/bin/"
 
-echo "spago v$(spago version) instaliuotas!"
-
-spago --version
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "v$(purs --version 2> /dev/null)"
 ```
 
 ## Paleistis ir kompiliavimas

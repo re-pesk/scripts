@@ -2,8 +2,8 @@
 
 # Kotlin [<sup>&#x2B67;</sup>](https://kotlinlang.org/)
 
-* Paskiausias leidimas: 2.1.20
-* Išleista: 2025-03-20
+* Paskiausias leidimas: 2.3.0
+* Išleista: 2025-12-16
 
 ## Parengimas
 
@@ -11,11 +11,12 @@ Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas, įterpiamas jo įkėlimo koma
 
 ```bash
 [ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
-[ $(grep '#begin include .pathrc' < ${HOME}/.bashrc | wc -l) -gt 0 ] || echo '#begin include .pathrc
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
 
 # include .pathrc if it exists
-if [ -f "$HOME/.pathrc" ]; then
-  . "$HOME/.pathrc"
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
 fi
 
 #end include .pathrc' >> ${HOME}/.bashrc
@@ -35,25 +36,35 @@ kotlin -version
 ### Kotlin Native
 
 ```bash
-URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/JetBrains/kotlin/releases/latest)"
-curl -sSLo- "${URL//tag/download}/kotlin-native-prebuilt-linux-x86_64-$(basename -- $URL).tar.gz" \
-| tar --transform 'flags=r;s/^(kotlin-native)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/JetBrains/kotlin/releases/latest" \
+  | xargs basename | sed 's/v//')"
 
-sed -i '/#begin kotlin init/,/#end kotlin init/c\' "${HOME}/.pathrc"
-[[ "$( tail -n 1 "${HOME}/.pathrc" )" =~ ^[[:blank:]]*$ ]] || echo "" >> "${HOME}/.pathrc"
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(kotlinc-native -version 2> /dev/null | awk '{print $NF}')"
 
-echo '#begin kotlin init
+curl -sSLO "https://github.com/JetBrains/kotlin/releases/download/v${LATEST}/kotlin-native-prebuilt-linux-x86_64-${LATEST}.tar.gz"
+curl -sSLO "https://github.com/JetBrains/kotlin/releases/download/v${LATEST}/kotlin-native-prebuilt-linux-x86_64-${LATEST}.tar.gz.sha256"
 
-[[ ":${PATH}:" == *":${HOME}/opt/.kotlin-native/bin:"* ]] \
-  || export PATH="${HOME}/opt/.kotlin-native/bin${PATH:+:${PATH}}"
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "kotlin-native-prebuilt-linux-x86_64-${LATEST}.tar.gz" | awk '{print $1}')" \
+  "$(cat "kotlin-native-prebuilt-linux-x86_64-${LATEST}.tar.gz.sha256")"
 
-#end kotlin init' >> "${HOME}/.pathrc"
+rm -rf "${HOME}/.opt/kotlin-native"
+tar --file="kotlin-native-prebuilt-linux-x86_64-${LATEST}.tar.gz" \
+  --transform 'flags=r;s/^(kotlin-native)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
+rm -f kotlin-native-prebuilt-linux-x86_64-${LATEST}.tar.gz*
 
-[[ ":${PATH}:" == *":${HOME}/opt/.kotlin-native/bin:"* ]] \
-  || export PATH="${HOME}/opt/.kotlin-native/bin${PATH:+:${PATH}}"
+[[ -d "${HOME}/.opt/kotlin-native/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/kotlin-native/bin:"* ]] \
+  && export PATH="${HOME}/.opt/kotlin-native/bin${PATH:+:${PATH}}"
 
-kotlinc-native -version  
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(kotlinc-native -version 2> /dev/null | awk '{print $NF}')"
+
+unset LATEST
 ```
+
+Baigę diegti, pakeiskite konfigūracinius failus, kad kelias `${HOME}/.opt/ballerina/bin` būtų automatiškai įtraukiamas į sistemos `PATH` kintamąjį.
 
 ## Paleistis
 

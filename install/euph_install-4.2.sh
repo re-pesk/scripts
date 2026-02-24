@@ -1,67 +1,64 @@
 #!/usr/bin/env -S bash
 
+# Įkelti pagalbines funkcijas
+. ./_helpers.sh
+
+echo ""
+
+# Įrašyti į kintamąjį diegiamos versijos numerį
+LATEST="4.2.0"
+CURRENT="$(euc --version | head -n 1 | awk '{print $5}')"
+if ! ask_to_install "${CURRENT}" "v${LATEST}" "Euphoria" "${HOME}/.opt/euphoria"; then
+  exit 1
+fi
+
+# Išsaugoti pradinį aplanką
+# Sukurti laikiną aplanką
+# Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="/tmp"
-cd "${TMP_DIR}"
+TMP_DIR="$( mktemp -p . -d -t euph.XXXXXXXX | xargs realpath )"
+trap cleanup EXIT
 
-echo -e "\nInstalling euphoria 4.2 to ${HOME}/.opt/euphoria\n"
-echo -e "Current directory => $PWD\n"
-
-[ -d "${TMP_DIR}/euphoria" ] && rm -rf "${TMP_DIR}/euphoria"
-
-echo -e "Cloning git repository of Euphoria 4.2\n"
+# Pereiti į laikiną aplanką
+# Klonuoti git repozitoriją iš OpenEuphoria
+# Pereiti į aplanką euphoria/source
+cd "${TMP_DIR}" || exit 1
 git clone https://github.com/OpenEuphoria/euphoria "euphoria"
+cd "./euphoria/source" || exit 1
 
-cd "${TMP_DIR}/euphoria/source"
-echo -e "Current directory => $PWD\n"
-echo -e "\nCompiling Euphoria 4.2\n"
-./configure
+# Sukompiliuoti Euphoria 4.2
+./configure --prefix "${HOME}/.opt/euphoria"
 make
+make install
 
-echo -e "Copying compiled files to bin\n"
+# Pakeisti kelią PATH kintamajame
+[[ ":${PATH}:" == *":${HOME}/.opt/euphoria-${CURRENT}/bin:"* ]] \
+  && export PATH="${PATH/"euphoria-${CURRENT}"/euphoria}"
 
-find build -maxdepth 1 -type f ! -name "*.*" -exec mv -t ../bin/ {} \+
-# find build -maxdepth 1 -type f -exec mv -t "${TMP_DIR}/euphoria/bin" {} \+
-cd "${TMP_DIR}/euphoria/bin"
+# Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+if ! euc --version 2> /dev/null || ! eui --version 2> /dev/null ; then
+  printf '%s\n\n' "Euphoria is not working as expected!"
+  exit 1
+fi
 
-echo -e "Current directory => $PWD\n"
+# Patikrinti, ar įdiegta versija yra naujausia.
+# Išvesti atitinkamą pranešimą
+CURRENT="$(euc --version | head -n 1 | awk '{print $5}')"
+[[ "${CURRENT}" == "v${LATEST}" ]] || { 
+  printf '\n%\n\n' "Euphoria v${CURRENT} is not v${LATEST}!"
+  exit 1
+}
+printf '%s\n\n' "Euphoria v${LATEST} is installed!"
 
-for file in *.{ex,exw} ;do
-  [ -f "${file%.*}" ] && continue
-  ./euc "$file"
-  exit_code="$?"
-  if [[ "$exit_code" > 0 ]]; then
-    exit "$exit_code"
-  fi 
-done
+# Išvesti komandą, kurią reikia įvykdyti terminale,
+# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
+# shellcheck disable=SC2016
+printf '%s\n\n' 'To use without relogging, execute the following command in the terminal:
 
-cd "${TMP_DIR}"
+[[ -d "${HOME}/.opt/euphoria/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/euphoria/bin:"* ]] \
+  && export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"'
 
-echo -e "Current directory => $PWD\n"
-
-echo -e "Replacing Euphoria 4.1 with 4.2\n"
-
-[ -d "${HOME}/.opt/euphoria" ] && mv -T "${HOME}/.opt/euphoria" "${HOME}/.opt/euphoria-4.1"
-mv "${TMP_DIR}/euphoria" $HOME/.opt/
-
-echo -e "eui --version => \n"; eui --version
-echo -e "euc --version => \n"; euc --version
-
-echo -e "Updating config file\n"
-
-cd "${HOME}/.opt/euphoria/source"
-echo -e "Current directory => $PWD\n"
-./configure
-find build -maxdepth 1 -type f -exec mv -t "${HOME}/.opt/euphoria/bin/" {} \+
-rm -rf build
-
-sed -i 's/source\/build/bin/g' "${HOME}/.opt/euphoria/bin/eu.cfg"
-
-rm -rf "${HOME}/.opt/euphoria-4.1"
-
-cd "${INIT_DIR}"
-
-echo -e "\nCurrent directory => $PWD\n"
-
-echo -e "Euphoria 4.2 is installed!\n"
-unset INIT_DIR TMP_DIR
+# Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
+create_file_if_not_exists "${HOME}/.pathrc" '# shellcheck shell=bash'
+insert_path "${HOME}/.pathrc" 'Euphoria' "${HOME}/.opt/euphoria/bin"

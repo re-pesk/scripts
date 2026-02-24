@@ -2,7 +2,7 @@
 
 # Ruby [<sup>&#x2B67;</sup>](https://www.ruby-lang.org/)
 
-* Paskiausias leidimas: 3.4.2
+* Paskiausias leidimas: 4.0.0
 
 ## Diegimas (Ubuntu 24.04)
 

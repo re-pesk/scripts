@@ -12,13 +12,33 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-[ -d ${HOME}/.opt/janet ] && rm -r ${HOME}/.opt/janet
-curl -sSLo - "${url//tag/download}/janet-$(basename -- $url)-linux-x64.tar.gz" \
-| tar --transform 'flags=r;s/^\.\/(janet)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
-ln -s ${HOME}/.opt/janet/bin/janet ${HOME}/.local/bin/janet
-ln -s ${HOME}/.opt/janet/man/man1/janet.1 ${HOME}/.local/man/man1/janet.1
-unset url
-janet --version
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/janet-lang/janet/releases/latest" | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(janet --version 2> /dev/null | awk -F '-' '{print $1}')"
+
+curl -sSLO "https://github.com/janet-lang/janet/releases/download/${LATEST}/janet-${LATEST}-linux-x64.tar.gz"
+
+printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
+  "$(sha256sum "janet-${LATEST}-linux-x64.tar.gz" | awk '{print $1}')" \
+  "$(curl -sL "https://github.com/janet-lang/janet/releases/expanded_assets/${LATEST}" \
+| xq -q "li > div:has(a span:contains('janet-${LATEST}-linux-x64.tar.gz')) ~ div > div > span > span" \
+| awk -F ':' '{print $NF}')"
+
+rm -rf "${HOME}/.opt/janet"
+tar --file="janet-${LATEST}-linux-x64.tar.gz" \
+  --transform 'flags=r;s/^\.\/(janet)[^\/]+/\1/x' \
+  --show-transformed-names -xzC "${HOME}/.opt"
+
+rm -f "janet-${LATEST}-linux-x64.tar.gz"
+
+ln -sf "${HOME}/.opt/janet/bin/janet" "${HOME}/.local/bin/"
+ln -sf "${HOME}/.opt/janet/man/man1/janet.1" "${HOME}/.local/man/man1/"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(janet --version 2> /dev/null | awk -F '-' '{print $1}')"
+
+unset LATEST
 ```
 
 ## Paleistis

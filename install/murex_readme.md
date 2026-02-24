@@ -12,13 +12,22 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-[ -d "${HOME}/.opt/murex" ] && rm -r "${HOME}/.opt/murex"
-[ -f "${HOME}/.local/bin/murex" ] && rm "${HOME}/.local/bin/murex"
-mkdir -p "${HOME}/.opt/murex/bin"
-curl "https://nojs.murex.rocks/bin/latest/murex-linux-amd64.gz" | gunzip -cf - > "${HOME}/.opt/murex/bin/murex"
-chmod +x "${HOME}/.opt/murex/bin/murex"
-ln -sf "${HOME}/.opt/murex/bin/murex" -t "${HOME}/.local/bin"
-murex --version
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/lmorg/murex/releases/latest" | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(murex --version | head -n 1 | awk '{print $2}')"
+
+rm -r "${HOME}/.opt/murex"
+mkdir -p "${HOME}/.opt/murex"
+curl "https://nojs.murex.rocks/bin/latest/murex-linux-amd64.gz" | gunzip -cf - > "${HOME}/.opt/murex/murex"
+chmod +x "${HOME}/.opt/murex/murex"
+
+ln -sf "${HOME}/.opt/murex/murex" "${HOME}/.local/bin/"
+
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(murex --version | head -n 1 | awk '{print $2}')"
+
+unset LATEST
 ```
 
 ## Paleistis

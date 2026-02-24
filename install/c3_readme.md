@@ -2,8 +2,8 @@
 
 # C3 [<sup>&#x2B67;</sup>](https://c3-lang.org/)
 
-* Paskiausias leidimas: 0.7.0
-* Išleista: 2025-03-31
+* Paskiausias leidimas: 0.7.8
+* Išleista: 2025-12-06
 
 ## Parengimas
 
@@ -12,13 +12,27 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-URL="$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/c3lang/c3c/releases/latest)"
-[[ -d ${HOME}/.opt/c3 ]] && rm -r ${HOME}/.opt/c3
-curl -fsSLo - "${URL//tag/download}/c3-ubuntu-20.tar.gz" \
-| tar  --transform 'flags=r;s/^(c3)/\1/x' --show-transformed-names -xzvC ${HOME}/.opt
-unset URL
-ln -fs ${HOME}/.opt/c3/c3c ${HOME}/.local/bin/c3c
-c3c --version
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/c3lang/c3c/releases/latest" | xargs basename)"
+
+# Patikrinti, ar kompiuteryje įdiegta kuri nors programos versija. Sulyginti versijas
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(c3c --version 2>/dev/null | head -n 1 | awk '{print $NF}')"
+
+# Jeigu vėliausia programos versija nėra naujesnė nei įdiegtoji, diegimą nutraukti.
+
+# Ištrinti įdiegtą versiją. Išskleisti iš repozitorijos atsisiųstą archyvą į diegimo katalogą.
+# Sukurti simbolinę nuorodą į vykdomajį failą.
+rm -rf "${HOME}/.opt/c3"
+curl -fsSLo - "https://github.com/c3lang/c3c/releases/download/${LATEST}/c3-linux.tar.gz" \
+| tar  --transform 'flags=r;s/^(c3)/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
+ln -fs "${HOME}/.opt/c3/c3c" "${HOME}/.local/bin"
+
+# Patikrinti, ar kompiuteryje įdiegta vėliausia programos versija.
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(c3c --version 2>/dev/null | head -n 1 | awk '{print $NF}')"
+
+# Ištrinti kintamuosius
+unset LATEST
 ```
 
 ## Paleistis

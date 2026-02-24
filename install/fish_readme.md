@@ -8,9 +8,15 @@
 ## Diegimas
 
 ```bash
-sudo add-apt-repository ppa:fish-shell/release-4
+# Jeigu sąraše nėra, pridedama repozitorija
+(( "$(add-apt-repository -L | grep -c 'fish-shell')" > 0 )) \
+|| sudo add-apt-repository ppa:fish-shell/release-4
 sudo apt update
-sudo apt install fish
+
+# Jeigu nėra instaliuota, diegiama paketas 'fish'
+dpkg -s fish &>/dev/null && sudo apt upgrade || sudo apt install fish
+
+# Išvedama įdiegta 'fish' versija
 fish --version
 ```
 

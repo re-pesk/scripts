@@ -26,7 +26,7 @@ bun --version
 ### Paleistis
 
 ```bash
-bun run js_sys-upgrade-bun.mjs
+bun run kodo-failas.mjs
 ```
 
 ### Vykdymo instrukcija (shebang)
@@ -53,7 +53,7 @@ deno --version
 ### Paleistis
 
 ```bash
-deno js_sys-upgrade-deno.mjs
+deno kodo-failas.mjs
 ```
 
 ### Vykdymo instrukcija (shebang)
@@ -89,7 +89,7 @@ node --version
 ### Paleistis
 
 ```bash
-node js_sys-upgrade-node.mjs
+node kodo-failas.mjs
 ```
 
 ### Vykdymo instrukcija (shebang)

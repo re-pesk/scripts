@@ -3,8 +3,8 @@
 
 # Oils for Unix [<sup>&#x2B67;</sup>](https://www.oilshell.org/)
 
-* Paskiausias leidimas: [0.28.0](https://oils.pub/release/latest/)
-* Išleista: 2025-03-16
+* Paskiausias leidimas: [0.37.0](https://oils.pub/release/latest/)
+* Išleista: 2025-11-30
 
 ## Parengimas
 
@@ -13,25 +13,29 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-# VERSION="$(curl -s https://oils.pub/release/latest/ | grep -o '<title>.*</title>' | sed 's/<\/\?title>//g;s/^Oils //g')"
-VERSION="$(curl -sSLo - https://raw.githubusercontent.com/oils-for-unix/oils/refs/heads/master/oils-version.txt | head -n 1)"
-curl -sSLo- "https://oils.pub/download/oils-for-unix-${VERSION}.tar.gz" | tar -xzv
-INIT_DIR="$PWD"
+LATEST="$(curl -sSLo - https://raw.githubusercontent.com/oils-for-unix/oils/refs/heads/master/oils-version.txt | head -n 1)"
 
-cd "oils-for-unix-${VERSION}"
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(osh --version | head -n 1 | awk '{print $2}')"
+
+curl -sSLo- "https://oils.pub/download/oils-for-unix-${LATEST}.tar.gz" | tar -xzv
+
+INIT_DIR="$PWD"
+cd "oils-for-unix-${LATEST}" || exit 1
 ./configure --prefix "${HOME}/.opt/oils" --datarootdir "${HOME}/.opt/oils/share"
 _build/oils.sh
 [ -d "${HOME}/.opt/oils" ] && rm -rf "${HOME}/.opt/oils"
 ./install
-ln -sf "${HOME}/.opt/oils/bin/oils-for-unix" "${HOME}/.local/bin/osh"
-ln -sf "${HOME}/.opt/oils/bin/oils-for-unix" "${HOME}/.local/bin/ysh"
 cd "${INIT_DIR}"
-rm -rf "oils-for-unix-${VERSION}"
+rm -rf "oils-for-unix-${LATEST}"
 
-unset INIT_DIR VERSION
+ln -sfT "${HOME}/.opt/oils/bin/oils-for-unix" "${HOME}/.local/bin/osh"
+ln -sfT "${HOME}/.opt/oils/bin/oils-for-unix" "${HOME}/.local/bin/ysh"
 
-osh --version | head -n 1 # => Oils ${VERSION}             https://oils.pub/
-ysh --version | head -n 1 # => Oils ${VERSION}             https://oils.pub/
+printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
+  "${LATEST}" "$(osh --version | head -n 1 | awk '{print $2}')"
+
+unset INIT_DIR LATEST
 ```
 
 ## Paleistis
