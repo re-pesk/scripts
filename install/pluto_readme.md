@@ -1,4 +1,4 @@
-[&#x2BA2;](./readme.md)
+[&#x2BA2;](./install_readme.md "Atgal")
 
 # Pluto [<sup>&#x2B67;</sup>](https://pluto-lang.org/)
 

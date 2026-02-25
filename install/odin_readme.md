@@ -1,4 +1,4 @@
-[&#x2BA2;](./readme.md)
+[&#x2BA2;](./install_readme.md "Atgal")
 
 # Odin [<sup>&#x2B67;</sup>](https://odin-lang.org/)
 

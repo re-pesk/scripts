@@ -1,4 +1,4 @@
-[&#x2BA2;](./readme.md)
+[&#x2BA2;](./install_readme.md "Atgal")
 
 # JavaScript [<sup>&#x2B67;</sup>](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 

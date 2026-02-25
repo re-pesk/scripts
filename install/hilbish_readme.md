@@ -1,4 +1,4 @@
-[&#x2BA2;](./readme.md)
+[&#x2BA2;](./install_readme.md "Atgal")
 
 # Hilbish [<sup>&#x2B67;</sup>](https://rosettea.github.io/Hilbish/)
 

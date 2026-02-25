@@ -8,7 +8,7 @@ Programavimo žaidimai
 
 * [Paleidimo skriptai](./script-loaders/readme.md)
 
-* Programavimo kalbų ir jų variklių [diegimas](./install/readme.md)
+* Programavimo kalbų ir jų variklių [diegimas](./install/install_readme.md)
 
 * Ubuntu [atnaujinimo skriptas](./proglangs/readme.md)
 

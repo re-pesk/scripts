@@ -1,4 +1,4 @@
-[&#x2BA2;](./readme.md)
+[&#x2BA2;](./install_readme.md "Atgal")
 
 # C [<sup>&#x2B67;</sup>](https://www.gnu.org/software/gnu-c-manual/gnu-c-manual.html)
 
