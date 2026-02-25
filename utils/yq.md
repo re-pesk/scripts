@@ -2,8 +2,8 @@
 
 `yq` is a lightweight and portable command-line YAML, JSON, INI and XML processor.
 
-* Pradinis kodas [&#x2B67;](https://github.com/mikefarah/yq)
-* Naudotojo vadovas [&#x2B67;](https://mikefarah.gitbook.io/yq/)
+* Pradinis kodas [<sup>&#x2B67;</sup>](https://github.com/mikefarah/yq)
+* Naudotojo vadovas [<sup>&#x2B67;</sup>](https://mikefarah.gitbook.io/yq/)
 
 ## Pasirengimas
 
@@ -51,5 +51,5 @@ unset LATEST
 ### Oficialios Ubuntu versijos diegimas
 
 ```bash
-dpkg -s yq &>/dev/null || sudo apt install xq -y
+dpkg -s yq &>/dev/null || sudo apt install yq -y
 ```

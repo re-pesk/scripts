@@ -2,7 +2,7 @@
 
 Command-line XML and HTML beautifier and content extractor.
 
-* Pradinis kodas [&#x2B67;](https://github.com/sibprogrammer/xq)
+* Pradinis kodas [<sup>&#x2B67;</sup>](https://github.com/sibprogrammer/xq)
 
 ## Pasirengimas
 
