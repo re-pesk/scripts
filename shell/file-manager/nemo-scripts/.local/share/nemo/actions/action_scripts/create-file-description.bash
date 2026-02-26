@@ -20,5 +20,5 @@ if [[ -f "$@.md" ]]; then
 fi
 
 filename="$@.md"
-echo -e '# '"$base_name\n\n[$base_name" '&#x1F875;](https://www.google.com/search?q='"$base_name"'&ie=UTF-8)' > "$filename"
+printf '%s\n' '# '"$base_name\n\n[$base_name" '&#x1F875;](https://www.google.com/search?q='"$base_name"'&ie=UTF-8)' > "$filename"
 exit 0

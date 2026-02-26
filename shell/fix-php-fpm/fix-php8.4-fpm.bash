@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 echo "Fixing php8.4-fpm.service"
