@@ -34,7 +34,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 
 * [x] [Abs](abs/sys-upgrade/abs_readme.md) (–)\
   (+) patogi kalba\
-  (?) nebevystoma? :frowning:, atnaujinta 2025-04
+  (?) ~~nebevystoma?~~ atnaujinta 2025-04-27
 * [x] [Elvish](elvish/sys-upgrade/elvish_readme.md) (?)\
   (–) keista asocijuotųjų masyvų ir funkcijų sintaksė\
   (+) dažniau minima, nei kitos alteratyvios apvalkalo scenarijų kalbos
@@ -51,9 +51,10 @@ Naudota operacinė sistema – Ubuntu 24.04
   (–) keista sintaksė
 * [x] [Ngs](ngs/sys-upgrade/ngs_readme.md) (?)\
   (–) keistai organizuotas darbas su klaidomis
-* [x] [Nu](nu/sys-upgrade/nu_readme.md) (?)\
+  (?) ~~nebevystoma?~~ atnaujinta 2025-04-05
+* [x] [Nushell](nushell/sys-upgrade/nu_readme.md) (?)\
   (+) dažniau minima, nei kitos alteratyvios apvalkalo scenarijų kalbos
-* [x] [PowerShell](pwsh/sys-upgrade/pwsh_readme.md) (–)\
+* [x] [PowerShell](powershell/sys-upgrade/pwsh_readme.md) (–)\
   (–) keista sintaksė\
   (–) kilmė iš Microsoft'o
 
@@ -91,7 +92,7 @@ Daug informacijos internete
 
 * [x] [Dart](dart/sys-upgrade/dart_readme.md) (–)\
   (–) nepatogus darbas su išorinėmis komandomis
-* [x] [Euphoria](euph/sys-upgrade/euph_readme.md) (–)\
+* [x] [Euphoria](euphoria/sys-upgrade/euph_readme.md) (–)\
   (–) sudėtingas instaliavimas\
   (–) seniai nebuvo leidimų
   * [x] [Phix](phix/sys-upgrade/phix_readme.md) - stipriai modifikuota Euforijos versija (–)\
@@ -130,7 +131,7 @@ Daug informacijos internete
 * [x] [Pike](pike/sys-upgrade/pike_readme.md) (+)\
   (+) C++ kalbos sintakse\
   (–) mažai naudojama
-* [x] [Python](py/sys-upgrade/py_readme.md) (±)\
+* [x] [Python](python/sys-upgrade/python_readme.md) (±)\
   (+) plačiai naudojamas\
   (+) daug informacijos internete\
   (–) teksto įtraukomis grįsta sintaksė
@@ -170,7 +171,7 @@ Daug informacijos internete
 * [x] [Odin](odin/sys-upgrade/odin_readme.md) (+)\
   (+) dar vienas C kalbos pakaitalas\
   (+) paprastesnė už Zig, verta pasimokyti
-* [ ] [Purescript](purs/sys-upgrade/purs_readme.md) (–)\
+* [ ] [Purescript](purescript/sys-upgrade/purs_readme.md) (–)\
   (–) transpileris, generuojantis JS kodą\
   (–) netinka scenarijų kalbos vaidmeniui
 * [x] [Rust](rust/sys-upgrade/rust_readme.md) (–)\
