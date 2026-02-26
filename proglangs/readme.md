@@ -52,9 +52,9 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Ngs](ngs/sys-upgrade/ngs_readme.md) (?)\
   (–) keistai organizuotas darbas su klaidomis
   (?) ~~nebevystoma?~~ atnaujinta 2025-04-05
-* [x] [Nushell](nushell/sys-upgrade/nushell_readme.md) (?)\
+* [x] [Nushell](nushell/sys-upgrade/nu_readme.md) (?)\
   (+) dažniau minima, nei kitos alteratyvios apvalkalo scenarijų kalbos
-* [x] [PowerShell](pwsh/sys-upgrade/pwsh_readme.md) (–)\
+* [x] [PowerShell](powershell/sys-upgrade/pwsh_readme.md) (–)\
   (–) keista sintaksė\
   (–) kilmė iš Microsoft'o
 
@@ -92,7 +92,7 @@ Daug informacijos internete
 
 * [x] [Dart](dart/sys-upgrade/dart_readme.md) (–)\
   (–) nepatogus darbas su išorinėmis komandomis
-* [x] [Euphoria](euph/sys-upgrade/euph_readme.md) (–)\
+* [x] [Euphoria](euphoria/sys-upgrade/euph_readme.md) (–)\
   (–) sudėtingas instaliavimas\
   (–) seniai nebuvo leidimų
   * [x] [Phix](phix/sys-upgrade/phix_readme.md) - stipriai modifikuota Euforijos versija (–)\
@@ -171,7 +171,7 @@ Daug informacijos internete
 * [x] [Odin](odin/sys-upgrade/odin_readme.md) (+)\
   (+) dar vienas C kalbos pakaitalas\
   (+) paprastesnė už Zig, verta pasimokyti
-* [ ] [Purescript](purs/sys-upgrade/purs_readme.md) (–)\
+* [ ] [Purescript](purescript/sys-upgrade/purs_readme.md) (–)\
   (–) transpileris, generuojantis JS kodą\
   (–) netinka scenarijų kalbos vaidmeniui
 * [x] [Rust](rust/sys-upgrade/rust_readme.md) (–)\

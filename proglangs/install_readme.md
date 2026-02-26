@@ -1,4 +1,4 @@
-[&#x2BA2;](../readme.md "Atgal")
+[&#x2BA2;](../readme.md)
 
 # Skirtingų programavimo kalbų ir vykdymo variklių instaliavimas
 
@@ -41,7 +41,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Murex](murex/install/murex_readme.md)
 * [x] [Ngs](ngs/install/ngs_readme.md) (atnaujinta 2025-04-05)
 * [x] [Node (JS)](js/install/js_readme.md)
-* [x] [Nu](nushell/install/nu_readme.md)
+* [x] [Nushell](nushell/install/nu_readme.md)
 * [x] [Odin](odin/install/odin_readme.md)
 * [x] [Onyx](onyx/install/onyx_readme.md)
 * [x] [Osh (Oils)](oils/install/oils_readme.md)
