@@ -1,12 +1,15 @@
 #!/bin/sh
 
 ansi_getShellName() {
-  echo "$(basename "$(ps -hp "$$" | { read _ _ _ _ cmd _; echo "$cmd"; })" )"
+  basename "$(ps -hp "$$" | { 
+    read -r _ _ _ _ cmd _
+    echo "$cmd" 
+  })"
 }
 
 ansi_getShellName
 
-if [ "$1" > 0 ]; then
+if ! [ "$1" = "" ] && [ "$1" -gt 0 ]; then
   exit 0
 fi
 

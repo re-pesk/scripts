@@ -27,7 +27,7 @@ Nemo failų naršyklės įskiepiai
 Kataloge, kuriame yra šis failas, įvykdyti komandas
 
 ```bash
-cp -r -t $HOME/.local/share/nemo .local/share/nemo/actions
+cp -r -t ${HOME}/.local/share/nemo .local/share/nemo/actions
 ```
 
 ### Klaidų sekimas

@@ -12,7 +12,7 @@ Nautilaus failų naršyklės skriptai
 Kataloge, kuriame yra šis failas, įvykdyti komandas
 
 ```bash
-cp -r -t $HOME/.local/share/nautilus .local/share/nautilus/scripts
+cp -r -t ${HOME}/.local/share/nautilus .local/share/nautilus/scripts
 ```
 
 ### Klaidų sekimas
