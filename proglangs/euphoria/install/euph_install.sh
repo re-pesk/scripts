@@ -1,5 +1,12 @@
 #!/usr/bin/env -S bash
 
+# Sukurti nuorodą į pagalbinių funkcijų failą
+HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
+cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
+
+# Įkelti pagalbines funkcijas
+. ../../_helpers.sh
+
 echo ""
 
 # Jei komandos neįdiegtos, išeiti iš skripto
