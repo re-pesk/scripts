@@ -70,4 +70,4 @@ declare -p arr6
 echo "${arr5[2]}"
 echo 
 
-printf "%q\n" "$IFS"
+printf '%q\n' "$IFS"

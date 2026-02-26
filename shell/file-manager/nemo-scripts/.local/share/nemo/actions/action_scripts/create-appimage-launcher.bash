@@ -13,7 +13,7 @@ if [[ ! "$@" =~ \.AppImage$ ]]; then
 fi
 
 file_name="$@.sh"
-echo -e "#!/usr/bin/env bash\n\n$@ --no-sandbox" > "$file_name"
+printf '%s\n' "#!/usr/bin/env bash\n\n$@ --no-sandbox" > "$file_name"
 
 chmod +x "$@"
 chmod +x "$file_name"
