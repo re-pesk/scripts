@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md).md)
+[&#x2BA2;](../../readme.md "Atgal")
 
 # NGS [<sup>&#x2B67;</sup>](https://ngs-lang.org/)
 

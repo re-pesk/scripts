@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md)
+[&#x2BA2;](../../readme.md "Atgal")
 
 # Elvish shell [<sup>&#x2B67;</sup>](https://elv.sh/)
 

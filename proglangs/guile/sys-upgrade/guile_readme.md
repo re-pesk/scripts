@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md).md)
+[&#x2BA2;](../../readme.md "Atgal")
 
 # GNU Guile [<sup>&#x2B67;</sup>](https://www.gnu.org/software/guile/)
 
@@ -19,7 +19,7 @@ guile --no-auto-compile guile_sys-upgrade.scm
 ### Vykdymo instrukcija (shebang)
 
 ```bash
-#!/usr/bin/env -S guile --no-auto-compile -s 
+#!/usr/bin/env -S guile --no-auto-compile -s
 !#
 ```
 

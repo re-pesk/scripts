@@ -1,9 +1,9 @@
-[&#x2BA2;](../../readme.md).md)
+[&#x2BA2;](../../readme.md "Atgal")
 
 # JavaScript [<sup>&#x2B67;</sup>](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ## Vadovai
-  
+
 * [Learn web development](https://developer.mozilla.org/en-US/docs/Learn)
 * [The Modern JavaScript Tutorial](https://javascript.info/)
 

@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md)
+[&#x2BA2;](../../readme.md "Atgal")
 
 # Euphoria [<sup>&#x2B67;</sup>](http://phix.x10.mx/)
 

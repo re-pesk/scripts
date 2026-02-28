@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md).md)
+[&#x2BA2;](../../readme.md "Atgal")
 
 # Fish shell [<sup>&#x2B67;</sup>](https://fishshell.com/)
 
