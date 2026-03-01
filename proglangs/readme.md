@@ -1,6 +1,6 @@
 [&#x2BA2;](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (58)
+# Skriptinimas skirtingomis programavimo kalbomis (60)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais.
 
@@ -58,7 +58,7 @@ Naudota operacinė sistema – Ubuntu 24.04
   (–) keista sintaksė\
   (–) kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (30)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (32)
 
 ### JavaVM (8)
 
@@ -88,7 +88,7 @@ Daug informacijos internete
 * [x] Deno truputį skiriasi nuo kitų variantų (±)
 * [x] Node (+)
 
-### Kitos (19)
+### Kitos (21)
 
 * [x] [Dart](dart/sys-upgrade/dart_readme.md) (–)\
   (–) nepatogus darbas su išorinėmis komandomis
@@ -141,6 +141,10 @@ Daug informacijos internete
   (+) plačiai naudojamas\
   (+) daug informacijos internete\
   (–) teksto įtraukomis grįsta sintaksė
+  * [x] [Bython](bython/sys_upgrade/bython_readme.md) (±)\
+    (+) skliaustais įrėminti blokai
+  * [x] [CurlyPy](curlypy/sys_upgrade/curlypy_readme.md) (±)\
+    (+) skliaustais įrėminti blokai
 * [x] [Ruby](ruby/sys-upgrade/ruby_readme.md) (–)\
   (–) keistoka sintaksė\
   (–) lėtas, išnaudoja tik vieną branduolį
