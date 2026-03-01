@@ -4,7 +4,7 @@
 
 Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 
-* [x] [Abs](abs/install/abs_readme.md) (atnaujinta 2025-04-27)
+* [x] [Abs](abs/install/abs_readme.md)
 * [x] [Ballerina](ballerina/install/ballerina_readme.md)
 * [x] [Bash](bash/install/bash_readme.md)
 * [x] [Bun (JS)](js/install/js_readme.md)
@@ -29,7 +29,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Haxe](haxe/install/haxe_readme.md)
 * [x] [Hilbish](hilbish/install/hilbish_readme.md)
 * [x] [Yash](yash/install/yash_readme.md)
-* [x] [Io](io/install/io_readme.md) (nebevystoma)
+* [x] [Io](io/install/io_readme.md)
 * [x] [Ysh (Oils)](oils/install/oils_readme.md)
 * [x] [Janet](janet/install/janet_readme.md)
 * [x] [Java](java/install/java_readme.md)
@@ -38,8 +38,9 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Kotlin (JVM)](kotlin/install/kotlin_readme.md)
 * [x] [ksh](ksh/install/ksh_readme.md)
 * [x] [Lua](lua/install/lua_readme.md)
+* [x] [Miniscript](miniscript/install/mscr_readme.md)
 * [x] [Murex](murex/install/murex_readme.md)
-* [x] [Ngs](ngs/install/ngs_readme.md) (atnaujinta 2025-04-05)
+* [x] [Ngs](ngs/install/ngs_readme.md)
 * [x] [Node (JS)](js/install/js_readme.md)
 * [x] [Nushell](nushell/install/nu_readme.md)
 * [x] [Odin](odin/install/odin_readme.md)

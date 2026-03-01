@@ -1,6 +1,6 @@
 [&#x2BA2;](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (57)
+# Skriptinimas skirtingomis programavimo kalbomis (58)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais.
 
@@ -29,7 +29,7 @@ Naudota operacinė sistema – Ubuntu 24.04
 * [x] [Zsh](zsh/sys-upgrade/zsh_readme.md) (±)\
   (–) asociatyvieji masyvai netinka medžio tipo struktūroms\
   (+) pakankamai paplitusi, daug informacijos
-  
+
 ## Alternatyvios apvalkalo scenarijų (Shell scripting) kalbos (9)
 
 * [x] [Abs](abs/sys-upgrade/abs_readme.md) (–)\
@@ -58,12 +58,12 @@ Naudota operacinė sistema – Ubuntu 24.04
   (–) keista sintaksė\
   (–) kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (29)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (30)
 
 ### JavaVM (8)
 
 Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
-  
+
 * [x] [Clojure](clojure/sys-upgrade/clojure_readme.md) (–)\
   (&ensp;) Lispo sintaksė
 * [x] [Ballerina](ballerina/sys-upgrade/ballerina_readme.md) (–)\
@@ -88,7 +88,7 @@ Daug informacijos internete
 * [x] Deno truputį skiriasi nuo kitų variantų (±)
 * [x] Node (+)
 
-### Kitos (18)
+### Kitos (19)
 
 * [x] [Dart](dart/sys-upgrade/dart_readme.md) (–)\
   (–) nepatogus darbas su išorinėmis komandomis
@@ -117,6 +117,12 @@ Daug informacijos internete
   (+) paprasta kalba
   * [x] [Hilbish](hilbish/sys-upgrade/hilbish_readme.md) Apvalkalas (shell) Lua kalbos pagrindu (+)
   * [x] [Pluto](pluto/sys-upgrade/pluto_readme.md) Lua kalbos supersetas su klasėmis (+)
+* [x] [Miniscript](miniscript/sys-upgrade/mscr_readme.md) (–)\
+  (+) paprasta kalba\
+  (–) menkos galimybės dirbti su išorinėmis komandomis\
+  (–) mažai informacijos internete\
+  (–) seniai nebuvo leidimų\
+  (+) ruošiama nauja versija
 * [x] [Onyx](onyx/sys-upgrade/onyx_readme.md) - kalba, skirta kompiliuoti į Wasm (±)\
   (+) turi JIT kompiliatorių\
   (–) visiškai nauja kalba\
