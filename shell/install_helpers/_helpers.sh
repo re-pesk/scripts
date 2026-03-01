@@ -28,7 +28,7 @@ declare -A MESSAGES="(
   'en.UTF-8.no_latest' 'Latest version is not provided! Check app code!'
   'en.UTF-8.not_installed' 'Application {APP_NAME} is not installed. Do you want to install version {LATEST}?'
   'en.UTF-8.overwrite' 'Application {APP_NAME} {CURRENT} is installed. Do you want overwrite it with version {LATEST}?'
-  'en.UTF-8.prompt' 'Print <y> to continue, <n> or <Enter> to exit'
+  'en.UTF-8.prompt' $'Print \'y\' to continue, \'n\' or <Enter> to exit'
   'en.UTF-8.record_exists' 'Record for {APP_NAME} already exists in {FILE_NAME}!'
   'lt_LT.UTF-8.checking_commands' 'Tikrinamos reikalingos komandos'
   'lt_LT.UTF-8.checking_packages' 'Tikrinami reikalingi paketai'
@@ -54,21 +54,35 @@ declare -A MESSAGES="(
   'lt_LT.UTF-8.no_latest' 'Nepateikta vėliausia versija! Patikrinkite programos kodą!'
   'lt_LT.UTF-8.not_installed' 'Programa {APP_NAME} neįdiegta. Ar įdiegti versiją {LATEST}?'
   'lt_LT.UTF-8.overwrite' 'Programa {APP_NAME} {CURRENT} yra įdiegta. Ar diegti versiją {LATEST}?'
-  'lt_LT.UTF-8.prompt' 'Norėdami tęsti, spauskite <y>, norėdami išeiti, spauskite <n> arba <Įvesti>'
+  'lt_LT.UTF-8.prompt' $'Norėdami tęsti, spauskite \'y\', norėdami išeiti, spauskite \'n\' arba <Įvesti>'
   'lt_LT.UTF-8.record_exists' '{APP_NAME} įrašas faile {FILE_NAME} jau yra!'
 )"
+
+infoMessage() {
+  printf "%s%s\n\n" "${2}" "${1}" 1>&2
+}
+
+warningMessage() {
+  printf "%s\033[33m%s\033[39m\n\n" "${2}" "${1}" 1>&2
+}
+
+errorMessage() {
+  printf "%s\033[31m%s\033[39m\n\n" "${2}" "${1}" 1>&2
+}
+
+successMessage() {
+  printf "%s\033[32m%s\033[39m\n\n" "${2}" "${1}" 1>&2
+}
 
 check_command() (
 
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
-  printf '%s%s\n\n' "${FUNC_NAME}" "${MESSAGES[${LANG}.checking_commands]}"
+  infoMessage "${MESSAGES[${LANG}.checking_commands]}" "${FUNC_NAME}"
 
   # If there are no arguments, exit the script
   # shellcheck disable=SC2128
   (( $# > 0)) || {
-    printf '%s: %s\n\n' \
-    "${FUNC_NAME}" \
-    "${MESSAGES[${LANG}.missing_arguments]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.missing_arguments]}" "${FUNC_NAME}"
     exit 1
   };
 
@@ -80,10 +94,11 @@ check_command() (
 
   # If there are names not in the commands' list, exit the script
   (( ${#NOT_COMMANDS[@]} > 0 )) && {
-    printf '%s%s\n\n  %s\n\n' \
-      "${FUNC_NAME}" \
+    errorMessage "$(
+      printf '%s\n\n  %s\n\n' \
       "${MESSAGES[${LANG}.missing_commands]}" \
-      "${NOT_COMMANDS[*]}" 1>&2
+      "${NOT_COMMANDS[*]}"
+      )" "${FUNC_NAME}"
     exit 1
   }
 
@@ -93,14 +108,12 @@ check_command() (
 check_package() (
 
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
-  printf '%s%s\n\n' "${FUNC_NAME}" "${MESSAGES[${LANG}.checking_packages]}"
+  infoMessage "${MESSAGES[${LANG}.checking_packages]}" "${FUNC_NAME}"
 
   # If there are no arguments, exit the script
   # shellcheck disable=SC2128
   (( $# > 0)) || {
-    printf '\n%s: %s\n\n' \
-    "${FUNC_NAME}" \
-    "${MESSAGES[${LANG}.missing_arguments]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.missing_arguments]}" "${FUNC_NAME}"
     exit 1
   };
 
@@ -112,10 +125,11 @@ check_package() (
 
   # If there are names that are not packages, exit the script
   (( ${#NOT_PKGNAMES[@]} > 0 )) && {
-    printf '\n%s%s\n\n  %s\n\n' \
-      "${FUNC_NAME}" \
+    errorMessage "$(
+      printf '%s\n\n  %s\n\n' \
       "${MESSAGES[${LANG}.erroneous_names]}" \
-      "${NOT_PKGNAMES[*]}" 1>&2
+      "${NOT_PKGNAMES[*]}"
+      )" "${FUNC_NAME}"
     exit 1
   }
 
@@ -125,10 +139,11 @@ check_package() (
 
   # If there are packages that are not installed, exit the script
   (( ${#NOT_INSTALLED[@]} > 0 )) && {
-    printf '\n%s%s\n\n  %s\n\n' \
-      "${FUNC_NAME}" \
+    errorMessage "$(
+      printf '%s\n\n  %s\n\n' \
       "${MESSAGES[${LANG}.missing_packages]}" \
-      "${NOT_INSTALLED[*]}" 1>&2
+      "${NOT_INSTALLED[*]}"
+      )" "${FUNC_NAME}"
     exit 1
   }
 
@@ -142,9 +157,7 @@ packages_to_install() (
   # If there are no arguments, exit the script
   # shellcheck disable=SC2128
   (( $# > 0)) || {
-    printf '\n%s%s\n\n' \
-    "${FUNC_NAME}" \
-    "${MESSAGES[${LANG}.missing_arguments]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.missing_arguments]}" "${FUNC_NAME}"
     exit 1
   };
 
@@ -156,10 +169,11 @@ packages_to_install() (
 
   # If there are packages that are not installed, exit the script
   (( ${#NOT_PKGNAMES[@]} > 0 )) && {
-    printf '\n%s%s\n\n  %s\n\n' \
-      "${FUNC_NAME}" \
+    errorMessage "$(
+      printf '%s\n\n  %s\n\n' \
       "${MESSAGES[${LANG}.erroneous_names]}" \
-      "${NOT_PKGNAMES[*]}" 1>&2
+      "${NOT_PKGNAMES[*]}"
+      )" "${FUNC_NAME}"
     exit 1
   }
 
@@ -204,34 +218,26 @@ ask_to_install() (
   # shellcheck disable=SC2329
   on_exit() {
     EXIT_CODE=$?
-    (( EXIT_CODE > 0 )) && printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.no_changes]}" 1>&2
+    (( EXIT_CODE > 0 )) && warningMessage "${MESSAGES[${LANG}.no_changes]}" "${FUNC_NAME}"
     exit "${EXIT_CODE}"
   }
   trap on_exit EXIT
 
   # If there is no latest version, exit the script
   if [[ -z "${LATEST}" ]]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.no_latest]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.no_latest]}" "${FUNC_NAME}"
     exit 1
   fi
 
   # If there is no application name, exit the script
   if [[ -z "${APP_NAME}" ]]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.no_app_name]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.no_app_name]}" "${FUNC_NAME}"
     exit 1
   fi
 
   # If there is no installation directory, exit the script
   if [[ -z "${INSTALL_DIR}" ]]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.no_install_dir]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.no_install_dir]}" "${FUNC_NAME}"
     exit 1
   fi
 
@@ -241,17 +247,15 @@ ask_to_install() (
 
   # The app is found, but the current version is not provided
   if [[ -n "${COMMAND_PATH}" && -z "${CURRENT}" ]]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.no_current]//'{APP_NAME}'/${APP_NAME}}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.no_current]//'{APP_NAME}'/"${APP_NAME}"}" "${FUNC_NAME}"
     exit 1
 
   # The app is not found, but the current version is provided
   elif [[ -z "${COMMAND_PATH}" && -n "${CURRENT}" ]]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "$(sed -e "s/{APP_NAME}/${APP_NAME}/g; s/{CURRENT}/${CURRENT}/g" \
-        <<< "${MESSAGES[${LANG}.no_app]}")" 1>&2
+    errorMessage "$(
+      sed -e "s/{APP_NAME}/${APP_NAME}/g; s/{CURRENT}/${CURRENT}/g" \
+        <<< "${MESSAGES[${LANG}.no_app]}"
+      )" "${FUNC_NAME}"
     exit 1
   fi
 
@@ -262,31 +266,29 @@ ask_to_install() (
   # The program is not installed, so the current version cannot be provided
   # (Contradictions are impossible at this stage)
   if [ -z "${COMMAND_PATH}" ]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "$(sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{LATEST}/${LATEST}/g" \
-        <<< "${MESSAGES[${LANG}.not_installed]}")" 1>&2
+    infoMessage "$(
+      sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{LATEST}/${LATEST}/g" \
+        <<< "${MESSAGES[${LANG}.not_installed]}"
+      )" "${FUNC_NAME}"
 
   elif [[ -z "${INSTALL_DIR}" ]]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.no_install_dir]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.no_install_dir]}" "${FUNC_NAME}"
     exit 1
 
   # The app is installed, and the current version and the installation directory are provided,
   # and the installation directory is the same as the directory of the current version
   elif [[ "$(realpath "${COMMAND_PATH}" 2> /dev/null)" =~ ^${INSTALL_DIR}.*$ ]]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "$(sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{CURRENT}/${CURRENT}/g;s/{LATEST}/${LATEST}/g" \
-        <<< "${MESSAGES[${LANG}.overwrite]}")" 1>&2
+    infoMessage "$(
+      sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{CURRENT}/${CURRENT}/g;s/{LATEST}/${LATEST}/g" \
+        <<< "${MESSAGES[${LANG}.overwrite]}"
+      )" "${FUNC_NAME}"
 
   # If the app is installed, and the current version is provided, but the installation directory is different
   else
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "$(sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{CURRENT}/${CURRENT}/g;s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
-        <<< "${MESSAGES[${LANG}.installed_not_in_dir]}")" 1>&2
+    infoMessage "$(
+      sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{CURRENT}/${CURRENT}/g;s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
+        <<< "${MESSAGES[${LANG}.installed_not_in_dir]}"
+      )" "${FUNC_NAME}"
     TO_CONTINUE="n"
   fi
 
@@ -304,10 +306,11 @@ ask_to_install() (
     exit 1
   fi
 
-  # If the installation will be continued, print a success message.
-  printf '%s\n\n' \
-  "$(sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{LATEST}/${LATEST}/g" \
-    <<< "${MESSAGES[${LANG}.installing]}")" 1>&2
+  # If the installation will be continued, print a info message.
+  infoMessage "$(
+    sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{LATEST}/${LATEST}/g" \
+      <<< "${MESSAGES[${LANG}.installing]}"
+    )" "${FUNC_NAME}"
 )
 
 # Compare checksums of a file.
@@ -330,9 +333,7 @@ compare_checksum_strings() (
   # Check if the checksums are provided
   for i in {1..2}; do
     if [[ -z "${!i}" ]] ; then
-      printf '\n%s%s\n\n' \
-        "${FUNC_NAME}" \
-        "${MESSAGES[${LANG}.empty_parameter]//'{i}'/${i}}" 1>&2
+      errorMessage "${MESSAGES[${LANG}.empty_parameter]//'{i}'/${i}}" "${FUNC_NAME}"
       exit 1
     fi
   done
@@ -357,14 +358,12 @@ compare_checksum_strings() (
 
   # If the checksums do not match, print an error message and exit the script
   [[ "${CHECKSUM_1}" != "${CHECKSUM_2}" ]] && {
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.mismatch]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.mismatch]}" "${FUNC_NAME}"
     exit 1
   }
 
   # If the checksums match, print a success message
-  printf '%s\n\n' "Checksum match!"
+  successMessage "${MESSAGES[${LANG}.match]}" "${FUNC_NAME}"
 )
 
 # Compare checksum of a file with a string.
@@ -383,16 +382,12 @@ check_sums_str() (
   [ -n "${DEBUG}" ] && printf '"%s"\n' "$FUNC_NAME\$# is $#." "$@" 1>&2
 
   [[ -z "${1}" ]] && {
-    printf '\n%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.missing_checksum_type]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.missing_checksum_type]}" "${FUNC_NAME}"
     exit 1
   }
 
   [[ -z "${2}" ]] && {
-    printf '\n%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.missing_filename]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.missing_filename]}" "${FUNC_NAME}"
     exit 1
   }
 
@@ -415,9 +410,7 @@ check_sums() (
   [ -n "${DEBUG}" ] && printf '"%s"\n' "$FUNC_NAME\$# is $#." "$@" 1>&2
 
   [[ -z "${3}" ]] && {
-    printf '\n%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.missing_chksum_fname]}" 1>&2
+    errorMessage "${MESSAGES[${LANG}.missing_chksum_fname]}" "${FUNC_NAME}"
     exit 1
   }
   if ! check_sums_str "${1}" "${2}" "$(cat "${3}")" "${4}" "${5}"; then
@@ -555,9 +548,7 @@ create_file_if_not_exists() (
 
   # Create a file if it does not exist
   if [ -f "${FILE_NAME}" ]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "${MESSAGES[${LANG}.file_exists]//'{FILE_NAME}'/${FILE_NAME}}" 1>&2
+    infoMessage "${MESSAGES[${LANG}.file_exists]//'{FILE_NAME}'/"${FILE_NAME}"}" "${FUNC_NAME}"
   else
     touch -c "${FILE_NAME}"
     [ -n "${CONTENT}" ] && printf '%s\n\n' "${CONTENT}" >> "${FILE_NAME}"
@@ -588,10 +579,10 @@ insert_path_str() (
 
   # Check if the record already exists in the file.
   if [[ "$(grep -c -F "#begin ${APP_NAME,,} init" < "${FILE_NAME}")" -gt 0 ]]; then
-    printf '%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "$(sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{FILE_NAME}/${FILE_NAME//"/"/"\/"}/g" \
-        <<< "${MESSAGES[${LANG}.record_exists]}")" 1>&2
+    infoMessage "$(
+      sed -e "s|{APP_NAME}|${APP_NAME}|g;s|{FILE_NAME}|${FILE_NAME}|g" \
+        <<< "${MESSAGES[${LANG}.record_exists]}"
+      )" "${FUNC_NAME}"
     exit 0
   fi
 
@@ -637,10 +628,10 @@ insert_path() (
 
   # Check if the record already exists in the file.
   if [[ "$(grep -c -F "#begin ${APP_NAME,,} init" < "${FILE_NAME}")" -gt 0 ]]; then
-    printf '\n%s%s\n\n' \
-      "${FUNC_NAME}" \
-      "$(sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{FILE_NAME}/${FILE_NAME//"/"/"\/"}/g" \
-        <<< "${MESSAGES[${LANG}.record_exists]}")" 1>&2
+    infoMessage "$(
+      sed -e "s|{APP_NAME}|${APP_NAME}|g;s|{FILE_NAME}|${FILE_NAME}|g" \
+        <<< "${MESSAGES[${LANG}.record_exists]}"
+      )" "${FUNC_NAME}"
     exit 0
   fi
 
