@@ -74,7 +74,7 @@ printf '\n%s\n\n' "Ballerina v${LATEST} is succesfully installed"
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogging, execute the following command in the terminal:
+printf '%s\n\n' 'To use without relogin, execute the following command in the terminal:
 
 [[ -d "${HOME}/.opt/ballerina/bin" ]] \
   && [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] \

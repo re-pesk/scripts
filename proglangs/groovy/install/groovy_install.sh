@@ -78,7 +78,7 @@ printf '%s\n\n' "Groovy v${LATEST} is succesfully installed."
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogging, execute the following commands in the terminal:
+printf '%s\n\n' 'To use without relogin, execute the following commands in the terminal:
 
 [ -z "$JAVA_HOME" ] && {
   JAVA_HOME="$(which java | xargs readlink -f | xargs dirname | xargs dirname)"
