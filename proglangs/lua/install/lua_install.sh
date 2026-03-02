@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
+
+# Sukurti nuorodą į pagalbinių funkcijų failą
+HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
+cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
 
 # Įkelti pagalbines funkcijas
 . ../../_helpers.sh
@@ -73,7 +77,7 @@ printf '%s\n\n' "Lua ${LATEST} is succesfully installed."
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogging, execute the following command in the terminal:
+printf '%s\n\n' 'To use without relogin, execute the following command in the terminal:
 
 [[ -d "${HOME}/.opt/lua/bin" ]] \
   && [[ ":${PATH}:" != *":${HOME}/.opt/lua/bin:"* ]] \
