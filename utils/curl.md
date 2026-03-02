@@ -2,9 +2,9 @@
 
 Command line tool and library for transferring data with URLs
 
-* Pradinis kodas [&#x2B67;](https://curl.se/)
-* Statinis binarinis vykdomasis failas [&#x2B67;](https://github.com/stunnel/static-curl)
-* Knyga *Everything curl* [&#x2B67;](https://everything.curl.dev/)
+* Pradinis kodas [<sup>&#x2B67;</sup>](https://curl.se/)
+* Statinis binarinis vykdomasis failas [<sup>&#x2B67;</sup>](https://github.com/stunnel/static-curl)
+* Knyga *Everything curl* [<sup>&#x2B67;</sup>](https://everything.curl.dev/)
 
 ## Diegimas
 

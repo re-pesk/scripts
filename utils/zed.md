@@ -2,8 +2,8 @@
 
 Command-line JSON editor.
 
-* Pagrindinis puslapis [&#x2B67;](https://zed.dev/)
-* Pradinis kodas [&#x2B67;](https://github.com/zed-industries/zed)
+* Pagrindinis puslapis [<sup>&#x2B67;</sup>](https://zed.dev/)
+* Pradinis kodas [<sup>&#x2B67;</sup>](https://github.com/zed-industries/zed)
 
 ## Diegimas
 
@@ -22,13 +22,7 @@ LATEST="$(
 printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
   "${LATEST}" "v$( zed --version  | awk '{print $2}')"
 
-curl -fo zed_install_.sh https://zed.dev/install.sh
-sed -i '/ZED_VERSION="\${ZED_VERSION:-latest}"/a\
-    TARGET_DIR="${TARGET_DIR:-\"$HOME\/.local\"}"
-s|\$HOME/\.local/zed|${TARGET_DIR}/zed|g
-/tar -xzf "\$temp\/zed-linux-\$arch\.tar\.gz" -C / s|"\$HOME/\.local/"|"${TARGET_DIR}/"|' zed_install_.sh
-TARGET_DIR="${HOME}/.opt" sh zed_install_.sh
-rm -f zed_install_.sh
+curl -f https://zed.dev/install.sh | sh
 
 printf '\nVersijos:\n  Vėliausia: %s\n  Įdiegta:   %s\n\n' \
   "${LATEST}" "v$( zed --version  | awk '{print $2}')"
