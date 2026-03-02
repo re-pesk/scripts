@@ -3,60 +3,10 @@
 # DEBUG: production mode - null or unset, debug mode - any other value
 DEBUG="${DEBUG:-}"
 
-declare -A MESSAGES="(
-  'en.UTF-8.checking_commands' 'Checking required commands'
-  'en.UTF-8.checking_packages' 'Checking required packages'
-  'en.UTF-8.empty_parameter' 'Error! Parameter {i} is empty!'
-  'en.UTF-8.enter' '<Enter>'
-  'en.UTF-8.erroneous_names' $'Error! Some name are not packages! Please check your script!\n\nErroneous names:'
-  'en.UTF-8.file_exists' '{FILE_NAME} already exists!'
-  'en.UTF-8.installed_not_in_dir' 'Application {APP_NAME} {CURRENT} is installed, but not in {INSTALL_DIR}. Uninstall it first and then run this script again.'
-  'en.UTF-8.installing' 'Installing {APP_NAME} version {LATEST}'
-  'en.UTF-8.match' 'Checksum match!'
-  'en.UTF-8.missing_arguments' 'Error! Arguments are not provided!'
-  'en.UTF-8.missing_chksum_fname' 'Error! Checksum file name is not provided!'
-  'en.UTF-8.missing_checksum_type' 'Error! Checksum type is not provided!'
-  'en.UTF-8.missing_commands' $'Error! Some commands are not available! Please install to continue!\n\nMissing commands:'
-  'en.UTF-8.missing_filename' 'Error! File name is not provided!'
-  'en.UTF-8.missing_packages' $'Error! Some packages are not installed! Please install to continue!\n\nMissing packages:'
-  'en.UTF-8.mismatch' 'Error! Checksum mismatch!'
-  'en.UTF-8.no_app' 'Application {APP_NAME} is not found, but current version is {CURRENT}! Check app code!'
-  'en.UTF-8.no_app_name' 'Application name is not provided! Check app code!'
-  'en.UTF-8.no_changes' 'No changes were made.'
-  'en.UTF-8.no_current' 'Application {APP_NAME} is not found, but current version is empty! Check app code!'
-  'en.UTF-8.no_install_dir' 'Installation directory is not provided! Check app code!'
-  'en.UTF-8.no_latest' 'Latest version is not provided! Check app code!'
-  'en.UTF-8.not_installed' 'Application {APP_NAME} is not installed. Do you want to install version {LATEST}?'
-  'en.UTF-8.overwrite' 'Application {APP_NAME} {CURRENT} is installed. Do you want overwrite it with version {LATEST}?'
-  'en.UTF-8.prompt' $'Print \'y\' to continue, \'n\' or <Enter> to exit'
-  'en.UTF-8.record_exists' 'Record for {APP_NAME} already exists in {FILE_NAME}!'
-  'lt_LT.UTF-8.checking_commands' 'Tikrinamos reikalingos komandos'
-  'lt_LT.UTF-8.checking_packages' 'Tikrinami reikalingi paketai'
-  'lt_LT.UTF-8.empty_parameter' 'Klaida! Parametras {i} tuščias!'
-  'lt_LT.UTF-8.enter' '<Įvesti>'
-  'lt_LT.UTF-8.erroneous_names' $'Klaida! Klaidingi paketų pavadinimai! Patikrinkite savo skriptą!\n\nKlaidingi pavadinimai:'
-  'lt_LT.UTF-8.file_exists' 'Failas {FILE_NAME} sistemoje jau yra!'
-  'lt_LT.UTF-8.installed_not_in_dir' 'Programa {APP_NAME} {CURRENT} yra įdiegta, bet ne į {INSTALL_DIR} aplanką. Išdiekite programą ir dar kartą paleiskite šį skriptą.'
-  'lt_LT.UTF-8.installing' 'Diegiama {APP_NAME} programos versija {LATEST}'
-  'lt_LT.UTF-8.match' 'Kontrolinės sumos sutampa!'
-  'lt_LT.UTF-8.missing_arguments' 'Klaida! Nepateikti argumentai!'
-  'lt_LT.UTF-8.missing_chksum_fname' 'Klaida! Nepateiktas kontrolinės sumos failo pavadinimas!'
-  'lt_LT.UTF-8.missing_checksum_type' 'Klaida! Nepateiktas kontrolinės sumos tipas!'
-  'lt_LT.UTF-8.missing_commands' $'Klaida! Nėra reikalingų komandų! Įdiekite, kad galėtute tęsti!\n\nTrūkstamos komandos:'
-  'lt_LT.UTF-8.missing_filename' 'Klaida! Nepateiktas failo pavadinimas!'
-  'lt_LT.UTF-8.missing_packages' $'Klaida! Neįdiegti reikalingi paketai! Įdiekite, kad galėtute tęsti!\n\nTrūkstami paketai:'
-  'lt_LT.UTF-8.mismatch' 'Klaida! Kontrolinės sumos nesutampa!'
-  'lt_LT.UTF-8.no_app' 'Programa {APP_NAME} nerasta, bet esama versija yra {CURRENT}! Patikrinkite programos kodą!'
-  'lt_LT.UTF-8.no_app_name' 'Nepateiktas programos pavadinimas! Patikrinkite programos kodą!'
-  'lt_LT.UTF-8.no_changes' 'Jokių pakeitimų neatlikta.'
-  'lt_LT.UTF-8.no_current' 'Programa {APP_NAME} įdiegta, bet esama versija nepateikta! Patikrinkite programos kodą!'
-  'lt_LT.UTF-8.no_install_dir' 'Nepateiktas diegimo katalogas! Patikrinkite programos kodą!'
-  'lt_LT.UTF-8.no_latest' 'Nepateikta vėliausia versija! Patikrinkite programos kodą!'
-  'lt_LT.UTF-8.not_installed' 'Programa {APP_NAME} neįdiegta. Ar įdiegti versiją {LATEST}?'
-  'lt_LT.UTF-8.overwrite' 'Programa {APP_NAME} {CURRENT} yra įdiegta. Ar diegti versiją {LATEST}?'
-  'lt_LT.UTF-8.prompt' $'Norėdami tęsti, spauskite \'y\', norėdami išeiti, spauskite \'n\' arba <Įvesti>'
-  'lt_LT.UTF-8.record_exists' '{APP_NAME} įrašas faile {FILE_NAME} jau yra!'
-)"
+if [ -z "${MESSAGES[*]}" ]; then
+  # shellcheck disable=SC1094
+  source "$(realpath "${BASH_SOURCE[0]}" | xargs dirname)/_messages.sh"
+fi
 
 infoMessage() {
   printf "%s%s\n\n" "${2}" "${1}" 1>&2
@@ -268,7 +218,7 @@ ask_to_install() (
   if [ -z "${COMMAND_PATH}" ]; then
     infoMessage "$(
       sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{LATEST}/${LATEST}/g" \
-        <<< "${MESSAGES[${LANG}.not_installed]}"
+        <<< "${MESSAGES[${LANG}.install_new]}"
       )" "${FUNC_NAME}"
 
   elif [[ -z "${INSTALL_DIR}" ]]; then
