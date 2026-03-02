@@ -1,41 +1,24 @@
 #!/usr/bin/env -S bash
 
-# Sukurti nuorodą į pagalbinių funkcijų failą
-HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
-cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
+install_euphoria_addon() {
 
-# Įkelti pagalbines funkcijas
-. ../../_helpers.sh
+  FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
+  printf '%s' "${FUNC_NAME:+"${FUNC_NAME}"$'\n\n'}"
 
-echo ""
+  ADDONS=("$@")
 
-# Jei komandos neįdiegtos, išeiti iš skripto
-if ! check_command curl xargs; then
-  exit 1
-fi
+  cd "${TMP_DIR}" || return 1
 
-# Išsaugoti pradinį aplanką
-# Sukurti laikiną aplanką
-# Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
-INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t euph.XXXXXXXX | xargs realpath )"
-trap cleanup EXIT
+  # shellcheck disable=SC2068
+  for addon in ${ADDONS[@]} ; do
+    printf '%s\n\n' "Compiling ${addon^}"
+    git clone "https://github.com/OpenEuphoria/${addon}"
 
-cd "${TMP_DIR}" || exit 1
-
-echo ""
-
-# shellcheck disable=SC2068
-for addon in $@ ; do
-  printf '%s\n\n' "Compiling ${addon^}\n"
-
-  git clone "https://github.com/OpenEuphoria/${addon}"
-  cd "${TMP_DIR}/${addon}" || exit 1
-  ./configure
-  make
-  mv "${TMP_DIR}/${addon}/build/${addon}" "${HOME}/.opt/euphoria/bin"
-  cd "${TMP_DIR}" || exit 1
-  rm -rf "${TMP_DIR}/${addon:?}"
-
-  printf '%s\n\n' "${addon^} is installed!"
-done
+    cd "${addon}" || exit 1
+    ./configure --prefix "${HOME}/.opt/euphoria"
+    make
+    make install
+    cd "${TMP_DIR}" || exit 1
+    printf '%s\n\n' "${addon^} is installed!"
+  done
+}
