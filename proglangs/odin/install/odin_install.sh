@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Odin"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -27,7 +31,7 @@ fi
 # Sukurti laikiną aplanką.
 # Nutatyti automainį laikino aplanko trynimą išeinant iš skripto.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t odin.XXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t odin_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Atsisiųsti į laikiną aplanką programos failą ir patikros sumą.
@@ -40,7 +44,7 @@ curl -sSLo - "https://github.com/odin-lang/Odin/releases/expanded_assets/${LATES
 # Jeigu patikros sumos nesutampa, nutraukti diegimą
 if ! check_sha256 "odin-linux-amd64-${LATEST}.tar.gz" \
   "odin-linux-amd64-${LATEST}.tar.gz.sha256"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -51,7 +55,7 @@ rm -rf "${HOME}/.opt/odin"
 if ! tar --file "odin-linux-amd64-${LATEST}.tar.gz" \
   --transform 'flags=r;s/^(odin)[^\/]+/\1/x' \
   --show-transformed-names -xzC "${HOME}/.opt"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -60,15 +64,15 @@ ln -fs "${HOME}/.opt/odin/odin" "${HOME}/.local/bin/"
 
 # Jeigu programa neveikia, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! odin version > /dev/null 2>&1; then
-  printf "Error! Odin compiler is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(odin version 2> /dev/null | awk -F'[ -]' '{print $3"-"$4"-"$5}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '%s\n\n' "Odin ${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '%s\n\n' "Odin ${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
 

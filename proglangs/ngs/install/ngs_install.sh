@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="NGS"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -32,14 +36,14 @@ curl https://ngs-lang.org/install.sh | bash
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! ngs --version > /dev/null 2>&1; then
-  printf "Error! NGS is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="v$(ngs --version)"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '%s\n\n' "NGS ${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '%s\n\n' "NGS ${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"

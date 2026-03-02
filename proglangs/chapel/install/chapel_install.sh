@@ -1,5 +1,9 @@
 #! /usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Chapel"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -27,10 +31,10 @@ fi
 # Sukurti laikiną aplanką
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t chapel.XXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t chapel_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
-# Atsisųsti į laikiną aplanką programos instaliacinį failą. 
+# Atsisųsti į laikiną aplanką programos instaliacinį failą.
 # Atsisųsti failo patikros sumą iš programos tinklalapio ir išsaugoti į kintamąjį.
 # Sulyginti failo patikros sumą su tinklalapio patikros suma.
 cd "${TMP_DIR}" || exit 1
@@ -41,7 +45,7 @@ curl -sL "https://github.com/chapel-lang/chapel/releases/expanded_assets/${LATES
 
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 if ! check_sha256 "chapel-${LATEST}-1.ubuntu24.amd64.deb" "chapel-${LATEST}-1.ubuntu24.amd64.deb.sha256"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed_latest]//'{LATEST}'/"${LATEST}"}"
   exit 1
 fi
 
@@ -55,13 +59,13 @@ sudo chown -R root:root /usr/share/chapel
 
 # Jeigu nepavyko įdiegti Chapel, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! chpl --version > /dev/null 2>&1; then
-  printf "Chapel is not installed!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 # Patikrinti, ar kompiuteryje įdiegta Chapel versija yra vėliausia
 CURRENT="$(chpl --version 2>/dev/null | head -n 1 | awk '{print $NF}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "Chapel v${LATEST} is not up to date!\n\n"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '\n%s\n\n' "Chapel v${LATEST} is succesfully installed."
+successMessage "${LANG_MESSAGES[installed_latest]//'{Latest}'/"${LATEST}"}"

@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Phix"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -31,7 +35,7 @@ fi
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 # shellcheck disable=SC2034
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t phix.XXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t phix_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Pereiti į laikiną aplanką
@@ -59,7 +63,7 @@ mv p32 phix/p32
 mkdir -p "${HOME}/.opt/phix/bin"
 mv phix "${HOME}/.opt/phix/"
 
-# Perkelti katalogus į phix/bin aplanką 
+# Perkelti katalogus į phix/bin aplanką
 mv -T "${HOME}/.opt/phix/phix/builtins" "${HOME}/.opt/phix/bin/builtins"
 mv -T "${HOME}/.opt/phix/phix/test" "${HOME}/.opt/phix/bin/test"
 mv -T "${HOME}/.opt/phix/phix/demo" "${HOME}/.opt/phix/bin/demo"
@@ -69,13 +73,14 @@ cd "${HOME}/.opt/phix/bin" || exit 1
 find "${HOME}/.opt/phix" -type f -executable -exec ln -s {} \;
 
 # Įtraukti phix/bin aplanką į sistemos PATH kintamąjį
-[[ -d "${HOME}/.opt/phix/bin" ]] \
+PATH_COMMAND=$'[[ -d "${HOME}/.opt/phix/bin" ]] \
   && [[ ":${PATH}:" != *":${HOME}/.opt/phix/bin:"* ]] \
-    && export PATH="${HOME}/.opt/phix/bin${PATH:+:${PATH}}"
+    && export PATH="${HOME}/.opt/phix/bin${PATH:+:${PATH}}"'
+eval "${PATH_COMMAND}"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! p -version > /dev/null 2>&1; then
-  printf "Error! Phix is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
@@ -85,19 +90,15 @@ p -test
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(p -version 2> /dev/null)"
 if [[ "${CURRENT}" == "${LATEST}" ]]; then
-  printf '%s\n\n' "Phix ${CURRENT} is not up to date!"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
-printf '%s\n\n' "Phix ${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
 
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogin, execute the following command in the terminal:
-
-[[ -d "${HOME}/.opt/phix/bin" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/phix/bin:"* ]] \
-  && export PATH="${HOME}/.opt/phix/bin${PATH:+:${PATH}}"'
+infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016

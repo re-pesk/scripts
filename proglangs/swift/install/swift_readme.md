@@ -36,7 +36,7 @@ Visos failų versijos yra <https://www.swift.org/install/linux/> puslapyje.
 
 ```bash
 # Atsiunčiama, išpakuojama ir paleidžiama swiftly - swift'o diegimo tvarkyklė
-TMP_DIR=$(mktemp -p . -d -t swiftly.XXXXXXXXXX)
+TMP_DIR=$(mktemp -p . -d -t swiftly_.XXXXXXXXXX | xargs realpath)
 curl -o - https://download.swift.org/swiftly/linux/swiftly-$(uname -m).tar.gz \
 | tar xzxC "${TMP_DIR}"
 export SWIFTLY_HOME_DIR="${HOME}/.opt/swiftly"
@@ -45,7 +45,7 @@ export SWIFTLY_TOOLCHAINS_DIR="${HOME}/.opt/swiftly/toolchains"
 "${TMP_DIR}/swiftly" init
 . "${HOME}/.opt/swiftly/env.sh"
 hash -r
-rm -rf "$TMP_DIR"
+rm -rf "${TMP_DIR}"
 
 swiftly --version
 swift --version

@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Zig"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -32,7 +36,7 @@ declare -A DATA="($(
 URL="${DATA["tarball"]}"
 
 # Atsisiųsti failą iš tinklalapio
-TMP_DIR="$( mktemp -d )"
+TMP_DIR="$( mktemp -p . -d -t zig_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 
@@ -41,7 +45,7 @@ curl -sSLo "${TMP_DIR}/zig-x86_64-linux-${LATEST}.tar.xz" "${URL}"
 # Išvesti į terminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
 # Jeigu kontrolinės sumos nesutampa, diegimą nutraukti, atsisiųstus failus ištrinti.
 if ! check_sha256_str "${TMP_DIR}/zig-x86_64-linux-${LATEST}.tar.xz" "${DATA["shasum"]}"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -60,13 +64,13 @@ echo ""
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! zig --version > /dev/null 2>&1; then
-  printf "Error! Zig is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(zig version 2> /dev/null)"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "Zig is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '\n%\n\n' "Zig v${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"

@@ -1,5 +1,9 @@
 #! /usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Janet"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -19,15 +23,15 @@ fi
 # Gauti įdiegtos programos versijos numerį
 # Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/janet-lang/janet/releases/latest" | xargs basename)"
-CURRENT="v$(janet --version 2> /dev/null | awk -F '-' '{print $1}')"
+CURRENT="v$(janet --version 2> /dev/null | awk -F'-' '{print $1}')"
 if ! ask_to_install "${LATEST}" "${CURRENT}" "janet" "${HOME}/.opt/janet"; then
   exit 1
 fi
 
-# Sukurti laikiną aplanką. 
+# Sukurti laikiną aplanką.
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -d )"
+TMP_DIR="$( mktemp -p . -d -t janet_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Atsisųsti į laikiną aplanką programos failą ir patikros sumą.
@@ -41,7 +45,7 @@ curl -sL "https://github.com/janet-lang/janet/releases/expanded_assets/${LATEST}
 # Jeigu patikros sumos nesutampa, nutraukti diegimą
 if ! check_sha256 "janet-${LATEST}-linux-x64.tar.gz" \
   "janet-${LATEST}-linux-x64.tar.gz.sha256"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -57,15 +61,15 @@ ln -sf "${HOME}/.opt/janet/man/man1/janet.1" "${HOME}/.local/man/man1/"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! janet --version > /dev/null 2>&1; then
-  printf '%s\n\n' "Error! Janet is not working as expected!"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar kompiuteryje įdiegta vėliausia programos versija.
 # Išvesti pranešimą apie reultatą.
 CURRENT="v$(janet --version 2> /dev/null | awk -F '-' '{print $1}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '%s\n\n' "Janet ${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '%s\n\n' "Janet ${LATEST} is succesfully installed."
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"

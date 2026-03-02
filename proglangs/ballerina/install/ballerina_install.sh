@@ -1,5 +1,9 @@
 #! /usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Ballerina"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -37,7 +41,7 @@ trap cleanup EXIT
 # Gauti programos failo nuorodą
 URL="https://github.com/ballerina-platform/ballerina-distribution/releases/download/v${LATEST}/ballerina-${LATEST}-swan-lake.zip"
 
-# Sukurti laikiną aplanką ir atsisųsti programos ir sha256sum failus. 
+# Sukurti laikiną aplanką ir atsisųsti programos ir sha256sum failus.
 # Patikrinti, ar failas atitinka patikros sumą
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 cd "${TMP_DIR}" || exit 1
@@ -46,7 +50,7 @@ curl -sSLO "${URL}.sha256"
 # shellcheck disable=SC2016
 if ! check_sha256 "ballerina-${LATEST}-swan-lake.zip" "ballerina-${LATEST}-swan-lake.zip.sha256" \
   "'{print $1}'" "'{print $NF}'"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed_latest]//'{LATEST}'/"${LATEST}"}"
   exit 1
 fi
 
@@ -63,26 +67,25 @@ mv -T "ballerina-${LATEST}-swan-lake" "${HOME}/.opt/ballerina"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! bal --version > /dev/null 2>&1; then
-  printf "Ballerina is not installed!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(bal --version 2>/dev/null | head -n 1 | awk '{print $2}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  echo "Ballerina is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '\n%s\n\n' "Ballerina v${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
 
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogin, execute the following command in the terminal:
-
-[[ -d "${HOME}/.opt/ballerina/bin" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] \
-  && export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"'
+PATH_COMMAND='[[ -d "${HOME}/.opt/ballerina/bin" ]] && \
+  [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] && \
+    export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"'
+infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016

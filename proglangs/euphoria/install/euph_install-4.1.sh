@@ -42,15 +42,18 @@ install_euphoria_4.1() {
 
   # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
   if ! euc --version &> /dev/null || ! eui --version &> /dev/null ; then
-    printf '%s\n\n' "Euphoria is not working as expected!"
+    errorMessage "${LANG_MESSAGES[not_working]}"
     return 1
   fi
 
   # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
   CURRENT="$(eui --version &> /dev/null && eui --version  | head -n 1 | awk '{print $3}' | sed 's/v//')"
   [[ "${CURRENT}" == "${LATEST}" ]] || {
-    printf '\n%s\n\n' "Euphoria v${CURRENT} is not v${LATEST}!"
+    errorMessage "$(
+      sed -e "s/{CURRENT}/${CURRENT}/g; s/{LATEST}/${LATEST}/g" \
+      <<< "${LANG_MESSAGES[not_latest]}"
+    )"
     return 1
   }
-  printf '%s\n\n' "Euphoria v${LATEST} is installed!"
+  successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
 }

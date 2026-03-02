@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Purescript"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -21,7 +25,7 @@ if ! ask_to_install "${LATEST}" "${CURRENT}" "purs" "${HOME}/.opt/purescript"; t
 fi
 
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t purs.XXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t purescript_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 cd "${TMP_DIR}" || exit 1
@@ -29,7 +33,7 @@ curl -sSLO "https://github.com/purescript/purescript/releases/download/${LATEST}
 curl -sSLO "https://github.com/purescript/purescript/releases/download/${LATEST}/linux64.sha"
 
 if ! check_sha1 "linux64.tar.gz" "linux64.sha"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 

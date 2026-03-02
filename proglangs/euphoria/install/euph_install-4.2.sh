@@ -37,10 +37,6 @@ install_euphoria_4.2() {
     fi
   done
 
-  # printf '%s' "${FUNC_NAME:+"${FUNC_NAME}-1"$'\n\n'}"
-  echo "CURRENT => ${CURRENT}"
-  echo "LATEST => ${LATEST}"
-
   cd "${TMP_DIR}" || exit 1
   rm -rf "${HOME}/.opt/euphoria-${CURRENT}"
   mv "${HOME}/.opt/euphoria" "${HOME}/.opt/euphoria-${CURRENT}"
@@ -55,7 +51,7 @@ install_euphoria_4.2() {
 
   # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
   if ! euc --version &> /dev/null || ! eui --version &> /dev/null ; then
-    printf '%s\n\n' "Euphoria is not working as expected!"
+    errorMessage "${LANG_MESSAGES[not_working]}"
     return 1
   fi
 
@@ -69,18 +65,21 @@ install_euphoria_4.2() {
   # Išvesti atitinkamą pranešimą
   CURRENT="$(euc --version &> /dev/null && euc --version | head -n 1 | awk '{print $5}' | sed 's/v//')"
   [[ "${CURRENT}" == "${LATEST}" ]] || {
-    printf '\n%s\n\n' "Euphoria v${CURRENT} is not v${LATEST}!"
+    errorMessage "$(
+      sed -e "s/{CURRENT}/${CURRENT}/g; s/{LATEST}/${LATEST}/g" \
+      <<< "${LANG_MESSAGES[not_latest]}"
+    )"
     return 1
   }
-  printf '%s\n\n' "Euphoria v${LATEST} is installed!"
+  successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
 
   # Išvesti komandą, kurią reikia įvykdyti terminale,
   # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
   # shellcheck disable=SC2016
-  COMMAND=$'[[ -d "${HOME}/.opt/euphoria/bin" ]] &&
+  PATH_COMMAND=$'[[ -d "${HOME}/.opt/euphoria/bin" ]] &&
   [[ ":${PATH}:" != *":${HOME}/.opt/euphoria/bin:"* ]] &&
     export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"'
-  printf '%s\n\n' "${EUPH_MESSAGES[${LANG}.wo_relogin]//'{COMMAND}'/"${COMMAND}"}"
+  infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
   # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
   create_file_if_not_exists "${HOME}/.pathrc" '# shellcheck shell=bash'

@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Lua"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -27,7 +31,7 @@ fi
 
 # Sukurti laikiną aplanką ir atsisųsti į jį programos failą ir patikros sumą.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t lua-install.XXXXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t lua_.XXXXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 curl -sLo "${TMP_DIR}/lua-${LATEST}.tar.gz" "https://www.lua.org/ftp/lua-${LATEST}.tar.gz"
@@ -38,7 +42,7 @@ curl -sL https://lua.org/ftp/ \
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 if ! check_sha256 "${TMP_DIR}/lua-${LATEST}.tar.gz" \
   "${TMP_DIR}/lua-${LATEST}.tar.gz.sha256"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -54,22 +58,23 @@ make install INSTALL_TOP="${HOME}/.opt/lua"
 cd "${INIT_DIR}" || exit 1
 
 # Įtraukti įdiegtos programos kelią į sistemos kintamąjį
-[[ -d "${HOME}/.opt/lua/bin" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/lua/bin:"* ]] \
-  && export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"
+PATH_COMMAND=$'[[ -d "${HOME}/.opt/lua/bin" ]] && \
+  [[ ":${PATH}:" != *":${HOME}/.opt/lua/bin:"* ]] && \
+    export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"'
+eval "${PATH_COMMAND}"
 
 echo ""
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! lua -v > /dev/null 2>&1; then
-  printf "Error! Lua is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(lua -v 2> /dev/null | awk '{print $2}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '%s\n\n' "Lua ${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
 printf '%s\n\n' "Lua ${LATEST} is succesfully installed."
@@ -77,11 +82,7 @@ printf '%s\n\n' "Lua ${LATEST} is succesfully installed."
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogin, execute the following command in the terminal:
-
-[[ -d "${HOME}/.opt/lua/bin" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/lua/bin:"* ]] \
-  && export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"'
+infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016

@@ -1,5 +1,9 @@
 #! /usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Nushell"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -27,7 +31,7 @@ fi
 # Sukurti laikiną aplanką ir atsisųsti į jį programos failą.
 # Sukurti failą su patikros suma iš tinklalapio.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -d )"
+TMP_DIR="$( mktemp -p . -d -t nushell_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 cd "${TMP_DIR}" || exit 1
@@ -42,7 +46,7 @@ curl -sSL "https://github.com/nushell/nushell/releases/expanded_assets/${LATEST}
 if ! check_sha256 \
   "nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz" \
   "nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz.sha256"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -54,32 +58,29 @@ tar --file="${TMP_DIR}/nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz" \
   --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzvC "${HOME}/.opt"
 
 # Įtraukti įdiegtos programos kelią į sistemos kintamąjį
-[[ -d "${HOME}/.opt/nu" ]] \
+PATH_COMMAND=$'[[ -d "${HOME}/.opt/nu" ]] \
   && [[ ":${PATH}:" != *":${HOME}/.opt/nu:"* ]] \
-    && export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"
+    && export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"'
+eval "${PATH_COMMAND}"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! nu -v > /dev/null 2>&1; then
-  printf "Error! Nushell is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą.
 CURRENT="$(nu -v 2> /dev/null)"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "Nushell ${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '%s\n\n' "Nushell ${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
 
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogin, execute the following command in the terminal:
-
-[[ -d "${HOME}/.opt/nu" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/nu:"* ]] \
-    && export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"'
+infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016

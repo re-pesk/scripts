@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Hilbish"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -26,7 +30,7 @@ fi
 # Sukurti laikiną aplanką
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -d )"
+TMP_DIR="$( mktemp -p . -d -t hilbish_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Atsisųsti į laikiną aplanką programos failą ir patikros sumą.
@@ -36,7 +40,7 @@ curl -sSLO "https://github.com/sammy-ette/Hilbish/releases/download/${LATEST}/hi
 
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 if ! check_md5 "hilbish-${LATEST}-linux-amd64.tar.gz" "hilbish-${LATEST}-linux-amd64.tar.gz.md5"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -57,14 +61,14 @@ printf "hilbish.opts.tips = false\n" >> "${HOME}/.config/hilbish/init.lua"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! hilbish --version > /dev/null 2>&1; then
-  printf "Error! Hilbish is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar kompiuteryje įdiegta vėliausia programos versija.
 CURRENT="$(hilbish --version 2> /dev/null | head -n 1 | awk '{print $2}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '%s\n\n' "Hilbish ${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '%s\n\n' "Hilbish ${LATEST} is succesfully installed."
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"

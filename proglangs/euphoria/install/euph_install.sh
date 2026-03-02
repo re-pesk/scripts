@@ -3,6 +3,8 @@
 # DEBUG: production mode - null or unset, debug mode - any other value
 DEBUG=
 
+APP_NAME="Euphoria"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"

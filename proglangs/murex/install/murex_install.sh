@@ -1,5 +1,9 @@
 #! /usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Murex"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -38,14 +42,14 @@ ln -sf "${HOME}/.opt/murex/murex" -t "${HOME}/.local/bin"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! murex --version > /dev/null 2>&1; then
-  printf "Error! Murex is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(murex --version | head -n 1 | awk '{print $2}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "Murex v${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
   exit 1
 }
-printf '\n%s\n\n' "Murex v${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"

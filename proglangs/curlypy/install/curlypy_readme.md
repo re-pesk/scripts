@@ -26,6 +26,7 @@ printf '\nAtsakymas:\n  Laukiamas: %s\n  Gautas:    %s\n\n' \
 ## Paleistis
 
 ```bash
+source "${HOME}/.pyvenvs/tests/bin/activate"
 curlypy kodo-failas.cpy
 ```
 

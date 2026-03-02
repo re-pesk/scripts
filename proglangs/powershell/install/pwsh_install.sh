@@ -1,5 +1,9 @@
 #! /usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="PowerShell"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -15,8 +19,7 @@ if ! check_command curl xargs; then
 fi
 
 # Įdiegti trūkstamus paketus
-( 
-  readarray -t NOT_INSTALLED < <(packages_to_install wget apt-transport-https software-properties-common)
+( readarray -t NOT_INSTALLED < <(packages_to_install wget apt-transport-https software-properties-common)
   (( ${#NOT_INSTALLED[@]} > 0 )) && sudo apt-get install -y "${NOT_INSTALLED[@]}"
 )
 
@@ -43,9 +46,10 @@ dpkg -s powershell &> /dev/null || sudo apt-get install -y powershell
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! pwsh -Version > /dev/null 2>&1; then
-  printf '%s\n\n' "Error! PowerShell is not working as expected!"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Išvesti sėkmės pranešimą
-printf '%s\n\n' "PowerShell v$(pwsh -Version | awk '{print $2}') is installed!"
+LATEST="$(pwsh -Version | awk '{print $2}')"
+successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
