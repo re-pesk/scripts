@@ -16,7 +16,7 @@ fi
 
 # Įdiegti trūkstamus paketus
 ( 
-  readarray -t NOT_INSTALLED < <(get_packages_to_install wget apt-transport-https software-properties-common)
+  readarray -t NOT_INSTALLED < <(packages_to_install wget apt-transport-https software-properties-common)
   (( ${#NOT_INSTALLED[@]} > 0 )) && sudo apt-get install -y "${NOT_INSTALLED[@]}"
 )
 

@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md)
+[&#x2BA2;](../../readme.md "Atgal")
 
 # Pike [<sup>&#x2B67;</sup>](https://pike.lysator.liu.se/)
 

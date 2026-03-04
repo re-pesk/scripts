@@ -1,50 +1,56 @@
 #!/usr/bin/env -S bash
 
-# Sukurti nuorodą į pagalbinių funkcijų failą
-HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
-cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
+install_euphoria_4.1() {
 
-# Įkelti pagalbines funkcijas
-. ../../_helpers.sh
+  FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
+  printf '%s' "${FUNC_NAME:+"${FUNC_NAME}"$'\n\n'}"
 
-echo ""
+  # Gauti įdiegtos programos versijos numerį
+  # Gauti programos paskutinės versijos numerį iš repozitorijos
+  # Vėliausią versiją galima rasti https://github.com/OpenEuphoria/euphoria/releases/latest
+  # Pasirinkti, ar įdiegti kitą versiją
+  LATEST="$(curl -sL -o /dev/null -w "%{url_effective}" https://github.com/OpenEuphoria/euphoria/releases/latest | xargs basename)"
+  CURRENT="$(eui --version &> /dev/null && eui --version  | head -n 1 | awk '{print $3}' | sed 's/v//')"
+  if ! ask_to_install "${LATEST}" "${CURRENT}" "eui" "${HOME}/.opt/euphoria"; then
+    return 1
+  fi
 
-# Gauti įdiegtos programos versijos numerį
-# Gauti programos paskutinės versijos numerį iš repozitorijos
-# Vėliausią versiją galima rasti https://github.com/OpenEuphoria/euphoria/releases/latest
-# Pasirinkti, ar įdiegti kitą versiją
-LATEST="$(curl -sL -o /dev/null -w "%{url_effective}" https://github.com/OpenEuphoria/euphoria/releases/latest | xargs basename)"
-CURRENT="$(euc --version 2> /dev/null | head -n 1 | awk '{print $5}')"
-if ! ask_to_install "v${LATEST}" "${CURRENT}" "eui" "${HOME}/.opt/euphoria-${LATEST}"; then
-  exit 1
-fi
+  # Gauti atsiuntimo nuorodą
+  # Ištrinti esamą versiją.
+  # Atsisiųsti archyvo failą iš repozitorijos išskleisti jį į diegimo aplanką.
+  # Sukurti tekstinį failą su versijos numeriu.
+  # URL="$(curl -sL https://api.github.com/repos/OpenEuphoria/euphoria/releases/latest | grep -o 'https.*Linux-x64.*tar.gz')"
+  URL="https://github.com$(
+    curl -sSLo - "https://github.com/OpenEuphoria/euphoria/releases/expanded_assets/${LATEST}" |
+    xq -q "a[href*='euphoria-${LATEST}-Linux-x64-'][href$='.tar.gz']" --attr href
+  )"
 
-echo ""
+  rm -rf "${HOME}/.opt/euphoria"
+  curl -sSLo - "${URL}" \
+  | tar --transform "flags=r;s/^(euphoria)-${LATEST}[^\/]+/\1/x" --show-transformed-names -xzC "${HOME}/.opt"
 
-# Gauti atsiuntimo nuorodą
-# Ištrinti esamą versiją.
-# Atsisiųsti archyvo failą iš repozitorijos išskleisti jį į diegimo aplanką.
-# Sukurti tekstinį failą su versijos numeriu.
-URL="$(curl -sL https://api.github.com/repos/OpenEuphoria/euphoria/releases/latest | grep -o 'https.*Linux-x64.*tar.gz')"
-rm -rf "${HOME}/.opt/euphoria-${LATEST}"
-curl -sSLo - "${URL}" \
-| tar --transform "flags=r;s/^(euphoria-${LATEST})[^\/]+/\1/x" --show-transformed-names -xzC "${HOME}/.opt"
+  touch "${HOME}/.opt/euphoria/v${LATEST}.txt"
 
-# Įkelti kelią į PATH
-[[ -d "${HOME}/.opt/euphoria-${LATEST}/bin" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/euphoria-${LATEST}/bin:"* ]] \
-  && export PATH="${HOME}/.opt/euphoria-${LATEST}/bin${PATH:+:${PATH}}"
-  
-# Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
-if ! euc --version 2> /dev/null || ! eui --version 2> /dev/null ; then
-  printf '%s\n\n' "Euphoria is not working as expected!"
-  exit 1
-fi
+  # Išvalyti kelią iš sistemos kintamojo PATH
+  # [[ ":${PATH}:" == *":${HOME}/.opt/euphoria/bin:"* ]] &&
+  #   export PATH="${PATH/"${HOME}/.opt/euphoria/bin:"/}"
 
-# Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
-CURRENT="$(euc --version | head -n 1 | awk '{print $5}')"
-[[ "${CURRENT}" == "v${LATEST}" ]] || { 
-  printf '\n%\n\n' "Euphoria v${CURRENT} is not v${LATEST}!"
-  exit 1
+  # Įkelti kelią į PATH
+  [[ -d "${HOME}/.opt/euphoria/bin" ]] &&
+    [[ ":${PATH}:" != *":${HOME}/.opt/euphoria/bin:"* ]] &&
+      export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
+
+  # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+  if ! euc --version &> /dev/null || ! eui --version &> /dev/null ; then
+    printf '%s\n\n' "Euphoria is not working as expected!"
+    return 1
+  fi
+
+  # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
+  CURRENT="$(eui --version &> /dev/null && eui --version  | head -n 1 | awk '{print $3}' | sed 's/v//')"
+  [[ "${CURRENT}" == "${LATEST}" ]] || {
+    printf '\n%s\n\n' "Euphoria v${CURRENT} is not v${LATEST}!"
+    return 1
+  }
+  printf '%s\n\n' "Euphoria v${LATEST} is installed!"
 }
-printf '%s\n\n' "Euphoria v${LATEST} is installed!"

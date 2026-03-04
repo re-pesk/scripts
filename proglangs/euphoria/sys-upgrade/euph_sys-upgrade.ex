@@ -35,7 +35,7 @@ procedure runCmd(sequence cmdArg)
   -- Išvedama komandos eilutė, apsupta skirtuko eilučių
   printf(1, "%s\n%s\n%s\n\n", { separator, command, separator })
 
-  -- Įvykdoma komanda, išėjimo kodas išsaugomas į kintamąjį 
+  -- Įvykdoma komanda, išėjimo kodas išsaugomas į kintamąjį
   integer exit_code = system_exec(command)
 
   -- Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas

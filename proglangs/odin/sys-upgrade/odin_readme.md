@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md)
+[&#x2BA2;](../../readme.md "Atgal")
 
 # Odin [<sup>&#x2B67;</sup>](ttps://odin-lang.org/)
 

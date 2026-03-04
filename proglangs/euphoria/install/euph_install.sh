@@ -1,5 +1,8 @@
 #!/usr/bin/env -S bash
 
+# DEBUG: production mode - null or unset, debug mode - any other value
+DEBUG=
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -7,24 +10,36 @@ cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
 # Įkelti pagalbines funkcijas
 . ../../_helpers.sh
 
+# shellcheck disable=SC2190
+declare -A EUPH_MESSAGES=(
+  'en.UTF-8.end' 'Installation is completed!'
+  'en.UTF-8.wo_relogin' $'To use without relogin, execute the following command in the terminal before:\n\n{COMMAND}'
+  'lt_LT.UTF-8.end' 'Diegimas baigtas!'
+  'lt_LT.UTF-8.wo_relogin' $'Norėdami tęsti neprisijungdami iš naujo, prieš tai paleiskite šią komandą terminale:\n\n{COMMAND}'
+)
+
 echo ""
 
 # Jei komandos neįdiegtos, išeiti iš skripto
-if ! check_command curl xargs; then
+if ! check_command curl xargs xq; then
   exit 1
 fi
 
-printf '%s\n' "Checking required packages\n"
-
-[ "$(apt list --installed 2> /dev/null | grep -cP '^build-essential\/')" -gt 1 ] || sudo apt install build-essential
-[ "$(apt list --installed 2> /dev/null | grep -cP '^git\/')" -gt 1 ] || sudo apt install git
-
-printf '%s\n' "\nInstalling Euphoria\n"
+(
+  readarray -t NOT_INSTALLED < <(packages_to_install build-essential git)
+  (( ${#NOT_INSTALLED[@]} > 0 )) && sudo apt-get install -y "${NOT_INSTALLED[@]}"
+)
 
 INIT_DIR="$PWD"
+TMP_DIR="$( mktemp -p . -d -t euphoria_.XXXXXXXX | xargs realpath )"
+trap cleanup EXIT
 
-"${INIT_DIR}/euph_install-4.1.sh"
-"${INIT_DIR}/euph_install-4.2.sh"
-"${INIT_DIR}/euph_install-addon.sh" eudoc creole
+. "${INIT_DIR}/euph_install-4.1.sh"
+. "${INIT_DIR}/euph_install-4.2.sh"
+. "${INIT_DIR}/euph_install-addon.sh"
 
-printf '%s\n' "Installation is completed!\n"
+install_euphoria_4.1 || exit 1
+install_euphoria_4.2 || exit 1
+install_euphoria_addon eudoc creole || exit 1
+
+printf '%s\n\n' "${EUPH_MESSAGES[${LANG}.end]}"
