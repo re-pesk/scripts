@@ -1,6 +1,6 @@
 [&#x2BA2;](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (60)
+# Skriptinimas skirtingomis programavimo kalbomis (61)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais.
 
@@ -8,11 +8,14 @@ Tikslas - patikrinti, kaip skirtingos kalbos tinka rašyti operacijų sistemos v
 
 Naudota operacinė sistema – Ubuntu 24.04
 
-## Tipinės apvalkalo scenarijų (Shell scripting) kalbos (6)
+## Tipinės apvalkalo scenarijų (Shell scripting) kalbos (7)
 
 * [x] [Bash](bash/sys-upgrade/bash_readme.md) (±)\
   (–) asociatyvieji masyvai netinka medžio tipo struktūroms\
   (+) labai paplitusi, daug informacijos
+  * [x] [Brush](brush/sys-upgrade/brush_readme.md) (–)\
+    (+) greita ir saugi - parašyta su Rust\
+    (+) suderinama su Bash
 * [x] [Dash](dash/sys-upgrade/dash_readme.md) (–)\
   (+) greita\
   (–) neturi asociatyviųjų masyvų\
