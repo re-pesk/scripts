@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="V"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -16,13 +20,18 @@ fi
 
 # Vėliausią versiją galima rasti https://github.com/vlang/v/releases/latest
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 TAG="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/vlang/v/releases/latest" | xargs basename)"
 COMMIT="$(curl -sSL "https://github.com/vlang/v/releases/tag/${TAG}" | xq -q "div:has(span:contains('${TAG}')) ~ div > a > code")"
-LATEST="$(curl -sSL "https://raw.githubusercontent.com/vlang/v/refs/heads/master/v.mod" | 
+LATEST="$(curl -sSL "https://raw.githubusercontent.com/vlang/v/refs/heads/master/v.mod" |
 awk -F"[' ]" '/version: / {print $3}') ${COMMIT}"
 CURRENT="$(v -v 2> /dev/null | awk '{print $2, $NF}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "v" "${HOME}/.opt/v"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "v" "${HOME}/.opt/v"; then
   exit 1
 fi
 
@@ -30,7 +39,7 @@ fi
 # Sukurti diegimo aplanką
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t v.XXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t v_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 cd "${TMP_DIR}" || exit 1
@@ -44,6 +53,7 @@ curl -sSL "https://github.com/vlang/v/releases/expanded_assets/${TAG}" |
 if ! check_sha256 "v_${TAG}_linux.zip" \
   "v_${TAG}_linux.zip.sha256" \
   "'{print \$1}'" "-F':' '{print \$NF}'"; then
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -57,15 +67,15 @@ ln -fs "${HOME}/.opt/v/v" -t "${HOME}/.local/bin"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! v -v > /dev/null 2>&1; then
-  printf "Error! V is not working as expected!\n\n" 1>&2
+  errorMessage "${LANG_MESSAGES[not_working]}" 1>&2
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(v -v 2> /dev/null)"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "${CURRENT} version is not up to date!" 1>&2
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-printf '\n%s\n\n' "${LATEST} version is succesfully installed" 1>&2
+successMessage "${LANG_MESSAGES[installed_latest]}"
 

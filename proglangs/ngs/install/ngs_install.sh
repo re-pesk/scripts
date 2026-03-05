@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="NGS"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -17,13 +21,18 @@ fi
 # Vėliausią versiją galima rasti https://github.com/ngs-lang/ngs/releases/latest
 # Gauti naujausią versiją iš repozitorijos
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(
   curl -sSLo /dev/null -w "%{url_effective}" "https://github.com/ngs-lang/ngs/releases/latest" | \
   xargs basename
 )"
 CURRENT="v$(ngs --version)"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "ngs" "${HOME}/.opt/ngs"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "ngs" "${HOME}/.opt/ngs"; then
   exit 1
 fi
 
@@ -32,14 +41,14 @@ curl https://ngs-lang.org/install.sh | bash
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! ngs --version > /dev/null 2>&1; then
-  printf "Error! NGS is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="v$(ngs --version)"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '%s\n\n' "NGS ${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-printf '%s\n\n' "NGS ${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]}"

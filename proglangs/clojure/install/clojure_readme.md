@@ -12,7 +12,7 @@ Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 ## Diegimas
 
 ```bash
-# Gauti paskutinės programos versijos numerį iš repozitorijos
+# Gauti paskutinės programos versijos numerį
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/clojure/brew-install/releases/latest" | xargs basename)"
 
 # Patikrinti, ar kompiuteryje įdiegta kuri nors programos versija. Sulyginti versijas

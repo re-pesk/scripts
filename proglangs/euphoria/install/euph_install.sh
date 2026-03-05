@@ -3,6 +3,8 @@
 # DEBUG: production mode - null or unset, debug mode - any other value
 DEBUG=
 
+APP_NAME="Euphoria"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -25,8 +27,7 @@ if ! check_command curl xargs xq; then
   exit 1
 fi
 
-(
-  readarray -t NOT_INSTALLED < <(packages_to_install build-essential git)
+( readarray -t NOT_INSTALLED < <(packages_to_install build-essential git)
   (( ${#NOT_INSTALLED[@]} > 0 )) && sudo apt-get install -y "${NOT_INSTALLED[@]}"
 )
 

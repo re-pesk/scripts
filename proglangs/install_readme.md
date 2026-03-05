@@ -8,6 +8,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Ballerina](ballerina/install/ballerina_readme.md)
 * [x] [Bash](bash/install/bash_readme.md)
 * [x] [Bython](bython/install/bython_readme.md)
+* [x] [Brush](brush/install/brush_readme.md)
 * [x] [Bun (JS)](js/install/js_readme.md)
 * [x] [C](c/install/c_readme.md)
 * [x] [C++](c++/install/c++_readme.md)

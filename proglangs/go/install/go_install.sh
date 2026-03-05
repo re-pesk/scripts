@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Go"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -15,15 +19,19 @@ if ! check_command curl xargs xq; then
 fi
 
 # Vėliausią versiją galima rasti https://go.dev/dl/
-# Gauti programos paskutinės versijos failo pavadinimą iš repozitorijos
 # Gauti vėliausios programos versijos numerį.
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sSL https://go.dev/dl/ \
 | xq -q "a.downloadBox[href$='.linux-amd64.tar.gz']" --attr href \
 | xargs basename | sed -E 's/^(go[0-9\.]+)\..+$/\1/')"
 CURRENT="$(go version 2> /dev/null | awk '{print $3}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "go" "${HOME}/.opt/go"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "go" "${HOME}/.opt/go"; then
   exit 1
 fi
 
@@ -44,7 +52,7 @@ curl -sSL https://go.dev/dl/ \
 
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 if ! check_sha256 "${LATEST}.linux-amd64.tar.gz" "${LATEST}.linux-amd64.tar.gz.sha256"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed_latest]}"
   exit 1
 fi
 
@@ -62,14 +70,14 @@ tar -f "${LATEST}.linux-amd64.tar.gz" -xzC "${HOME}/.opt"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! go version > /dev/null 2>&1; then
-  printf "Error! Golang is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(go version 2> /dev/null | awk '{print $3}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "Golang is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
 printf '\n%s\n\n' "Golang v${LATEST} is succesfully installed"
@@ -77,14 +85,12 @@ printf '\n%s\n\n' "Golang v${LATEST} is succesfully installed"
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogin, execute the following commands in the terminal:
-
-[[ ":${PATH}:" == *":${HOME}/.opt/go/bin:"* ]] \
-  || export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
-
-[[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] \
-  || export PATH="${HOME}/go/bin${PATH:+:${PATH}}"'
+PATH_COMMAND=$'[[ ":${PATH}:" == *":${HOME}/.opt/go/bin:"* ]] || \
+  export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"\n
+[[ ":${PATH}:" == *":${HOME}/go/bin:"* ]] || \
+  export PATH="${HOME}/go/bin${PATH:+:${PATH}}"'
+infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" 'Go' '${HOME}/.opt/go/bin' '${HOME}/go/bin'
+insert_path "${HOME}/.pathrc" '${HOME}/.opt/go/bin' '${HOME}/go/bin'

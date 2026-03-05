@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Abs"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -15,12 +19,17 @@ if ! check_command curl xargs; then
 fi
 
 # Vėliausią versiją galima rasti https://github.com/abs-lang/abs/releases/latest
-# Gauti programos paskutinės versijos numerį iš repozitorijos
+# Gauti programos paskutinės versijos numerį
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/abs-lang/abs/releases/latest" | xargs basename)"
 CURRENT="$(abs --version 2> /dev/null)"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "abs" "${HOME}/.opt/abs"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "abs" "${HOME}/.opt/abs"; then
   exit 1
 fi
 
@@ -35,14 +44,14 @@ ln -fs "${HOME}/.opt/abs/abs" "${HOME}/.local/bin"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! abs --version > /dev/null 2>&1; then
-  printf '%s\n\n' "Error! Abs is not working as expected!"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(abs --version 2> /dev/null)"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "Abs v${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-printf '\n%s\n\n' "Abs v${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]}"

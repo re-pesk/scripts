@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Oils"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -14,18 +18,25 @@ if ! check_command curl xargs xq; then
   exit 1
 fi
 
-# Gauti programos paskutinės versijos numerį iš repozitorijos
 # Vėliausią versiją galima rasti https://github.com/nushell/nushell/releases/latest
+# Gauti programos paskutinės versijos numerį
+# Gauti įdiegtos programos versijos numerį
 LATEST="$(curl -sSLo - https://raw.githubusercontent.com/oils-for-unix/oils/refs/heads/master/oils-version.txt | head -n 1)"
 CURRENT="$(osh --version | head -n 1 | awk '{print $2}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "osh" "${HOME}/.opt/oils"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "osh" "${HOME}/.opt/oils"; then
   exit 1
 fi
 
 # Sukurti laikiną aplanką
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t oils.XXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t oils_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Atsisiųsti į laikiną aplanką programos failą ir patikros sumą.
@@ -37,7 +48,7 @@ curl -fssL "https://oils.pub/release/${LATEST}/" \
 
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 if ! check_sha256 "oils-for-unix-${LATEST}.tar.gz" "oils-for-unix-${LATEST}.tar.gz.sha256"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -53,14 +64,14 @@ ln -sfT "${HOME}/.opt/oils/bin/oils-for-unix" "${HOME}/.local/bin/ysh"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! osh --version &> /dev/null || ! ysh --version &> /dev/null; then
-  printf '\n%s\n\n' "Error! Oils is not working as expected!"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar kompiuteryje įdiegta vėliausia programos versija.
 CURRENT="$(osh --version | head -n 1 | awk '{print $2}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "Oils ${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-printf '\n%s\n\n' "Oils ${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]}"

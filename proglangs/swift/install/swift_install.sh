@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Swiftly"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -19,7 +23,7 @@ fi
 # Sukurti laikiną aplanką.
 # Sukurti funkciją, ištrinančią jį iš disko.
 # Nustatyti, jog ji bus paleista, kai bus nutrauktas šio skripto vykdymas.
-TMP_DIR="$( mktemp -p . -d -t swiftly.XXXXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t swiftly_.XXXXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Atsisiųsti į laikiną aplanką diegimo programą.
@@ -41,11 +45,14 @@ hash -r
 rm -rf "${TMP_DIR}"
 
 if ! swiftly --version > /dev/null 2>&1; then
-  printf "Error! Swiftly is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
+successMessage "${LANG_MESSAGES[installed]}"
 
 if ! swift --version > /dev/null 2>&1; then
   printf "Error! Swift is not working as expected!\n\n"
+  errorMessage "${MESSAGES[${LANG}.not_working]//'{APP_NAME}'/"Swift"}"
   exit 1
 fi
+successMessage "${MESSAGES[${LANG}.installed]//'{APP_NAME}'/"Swift"}"

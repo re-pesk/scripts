@@ -1,5 +1,9 @@
 #!/usr/bin/env -S bash
 
+DEBUG=
+
+APP_NAME="Yash"
+
 # Sukurti nuorodą į pagalbinių funkcijų failą
 HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
@@ -14,20 +18,25 @@ if ! check_command curl make xargs xq; then
   exit 1
 fi
 
-# Gauti programos paskutinės versijos numerį iš repozitorijos
+# Gauti programos paskutinės versijos numerį
 # Vėliausią versiją galima rasti https://github.com/magicant/yash/releases/latest
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/magicant/yash/releases/latest" | xargs basename)"
 CURRENT="$(yash --version 2> /dev/null | head -n 1 | awk '{print $NF}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "yash" "${HOME}/.opt/yash"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "yash" "${HOME}/.opt/yash"; then
   exit 1
 fi
 
 # Sukurti laikiną aplanką.
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -d )"
+TMP_DIR="$( mktemp -p . -d -t yash_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Sukurti laikiną aplanką ir atsisųsti į jį programos failą ir patikros sumą.
@@ -40,7 +49,7 @@ curl -sSL "https://github.com/magicant/yash/releases/expanded_assets/${LATEST}" 
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 if ! check_sha256 "yash-${LATEST}.tar.gz" \
   "yash-${LATEST}.tar.gz.sha256"; then
-  printf '%s\n\n' "Installation failed!"
+  errorMessage "${LANG_MESSAGES[failed]}"
   exit 1
 fi
 
@@ -67,27 +76,26 @@ make install
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! yash --version > /dev/null 2>&1; then
-  printf "Error! Yash is not working as expected!\n\n"
+  errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
 
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(yash --version 2> /dev/null | head -n 1 | awk '{print $NF}')"
-[[ "${CURRENT}" == "${LATEST}" ]] || { 
-  printf '\n%s\n\n' "Yash v${CURRENT} is not up to date!"
+[[ "${CURRENT}" == "${LATEST}" ]] || {
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-printf '\n%s\n\n' "Yash v${LATEST} is succesfully installed"
+successMessage "${LANG_MESSAGES[installed_latest]}"
 
 # Išvesti komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
 # shellcheck disable=SC2016
-printf '%s\n\n' 'To use without relogin, execute the following command in the terminal:
-
-[[ -d "${HOME}/.opt/yash/bin" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/yash/bin:"* ]] \
-  && export PATH="${HOME}/.opt/yash/bin${PATH:+:${PATH}}"'
+PATH_COMMAND=$'[[ -d "${HOME}/.opt/yash/bin" ]] &&
+  [[ ":${PATH}:" != *":${HOME}/.opt/yash/bin:"* ]] &&
+    export PATH="${HOME}/.opt/yash/bin${PATH:+:${PATH}}"'
+infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" 'Yash' '${HOME}/.opt/yash/bin'
+insert_path "${HOME}/.pathrc" '${HOME}/.opt/yash/bin'
