@@ -2,8 +2,12 @@
 
 unset MESSAGES LANG_MESSAGES
 
-# shellcheck disable=SC2190
+# shellcheck disable=SC2034,SC2190
 declare -A MESSAGES=(
+  # Messages for _messages.sh
+  'en.UTF-8.empty_app_name' 'Error! Variable APP_NAME is empty!'
+  'lt_LT.UTF-8.empty_app_name' 'Klaida! Kintamasis APP_NAME tuščias!'
+
   # Messages for _helpers.sh
   'en.UTF-8.checking_commands' 'Checking required commands'
   'en.UTF-8.checking_packages' 'Checking required packages'
@@ -25,6 +29,7 @@ declare -A MESSAGES=(
   'en.UTF-8.no_app' 'Application {APP_NAME} is not found, but current version is {CURRENT}! Check app code!'
   'en.UTF-8.no_app_name' 'Application name is not provided! Check app code!'
   'en.UTF-8.no_changes' 'No changes were made.'
+  'en.UTF-8.no_command_name' 'Command name is not provided! Check app code!'
   'en.UTF-8.no_current' 'Application {APP_NAME} is not found, but current version is empty! Check app code!'
   'en.UTF-8.no_install_dir' 'Installation directory is not provided! Check app code!'
   'en.UTF-8.no_latest' 'Latest version is not provided! Check app code!'
@@ -51,6 +56,7 @@ declare -A MESSAGES=(
   'lt_LT.UTF-8.no_app' 'Programa {APP_NAME} nerasta, bet esama versija yra {CURRENT}! Patikrinkite programos kodą!'
   'lt_LT.UTF-8.no_app_name' 'Nepateiktas programos pavadinimas! Patikrinkite programos kodą!'
   'lt_LT.UTF-8.no_changes' 'Jokių pakeitimų neatlikta.'
+  'lt_LT.UTF-8.no_command_name' 'Nepateiktas komandos pavadinimas! Check app code!'
   'lt_LT.UTF-8.no_current' 'Programa {APP_NAME} įdiegta, bet esama versija nepateikta! Patikrinkite programos kodą!'
   'lt_LT.UTF-8.no_install_dir' 'Nepateiktas diegimo katalogas! Patikrinkite programos kodą!'
   'lt_LT.UTF-8.no_latest' 'Nepateikta vėliausia versija! Patikrinkite programos kodą!'
@@ -83,11 +89,31 @@ declare -A MESSAGES=(
   'lt_LT.UTF-8.wo_relogin' $'Norėdami naudoti programą šioje sesijoje, paleiskite terminale komandą:\n\n{PATH_COMMAND}'
 )
 
-declare -A LANG_MESSAGES
+declare -gA LANG_MESSAGES
 
-# echo "APP_NAME: ${APP_NAME}"
+APP_NAME="${APP_NAME:-}"
+
+if [ -z "${APP_NAME}" ]; then
+  # shellcheck disable=SC1094
+  printf '%s\n\n' "${MESSAGES[${LANG}.empty_app_name]}"
+  exit 1
+fi
 
 while IFS= read -rd '' key && IFS= read -rd '' value; do
   # shellcheck disable=SC2034
-  [[ "$key" == "${LANG}"* ]] && LANG_MESSAGES["${key#"${LANG}."}"]=${value//'{APP_NAME}'/"${APP_NAME}"}
+  [[ "$key" != "${LANG}"* ]] && continue
+  # shellcheck disable=SC2034
+  LANG_MESSAGES["${key#"${LANG}."}"]="${value//'{APP_NAME}'/"${APP_NAME}"}"
 done < <(printf '%s\0%s\0' "${MESSAGES[@]@k}")
+
+update_lang_messages() {
+  # shellcheck disable=SC2178
+  local -n lang_messages="$1"
+  while IFS= read -rd '' key && IFS= read -rd '' value; do
+    # shellcheck disable=SC2034
+    printf '%s "%s"\n' "$key" "$(
+      sed -e "s|{CURRENT}|${CURRENT}|g;s|{LATEST}|${LATEST}|g" \
+        <<< "${value}"
+    )"
+  done < <(printf '%s\0%s\0' "${lang_messages[@]@k}")
+}

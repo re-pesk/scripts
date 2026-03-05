@@ -3,36 +3,84 @@
 # DEBUG: production mode - null or unset, debug mode - any other value
 DEBUG="${DEBUG:-}"
 
+APP_NAME="${APP_NAME:-}"
+CURRENT="${CURRENT:-}"
+LATEST="${LATEST:-}"
+
+# If there are no messages, source the messages file
 if [ -z "${MESSAGES[*]}" ]; then
   # shellcheck disable=SC1094
   source "$(realpath "${BASH_SOURCE[0]}" | xargs dirname)/_messages.sh"
 fi
 
+# Prints an info message
+: <<"USAGE"
+infoMessage <MESSAGE> ?<FUNCTION_NAME>
+USAGE
+: <<"EXAMPLE"
+infoMessage "Info!"
+infoMessage "Info!" "my_function"
+EXAMPLE
+
 infoMessage() {
   printf "%s%s\n\n" "${2}" "${1}" 1>&2
 }
+
+# Prints a warning message
+: <<"USAGE"
+warningMessage <MESSAGE> ?<FUNCTION_NAME>
+USAGE
+: <<"EXAMPLE"
+warningMessage "Warning!"
+warningMessage "Warning!" "my_function"
+EXAMPLE
 
 warningMessage() {
   printf "%s\033[33m%s\033[39m\n\n" "${2}" "${1}" 1>&2
 }
 
+# Prints an error message
+: <<"USAGE"
+errorMessage <MESSAGE> ?<FUNCTION_NAME>
+USAGE
+: <<"EXAMPLE"
+errorMessage "Error!"
+errorMessage "Error!" "my_function"
+EXAMPLE
 errorMessage() {
   printf "%s\033[31m%s\033[39m\n\n" "${2}" "${1}" 1>&2
 }
+
+# Prints a success message
+: <<"USAGE"
+successMessage <MESSAGE> ?<FUNCTION_NAME>
+USAGE
+: <<"EXAMPLE"
+successMessage "Success!"
+successMessage "Success!" "my_function"
+EXAMPLE
 
 successMessage() {
   printf "%s\033[32m%s\033[39m\n\n" "${2}" "${1}" 1>&2
 }
 
+# Check if the commands are available
+: <<"USAGE"
+check_command <COMMAND_1> ...
+USAGE
+: <<"EXAMPLE"
+check_command curl xargs
+EXAMPLE
+
 check_command() (
 
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
-  infoMessage "${MESSAGES[${LANG}.checking_commands]}" "${FUNC_NAME}"
+  infoMessage "${LANG_MESSAGES[checking_commands]}" "${FUNC_NAME}"
 
   # If there are no arguments, exit the script
   # shellcheck disable=SC2128
   (( $# > 0)) || {
-    errorMessage "${MESSAGES[${LANG}.missing_arguments]}" "${FUNC_NAME}"
+    errorMessage "${LANG_MESSAGES[missing_arguments]}" "${FUNC_NAME}"
     exit 1
   };
 
@@ -46,7 +94,7 @@ check_command() (
   (( ${#NOT_COMMANDS[@]} > 0 )) && {
     errorMessage "$(
       printf '%s\n\n  %s\n\n' \
-      "${MESSAGES[${LANG}.missing_commands]}" \
+      "${LANG_MESSAGES[missing_commands]}" \
       "${NOT_COMMANDS[*]}"
       )" "${FUNC_NAME}"
     exit 1
@@ -55,15 +103,23 @@ check_command() (
   exit 0
 )
 
+# Check if the packages are installed
+: <<"USAGE"
+check_package <PACKAGES_LIST>
+USAGE
+: <<"EXAMPLE"
+check_package gcc make
+EXAMPLE
+
 check_package() (
 
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
-  infoMessage "${MESSAGES[${LANG}.checking_packages]}" "${FUNC_NAME}"
+  infoMessage "${LANG_MESSAGES[checking_packages]}" "${FUNC_NAME}"
 
   # If there are no arguments, exit the script
   # shellcheck disable=SC2128
   (( $# > 0)) || {
-    errorMessage "${MESSAGES[${LANG}.missing_arguments]}" "${FUNC_NAME}"
+    errorMessage "${LANG_MESSAGES[missing_arguments]}" "${FUNC_NAME}"
     exit 1
   };
 
@@ -77,7 +133,7 @@ check_package() (
   (( ${#NOT_PKGNAMES[@]} > 0 )) && {
     errorMessage "$(
       printf '%s\n\n  %s\n\n' \
-      "${MESSAGES[${LANG}.erroneous_names]}" \
+      "${LANG_MESSAGES[erroneous_names]}" \
       "${NOT_PKGNAMES[*]}"
       )" "${FUNC_NAME}"
     exit 1
@@ -91,7 +147,7 @@ check_package() (
   (( ${#NOT_INSTALLED[@]} > 0 )) && {
     errorMessage "$(
       printf '%s\n\n  %s\n\n' \
-      "${MESSAGES[${LANG}.missing_packages]}" \
+      "${LANG_MESSAGES[missing_packages]}" \
       "${NOT_INSTALLED[*]}"
       )" "${FUNC_NAME}"
     exit 1
@@ -100,6 +156,14 @@ check_package() (
   exit 0
 )
 
+# Returns a list of packages that are not installed
+: <<"USAGE"
+packages_to_install <PACKAGES_LIST>
+USAGE
+: <<"EXAMPLE"
+packages_to_install gcc make
+EXAMPLE
+
 packages_to_install() (
 
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
@@ -107,7 +171,7 @@ packages_to_install() (
   # If there are no arguments, exit the script
   # shellcheck disable=SC2128
   (( $# > 0)) || {
-    errorMessage "${MESSAGES[${LANG}.missing_arguments]}" "${FUNC_NAME}"
+    errorMessage "${LANG_MESSAGES[missing_arguments]}" "${FUNC_NAME}"
     exit 1
   };
 
@@ -121,7 +185,7 @@ packages_to_install() (
   (( ${#NOT_PKGNAMES[@]} > 0 )) && {
     errorMessage "$(
       printf '%s\n\n  %s\n\n' \
-      "${MESSAGES[${LANG}.erroneous_names]}" \
+      "${LANG_MESSAGES[erroneous_names]}" \
       "${NOT_PKGNAMES[*]}"
       )" "${FUNC_NAME}"
     exit 1
@@ -140,6 +204,11 @@ packages_to_install() (
   exit 1
 )
 
+# Cleanup function
+: << "USAGE"
+trap cleanup EXIT
+USAGE
+
 cleanup() {
   # shellcheck disable=SC2164
   [[ -n "${INIT_DIR}" ]] && [[ -d "${INIT_DIR}" ]] && cd "${INIT_DIR}"
@@ -148,106 +217,87 @@ cleanup() {
 
 # Ask the user to install a program.
 : << "USAGE"
-ask_to_install "${LATEST}" "${CURRENT}" "${APP_NAME}" "${INSTALL_DIR}"
+ask_to_install <COMMAND NAME> <INSTALL DIR>
 USAGE
 : << "EXAMPLE"
-ask_to_install "${LATEST}" "${CURRENT}" "groovy" "${HOME}/.opt/groovy"
+ask_to_install "bal" "${HOME}/.opt/ballerina"
 EXAMPLE
 
 ask_to_install() (
 
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
 
-  local LATEST="${1}"
-  local CURRENT="${2}"
-  local APP_NAME="${3}"
-  local INSTALL_DIR="${4}"
+  local -r COMMAND_NAME="${1}"
+  local -r COMMAND_PATH="$(command -v "${COMMAND_NAME}")"
+  local -r INSTALL_DIR="${2}"
   local TO_CONTINUE=""
 
   # Vykdoma išeinant iš funkcijos
   # shellcheck disable=SC2329
   on_exit() {
     EXIT_CODE=$?
-    (( EXIT_CODE > 0 )) && warningMessage "${MESSAGES[${LANG}.no_changes]}" "${FUNC_NAME}"
+    (( EXIT_CODE > 0 )) && warningMessage "${LANG_MESSAGES[no_changes]}" "${FUNC_NAME}"
     exit "${EXIT_CODE}"
   }
   trap on_exit EXIT
 
-  # If there is no latest version, exit the script
-  if [[ -z "${LATEST}" ]]; then
-    errorMessage "${MESSAGES[${LANG}.no_latest]}" "${FUNC_NAME}"
+  # If there is no command name, exit the script
+  [[ -z "${COMMAND_NAME}" ]] && {
+    errorMessage "${LANG_MESSAGES[no_command_name]}" "${FUNC_NAME}"
     exit 1
-  fi
-
-  # If there is no application name, exit the script
-  if [[ -z "${APP_NAME}" ]]; then
-    errorMessage "${MESSAGES[${LANG}.no_app_name]}" "${FUNC_NAME}"
-    exit 1
-  fi
+  }
 
   # If there is no installation directory, exit the script
-  if [[ -z "${INSTALL_DIR}" ]]; then
-    errorMessage "${MESSAGES[${LANG}.no_install_dir]}" "${FUNC_NAME}"
+  [[ -z "${INSTALL_DIR}" ]] && {
+    errorMessage "${LANG_MESSAGES[no_install_dir]}" "${FUNC_NAME}"
+    exit 1
+  }
+
+  if [[ -z "${CURRENT}" ]]; then
+    # The current version is not provided
+    if [[ -n "${COMMAND_PATH}" ]]; then
+      # but the command path is found
+      # This is a contradiction, so you are asked to check the app code, and the script is exited
+      errorMessage "${LANG_MESSAGES[no_current]}" "${FUNC_NAME}"
+      exit 1
+    fi
+    # The current version is not provided,
+    # so app is not installed and you are asked to install a new version
+    infoMessage \
+      "${LANG_MESSAGES[install_new]}" \
+      "${FUNC_NAME}"
+  fi
+
+  if [[ -z "${COMMAND_PATH}" ]]; then
+    # The current version is provided
+    # but the command path is not found, so app is not installed
+    # This is a contradiction, so you are asked to check the app code, and the script is exited
+    errorMessage \
+      "${LANG_MESSAGES[no_app]}" \
+      "${FUNC_NAME}"
     exit 1
   fi
 
-  COMMAND_PATH="$(command -v "${APP_NAME}")"
-
-  # Elimination of contradictions
-
-  # The app is found, but the current version is not provided
-  if [[ -n "${COMMAND_PATH}" && -z "${CURRENT}" ]]; then
-    errorMessage "${MESSAGES[${LANG}.no_current]//'{APP_NAME}'/"${APP_NAME}"}" "${FUNC_NAME}"
+  # The command path is found, the current version is provided, app is installed,
+  # but the installation directory is different.
+  # so you are asked about deleting the current version manually, and the script is exited
+  if [[ ! "$(realpath "${COMMAND_PATH}" 2> /dev/null)" =~ ^${INSTALL_DIR}.*$ ]]; then
+    infoMessage \
+    "${LANG_MESSAGES[installed_not_in_dir]//'{INSTALL_DIR}'/"${INSTALL_DIR}"}" \
+    "${FUNC_NAME}"
     exit 1
-
-  # The app is not found, but the current version is provided
-  elif [[ -z "${COMMAND_PATH}" && -n "${CURRENT}" ]]; then
-    errorMessage "$(
-      sed -e "s/{APP_NAME}/${APP_NAME}/g; s/{CURRENT}/${CURRENT}/g" \
-        <<< "${MESSAGES[${LANG}.no_app]}"
-      )" "${FUNC_NAME}"
-    exit 1
-  fi
-
-  # exit 0
-
-  # ----
-
-  # The program is not installed, so the current version cannot be provided
-  # (Contradictions are impossible at this stage)
-  if [ -z "${COMMAND_PATH}" ]; then
-    infoMessage "$(
-      sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{LATEST}/${LATEST}/g" \
-        <<< "${MESSAGES[${LANG}.install_new]}"
-      )" "${FUNC_NAME}"
-
-  elif [[ -z "${INSTALL_DIR}" ]]; then
-    errorMessage "${MESSAGES[${LANG}.no_install_dir]}" "${FUNC_NAME}"
-    exit 1
-
-  # The app is installed, and the current version and the installation directory are provided,
-  # and the installation directory is the same as the directory of the current version
-  elif [[ "$(realpath "${COMMAND_PATH}" 2> /dev/null)" =~ ^${INSTALL_DIR}.*$ ]]; then
-    infoMessage "$(
-      sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{CURRENT}/${CURRENT}/g;s/{LATEST}/${LATEST}/g" \
-        <<< "${MESSAGES[${LANG}.overwrite]}"
-      )" "${FUNC_NAME}"
-
-  # If the app is installed, and the current version is provided, but the installation directory is different
   else
-    infoMessage "$(
-      sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{CURRENT}/${CURRENT}/g;s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
-        <<< "${MESSAGES[${LANG}.installed_not_in_dir]}"
-      )" "${FUNC_NAME}"
-    TO_CONTINUE="n"
+    # and the installation directory is the same as the directory of the current version
+    # so you are asked about overwriting the current version
+    infoMessage "${LANG_MESSAGES[overwrite]}" "${FUNC_NAME}"
   fi
 
   # If the program is not installed or this installation directory is not different from ${INSTALL_DIR},
   # ask the user to install the program.
   if [[ "${TO_CONTINUE}" != "n" ]]; then
-    printf '%s: \e[s' "${MESSAGES[${LANG}.prompt]}" 1>&2
+    printf '%s: \e[s' "${LANG_MESSAGES[prompt]}" 1>&2
     read -e -r TO_CONTINUE
-    [[ "${TO_CONTINUE}" == "" ]] && printf '\e[u%s\n' "${MESSAGES[${LANG}.enter]}" 1>&2
+    [[ "${TO_CONTINUE}" == "" ]] && printf '\e[u%s\n' "${LANG_MESSAGES[enter]}" 1>&2
     echo ""
   fi
 
@@ -257,10 +307,9 @@ ask_to_install() (
   fi
 
   # If the installation will be continued, print a info message.
-  infoMessage "$(
-    sed -e "s/{APP_NAME}/${APP_NAME}/g;s/{LATEST}/${LATEST}/g" \
-      <<< "${MESSAGES[${LANG}.installing]}"
-    )" "${FUNC_NAME}"
+  infoMessage \
+    "${LANG_MESSAGES[installing]}" \
+    "${FUNC_NAME}"
 )
 
 # Compare checksums of a file.
@@ -283,7 +332,7 @@ compare_checksum_strings() (
   # Check if the checksums are provided
   for i in {1..2}; do
     if [[ -z "${!i}" ]] ; then
-      errorMessage "${MESSAGES[${LANG}.empty_parameter]//'{i}'/${i}}" "${FUNC_NAME}"
+      errorMessage "${LANG_MESSAGES[empty_parameter]//'{i}'/${i}}" "${FUNC_NAME}"
       exit 1
     fi
   done
@@ -308,12 +357,12 @@ compare_checksum_strings() (
 
   # If the checksums do not match, print an error message and exit the script
   [[ "${CHECKSUM_1}" != "${CHECKSUM_2}" ]] && {
-    errorMessage "${MESSAGES[${LANG}.mismatch]}" "${FUNC_NAME}"
+    errorMessage "${LANG_MESSAGES[mismatch]}" "${FUNC_NAME}"
     exit 1
   }
 
   # If the checksums match, print a success message
-  successMessage "${MESSAGES[${LANG}.match]}" "${FUNC_NAME}"
+  successMessage "${LANG_MESSAGES[match]}" "${FUNC_NAME}"
 )
 
 # Compare checksum of a file with a string.
@@ -332,12 +381,12 @@ check_sums_str() (
   [ -n "${DEBUG}" ] && printf '"%s"\n' "$FUNC_NAME\$# is $#." "$@" 1>&2
 
   [[ -z "${1}" ]] && {
-    errorMessage "${MESSAGES[${LANG}.missing_checksum_type]}" "${FUNC_NAME}"
+    errorMessage "${LANG_MESSAGES[missing_checksum_type]}" "${FUNC_NAME}"
     exit 1
   }
 
   [[ -z "${2}" ]] && {
-    errorMessage "${MESSAGES[${LANG}.missing_filename]}" "${FUNC_NAME}"
+    errorMessage "${LANG_MESSAGES[missing_filename]}" "${FUNC_NAME}"
     exit 1
   }
 
@@ -360,7 +409,7 @@ check_sums() (
   [ -n "${DEBUG}" ] && printf '"%s"\n' "$FUNC_NAME\$# is $#." "$@" 1>&2
 
   [[ -z "${3}" ]] && {
-    errorMessage "${MESSAGES[${LANG}.missing_chksum_fname]}" "${FUNC_NAME}"
+    errorMessage "${LANG_MESSAGES[missing_chksum_fname]}" "${FUNC_NAME}"
     exit 1
   }
   if ! check_sums_str "${1}" "${2}" "$(cat "${3}")" "${4}" "${5}"; then
@@ -483,7 +532,7 @@ check_md5() (
 
 # Create a ${HOME}/.pathrc file if it does not exist.
 : << "USAGE"
-create_file_if_not_exists "${FILE_NAME}"
+create_file_if_not_exists <FILE_NAME>
 USAGE
 : << "EXAMPLE"
 create_file_if_not_exists "${HOME}/.pathrc"
@@ -498,7 +547,7 @@ create_file_if_not_exists() (
 
   # Create a file if it does not exist
   if [ -f "${FILE_NAME}" ]; then
-    infoMessage "${MESSAGES[${LANG}.file_exists]//'{FILE_NAME}'/"${FILE_NAME}"}" "${FUNC_NAME}"
+    infoMessage "${LANG_MESSAGES[file_exists]//'{FILE_NAME}'/"${FILE_NAME}"}" "${FUNC_NAME}"
   else
     touch -c "${FILE_NAME}"
     [ -n "${CONTENT}" ] && printf '%s\n\n' "${CONTENT}" >> "${FILE_NAME}"
@@ -507,10 +556,10 @@ create_file_if_not_exists() (
 
 # Insert a path record to the certain file.
 : << "USAGE"
-insert_path_str "${FILE_NAME}" "${APP_NAME}" "${INSERT_STR}"
+insert_path_str <FILE NAME> <STRING TO INSERT>
 USAGE
 : << "EXAMPLE"
-insert_path_str "${HOME}/.pathrc" 'Go' \
+insert_path_str "${HOME}/.pathrc" \
 '[[ -d "${HOME}/.opt/go/bin" ]] \
   && [[ ":${PATH}:" != *":${HOME}/.opt/go/bin:"* ]] \
   && export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
@@ -524,15 +573,13 @@ insert_path_str() (
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
 
   FILE_NAME="${1}"
-  APP_NAME="${2}"
-  INSERT_STR="${3}"
+  INSERT_STR="${2}"
 
   # Check if the record already exists in the file.
   if [[ "$(grep -c -F "#begin ${APP_NAME,,} init" < "${FILE_NAME}")" -gt 0 ]]; then
-    infoMessage "$(
-      sed -e "s|{APP_NAME}|${APP_NAME}|g;s|{FILE_NAME}|${FILE_NAME}|g" \
-        <<< "${MESSAGES[${LANG}.record_exists]}"
-      )" "${FUNC_NAME}"
+    infoMessage \
+      "${LANG_MESSAGES[record_exists]//'{FILE_NAME}'/"${FILE_NAME}"}" \
+      "${FUNC_NAME}"
     exit 0
   fi
 
@@ -561,10 +608,10 @@ Letter case of app_name does not matter.
 Other parameters must be in 'single quotes'.
 COMMENT
 : << "USAGE"
-insert_path "${FILE_NAME}" "${APP_NAME}" "${APP_DIR_1}" "${APP_DIR_2}" ...
+insert_path <FILE NAME> <APP DIR 1> <APP DIR 2> ...
 USAGE
 : << "EXAMPLE"
-insert_path "${HOME}/.pathrc" 'Go' '${HOME}/.opt/go/bin' '${HOME}/go/bin'
+insert_path "${HOME}/.pathrc" '${HOME}/.opt/go/bin' '${HOME}/go/bin'
 EXAMPLE
 
 insert_path() (
@@ -572,15 +619,16 @@ insert_path() (
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
 
   FILE_NAME="${1}"
-  APP_NAME="${2}"
-  shift 2
+  # APP_NAME from variable in outer scope
+  shift 1
   APP_DIRS=("$@")
 
   # Check if the record already exists in the file.
+  # shellcheck disable=SC2031
   if [[ "$(grep -c -F "#begin ${APP_NAME,,} init" < "${FILE_NAME}")" -gt 0 ]]; then
     infoMessage "$(
       sed -e "s|{APP_NAME}|${APP_NAME}|g;s|{FILE_NAME}|${FILE_NAME}|g" \
-        <<< "${MESSAGES[${LANG}.record_exists]}"
+        <<< "${LANG_MESSAGES[record_exists]}"
       )" "${FUNC_NAME}"
     exit 0
   fi
@@ -595,7 +643,8 @@ insert_path() (
     export PATH="'"${APP_DIR}"'${PATH:+:${PATH}}"'
   done
 
-  if ! insert_path_str "${FILE_NAME}" "${APP_NAME}" "${PATH_LIST}"; then
+  # shellcheck disable=SC2031
+  if ! insert_path_str "${FILE_NAME}" "${PATH_LIST}"; then
     exit 1
   fi
 )
