@@ -11,7 +11,7 @@ Jeigu nėra įdiegta, įdiekite [curl](../utils/curl.md) ir xargs (findutils).
 ## Diegimas
 
 ```bash
-# Gauti paskutinės programos versijos numerį iš repozitorijos
+# Gauti paskutinės programos versijos numerį
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/chapel-lang/chapel/releases/latest" | xargs basename)"
 
 # Patikrinti, ar kompiuteryje įdiegta kuri nors programos versija. Sulyginti versijas

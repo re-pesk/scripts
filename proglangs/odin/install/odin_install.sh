@@ -19,12 +19,17 @@ if ! check_command curl xargs xq; then
 fi
 
 # Vėliausią versiją galima rasti puslapyje https://github.com/odin-lang/Odin/releases/latest
-# Gauti vėliausios programos versijos numerį iš repozitorijos.
+# Gauti vėliausios programos versijos numerį.
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sSLo /dev/null -w "%{url_effective}" "https://github.com/odin-lang/Odin/releases/latest" | xargs basename)"
 CURRENT="$(odin version 2> /dev/null | cut -c 14-24)"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "odin" "${HOME}/.opt/odin"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "odin" "${HOME}/.opt/odin"; then
   exit 1
 fi
 
@@ -71,8 +76,8 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(odin version 2> /dev/null | awk -F'[ -]' '{print $3"-"$4"-"$5}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"
 

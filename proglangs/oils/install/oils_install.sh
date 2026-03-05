@@ -18,11 +18,18 @@ if ! check_command curl xargs xq; then
   exit 1
 fi
 
-# Gauti programos paskutinės versijos numerį iš repozitorijos
 # Vėliausią versiją galima rasti https://github.com/nushell/nushell/releases/latest
+# Gauti programos paskutinės versijos numerį
+# Gauti įdiegtos programos versijos numerį
 LATEST="$(curl -sSLo - https://raw.githubusercontent.com/oils-for-unix/oils/refs/heads/master/oils-version.txt | head -n 1)"
 CURRENT="$(osh --version | head -n 1 | awk '{print $2}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "osh" "${HOME}/.opt/oils"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "osh" "${HOME}/.opt/oils"; then
   exit 1
 fi
 
@@ -64,7 +71,7 @@ fi
 # Patikrinti, ar kompiuteryje įdiegta vėliausia programos versija.
 CURRENT="$(osh --version | head -n 1 | awk '{print $2}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"

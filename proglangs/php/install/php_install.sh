@@ -23,10 +23,18 @@ if (( $(add-apt-repository -L ondrej/php | grep -c "ondrej/php") < 1 )); then
   sudo apt update
 fi
 
+# Gauti programos paskutinės versijos numerį
+# Gauti įdiegtos programos versijos numerį
 LATEST="$(curl -sSLo /dev/null -w "%{url_effective}" "https://github.com/php/php-src/releases/latest" \
   | xargs basename | sed 's/^php-//')"
 CURRENT="$(php -v 2> /dev/null | head -n 1 | awk '{print $2}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "php" "$(which php | xargs realpath)"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "php" "$(which php | xargs realpath)"; then
   exit 1
 fi
 
@@ -44,7 +52,7 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(php -v 2> /dev/null | head -n 1 | awk '{print $2}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"

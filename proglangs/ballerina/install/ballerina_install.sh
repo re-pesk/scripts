@@ -19,15 +19,20 @@ if ! check_command curl unzip xargs; then
 fi
 
 # Vėliausią versiją galima rasti https://github.com/ballerina-platform/ballerina-distribution/releases/latest
-# Gauti paskutinės programos versijos numerį iš repozitorijos
+# Gauti paskutinės programos versijos numerį
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(
   curl -sLo /dev/null -w "%{url_effective}" "https://github.com/ballerina-platform/ballerina-distribution/releases/latest" \
   | xargs basename | cut -c 2-
 )"
 CURRENT="$(bal --version 2>/dev/null | head -n 1 | awk '{print $2}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "bal" "${HOME}/.opt/ballerina"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "bal" "${HOME}/.opt/ballerina"; then
   exit 1
 fi
 
@@ -50,7 +55,7 @@ curl -sSLO "${URL}.sha256"
 # shellcheck disable=SC2016
 if ! check_sha256 "ballerina-${LATEST}-swan-lake.zip" "ballerina-${LATEST}-swan-lake.zip.sha256" \
   "'{print $1}'" "'{print $NF}'"; then
-  errorMessage "${LANG_MESSAGES[failed_latest]//'{LATEST}'/"${LATEST}"}"
+  errorMessage "${LANG_MESSAGES[failed_latest]}"
   exit 1
 fi
 
@@ -74,10 +79,10 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(bal --version 2>/dev/null | head -n 1 | awk '{print $2}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"
 
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
@@ -89,4 +94,4 @@ infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" 'Ballerina' '${HOME}/.opt/ballerina/bin'
+insert_path "${HOME}/.pathrc" '${HOME}/.opt/ballerina/bin'

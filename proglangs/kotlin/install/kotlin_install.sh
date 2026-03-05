@@ -24,14 +24,19 @@ fi
   kotlin -version
 }
 
-# Gauti programos paskutinės versijos numerį iš repozitorijos
+# Gauti programos paskutinės versijos numerį
 # Vėliausią versiją galima rasti https://github.com/JetBrains/kotlin/releases/latest
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/JetBrains/kotlin/releases/latest" \
   | xargs basename | sed 's/v//')"
 CURRENT="$(kotlinc-native -version 2> /dev/null | awk '{print $NF}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "kotlin" "${HOME}/.opt/kotlin-native"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "kotlin" "${HOME}/.opt/kotlin-native"; then
   exit 1
 fi
 
@@ -88,4 +93,4 @@ infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įtraukti įdiegtos programos kelią į sistemos kintamąjį
 # shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" 'Kotlin' '${HOME}/.opt/kotlin-native/bin'
+insert_path "${HOME}/.pathrc" '${HOME}/.opt/kotlin-native/bin'

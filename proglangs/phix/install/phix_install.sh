@@ -21,12 +21,17 @@ fi
 # Versiją galima rasti http://phix.x10.mx/index.php
 # Gauti programos paskutinės versijos numerį iš tinklalapio
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl http://phix.x10.mx/download.php 2> /dev/null | \
   xq -nq 'body > div#wrap > div#content > div#left > p:first-of-type' | \
   head -n 1 | awk '{print $3}')"
 CURRENT="$(p -version 2> /dev/null)"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "phix" "${HOME}/.opt/phix"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "phix" "${HOME}/.opt/phix"; then
   exit 1
 fi
 
@@ -93,7 +98,7 @@ if [[ "${CURRENT}" == "${LATEST}" ]]; then
   errorMessage "${LANG_MESSAGES[not_working]}"
   exit 1
 fi
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"
 
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
@@ -102,4 +107,4 @@ infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" 'phix' '${HOME}/.opt/phix/bin'
+insert_path "${HOME}/.pathrc" '${HOME}/.opt/phix/bin'

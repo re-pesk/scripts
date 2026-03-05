@@ -36,10 +36,15 @@ fi
 
 # Nustatyti laukiamą atsakymą
 # Gauti reikalingą eilutę iš komandos išvedimo
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="curlypy"
 CURRENT="$(curlypy --help 2> /dev/null | head -n 1 | awk '{print $2}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "CurlyPy" "${HOME}/.pyvenvs/tests/bin"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "CurlyPy" "${HOME}/.pyvenvs/tests/bin"; then
   exit 1
 fi
 

@@ -19,12 +19,17 @@ if ! check_command curl xargs; then
 fi
 
 # Vėliausią versiją galima rasti https://github.com/chapel-lang/chapel/releases/latest
-# Gauti paskutinės programos versijos numerį iš repozitorijos
+# Gauti paskutinės programos versijos numerį
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(basename -- "$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/chapel-lang/chapel/releases/latest")")"
 CURRENT="$(chpl --version 2>/dev/null | head -n 1 | awk '{print $NF}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "chpl" "/usr/share/chapel"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "chpl" "/usr/share/chapel"; then
   exit 1
 fi
 
@@ -45,7 +50,7 @@ curl -sL "https://github.com/chapel-lang/chapel/releases/expanded_assets/${LATES
 
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 if ! check_sha256 "chapel-${LATEST}-1.ubuntu24.amd64.deb" "chapel-${LATEST}-1.ubuntu24.amd64.deb.sha256"; then
-  errorMessage "${LANG_MESSAGES[failed_latest]//'{LATEST}'/"${LATEST}"}"
+  errorMessage "${LANG_MESSAGES[failed_latest]}"
   exit 1
 fi
 
@@ -65,7 +70,7 @@ fi
 # Patikrinti, ar kompiuteryje įdiegta Chapel versija yra vėliausia
 CURRENT="$(chpl --version 2>/dev/null | head -n 1 | awk '{print $NF}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{Latest}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"

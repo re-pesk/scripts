@@ -5,14 +5,28 @@ install_euphoria_4.2() {
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
   printf '%s' "${FUNC_NAME:+"${FUNC_NAME}"$'\n\n'}"
 
-  # Įrašyti į kintamąjį diegiamos versijos numerį
+  # Sukurti nuorodą į pagalbinių funkcijų failą
+  HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
+  cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
+
+  # Įkelti pagalbines funkcijas
+  . ../../_helpers.sh
+
+  # Gauti įdiegtos programos versijos numerį
+  # Gauti programos paskutinės versijos numerį
   # shellcheck disable=SC1003
   LATEST="$(
     curl -sSLo - "https://raw.githubusercontent.com/OpenEuphoria/euphoria/refs/heads/master/source/version_info.rc" |
     grep -P 'VALUE "ProductVersion"' | awk -F'"|\' '{print $4}'
   )"
   CURRENT="$(euc --version &> /dev/null && euc --version | head -n 1 | awk '{print $5}' | sed 's/v//')"
-  if ! ask_to_install "${LATEST}" "${CURRENT}" "euc" "${HOME}/.opt/euphoria"; then
+
+  # Atnaujinti pranešimų masyvą
+  # shellcheck disable=SC2155
+  declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+  # Pasirinkti, ar įdiegti kitą versiją
+  if ! ask_to_install "euc" "${HOME}/.opt/euphoria"; then
     return 1
   fi
 
@@ -65,13 +79,10 @@ install_euphoria_4.2() {
   # Išvesti atitinkamą pranešimą
   CURRENT="$(euc --version &> /dev/null && euc --version | head -n 1 | awk '{print $5}' | sed 's/v//')"
   [[ "${CURRENT}" == "${LATEST}" ]] || {
-    errorMessage "$(
-      sed -e "s/{CURRENT}/${CURRENT}/g; s/{LATEST}/${LATEST}/g" \
-      <<< "${LANG_MESSAGES[not_latest]}"
-    )"
+    errorMessage "${LANG_MESSAGES[not_latest]}"
     return 1
   }
-  successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+  successMessage "${LANG_MESSAGES[installed_latest]}"
 
   # Išvesti komandą, kurią reikia įvykdyti terminale,
   # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
@@ -83,5 +94,5 @@ install_euphoria_4.2() {
 
   # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
   create_file_if_not_exists "${HOME}/.pathrc" '# shellcheck shell=bash'
-  insert_path "${HOME}/.pathrc" 'Euphoria' "${HOME}/.opt/euphoria/bin"
+  insert_path "${HOME}/.pathrc" "${HOME}/.opt/euphoria/bin"
 }

@@ -20,13 +20,18 @@ fi
 
 # Vėliausią versiją galima rasti https://github.com/vlang/v/releases/latest
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 TAG="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/vlang/v/releases/latest" | xargs basename)"
 COMMIT="$(curl -sSL "https://github.com/vlang/v/releases/tag/${TAG}" | xq -q "div:has(span:contains('${TAG}')) ~ div > a > code")"
 LATEST="$(curl -sSL "https://raw.githubusercontent.com/vlang/v/refs/heads/master/v.mod" |
 awk -F"[' ]" '/version: / {print $3}') ${COMMIT}"
 CURRENT="$(v -v 2> /dev/null | awk '{print $2, $NF}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "v" "${HOME}/.opt/v"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "v" "${HOME}/.opt/v"; then
   exit 1
 fi
 
@@ -69,8 +74,8 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(v -v 2> /dev/null)"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"
 

@@ -27,8 +27,7 @@ if ! check_command curl xargs xq; then
   exit 1
 fi
 
-(
-  readarray -t NOT_INSTALLED < <(packages_to_install build-essential git)
+( readarray -t NOT_INSTALLED < <(packages_to_install build-essential git)
   (( ${#NOT_INSTALLED[@]} > 0 )) && sudo apt-get install -y "${NOT_INSTALLED[@]}"
 )
 

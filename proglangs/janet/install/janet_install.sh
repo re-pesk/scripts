@@ -18,13 +18,18 @@ if ! check_command curl xargs xq; then
   exit 1
 fi
 
-# Gauti programos paskutinės versijos numerį iš repozitorijos
+# Gauti programos paskutinės versijos numerį
 # Vėliausią versiją galima rasti https://github.com/janet-lang/janet/releases/latest
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/janet-lang/janet/releases/latest" | xargs basename)"
 CURRENT="v$(janet --version 2> /dev/null | awk -F'-' '{print $1}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "janet" "${HOME}/.opt/janet"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "janet" "${HOME}/.opt/janet"; then
   exit 1
 fi
 
@@ -69,7 +74,7 @@ fi
 # Išvesti pranešimą apie reultatą.
 CURRENT="v$(janet --version 2> /dev/null | awk -F '-' '{print $1}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"

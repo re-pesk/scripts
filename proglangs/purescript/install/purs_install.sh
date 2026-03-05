@@ -18,9 +18,17 @@ if ! check_command curl xargs; then
   exit 1
 fi
 
+# Gauti programos paskutinės versijos numerį
+# Gauti įdiegtos programos versijos numerį
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/purescript/purescript/releases/latest" | xargs basename)"
 CURRENT="v$(purs --version 2> /dev/null)"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "purs" "${HOME}/.opt/purescript"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "purs" "${HOME}/.opt/purescript"; then
   exit 1
 fi
 

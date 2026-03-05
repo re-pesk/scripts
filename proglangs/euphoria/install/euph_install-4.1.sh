@@ -5,13 +5,25 @@ install_euphoria_4.1() {
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
   printf '%s' "${FUNC_NAME:+"${FUNC_NAME}"$'\n\n'}"
 
+  # Sukurti nuorodą į pagalbinių funkcijų failą
+  HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
+  cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
+
+  # Įkelti pagalbines funkcijas
+  . ../../_helpers.sh
+
   # Gauti įdiegtos programos versijos numerį
-  # Gauti programos paskutinės versijos numerį iš repozitorijos
+  # Gauti programos paskutinės versijos numerį
   # Vėliausią versiją galima rasti https://github.com/OpenEuphoria/euphoria/releases/latest
-  # Pasirinkti, ar įdiegti kitą versiją
   LATEST="$(curl -sL -o /dev/null -w "%{url_effective}" https://github.com/OpenEuphoria/euphoria/releases/latest | xargs basename)"
   CURRENT="$(eui --version &> /dev/null && eui --version  | head -n 1 | awk '{print $3}' | sed 's/v//')"
-  if ! ask_to_install "${LATEST}" "${CURRENT}" "eui" "${HOME}/.opt/euphoria"; then
+
+  # Atnaujinti pranešimų masyvą
+  # shellcheck disable=SC2155
+  declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+  # Pasirinkti, ar įdiegti kitą versiją
+  if ! ask_to_install "eui" "${HOME}/.opt/euphoria"; then
     return 1
   fi
 
@@ -49,11 +61,8 @@ install_euphoria_4.1() {
   # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
   CURRENT="$(eui --version &> /dev/null && eui --version  | head -n 1 | awk '{print $3}' | sed 's/v//')"
   [[ "${CURRENT}" == "${LATEST}" ]] || {
-    errorMessage "$(
-      sed -e "s/{CURRENT}/${CURRENT}/g; s/{LATEST}/${LATEST}/g" \
-      <<< "${LANG_MESSAGES[not_latest]}"
-    )"
+    errorMessage "${LANG_MESSAGES[not_latest]}"
     return 1
   }
-  successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+  successMessage "${LANG_MESSAGES[installed_latest]}"
 }

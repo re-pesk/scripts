@@ -19,12 +19,17 @@ if ! check_command curl xargs; then
 fi
 
 # Vėliausią versiją galima rasti https://github.com/Murex-dev/murex/releases/latest
-# Gauti programos paskutinės versijos numerį iš repozitorijos
+# Gauti programos paskutinės versijos numerį
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/lmorg/murex/releases/latest" | xargs basename)"
 CURRENT="$(murex --version | head -n 1 | awk '{print $2}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "murex" "${HOME}/.opt/murex"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "murex" "${HOME}/.opt/murex"; then
   exit 1
 fi
 
@@ -49,7 +54,7 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(murex --version | head -n 1 | awk '{print $2}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"

@@ -4,12 +4,6 @@ DEBUG=
 
 APP_NAME="Brush"
 
-# # Sukurti simbolinę nuorodą į pranešimų failą
-# MESSAGES_FILE="$(realpath ../../../shell/install_helpers/_messages.sh)"
-# cmp -s ../../_messages.sh "${MESSAGES_FILE}" || cp -sfit ../../ "${MESSAGES_FILE}"
-
-# source ../../_messages.sh
-
 # Sukurti simbolinę nuorodą į pagalbinių funkcijų failą
 HELPERS_FILE="$(realpath ../../../shell/install_helpers/_helpers.sh)"
 cmp -s ../../_helpers.sh "${HELPERS_FILE}" || cp -sfit ../../ "${HELPERS_FILE}"
@@ -25,13 +19,18 @@ if ! check_command curl xargs; then
 fi
 
 # Vėliausią versiją galima rasti https://github.com/reubeno/brush/releases/latest
-# Gauti programos paskutinės versijos numerį iš repozitorijos
+# Gauti programos paskutinės versijos numerį
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/reubeno/brush/releases/latest" | \
   xargs basename | awk -F'-' '{print $NF}')"
-CURRENT="$(brush --version 2> /dev/null | awk '{print $2}')"
-if ! ask_to_install "${LATEST#v}" "${CURRENT}" "brush" "${HOME}/.opt/brush"; then
+CURRENT="$(brush --version 2> /dev/null | awk '{print "v"$2}')"
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "brush" "${HOME}/.opt/brush"; then
   exit 1
 fi
 
@@ -51,7 +50,7 @@ curl -sSLO "${URL}.sha256"
 
 # Jeigu patikros sumos nesutampa, nutraukti diegimą
 if ! check_sha256 "brush-x86_64-unknown-linux-musl.tar.gz" "brush-x86_64-unknown-linux-musl.sha256"; then
-  errorMessage "${LANG_MESSAGES[failed_latest]//'{LATEST}'/"${LATEST}"}"
+  errorMessage "${LANG_MESSAGES[failed_latest]}"
   exit 1
 fi
 
@@ -77,7 +76,7 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(brush --version 2> /dev/null | awk '{print $2}')"
 if [[ "${CURRENT}" != "${LATEST#v}" ]]; then
-  errorMessage "${LANG_MESSAGES[not_installed]//'{LATEST}'/"${LATEST}"}"
+  errorMessage "${LANG_MESSAGES[not_installed]}"
   exit 1
 fi
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"

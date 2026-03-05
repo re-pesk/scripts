@@ -20,10 +20,15 @@ fi
 
 # Vėliausią versiją galima rasti https://github.com/scala/scala3/releases/latest
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/scala/scala3/releases/latest" | xargs basename)"
 CURRENT="$(scala version 2> /dev/null | tail -n +2 | awk '{print $NF}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "scala" "${HOME}/.opt/scala3"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "scala" "${HOME}/.opt/scala3"; then
   exit 1
 fi
 
@@ -71,10 +76,10 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(scala version 2> /dev/null | tail -n +2 | awk '{print $NF}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"
 
 # Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
 # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
@@ -83,4 +88,4 @@ infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
 # shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" 'Scala' '${HOME}/.opt/scala3/bin'
+insert_path "${HOME}/.pathrc" '${HOME}/.opt/scala3/bin'

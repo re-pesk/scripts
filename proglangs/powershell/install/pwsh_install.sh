@@ -51,5 +51,11 @@ if ! pwsh -Version > /dev/null 2>&1; then
 fi
 
 # Išvesti sėkmės pranešimą
+# shellcheck disable=SC2034
 LATEST="$(pwsh -Version | awk '{print $2}')"
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+successMessage "${LANG_MESSAGES[installed_latest]}"

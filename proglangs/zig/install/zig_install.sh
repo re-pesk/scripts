@@ -23,7 +23,13 @@ fi
 LATEST="$(curl -Lso - https://ziglang.org/download/index.json |\
   jq -r 'keys - ["master"] | sort_by(split(".") | map(tonumber)) | last')"
 CURRENT="$(zig version 2> /dev/null)"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "zig" "${HOME}/.opt/zig"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "zig" "${HOME}/.opt/zig"; then
   exit 1
 fi
 
@@ -70,7 +76,7 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą
 CURRENT="$(zig version 2> /dev/null)"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"

@@ -23,12 +23,20 @@ if ! java --version > /dev/null 2>&1; then
   exit 1
 fi
 
-# Versijos numerį galima pasitikrinti "https://groovy.apache.org/download.html#distro"
+# Vėliausią versiją galima rasti "https://groovy.apache.org/download.html#distro"
+# Gauti programos paskutinės versijos numerį
+# Gauti įdiegtos programos versijos numerį
 LATEST="$( curl -s https://groovy.apache.org/download.html#distro \
   | xq -q "button[id='big-download-button']" --attr "onclick" \
   | awk -F'["-]' '{print $(NF-1)}' | sed 's/\.zip$//' )"
 CURRENT="$(groovy --version 2> /dev/null | awk '{print $3}')"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "groovy" "${HOME}/.opt/groovy"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "groovy" "${HOME}/.opt/groovy"; then
   exit 1
 fi
 
@@ -78,7 +86,7 @@ fi
 # Patikrinti, ar įdiegta versija yra naujausia. Išvesti atitinkamą pranešimą.
 CURRENT="$(groovy --version 2> /dev/null | awk '{print $3}')"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
 printf '%s\n\n' "Groovy v${LATEST} is succesfully installed."
@@ -97,4 +105,4 @@ infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įtraukti įdiegtos programos kelią į sistemos kintamąjį
 # shellcheck disable=SC2016
-insert_path_str "${HOME}/.pathrc" 'Groovy' "${PATH_COMMAND}"
+insert_path_str "${HOME}/.pathrc" "${PATH_COMMAND}"

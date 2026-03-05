@@ -19,10 +19,15 @@ fi
 # Gauti programos paskutinės versijos failo pavadinimą iš repozitorijos
 # Vėliausią versiją galima rasti "https://dl.elv.sh/
 # Gauti įdiegtos programos versijos numerį
-# Pasirinkti, ar įdiegti naujausią versiją
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/elves/elvish/releases/latest" | xargs basename )"
 CURRENT="v$(elvish --version | cut -c -6)"
-if ! ask_to_install "${LATEST}" "${CURRENT}" "elvish" "${HOME}/.opt/elvish"; then
+
+# Atnaujinti pranešimų masyvą
+# shellcheck disable=SC2155
+declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+
+# Pasirinkti, ar įdiegti naujausią versiją
+if ! ask_to_install "elvish" "${HOME}/.opt/elvish"; then
   exit 1
 fi
 
@@ -39,7 +44,7 @@ curl -sSLO "https://dl.elv.sh/linux-amd64/elvish-${LATEST}.tar.gz"
 # Jeigu patikros sumos nesutampa, ištrinti laikinąjį katalogą ir nutraukti diegimą
 if ! check_sha256_str "elvish-${LATEST}.tar.gz" \
   "$(curl -sSLo - "https://dl.elv.sh/linux-amd64/elvish-${LATEST}.tar.gz.sha256sum")"; then
-  errorMessage "${LANG_MESSAGES[failed_latest]//'{LATEST}'/"${LATEST}"}"
+  errorMessage "${LANG_MESSAGES[failed_latest]}"
   exit 1
 fi
 
@@ -60,7 +65,7 @@ fi
 # Patikrinti, ar kompiuteryje įdiegta Elvish versija yra vėliausia
 CURRENT="v$(elvish --version | cut -c -6)"
 [[ "${CURRENT}" == "${LATEST}" ]] || {
-  errorMessage "${LANG_MESSAGES[not_updated]//'{CURRENT}'/"${CURRENT}"}"
+  errorMessage "${LANG_MESSAGES[not_updated]}"
   exit 1
 }
-successMessage "${LANG_MESSAGES[installed_latest]//'{LATEST}'/"${LATEST}"}"
+successMessage "${LANG_MESSAGES[installed_latest]}"
