@@ -204,6 +204,25 @@ packages_to_install() (
   exit 1
 )
 
+install_missing_packages() (
+
+  FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
+
+  # If there are no arguments, exit the script
+  # shellcheck disable=SC2128
+  (( $# > 0)) || {
+    errorMessage "${LANG_MESSAGES[missing_arguments]}" "${FUNC_NAME}"
+    exit 1
+  };
+
+  readarray -t NOT_INSTALLED < <(packages_to_install "$@")
+  (( ${#NOT_INSTALLED[@]} > 0 )) && {
+    sudo apt-get install -y "${NOT_INSTALLED[@]}"
+    exit $?
+  }
+  exit 0
+)
+
 # Cleanup function
 : << "USAGE"
 trap cleanup EXIT
