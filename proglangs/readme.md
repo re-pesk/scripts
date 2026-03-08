@@ -1,6 +1,6 @@
 [&#x2BA2;](../readme.md)
 
-# Skriptinimas skirtingomis programavimo kalbomis (61)
+# Skriptinimas skirtingomis programavimo kalbomis (62)
 
 Ubuntu paketų atnaujinimo skriptas skirtingomis programavimo kalbomis ar jų dialektais.
 
@@ -61,7 +61,7 @@ Naudota operacinė sistema – Ubuntu 24.04
   (–) keista sintaksė\
   (–) kilmė iš Microsoft'o
 
-## Intepretuojamos kalbos ir JIT kompiliatoriai (32)
+## Intepretuojamos kalbos ir JIT kompiliatoriai (33)
 
 ### JavaVM (8)
 
@@ -83,13 +83,19 @@ Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
   * [x] kompiliuojamas į mašininį kodą.
 * [x] [Scala](scala/sys-upgrade/scala_readme.md) (–)
 
-### [JS](js/sys-upgrade/js_readme.md) (3)
+### [JS](js/sys-upgrade/js_readme.md) ir [TS](ts/sys-upgrade/ts_readme_deno.md) (4)
 
-Daug informacijos internete
-
-* [x] Bun (+)
-* [x] Deno truputį skiriasi nuo kitų variantų (±)
-* [x] Node (+)
+* JavaScript'as (+)
+  (+) Daug informacijos internete
+  * [x] Bun (+)
+  * [x] Deno truputį skiriasi nuo kitų variantų (±)
+  * [x] Node (+)
+* TypeScript'as (±)
+  (+) Daug informacijos internete
+  (+) Sparčiai populiarėja
+  (–) Paprastai vykdomas ne tiesiogiai, bet po vertimo į JS
+  * [x] [Deno](ts/sys-upgrade/ts_readme_deno.md) (+)
+    (+) Vykdomo tiesiogiai, be vertimo į JS
 
 ### Kitos (21)
 

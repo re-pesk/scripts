@@ -62,6 +62,7 @@ Skirtingų programavimo kalbų instaliavimas Ubuntu 24.04 operacinėje sistemoje
 * [x] [Scala (JVM)](scala/install/scala_readme.md)
 * [x] [Swift](swift/install/swift_readme.md)
 * [x] [Tcl](tcl/install/tcl_readme.md)
+* [x] [TypeScript](ts/install/ts_readme_deno.md)
 * [x] [V](v/install/v_readme.md)
 * [x] [Zig](zig/install/zig_readme.md)
 * [x] [Zsh](zsh/install/zsh_readme.md)
