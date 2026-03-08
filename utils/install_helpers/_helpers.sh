@@ -10,7 +10,8 @@ LATEST="${LATEST:-}"
 # If there are no messages, source the messages file
 if [ -z "${MESSAGES[*]}" ]; then
   # shellcheck disable=SC1094
-  source "$(realpath "${BASH_SOURCE[0]}" | xargs dirname)/_messages.sh"
+  UTILS_DIR="$(cd -- "$(realpath "${BASH_SOURCE[0]}" | xargs dirname)" &> /dev/null && pwd )"
+  . "${UTILS_DIR}/_messages.sh"
 fi
 
 # Prints an info message
@@ -75,7 +76,6 @@ EXAMPLE
 check_command() (
 
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
-  infoMessage "${LANG_MESSAGES[checking_commands]}" "${FUNC_NAME}"
 
   # If there are no arguments, exit the script
   # shellcheck disable=SC2128
@@ -114,7 +114,6 @@ EXAMPLE
 check_package() (
 
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
-  infoMessage "${LANG_MESSAGES[checking_packages]}" "${FUNC_NAME}"
 
   # If there are no arguments, exit the script
   # shellcheck disable=SC2128
@@ -204,6 +203,26 @@ packages_to_install() (
   exit 1
 )
 
+install_missing_packages() (
+
+  FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
+
+  # If there are no arguments, exit the script
+  # shellcheck disable=SC2128
+  (( $# > 0)) || {
+    errorMessage "${LANG_MESSAGES[missing_arguments]}" "${FUNC_NAME}"
+    exit 1
+  };
+
+  readarray -t NOT_INSTALLED < <(packages_to_install "$@")
+  (( ${#NOT_INSTALLED[@]} > 0 )) && {
+    sudo apt-get install -y "${NOT_INSTALLED[@]}"
+    errorMessage "${LANG_MESSAGES[missing_packages_are_not_installed]}" "${FUNC_NAME}"
+    exit 1
+  }
+  exit 0
+)
+
 # Cleanup function
 : << "USAGE"
 trap cleanup EXIT
@@ -228,7 +247,7 @@ ask_to_install() (
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
 
   local -r COMMAND_NAME="${1}"
-  local -r COMMAND_PATH="$(command -v "${COMMAND_NAME}")"
+  local -r COMMAND_PATH="$(command -v "${COMMAND_NAME}"| xargs realpath)"
   local -r INSTALL_DIR="${2}"
   local TO_CONTINUE=""
 
@@ -281,7 +300,7 @@ ask_to_install() (
   # The command path is found, the current version is provided, app is installed,
   # but the installation directory is different.
   # so you are asked about deleting the current version manually, and the script is exited
-  if [[ ! "$(realpath "${COMMAND_PATH}" 2> /dev/null)" =~ ^${INSTALL_DIR}.*$ ]]; then
+  if [[ ! "${COMMAND_PATH}" =~ ^${INSTALL_DIR}.*$ ]]; then
     infoMessage \
     "${LANG_MESSAGES[installed_not_in_dir]//'{INSTALL_DIR}'/"${INSTALL_DIR}"}" \
     "${FUNC_NAME}"
