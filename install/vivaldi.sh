@@ -3,12 +3,10 @@
 # shellcheck disable=SC2034
 APP_NAME="Vivaldi"
 
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-HELPERS="$(cd -- "${SCRIPT_DIR}/../shell/install_helpers/" &> /dev/null && pwd )/_helpers.sh"
-cmp -s "${SCRIPT_DIR}/_helpers.sh" "${HELPERS}" || cp -sfit "${SCRIPT_DIR}/" "${HELPERS}"
-
+# Jeigu nėra pagalbinio failo, paleisti skriptą pagalbiniams failams įkelti
 # Įkelti pagalbines funkcijas
-. ./_helpers.sh
+../utils/install_helpers/_set_helpers.sh
+. ./_helpers_.sh
 
 echo ""
 
