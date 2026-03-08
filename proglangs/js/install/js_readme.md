@@ -6,7 +6,7 @@
 * Išleista: 2024-06
 
 ## Vadovai
-  
+
 * [Learn web development](https://developer.mozilla.org/en-US/docs/Learn)
 * [The Modern JavaScript Tutorial](https://javascript.info/)
 
@@ -46,7 +46,7 @@ arba
 ### Diegimas
 
 ```bash
-curl -fsSL https://deno.land/install.sh | sh
+DENO_INSTALL="${HOME}/.opt/deno" curl -fsSL https://deno.land/install.sh | sh
 deno --version
 ```
 
@@ -84,7 +84,7 @@ arba (jeigu patenkina sistemos (Ubuntu 24.04) versija `nodejs v18.19`)
 sudo apt update
 sudo apt install nodejs
 node --version
-```  
+```
 
 ### Paleistis
 

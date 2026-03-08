@@ -71,7 +71,7 @@ for file in *.ex ; do
   exit_code="$?"
   if [[ "$exit_code" -gt 0 ]]; then
     exit "$exit_code"
-  fi 
+  fi
 done
 
 [[ -d "${HOME}/.opt/euphoria/bin" ]] \
@@ -106,7 +106,7 @@ for file in *.{ex,exw} ;do
   exit_code="$?"
   if [[ "$exit_code" > 0 ]]; then
     exit "$exit_code"
-  fi 
+  fi
 done
 
 cd "/tmp"

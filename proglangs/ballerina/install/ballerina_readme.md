@@ -29,8 +29,8 @@ Paleidžiamas diegimo skriptas `balerina_install.sh`. Pabaigus diegimą, įvykdo
 
 ```bash
 [[ -d "${HOME}/.opt/ballerina/bin" ]] \
-&& [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] \
-&& export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"
+  && [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] \
+    && export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"
 ```
 
 Arba įvykdomos komandos terminale
@@ -38,7 +38,7 @@ Arba įvykdomos komandos terminale
 ```bash
 LATEST="$(
   curl -sLo /dev/null -w "%{url_effective}" "https://github.com/ballerina-platform/ballerina-distribution/releases/latest" | \
-  xargs basename |  cut -c 2- 
+  xargs basename |  cut -c 2-
 )"
 
 printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
@@ -59,13 +59,13 @@ mv -T "./ballerina-${LATEST}-swan-lake" "${HOME}/.opt/ballerina"
 rm -f ballerina-${LATEST}-swan-lake.zip*
 
 [ -d "${HOME}/.opt/ballerina" ] \
-&& [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] \
-&& export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"
+  && [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] \
+    && export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"
 
 printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
   "${LATEST}" "$(bal --version 2>/dev/null | head -n 1 | awk '{print $2}')"
 
-unset URL LATEST
+unset LATEST
 ```
 
 Baigę diegti, pakeiskite konfigūracinius failus, kad kelias `${HOME}/.opt/ballerina/bin` būtų automatiškai įtraukiamas į sistemos `PATH` kintamąjį.

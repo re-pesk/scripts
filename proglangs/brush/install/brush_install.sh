@@ -1,15 +1,14 @@
 #!/usr/bin/env -S bash
 
+# DEBUG: darbinis režimas - null arba nunustatytas (unset), klaidų paieškos režimas - bet kokia kita reikšmė
 DEBUG=
 
 APP_NAME="Brush"
 
-# Sukurti simbolinę nuorodą į pagalbinių funkcijų failą
-HELPERS_FILE="$(realpath ../../../shell/install_helpers/_helpers.sh)"
-cmp -s ../../_helpers.sh "${HELPERS_FILE}" || cp -sfit ../../ "${HELPERS_FILE}"
-
+# Jeigu nėra pagalbinio failo, paleisti skriptą pagalbiniams failams įkelti
 # Įkelti pagalbines funkcijas
-source ../../_helpers.sh
+../../../utils/install_helpers/_set_helpers.sh ../../
+. ../../_helpers_.sh
 
 echo ""
 

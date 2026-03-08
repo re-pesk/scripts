@@ -5,12 +5,10 @@ install_euphoria_4.1() {
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
   printf '%s' "${FUNC_NAME:+"${FUNC_NAME}"$'\n\n'}"
 
-  # Sukurti nuorodą į pagalbinių funkcijų failą
-  HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
-  cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
-
+  # Jeigu nėra pagalbinio failo, paleisti skriptą pagalbiniams failams įkelti
   # Įkelti pagalbines funkcijas
-  . ../../_helpers.sh
+  ../../../utils/install_helpers/_set_helpers.sh ../../
+  . ../../_helpers_.sh
 
   # Gauti įdiegtos programos versijos numerį
   # Gauti programos paskutinės versijos numerį

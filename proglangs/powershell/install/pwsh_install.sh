@@ -1,15 +1,14 @@
 #! /usr/bin/env -S bash
 
+# DEBUG: darbinis režimas - null arba nunustatytas (unset), klaidų paieškos režimas - bet kokia kita reikšmėeškos režimas - bet kokia kita reikšmė
 DEBUG=
 
 APP_NAME="PowerShell"
 
-# Sukurti nuorodą į pagalbinių funkcijų failą
-HELPERS="$(realpath ../../../shell/install_helpers/_helpers.sh)"
-cmp -s ../../_helpers.sh "${HELPERS}" || cp -sfit ../../ "${HELPERS}"
-
+# Jeigu nėra pagalbinio failo, paleisti skriptą pagalbiniams failams įkelti
 # Įkelti pagalbines funkcijas
-. ../../_helpers.sh
+../../../utils/install_helpers/_set_helpers.sh ../../
+. ../../_helpers_.sh
 
 echo ""
 
