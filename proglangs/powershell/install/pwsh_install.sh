@@ -55,6 +55,6 @@ LATEST="$(pwsh -Version | awk '{print $2}')"
 
 # Atnaujinti pranešimų masyvą
 # shellcheck disable=SC2155
-declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+update_lang_messages
 
 successMessage "${LANG_MESSAGES[installed_latest]}"

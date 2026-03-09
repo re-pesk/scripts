@@ -25,7 +25,7 @@ CURRENT="$(miniscript -? 2> /dev/null | tail -n +2 | head -n 1 | awk '{print $5}
 
 # Atnaujinti pranešimų masyvą
 # shellcheck disable=SC2155
-declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją
 if ! ask_to_install "miniscript" "${HOME}/.opt/miniscript"; then

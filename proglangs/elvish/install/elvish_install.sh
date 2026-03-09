@@ -23,7 +23,7 @@ CURRENT="v$(elvish --version | cut -c -6)"
 
 # Atnaujinti pranešimų masyvą
 # shellcheck disable=SC2155
-declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją
 if ! ask_to_install "elvish" "${HOME}/.opt/elvish"; then
@@ -33,7 +33,7 @@ fi
 # Sukurti laikiną aplanką.
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t elvish.XXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t elvish_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Atsisųsti į laikiną aplanką programos failą.

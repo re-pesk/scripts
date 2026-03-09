@@ -7,63 +7,10 @@ APP_NAME="${APP_NAME:-}"
 CURRENT="${CURRENT:-}"
 LATEST="${LATEST:-}"
 
-# If there are no messages, source the messages file
-if [ -z "${MESSAGES[*]}" ]; then
-  # shellcheck disable=SC1094
-  UTILS_DIR="$(cd -- "$(realpath "${BASH_SOURCE[0]}" | xargs dirname)" &> /dev/null && pwd )"
-  . "${UTILS_DIR}/_messages.sh"
-fi
+# shellcheck disable=SC1094
+UTILS_DIR="$(cd -- "$(realpath "${BASH_SOURCE[0]}" | xargs dirname)" &> /dev/null && pwd )"
+. "${UTILS_DIR}/_messages.sh"
 
-# Prints an info message
-: <<"USAGE"
-infoMessage <MESSAGE> ?<FUNCTION_NAME>
-USAGE
-: <<"EXAMPLE"
-infoMessage "Info!"
-infoMessage "Info!" "my_function"
-EXAMPLE
-
-infoMessage() {
-  printf "%s%s\n\n" "${2}" "${1}" 1>&2
-}
-
-# Prints a warning message
-: <<"USAGE"
-warningMessage <MESSAGE> ?<FUNCTION_NAME>
-USAGE
-: <<"EXAMPLE"
-warningMessage "Warning!"
-warningMessage "Warning!" "my_function"
-EXAMPLE
-
-warningMessage() {
-  printf "%s\033[33m%s\033[39m\n\n" "${2}" "${1}" 1>&2
-}
-
-# Prints an error message
-: <<"USAGE"
-errorMessage <MESSAGE> ?<FUNCTION_NAME>
-USAGE
-: <<"EXAMPLE"
-errorMessage "Error!"
-errorMessage "Error!" "my_function"
-EXAMPLE
-errorMessage() {
-  printf "%s\033[31m%s\033[39m\n\n" "${2}" "${1}" 1>&2
-}
-
-# Prints a success message
-: <<"USAGE"
-successMessage <MESSAGE> ?<FUNCTION_NAME>
-USAGE
-: <<"EXAMPLE"
-successMessage "Success!"
-successMessage "Success!" "my_function"
-EXAMPLE
-
-successMessage() {
-  printf "%s\033[32m%s\033[39m\n\n" "${2}" "${1}" 1>&2
-}
 
 # Check if the commands are available
 : <<"USAGE"
@@ -96,7 +43,7 @@ check_command() (
       printf '%s\n\n  %s\n\n' \
       "${LANG_MESSAGES[missing_commands]}" \
       "${NOT_COMMANDS[*]}"
-      )" "${FUNC_NAME}"
+    )" "${FUNC_NAME}"
     exit 1
   }
 

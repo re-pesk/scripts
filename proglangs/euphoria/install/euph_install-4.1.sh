@@ -18,7 +18,7 @@ install_euphoria_4.1() {
 
   # Atnaujinti pranešimų masyvą
   # shellcheck disable=SC2155
-  declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+  update_lang_messages
 
   # Pasirinkti, ar įdiegti kitą versiją
   if ! ask_to_install "eui" "${HOME}/.opt/euphoria"; then

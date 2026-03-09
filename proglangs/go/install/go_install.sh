@@ -27,7 +27,7 @@ CURRENT="$(go version 2> /dev/null | awk '{print $3}')"
 
 # Atnaujinti pranešimų masyvą
 # shellcheck disable=SC2155
-declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją
 if ! ask_to_install "go" "${HOME}/.opt/go"; then
@@ -37,7 +37,7 @@ fi
 # Sukurti laikiną aplanką.
 # Nustatyti funkciją, ištrinančią jį iš disko išeinant iš programos.
 INIT_DIR="$PWD"
-TMP_DIR="$( mktemp -p . -d -t go.XXXXXXXX | xargs realpath )"
+TMP_DIR="$( mktemp -p . -d -t go_.XXXXXXXX | xargs realpath )"
 trap cleanup EXIT
 
 # Atsisųsti į laikiną aplanką programos failą.

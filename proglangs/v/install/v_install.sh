@@ -27,7 +27,7 @@ CURRENT="$(v -v 2> /dev/null | awk '{print $2, $NF}')"
 
 # Atnaujinti pranešimų masyvą
 # shellcheck disable=SC2155
-declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją
 if ! ask_to_install "v" "${HOME}/.opt/v"; then
