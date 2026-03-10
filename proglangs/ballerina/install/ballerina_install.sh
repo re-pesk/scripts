@@ -64,10 +64,12 @@ unzip -q "ballerina-${LATEST}-swan-lake.zip"
 rm -rf "${HOME}/.opt/ballerina"
 mv -T "ballerina-${LATEST}-swan-lake" "${HOME}/.opt/ballerina"
 
-# Įtraukti programos kelią į sistemos kintamąjį
-[[ -d "${HOME}/.opt/ballerina/bin" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] \
-    && export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"
+# Įtraukti įdiegtos programos kelią, kad galima būtų ją kviesti,
+# neprisijungus prie vartotojo paskyros iš naujo.
+PATH_COMMAND=$'[[ -d "${HOME}/.opt/ballerina/bin" ]] && \
+  [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] && \
+    export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"'
+eval "${PATH_COMMAND}"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! bal --version > /dev/null 2>&1; then
@@ -83,14 +85,10 @@ CURRENT="$(bal --version 2>/dev/null | head -n 1 | awk '{print $2}')"
 }
 successMessage "${LANG_MESSAGES[installed_latest]}"
 
-# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
-# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
+# Išvesti į terminalą komandą, kurią reikia įvykdyti,
+# kad galima būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
 # shellcheck disable=SC2016
-PATH_COMMAND='[[ -d "${HOME}/.opt/ballerina/bin" ]] && \
-  [[ ":${PATH}:" != *":${HOME}/.opt/ballerina/bin:"* ]] && \
-    export PATH="${HOME}/.opt/ballerina/bin${PATH:+:${PATH}}"'
 infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
-# shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" '${HOME}/.opt/ballerina/bin'
+insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"

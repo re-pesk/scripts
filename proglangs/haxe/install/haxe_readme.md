@@ -49,7 +49,7 @@ printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
 # Atsisiųsti failą iš svetainės
 curl -fsSLO https://github.com/HaxeFoundation/hashlink/releases/download/latest/hashlink-${COMMIT}-linux-amd64.tar.gz
 
-# Išvesti į terminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
+# Išvesti į terminalą SHA256 kontrolines sumas, kad galima būtų sulyginti
 # Jeigu kontrolinės sumos nesutampa, diegimą nutraukti ir ištrinti atsisiųstus failus.
 printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
   "$(sha256sum "hashlink-${COMMIT}-linux-amd64.tar.gz" | awk '{print $1}')" \
@@ -70,7 +70,7 @@ rm -f "hashlink-${COMMIT}-linux-amd64.tar.gz"
 
 printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
   "${LATEST}" "$(hl --version 2> /dev/null)"
-  
+
 unset COMMIT LATEST
 ```
 

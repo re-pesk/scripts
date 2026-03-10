@@ -60,7 +60,8 @@ tar --file="${TMP_DIR}/scala3-${LATEST}-x86_64-pc-linux.tar.gz" \
   --transform='flags=r;s/^(scala3)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
 rm -rf "${TMP_DIR}"
 
-# Įtraukti įdiegtos programos kelius į sistemos kintamąjį
+# Įtraukti įdiegtos programos kelius, kad galima būtų ją kviesti,
+# neprisijungus prie vartotojo paskyros iš naujo.
 PATH_COMMAND=$'[[ -d "${HOME}/.opt/scala3/bin" ]] && \
   [[ ":${PATH}:" != *":${HOME}/.opt/scala3/bin:"* ]] && \
     export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"'
@@ -80,11 +81,9 @@ CURRENT="$(scala version 2> /dev/null | tail -n +2 | awk '{print $NF}')"
 }
 successMessage "${LANG_MESSAGES[installed_latest]}"
 
-# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
-# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
-# shellcheck disable=SC2016
+# Išvesti į terminalą komandą, kurią reikia įvykdyti,
+# kad galima būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
 infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
-# shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" '${HOME}/.opt/scala3/bin'
+insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"

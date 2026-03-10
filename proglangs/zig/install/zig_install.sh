@@ -47,7 +47,7 @@ trap cleanup EXIT
 
 curl -sSLo "${TMP_DIR}/zig-x86_64-linux-${LATEST}.tar.xz" "${URL}"
 
-# Išvesti į terminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
+# Išvesti į terminalą SHA256 kontrolines sumas, kad galima būtų sulyginti
 # Jeigu kontrolinės sumos nesutampa, diegimą nutraukti, atsisiųstus failus ištrinti.
 if ! check_sha256_str "${TMP_DIR}/zig-x86_64-linux-${LATEST}.tar.xz" "${DATA["shasum"]}"; then
   errorMessage "${LANG_MESSAGES[failed]}"

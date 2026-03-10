@@ -56,10 +56,12 @@ install_euphoria_4.2() {
 
   echo ""
 
-  # Jeigu nėra pakeisti kelią PATH kintamajame
-  [[ -d "${HOME}/.opt/euphoria/bin" ]] &&
-    [[ ":${PATH}:" != *":${HOME}/.opt/euphoria/bin:"* ]] &&
-      export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"
+  # Įtraukti įdiegtos programos kelią, kad galima būtų ją kviesti,
+  # neprisijungus prie vartotojo paskyros iš naujo.
+  PATH_COMMAND=$'[[ -d "${HOME}/.opt/euphoria/bin" ]] &&
+  [[ ":${PATH}:" != *":${HOME}/.opt/euphoria/bin:"* ]] &&
+    export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"'
+  eval "${PATH_COMMAND}"
 
   # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
   if ! euc --version &> /dev/null || ! eui --version &> /dev/null ; then
@@ -82,15 +84,11 @@ install_euphoria_4.2() {
   }
   successMessage "${LANG_MESSAGES[installed_latest]}"
 
-  # Išvesti komandą, kurią reikia įvykdyti terminale,
-  # kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
-  # shellcheck disable=SC2016
-  PATH_COMMAND=$'[[ -d "${HOME}/.opt/euphoria/bin" ]] &&
-  [[ ":${PATH}:" != *":${HOME}/.opt/euphoria/bin:"* ]] &&
-    export PATH="${HOME}/.opt/euphoria/bin${PATH:+:${PATH}}"'
+  # Išvesti į terminalą komandą, kurią reikia įvykdyti,
+  # kad galima būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
   infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
   # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
   create_file_if_not_exists "${HOME}/.pathrc" '# shellcheck shell=bash'
-  insert_path "${HOME}/.pathrc" "${HOME}/.opt/euphoria/bin"
+  insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"
 }

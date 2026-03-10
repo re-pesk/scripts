@@ -72,11 +72,12 @@ mv -T "${HOME}/.opt/phix/phix/builtins" "${HOME}/.opt/phix/bin/builtins"
 mv -T "${HOME}/.opt/phix/phix/test" "${HOME}/.opt/phix/bin/test"
 mv -T "${HOME}/.opt/phix/phix/demo" "${HOME}/.opt/phix/bin/demo"
 
-# SUkurt phix/bin aplanke simbolines nuorodas
+# Sukurti phix/bin aplanke simbolines nuorodas
 cd "${HOME}/.opt/phix/bin" || exit 1
 find "${HOME}/.opt/phix" -type f -executable -exec ln -s {} \;
 
-# Įtraukti phix/bin aplanką į sistemos PATH kintamąjį
+# Įtraukti įdiegtos programos kelius, kad galima būtų ją kviesti,
+# neprisijungus prie vartotojo paskyros iš naujo.
 PATH_COMMAND=$'[[ -d "${HOME}/.opt/phix/bin" ]] \
   && [[ ":${PATH}:" != *":${HOME}/.opt/phix/bin:"* ]] \
     && export PATH="${HOME}/.opt/phix/bin${PATH:+:${PATH}}"'
@@ -99,11 +100,9 @@ if [[ "${CURRENT}" == "${LATEST}" ]]; then
 fi
 successMessage "${LANG_MESSAGES[installed_latest]}"
 
-# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
-# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
-# shellcheck disable=SC2016
+# Išvesti į terminalą komandą, kurią reikia įvykdyti,
+# kad galima būtų kviesti programa, neprisijungus prie vartotojo paskyros iš naujo.
 infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
-# shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" '${HOME}/.opt/phix/bin'
+insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"

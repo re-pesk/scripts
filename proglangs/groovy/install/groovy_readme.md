@@ -41,7 +41,7 @@ printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
 # Atsisiųsti failą iš svetainės
 curl -sSLO "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-sdk-${LATEST}.zip"
 
-# Išvesti į terminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
+# Išvesti į terminalą SHA256 kontrolines sumas, kad galima būtų sulyginti
 # Jeigu kontrolinės sumos nesutampa, diegimą nutraukti ir ištrinti atsisiųstus failus.
 printf 'sha256 kontrolinės sumos:\n  atsisiųsto failo: %s\n  iš repozitorijos: %s\n\n' \
   "$(sha256sum "apache-groovy-sdk-${LATEST}.zip" | awk '{print $1}')" \
@@ -58,7 +58,8 @@ mv -T "groovy-${LATEST}" "${HOME}/.opt/groovy"
 rm -f "groovy-sdk-${LATEST}.zip"
 
 # Sukurti sistemos kintamąjį, jeigu jo nėra
-# Įtraukti įdiegtos programos kelią į sistemos kintamąjį
+# Įtraukti įdiegtos programos kelią, kad galima būtų ją kviesti,
+# neprisijungus prie vartotojo paskyros iš naujo.
 [ -z "$JAVA_HOME" ] && {
   JAVA_HOME="$(which java | xargs readlink -f | xargs dirname | xargs dirname)"
   export JAVA_HOME

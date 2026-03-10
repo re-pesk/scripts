@@ -61,7 +61,8 @@ rm -rf "${HOME}/.opt/lua"
 make install INSTALL_TOP="${HOME}/.opt/lua"
 cd "${INIT_DIR}" || exit 1
 
-# Įtraukti įdiegtos programos kelią į sistemos kintamąjį
+# Įtraukti įdiegtos programos kelią, kad galima būtų ją kviesti,
+# neprisijungus prie vartotojo paskyros iš naujo.
 PATH_COMMAND=$'[[ -d "${HOME}/.opt/lua/bin" ]] && \
   [[ ":${PATH}:" != *":${HOME}/.opt/lua/bin:"* ]] && \
     export PATH="${HOME}/.opt/lua/bin${PATH:+:${PATH}}"'
@@ -83,11 +84,9 @@ CURRENT="$(lua -v 2> /dev/null | awk '{print $2}')"
 }
 printf '%s\n\n' "Lua ${LATEST} is succesfully installed."
 
-# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
-# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
-# shellcheck disable=SC2016
+# Išvesti į terminalą komandą, kurią reikia įvykdyti,
+# kad gali būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
 infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
-# shellcheck disable=SC2016
-insert_path_str "${HOME}/.pathrc" '${HOME}/.opt/lua/bin'
+insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"

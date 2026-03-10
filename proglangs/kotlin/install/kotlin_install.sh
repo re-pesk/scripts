@@ -64,9 +64,12 @@ rm -rf "${HOME}/.opt/kotlin-native"
 tar --file="kotlin-native-prebuilt-linux-x86_64-${LATEST}.tar.gz" \
   --transform 'flags=r;s/^(kotlin-native)[^\/]+/\1/x' --show-transformed-names -xzvC "${HOME}/.opt"
 
-[[ -d "${HOME}/.opt/kotlin-native/bin" ]] && \
+# Įtraukti įdiegtos programos kelią, kad galima būtų ją kviesti,
+# neprisijungus prie vartotojo paskyros iš naujo.
+PATH_COMMAND=$'[[ -d "${HOME}/.opt/kotlin-native/bin" ]] && \
   [[ ":${PATH}:" != *":${HOME}/.opt/kotlin-native/bin:"* ]] && \
-    export PATH="${HOME}/.opt/kotlin-native/bin${PATH:+:${PATH}}"
+    export PATH="${HOME}/.opt/kotlin-native/bin${PATH:+:${PATH}}"'
+eval "${PATH_COMMAND}"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! kotlinc-native -version > /dev/null 2>&1; then
@@ -82,14 +85,9 @@ CURRENT="$(kotlinc-native -version 2> /dev/null | awk '{print $NF}')"
 }
 printf '%s\n\n' "Kotlin v${LATEST} is succesfully installed."
 
-# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
-# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
-# shellcheck disable=SC2016
-PATH_COMMAND=$'[[ -d "${HOME}/.opt/kotlin-native/bin" ]] && \
-  [[ ":${PATH}:" != *":${HOME}/.opt/kotlin-native/bin:"* ]] && \
-    export PATH="${HOME}/.opt/kotlin-native/bin${PATH:+:${PATH}}"'
+# Įšvesti į terminale komandą, kurią reikia įvykdyti,
+# kad galima būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
 infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
-# Įtraukti įdiegtos programos kelią į sistemos kintamąjį
-# shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" '${HOME}/.opt/kotlin-native/bin'
+# Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
+insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"

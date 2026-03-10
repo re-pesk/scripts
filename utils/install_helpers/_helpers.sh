@@ -194,7 +194,7 @@ ask_to_install() (
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
 
   local -r COMMAND_NAME="${1}"
-  local -r COMMAND_PATH="$(command -v "${COMMAND_NAME}"| xargs realpath)"
+  local -r COMMAND_PATH="${COMMAND_NAME:+$(command -v "${COMMAND_NAME}" | xargs realpath)}"
   local -r INSTALL_DIR="${2}"
   local TO_CONTINUE=""
 
@@ -522,10 +522,10 @@ create_file_if_not_exists() (
 
 # Insert a path record to the certain file.
 : << "USAGE"
-insert_path_str <FILE NAME> <STRING TO INSERT>
+insert_path <FILE NAME> <STRING TO INSERT>
 USAGE
 : << "EXAMPLE"
-insert_path_str "${HOME}/.pathrc" \
+insert_path "${HOME}/.pathrc" \
 '[[ -d "${HOME}/.opt/go/bin" ]] \
   && [[ ":${PATH}:" != *":${HOME}/.opt/go/bin:"* ]] \
   && export PATH="${HOME}/.opt/go/bin${PATH:+:${PATH}}"
@@ -535,7 +535,7 @@ insert_path_str "${HOME}/.pathrc" \
   && export PATH="${HOME}/go/bin${PATH:+:${PATH}}"'
 EXAMPLE
 
-insert_path_str() (
+insert_path() (
   FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
 
   FILE_NAME="${1}"
@@ -564,53 +564,4 @@ insert_path_str() (
 '"${INSERT_STR}"'
 
 #end '"${APP_NAME,,}"' init' >> "${FILE_NAME}"
-)
-
-# Insert several paths in one record to the certain file.
-: << "COMMENT"
-Use 'single quotes' to prevent expansion of variables.
-FILE_NAME must be in "double quotes".
-Letter case of app_name does not matter.
-Other parameters must be in 'single quotes'.
-COMMENT
-: << "USAGE"
-insert_path <FILE NAME> <APP DIR 1> <APP DIR 2> ...
-USAGE
-: << "EXAMPLE"
-insert_path "${HOME}/.pathrc" '${HOME}/.opt/go/bin' '${HOME}/go/bin'
-EXAMPLE
-
-insert_path() (
-
-  FUNC_NAME="${DEBUG:+"${FUNCNAME[0]}: "}"
-
-  FILE_NAME="${1}"
-  # APP_NAME from variable in outer scope
-  shift 1
-  APP_DIRS=("$@")
-
-  # Check if the record already exists in the file.
-  # shellcheck disable=SC2031
-  if [[ "$(grep -c -F "#begin ${APP_NAME,,} init" < "${FILE_NAME}")" -gt 0 ]]; then
-    infoMessage "$(
-      sed -e "s|{APP_NAME}|${APP_NAME}|g;s|{FILE_NAME}|${FILE_NAME}|g" \
-        <<< "${LANG_MESSAGES[record_exists]}"
-      )" "${FUNC_NAME}"
-    exit 0
-  fi
-
-  # Create a string of paths to be added to the PATH variable
-  PATH_LIST=""
-  # shellcheck disable=SC2068
-  for APP_DIR in ${APP_DIRS[@]}; do
-    # shellcheck disable=SC2016
-    PATH_LIST="${PATH_LIST:+"${PATH_LIST}"$'\n\n'}"'[[ -d "'"${APP_DIR}"'" ]] &&
-  [[ ":${PATH}:" != *":'"${APP_DIR}"':"* ]] &&
-    export PATH="'"${APP_DIR}"'${PATH:+:${PATH}}"'
-  done
-
-  # shellcheck disable=SC2031
-  if ! insert_path_str "${FILE_NAME}" "${PATH_LIST}"; then
-    exit 1
-  fi
 )

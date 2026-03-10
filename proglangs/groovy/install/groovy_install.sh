@@ -66,15 +66,16 @@ unzip -q "groovy-sdk-${LATEST}.zip"
 rm -rf "${HOME}/.opt/groovy"
 mv -T "groovy-${LATEST}" "${HOME}/.opt/groovy"
 
-# shellcheck disable=SC2155
-[ -z "$JAVA_HOME" ] \
-  && export JAVA_HOME="$(
-    which java | xargs readlink -f | xargs dirname | xargs dirname
-  )"
-
-[[ -d "${HOME}/.opt/groovy/bin" ]] \
-  && [[ ":${PATH}:" != *":${HOME}/.opt/groovy/bin:"* ]] \
-  && export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"
+# Įtraukti įdiegtos programos kelią ir kitus kintamuosius,
+# kad galima būtų ją kviesti, neprisijungus prie vartotojo paskyros iš naujo.
+PATH_COMMAND=$'[ -z "$JAVA_HOME" ] && {
+  JAVA_HOME="$(which java | xargs readlink -f | xargs dirname | xargs dirname)"
+	export JAVA_HOME
+}\n
+[[ -d "${HOME}/.opt/groovy/bin" ]] && \
+  [[ ":${PATH}:" != *":${HOME}/.opt/groovy/bin:"* ]] && \
+    export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"'
+eval "${PATH_COMMAND}"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! groovy --version > /dev/null 2>&1; then
@@ -90,18 +91,9 @@ CURRENT="$(groovy --version 2> /dev/null | awk '{print $3}')"
 }
 printf '%s\n\n' "Groovy v${LATEST} is succesfully installed."
 
-# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
-# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
-# shellcheck disable=SC2016
-PATH_COMMAND=$'[ -z "$JAVA_HOME" ] && {
-  JAVA_HOME="$(which java | xargs readlink -f | xargs dirname | xargs dirname)"
-	export JAVA_HOME
-}\n
-[[ -d "${HOME}/.opt/groovy/bin" ]] && \
-  [[ ":${PATH}:" != *":${HOME}/.opt/groovy/bin:"* ]] && \
-    export PATH="${HOME}/.opt/groovy/bin${PATH:+:${PATH}}"'
+# Išvesti į terminalą komandą, kurią reikia įvykdyti,
+# kad galima būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
 infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
-# Įtraukti įdiegtos programos kelią į sistemos kintamąjį
-# shellcheck disable=SC2016
-insert_path_str "${HOME}/.pathrc" "${PATH_COMMAND}"
+# Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
+insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"

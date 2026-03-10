@@ -48,7 +48,7 @@ URL="${DATA["tarball"]}"
 # Atsisiųsti failą iš tinklalapio
 curl -sSLo "zig-x86_64-linux-${LATEST}.tar.xz" "${URL}"
 
-# Išvesti į terminalą SHA256 kontrolines sumas, kad būtų galima sulyginti
+# Išvesti į terminalą SHA256 kontrolines sumas, kad galima būtų sulyginti
 # Jeigu kontrolinės sumos nesutampa, diegimą nutraukti, atsisiųstus failus ištrinti.
 sha256sum "zig-x86_64-linux-${LATEST}.tar.xz" | awk '{print "\n"$1}'; \
 printf '%s\n\n' "${DATA["shasum"]}"

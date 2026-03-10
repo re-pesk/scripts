@@ -61,11 +61,14 @@ rm -rf "${HOME}/.opt/nu"
 tar --file="${TMP_DIR}/nu-${LATEST}-x86_64-unknown-linux-gnu.tar.gz" \
   --transform 'flags=r;s/nu.+gnu/nu/x' --show-transformed-names -xzvC "${HOME}/.opt"
 
-# Įtraukti įdiegtos programos kelią į sistemos kintamąjį
+# Įtraukti įdiegtos programos kelią, kad galima būtų ją kviesti,
+# neprisijungus prie vartotojo paskyros iš naujo.
+# Išvesti šią komandą į terminalą.
 PATH_COMMAND=$'[[ -d "${HOME}/.opt/nu" ]] \
   && [[ ":${PATH}:" != *":${HOME}/.opt/nu:"* ]] \
     && export PATH="${HOME}/.opt/nu${PATH:+:${PATH}}"'
 eval "${PATH_COMMAND}"
+infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if ! nu -v > /dev/null 2>&1; then
@@ -81,11 +84,10 @@ CURRENT="$(nu -v 2> /dev/null)"
 }
 successMessage "${LANG_MESSAGES[installed_latest]}"
 
-# Išvesti į terminalą komandą, kurią reikia įvykdyti terminale,
-# kad nereikėtų iš naujo prisijungti prie vartotojo paskyros.
+# Išvesti į terminalą komandą, kurią reikia įvykdyti,
+# kad galima būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
 # shellcheck disable=SC2016
 infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
-# shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" '${HOME}/.opt/nu'
+insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"
