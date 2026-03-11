@@ -1,4 +1,4 @@
-[&#x2BA2;](../../install_readme.md "Atgal")
+[Grįžti &#x2BA2;](../../install_readme.md "Grįžti")
 
 # Java [<sup>&#x2B67;</sup>](https://www.java.com/en/download/help/index.html)
 

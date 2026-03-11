@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md "Atgal")
+[Grįžti &#x2BA2;](../../readme.md "Grįžti")
 
 # PureScript [<sup>&#x2B67;</sup>](hhttps://www.purescript.org/)
 

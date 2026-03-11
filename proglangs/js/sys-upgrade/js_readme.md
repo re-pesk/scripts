@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md "Atgal")
+[Grįžti &#x2BA2;](../../readme.md "Grįžti")
 
 # JavaScript [<sup>&#x2B67;</sup>](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 

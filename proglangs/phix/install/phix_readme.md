@@ -1,4 +1,4 @@
-[&#x2BA2;](../../install_readme.md "Atgal")
+[Grįžti &#x2BA2;](../../install_readme.md "Grįžti")
 
 # Phix [<sup>&#x2B67;</sup>](http://phix.x10.mx/index.php)
 

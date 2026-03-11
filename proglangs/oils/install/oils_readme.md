@@ -1,5 +1,5 @@
 <!-- markdownlint-disable-file no-hard-tabs -->
-[&#x2BA2;](../../install_readme.md "Atgal")
+[Grįžti &#x2BA2;](../../install_readme.md "Grįžti")
 
 # Oils for Unix [<sup>&#x2B67;</sup>](https://www.oilshell.org/)
 

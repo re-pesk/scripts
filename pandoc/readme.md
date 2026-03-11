@@ -1,4 +1,4 @@
-[&#x2BA2;](../readme.md)
+[Grįžti &#x2BA2;](../readme.md "Grįžti")
 
 # Pandoc konverterio naudojimas
 
@@ -21,21 +21,21 @@ Pavyzdys:
 | Pavadinimas | Failo plėtinys | Numatytieji plėtiniai |
 | -- | -- | :--: |
 | asciidoc | adoc | - |
-| context | ctex  | - |
-| djot | dj  | - |
-| docx | docx  | - |
-| haddock | hie  | - |
-| html | html  | - |
-| ipynb | ipynb  | - |
-| jats | jats  | - |
-| json | json  | - |
-| latex | tex  | - |
+| context | ctex | - |
+| djot | dj | - |
+| docx | docx | - |
+| haddock | hie | - |
+| html | html | - |
+| ipynb | ipynb | - |
+| jats | jats | - |
+| json | json | - |
+| latex | tex | - |
 | markdown | md | +abbreviations+emoji+mark |
-| muse | muse  | - |
-| native | hs  | - |
-| pdf | pdf  | - |
-| odt | odt  | - |
-| rst | rst  | - |
-| texinfo | txi  | - |
-| textile | textile  | - |
-| typst | typ  | - |
+| muse | muse | - |
+| native | hs | - |
+| pdf | pdf | - |
+| odt | odt | - |
+| rst | rst | - |
+| texinfo | txi | - |
+| textile | textile | - |
+| typst | typ | - |

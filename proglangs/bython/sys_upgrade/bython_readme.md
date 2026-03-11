@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md "Atgal")
+[Grįžti &#x2BA2;](../../readme.md "Grįžti")
 
 # Bython [<sup>&#x2B67;</sup>](https://github.com/prushton2/bython)
 

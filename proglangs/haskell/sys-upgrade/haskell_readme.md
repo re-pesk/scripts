@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md "Atgal")
+[Grįžti &#x2BA2;](../../readme.md "Grįžti")
 
 # Haskell [<sup>&#x2B67;</sup>](https://www.haskell.org/)
 

@@ -1,4 +1,4 @@
-[&#x2BA2;](../readme.md)
+[Grįžti &#x2BA2;](../readme.md "Grįžti")
 
 # Priminimo skriptai
 

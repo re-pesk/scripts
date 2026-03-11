@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md "Atgal")
+[Grįžti &#x2BA2;](../../readme.md "Grįžti")
 
 # Ksh93 [<sup>&#x2B67;</sup>](http://www.kornshell.com/) [(man.1)](https://linux.die.net/man/1/ksh93)
 

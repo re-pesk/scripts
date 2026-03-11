@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md "Atgal")
+[Grįžti &#x2BA2;](../../readme.md "Grįžti")
 
 # C3 [<sup>&#x2B67;</sup>](https://c3-lang.org/)
 

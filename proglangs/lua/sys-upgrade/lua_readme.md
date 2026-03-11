@@ -1,4 +1,4 @@
-[&#x2BA2;](../../readme.md "Atgal")
+[Grįžti &#x2BA2;](../../readme.md "Grįžti")
 
 # Lua [<sup>&#x2B67;</sup>2934;</sup>](https://www.lua.org/)
 

@@ -1,4 +1,4 @@
-[&#x2BA2;](../../install_readme.md "Atgal")
+[Grįžti &#x2BA2;](../../install_readme.md "Grįžti")
 
 # Carbon [<sup>&#x2B67;</sup>](https://docs.carbon-lang.dev/)
 

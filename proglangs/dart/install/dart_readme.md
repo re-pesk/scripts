@@ -1,4 +1,4 @@
-[&#x2BA2;](../../install_readme.md "Atgal")
+[Grįžti &#x2BA2;](../../install_readme.md "Grįžti")
 
 # Dart [<sup>&#x2B67;</sup>](https://dart.dev/)
 
@@ -18,7 +18,7 @@ wget -qO- https://dl-ssl.google.com/linux/linux_signing_key.pub |\
 echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/dart.gpg] https://storage.googleapis.com/download.dartlang.org/linux/debian stable main' |\
   sudo tee /etc/apt/sources.list.d/dart_stable.list
 
-# Jeigu nėra instaliuota, instaliuojamas Dartas 
+# Jeigu nėra instaliuota, instaliuojamas Dartas
 sudo apt-get update && sudo apt-get install dart
 
 # Tikrinamas Darto veikimas
@@ -48,7 +48,7 @@ dart kodo-failas.dart
 arba
 
 ```bash
-///usr/bin/env dart "$0" "$@"; exit $? 
+///usr/bin/env dart "$0" "$@"; exit $?
 ```
 
 ## Kompiliavimas
