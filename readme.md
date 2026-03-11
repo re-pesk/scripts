@@ -6,10 +6,12 @@ Programavimo žaidimai
 
 * Pandoc konverterio [pagalbinis skriptas](./pandoc/readme.md)
 
-* [Paleidimo skriptai](./script-loaders/readme.md)
+* Programų [paleidimo skriptai](./script-loaders/readme.md)
 
-* Programavimo kalbų ir jų variklių [diegimas](./proglangs/install_readme.md)
+* Programų diegimo [skriptai](./install/readme.md)
 
 * Ubuntu [atnaujinimo skriptas](./proglangs/readme.md)
 
-* Įvairūs pagalbiniai [skriptai ir pavyzdžiai](./shell/readme.md)
+* Skriptų [pavyzdžiai](./shell/readme.md)
+
+* Pagalbiniai [skriptai](./utils/readme.md)

@@ -8,6 +8,10 @@ Tikslas - patikrinti, kaip skirtingos kalbos tinka rašyti operacijų sistemos v
 
 Naudota operacinė sistema – Ubuntu 24.04
 
+## Diegimas
+
+Apie programavimo kalbų ir vykdymo aplinkų [diegimą <sup>&#x2B67;</sup>](../install/proglangs_readme.md "Diegimas")
+
 ## Tipinės apvalkalo scenarijų (Shell scripting) kalbos (7)
 
 * [x] [Bash <sup>&#x2B67;</sup>](bash/sys-upgrade/bash_readme.md) (±)\
