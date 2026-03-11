@@ -38,7 +38,6 @@ LATEST="curlypy"
 CURRENT="$(curlypy --help 2> /dev/null | head -n 1 | awk '{print $2}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

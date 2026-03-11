@@ -20,7 +20,6 @@ install_euphoria_4.2() {
   CURRENT="$(euc --version &> /dev/null && euc --version | head -n 1 | awk '{print $5}' | sed 's/v//')"
 
   # Atnaujinti pranešimų masyvą
-  # shellcheck disable=SC2155
   update_lang_messages
 
   # Pasirinkti, ar įdiegti kitą versiją

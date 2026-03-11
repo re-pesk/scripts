@@ -24,7 +24,6 @@ LATEST="$(curl -sSLo /dev/null -w "%{url_effective}" "https://github.com/odin-la
 CURRENT="$(odin version 2> /dev/null | cut -c 14-24)"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

@@ -24,7 +24,7 @@ fi
 
 if [ -d "${HOME}/.pyvenvs/tests" ]; then
   # shellcheck disable=SC1091
-  source "${HOME}/.pyvenvs/tests/bin/activate"
+  . "${HOME}/.pyvenvs/tests/bin/activate"
   if bython --help &> /dev/null; then
     infoMessage "${LANG_MESSAGES[already]}"
     deactivate
@@ -38,7 +38,6 @@ LATEST="bython"
 CURRENT="$(bython --help 2> /dev/null | head -n 1 | awk '{print $2}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją
@@ -53,7 +52,7 @@ fi
 mkdir -p "${HOME}/.pyvenvs"
 python3 -m venv ~/.pyvenvs/tests
 # shellcheck disable=SC1091
-source "${HOME}/.pyvenvs/tests/bin/activate"
+. "${HOME}/.pyvenvs/tests/bin/activate"
 python -m pip install bython-prushton
 printf '%s\n' $'#!/usr/bin/env -S bash\n\npython -m bython-prushton "$@"' > "${HOME}/.pyvenvs/tests/bin/bython"
 

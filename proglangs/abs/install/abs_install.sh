@@ -24,7 +24,6 @@ LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/abs-lang
 CURRENT="$(abs --version 2> /dev/null)"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

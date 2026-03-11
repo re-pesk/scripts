@@ -23,7 +23,6 @@ LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/scala/sc
 CURRENT="$(scala version 2> /dev/null | tail -n +2 | awk '{print $NF}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

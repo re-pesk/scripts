@@ -17,7 +17,6 @@ install_euphoria_4.1() {
   CURRENT="$(eui --version &> /dev/null && eui --version  | head -n 1 | awk '{print $3}' | sed 's/v//')"
 
   # Atnaujinti pranešimų masyvą
-  # shellcheck disable=SC2155
   update_lang_messages
 
   # Pasirinkti, ar įdiegti kitą versiją

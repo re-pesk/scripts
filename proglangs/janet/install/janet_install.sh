@@ -24,7 +24,6 @@ LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/janet-la
 CURRENT="v$(janet --version 2> /dev/null | awk -F'-' '{print $1}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

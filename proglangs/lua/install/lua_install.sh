@@ -25,7 +25,6 @@ LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/lua/lua/
 CURRENT="$(lua -v 2> /dev/null | awk '{print $2}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

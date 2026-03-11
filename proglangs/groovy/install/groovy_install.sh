@@ -31,7 +31,6 @@ LATEST="$( curl -s https://groovy.apache.org/download.html#distro \
 CURRENT="$(groovy --version 2> /dev/null | awk '{print $3}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

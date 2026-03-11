@@ -31,7 +31,6 @@ LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/JetBrain
 CURRENT="$(kotlinc-native -version 2> /dev/null | awk '{print $NF}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

@@ -27,7 +27,6 @@ LATEST="$(
 CURRENT="$(bal --version 2>/dev/null | head -n 1 | awk '{print $2}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją
@@ -87,7 +86,6 @@ successMessage "${LANG_MESSAGES[installed_latest]}"
 
 # Išvesti į terminalą komandą, kurią reikia įvykdyti,
 # kad galima būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
-# shellcheck disable=SC2016
 infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
 
 # Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą

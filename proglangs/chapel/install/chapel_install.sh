@@ -24,7 +24,6 @@ LATEST="$(basename -- "$(curl -sLo /dev/null -w "%{url_effective}" "https://gith
 CURRENT="$(chpl --version 2>/dev/null | head -n 1 | awk '{print $NF}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

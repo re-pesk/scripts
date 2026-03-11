@@ -27,7 +27,6 @@ LATEST="$(
 CURRENT="v$(ngs --version)"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

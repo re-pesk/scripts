@@ -22,7 +22,6 @@ LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/elves/el
 CURRENT="v$(elvish --version | cut -c -6)"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

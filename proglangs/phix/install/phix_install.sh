@@ -26,7 +26,6 @@ LATEST="$(curl http://phix.x10.mx/download.php 2> /dev/null | \
 CURRENT="$(p -version 2> /dev/null)"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją

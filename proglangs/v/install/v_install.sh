@@ -26,7 +26,6 @@ awk -F"[' ]" '/version: / {print $3}') ${COMMIT}"
 CURRENT="$(v -v 2> /dev/null | awk '{print $2, $NF}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
 update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją
