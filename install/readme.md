@@ -8,9 +8,11 @@
 * [hyperfine <sup>&#x2B67;</sup>](./hyperfine/hyperfine.md)
 * [yq <sup>&#x2B67;</sup>](./yq/yq.md)
 * [jq <sup>&#x2B67;</sup>](./jq/jq.md)
+* [vivaldi <sup>&#x2B67;</sup>](./vivaldi/vivaldi.md)
+* [vscode <sup>&#x2B67;</sup>](./vscode/vscode.md)
 * [xq <sup>&#x2B67;</sup>](./xq/xq.md)
 * [zed <sup>&#x2B67;</sup>](./zed/zed.md)
 
 ## Programavimo kalbos ir vykdymo aplinkos
 
-[Sąrašas](./proglangs_readme.md "Proglangs")
+[Sąrašas](./_proglangs/proglangs_readme.md "Proglangs")

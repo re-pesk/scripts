@@ -1,6 +1,4 @@
-# Pagalbiniai skriptai
-
-Programavimo žaidimai
+# Sistemos scenarijų programavimo žaidimai
 
 * Priminimo [skriptas](./alarm-clock/readme.md)
 
@@ -11,6 +9,8 @@ Programavimo žaidimai
 * Programų diegimo [skriptai](./install/readme.md)
 
 * Ubuntu [atnaujinimo skriptas](./proglangs/readme.md)
+
+  * Programavimo kalbų ir vykdymo aplinkų [diegimo skriptai](./install/_proglangs/proglangs/readme.md)
 
 * Skriptų [pavyzdžiai](./shell/readme.md)
 

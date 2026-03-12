@@ -1,0 +1,59 @@
+#! /usr/bin/env -S bash
+
+# DEBUG: darbinis režimas - null arba nunustatytas (unset), klaidų paieškos režimas - bet kokia kita reikšmėeškos režimas - bet kokia kita reikšmė
+DEBUG=
+
+APP_NAME="PowerShell"
+
+# Jeigu nėra pagalbinio failo, paleisti skriptą pagalbiniams failams įkelti
+# Įkelti pagalbines funkcijas
+../../../utils/install_helpers/_set_helpers.sh ../../
+. ../../_helpers_.sh
+
+echo ""
+
+# Jei komandos neįdiegtos, išeiti iš skripto
+if ! check_command curl xargs; then
+  exit 1
+fi
+
+# Įdiegti trūkstamus paketus
+( readarray -t NOT_INSTALLED < <(packages_to_install wget apt-transport-https software-properties-common)
+  (( ${#NOT_INSTALLED[@]} > 0 )) && sudo apt-get install -y "${NOT_INSTALLED[@]}"
+)
+
+# Įdiegti pagrindinį Microsoft paketą
+dpkg -s packages-microsoft-prod &> /dev/null || (
+  # Gauti operacinės sistemos pavadinimą ir versiją
+  source /etc/os-release
+
+  # Atsisiųsti Microsoft'o repositorijos raktus
+  wget -q "https://packages.microsoft.com/config/${NAME,,}/${VERSION_ID}/packages-microsoft-prod.deb"
+
+  # Įdiegti raktus
+  sudo dpkg -i packages-microsoft-prod.deb
+
+  # Ištrinti raktų failą
+  rm -f packages-microsoft-prod.deb
+)
+
+# Atnaujinti paketų sąrašą po packages.microsoft.com pridėjimo
+sudo apt-get update
+
+# Įdiegti PowerShell
+dpkg -s powershell &> /dev/null || sudo apt-get install -y powershell
+
+# Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
+if ! pwsh -Version > /dev/null 2>&1; then
+  errorMessage "${LANG_MESSAGES[not_working]}"
+  exit 1
+fi
+
+# Išvesti sėkmės pranešimą
+# shellcheck disable=SC2034
+LATEST="$(pwsh -Version | awk '{print $2}')"
+
+# Atnaujinti pranešimų masyvą
+update_lang_messages
+
+successMessage "${LANG_MESSAGES[installed_latest]}"
