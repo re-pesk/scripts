@@ -38,7 +38,7 @@ const runCmd = (cmdArg) => {
   // Išvedama komandos eilutė, apsupta skirtuko eilučių
   console.log(`${separator}\n${command}\n${separator}\n`)
 
-  // Įvykdoma komanda, procesas išsaugomas į kintamąjį 
+  // Įvykdoma komanda, procesas išsaugomas į kintamąjį
   const child_proc = spawnSync(
     ["sudo", ...cmdArg.split(' ')], {
     stdio: ['inherit', 'inherit', 'inherit'],

@@ -22,7 +22,7 @@ const successMessage = messages[LANG].succ
 // Išorinių komandų iškvietimo funkcija
 const runCmd = (cmdArg) => {
 
-  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento 
+  // Sukuriama komandos tekstinė eilutė iš funkcijos argumento
   let command = `sudo ${cmdArg}`
 
   // Sukuriamas komandos ilgio skirtukas iš "-" simbolių
@@ -33,7 +33,7 @@ const runCmd = (cmdArg) => {
   // Išvedama komandos eilutė, apsupta skirtuko eilučių
   console.log(`${separator}\n${command}\n${separator}\n`)
 
-  // Įvykdoma komandas, procesas išsaugomas į kintamąjį 
+  // Įvykdoma komandas, procesas išsaugomas į kintamąjį
   const child_proc = new Deno.Command('sudo', {
     args: [...cmdArg.split(' ')],
     stdin: 'inherit',
@@ -44,7 +44,7 @@ const runCmd = (cmdArg) => {
   // Išsaugomas įvykdytos komandos išėjimo kodas
   const { code } = child_proc.outputSync();
 
-  // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas 
+  // Jeigu vykdant komandą įvyko klaida, išvedamas klaidos pranešimas ir nutraukiamas programos vykdymas
   if (code !== 0) {
     console.log(`\n${errorMessage}\n`);
     Deno.exit(99)

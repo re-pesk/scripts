@@ -1,6 +1,6 @@
 [Grįžti &#x2BA2;](../../install_readme.md "Grįžti")
 
-# TypeScript [<sup>&#x2B67;</sup>](https://www.typescriptlang.org/) (Deno [<sup>&#x2B67;</sup>](https://deno.com/))
+# Deno [<sup>&#x2B67;</sup>](https://deno.com/)
 
 * Paskiausias leidimas: 5.9.3
 * Išleista: 2025-10-01
@@ -9,9 +9,7 @@
 
 Jeigu nėra įdiegta, įdiegiama [curl](../utils/curl.md)
 
-## Deno
-
-### Diegimas
+## Diegimas
 
 ```bash
 LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/denoland/deno/releases/latest" | xargs basename)"
@@ -34,10 +32,10 @@ unset LATEST
 
 Baigę diegti, pakeiskite konfigūracinius failus, kad kelias `${HOME}/.opt/deno/bin` būtų automatiškai įtraukiamas į sistemos `PATH` kintamąjį.
 
-### Paleistis
+## Paleistis
 
 ```bash
-deno run kodo-failas.mts
+deno run kodo-failas.m{j,t}s
 ```
 
 ### Vykdymo instrukcija (shebang)
@@ -49,6 +47,6 @@ deno run kodo-failas.mts
 ### Kompiliavimas
 
 ```bash
-deno compile --allow-run --allow-env --output vykdomasis-failas.bin kodo-failas.mts
+deno compile --allow-run --allow-env --output vykdomasis-failas.bin kodo-failas.m{j,t}s
 ./vykdomasis-failas.bin
 ```

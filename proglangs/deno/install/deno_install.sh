@@ -24,20 +24,24 @@ LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/denoland
 CURRENT="$(deno --version 2> /dev/null | head -n 1 | awk '{print "v"$2}')"
 
 # Atnaujinti pranešimų masyvą
-# shellcheck disable=SC2155
-declare -A LANG_MESSAGES="($(update_lang_messages LANG_MESSAGES))"
+update_lang_messages
 
 # Pasirinkti, ar įdiegti naujausią versiją
 if ! ask_to_install "deno" "${HOME}/.opt/deno"; then
   exit 1
 fi
 
+# Ištrinti diegimo katalogą, jei jis yra
+# Įdiegti naujausią deno versiją į nurodytą katalogą
 rm -rf "${HOME}/.opt/deno"
 curl -sSLo - "https://deno.land/x/install/install.sh" | DENO_INSTALL="${HOME}/.opt/deno" sh
 
-[[ -d "${HOME}/.opt/deno/bin" ]] && \
+# Įtraukti įdiegtos programos kelią, kad galima būtų ją kviesti,
+# neprisijungus prie vartotojo paskyros iš naujo.
+PATH_COMMAND=$'[[ -d "${HOME}/.opt/deno/bin" ]] && \
   [[ ":${PATH}:" != *":${HOME}/.opt/deno/bin:"* ]] && \
-    export PATH="${HOME}/.opt/deno/bin${PATH:+:${PATH}}"
+    export PATH="${HOME}/.opt/deno/bin${PATH:+:${PATH}}"'
+eval "${PATH_COMMAND}"
 
 # Jeigu nepavyko įdiegti, išvesti pranešimą ir nutraukti scenarijaus vykdymą
 if  ! deno --version &> /dev/null; then
@@ -53,5 +57,9 @@ if ! [[ "${CURRENT}" == "${LATEST}" ]]; then
 fi
 successMessage "${LANG_MESSAGES[installed_latest]}"
 
-# shellcheck disable=SC2016
-insert_path "${HOME}/.pathrc" '${HOME}/.opt/deno/bin'
+# Išvesti į terminalą komandą, kurią reikia įvykdyti,
+# kad galima būtų kviesti programą, neprisijungus prie vartotojo paskyros iš naujo.
+infoMessage "${LANG_MESSAGES[wo_relogin]//'{PATH_COMMAND}'/"${PATH_COMMAND}"}"
+
+# Įrašyti programos kelio įtraukimo komandą į konfigūracinį failą
+insert_path "${HOME}/.pathrc" "${PATH_COMMAND}"

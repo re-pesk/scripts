@@ -88,13 +88,13 @@ Lėtai pasileidžia arba reikalingas kompiliavimas. Reikalinga Java JRE arba JDK
 * [JavaScript'as <sup>&#x2B67;</sup>](js/sys-upgrade/js_readme.md) (+)
   (+) Daug informacijos internete
   * [x] Bun (+)
-  * [x] [Deno <sup>&#x2B67;</sup>](deno/sys-upgrade/deno_readme.md) truputį skiriasi nuo kitų variantų (±)
+  * [x] Deno (±)
   * [x] Node (+)
-* [TypeScript'as <sup>&#x2B67;</sup>](deno/sys-upgrade/deno_readme.md) (±)
+* [TypeScript'as <sup>&#x2B67;</sup>](ts/sys-upgrade/ts_readme.md) (±)
   (+) Daug informacijos internete
   (+) Sparčiai populiarėja
   (–) Paprastai vykdomas ne tiesiogiai, bet po vertimo į JS
-  * [x] [Deno <sup>&#x2B67;</sup>](deno/sys-upgrade/deno_readme.md) (+)
+  * [x] Deno (+)
     (+) Vykdomas tiesiogiai, be vertimo į JS
 
 ### Kitos (21)

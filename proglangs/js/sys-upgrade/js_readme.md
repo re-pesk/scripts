@@ -1,68 +1,73 @@
 [Grįžti &#x2BA2;](../../readme.md "Grįžti")
 
-# JavaScript [<sup>&#x2B67;</sup>](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+# [JavaScript <sup>&#x2B67;</sup>](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ## Vadovai
 
-* [Learn web development](https://developer.mozilla.org/en-US/docs/Learn)
-* [The Modern JavaScript Tutorial](https://javascript.info/)
+* [Learn web development <sup>&#x2B67;</sup>](https://developer.mozilla.org/en-US/docs/Learn)
+* [The Modern JavaScript Tutorial <sup>&#x2B67;</sup>](https://javascript.info/)
 
-## [Diegimas](../install/js_readme.md)
+## Vykdymas
 
-## Paleistis
+JavaScript vykdomas [Bun <sup>&#x2B67;</sup>](../../bun/install/bun_readme.md), [Deno <sup>&#x2B67;</sup>](../../deno/install/deno_readme.md) , [Node <sup>&#x2B67;</sup>](../../node/install/node_readme.md) aplinkose.
 
-### Bun
+### Diegimas
 
-```bash
-bun run js_sys-upgrade-bun.mjs
-```
+Apie Bun diegimą [žiūrėti <sup>&#x2B67;</sup>](../../bun/install/bun_readme.md).
+Apie Deno diegimą [žiūrėti <sup>&#x2B67;</sup>](../../deno/install/deno_readme.md).
+Apie Node diegimą [žiūrėti <sup>&#x2B67;</sup>](../../node/install/node_readme.md).
 
-### Deno
+### Paleistis
 
-```bash
-deno js_sys-upgrade-deno.mjs
-```
+* Bun
 
-### Node
+  ```bash
+  bun run bun_sys-upgrade.mjs
+  ```
 
-```bash
-node js_sys-upgrade-node.mjs
-```
+* Deno
 
-## Vykdymo instrukcija (shebang)
+  ```bash
+  deno run --allow-run --allow-env deno_sys-upgrade-deno.mjs
+  ```
 
-### Bun
+* Node
 
-```bash
-#!/usr/bin/env -S bun run
-```
+  ```bash
+  node node_sys-upgrade.mjs
+  ```
 
-arba
+### Vykdymo instrukcija (shebang)
 
-```bash
-///usr/bin/env -S bun run "$0" "$@"; exit $?
-```
+* Bun
 
-### Deno
+  ```bash
+  #!/usr/bin/env -S bun run
+  # arba
+  ///usr/bin/env -S bun run "$0" "$@"; exit $?
+  ```
 
-```bash
-#!/usr/bin/env -S deno run --allow-run --allow-env
-```
+* Deno
 
-arba
+  ```bash
+  #!/usr/bin/env -S deno run --allow-run --allow-env
+  #arba
+  ///usr/bin/env -S deno run --allow-run --allow-env "$0" "$@"; exit $?
+  ```
 
-```bash
-///usr/bin/env -S deno run --allow-run --allow-env "$0" "$@"; exit $?
-```
+* Node
 
-### Node
+  ```bash
+  #!/usr/bin/env -S node
+  # arba
+  ///usr/bin/env -S node "$0" "$@"; exit $?
+  ```
 
-```bash
-#!/usr/bin/env -S node
-```
+### Kompiliavimas
 
-arba
+* Deno
 
-```bash
-///usr/bin/env -S node "$0" "$@"; exit $?
-```
+  ```bash
+  deno compile --allow-run --allow-env --output deno_sys-upgrade.bin deno_sys-upgrade.mjs
+  ./deno_sys-upgrade.bin
+  ```
