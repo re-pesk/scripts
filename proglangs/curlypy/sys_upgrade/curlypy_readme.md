@@ -1,8 +1,10 @@
-[Grįžti &#x2BA2;](../../readme.md "Grįžti")
+[Grįžti &#x2BA2;](../readme.md "Grįžti")
 
 # CurlyPy [<sup>&#x2B67;</sup>](https://github.com/DevBoiAgru/CurlyPy)
 
-## [Diegimas](../install/curlypy_readme.md)
+## Diegimas
+
+[Žiūrėti <sup>&#x2B67;</sup>](../../install/curlypy/curlypy_readme.md)
 
 ## Paleistis
 
