@@ -1,0 +1,87 @@
+[Grįžti &#x2BA2;](../readme.md "Grįžti")
+
+# Scala [<sup>&#x2B67;</sup>](https://scala-lang.org/)
+
+* Paskiausias leidimas: 3.8.1
+* Išleista: 2026-01-22
+
+## Parengimas
+
+Operacinė sistema – Ubuntu 24.04
+
+Jeigu nėra sukurtas, sukuriamas ~/.pathrc failas ir įterpiama jo įkėlimo komanda į .bashrc failą
+
+```bash
+[ -f "${HOME}/.pathrc" ] || touch "${HOME}/.pathrc"
+(( $(grep -c '#begin include .pathrc' < ${HOME}/.bashrc) > 0 )) \
+|| echo '#begin include .pathrc
+
+# include .pathrc if it exists
+if [ -f "${HOME}/.pathrc" ]; then
+  . "${HOME}/.pathrc"
+fi
+
+#end include .pathrc' >> ${HOME}/.bashrc
+```
+
+Jeigu nėra įdiegta, įdiegiama [curl](../curl/curl.md)
+
+## Diegimas
+
+Paleidžiamas diegimo skriptas `scala_install.sh`. Pabaigus diegimą, įvykdoma komanda
+
+```bash
+[[ -d "${HOME}/.opt/scala3/bin" ]] \
+&& [[ ":${PATH}:" != *":${HOME}/.opt/scala3/bin:"* ]] \
+&& export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
+```
+
+Arba įvykdomos komandos terminale
+
+```bash
+LATEST="$(curl -sLo /dev/null -w "%{url_effective}" "https://github.com/scala/scala3/releases/latest" | xargs basename)"
+
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(scala version 2> /dev/null | tail -n +2 | awk '{print $NF}')"
+
+curl -sSLO "https://github.com/scala/scala3/releases/download/${LATEST}/scala3-${LATEST}-x86_64-pc-linux.tar.gz"
+curl -sSLO "https://github.com/scala/scala3/releases/download/${LATEST}/scala3-${LATEST}-x86_64-pc-linux.tar.gz.sha256"
+
+sha256sum "scala3-${LATEST}-x86_64-pc-linux.tar.gz" | awk '{print $1}'
+cat "scala3-${LATEST}-x86_64-pc-linux.tar.gz.sha256" | awk '{print $1}'
+
+[[ -d "${HOME}/.opt/scala3" ]] && rm -rf "${HOME}/.opt/scala3"
+tar --file="scala3-${LATEST}-x86_64-pc-linux.tar.gz" \
+  --transform='flags=r;s/^(scala3)[^\/]+/\1/x' \
+  --show-transformed-names -xzvC "${HOME}/.opt"
+rm -f scala3-${LATEST}-x86_64-pc-linux.tar.gz*
+
+[[ -d "${HOME}/.opt/scala3/bin" ]] \
+  && [[ ":${PATH}:" != *":${HOME}/.opt/scala3/bin:"* ]] \
+  && export PATH="${HOME}/.opt/scala3/bin${PATH:+:${PATH}}"
+
+printf '\nVersijos:\n  Vėliausia: v%s\n  Įdiegta:   v%s\n\n' \
+  "${LATEST}" "$(scala version 2> /dev/null | tail -n +2 | awk '{print $NF}')"
+
+unset LATEST
+```
+
+Baigus diegti, pakeičiami konfigūraciniai failai, kad katalogas `${HOME}/.opt/scala3/bin` būtų automatiškai įtraukiamas į sistemos `PATH` kintamąjį.
+
+## Paleistis
+
+```bash
+scala run scala_sys-upgrade.scala
+```
+
+### Vykdymo instrukcija (shebang)
+
+```bash
+#!/usr/bin/env -S scala shebang
+```
+
+arba
+
+```bash
+///usr/bin/env -S scala shebang "$0" "$@"; exit $?
+```

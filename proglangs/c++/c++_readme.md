@@ -1,0 +1,22 @@
+[Grįžti &#x2BA2;](../readme.md "Grįžti")
+
+# C++ [<sup>&#x2B67;</sup>](https://cplusplus.com/doc/tutorial/)
+
+## Diegimas
+
+[Žiūrėti <sup>&#x2B67;</sup>](../../install/c++/c++_readme.md)
+
+## Paleistis
+
+### Vykdymo instrukcija (shebang)
+
+```bash
+///usr/bin/env -S g++ -Wno-sizeof-array-argument -std=c++2b -o "${0%.*}.bin" "$0"; "./${0%.*}.bin" "$@"; exit $?
+```
+
+## Kompiliavimas
+
+```bash
+g++ -static -Wno-sizeof-array-argument -std=c++2b -o c++_sys-upgrade.bin c++_sys-upgrade.cpp
+./c++_sys-upgrade.bin
+```

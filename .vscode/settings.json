@@ -10,5 +10,11 @@
     "tuple": "c",
     "type_traits": "c",
     "utility": "c"
+  },
+  "shellcheck.ignorePatterns" : {
+    "**/*_.*":true,
+    "**/*.*_":true,
+    "**/*_":true,
+    "**/tmp.*":true,
   }
 }

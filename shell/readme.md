@@ -1,23 +1,11 @@
-[&#x2BA2;](../readme.md)
+[Grįžti &#x2BA2;](../readme.md "Grįžti")
 
-# Pagalbiniai skriptai
+# Pavyzdžiai
 
-* assoc-arrays/\*.*
+* arrays/ - darbo su masyvais pavyzdžiai
 
-  * get-assoc-array.* - asocijuoto masyvo (arba jį atstojančios struktūros, jeigu apvalkalas (shell) jo nepalaiko) duomenų gražinimas iš funkcijos
+* check-packages/ - kaip patikrinti, ar Ubuntu sistemoje instaliuoti paketai iš duoto sąrašo
 
-  * merge-assoc-arrays*.* - asocijuotų masyvų (arba jį atstojančių struktūrų) suliejimo pavyzdžiai
+* get-shell-name/ - kaip gauti apvalkalo, kuriame vykdoma shell programa, pavadinimą
 
-  * substitute-assoc-array.* - asocijuotų masyvų substitucijos pavyzdžiai
-
-* check-packages/\*.* - skriptai, skirti patikrinti, ar Ubuntu sistemoje instaliuoti paketai iš duoto sąrašo
-
-* file-manager/\*.*
-
-  * nautilus-scripts - [Nautilaus skriptai](./file-manager/nautilus-scripts/readme.lt.md)
-
-  * nemo-scripts - [Nemo akcijos ir skriptai](./file-manager/nemo-scripts/readme.lt.md)
-
-* fix-php-fpm/\*.* - PHP 8.\* FastCGI proceso (FPM) problemų taisymo skriptai
-
-* get-shell-name/\*.* - gauti apvalkalo, kuriame vykdoma shell programa, pavadinimą
+* update-paths/ - kaip atnaujinti kelius, kurie yra automatiškai įtraukti į sistemos kintamąjį

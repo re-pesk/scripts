@@ -1,0 +1,32 @@
+[Grįžti &#x2BA2;](../readme.md "Grįžti")
+
+# Rust [<sup>&#x2B67;</sup>](https://www.rust-lang.org/)
+
+## Diegimas
+
+[Žiūrėti <sup>&#x2B67;</sup>](../../install/rust/rust_readme.md)
+
+## Paleistis
+
+```bash
+cargo script rust_sys-upgrade.rs
+```
+
+### Vykdymo instrukcija (shebang)
+
+```bash
+#!/usr/bin/env -S run-cargo-script
+```
+
+arba
+
+```bash
+///usr/bin/env -S cargo script "$0" "$@"; exit $?
+```
+
+## Kompiliavimas
+
+```bash
+rustc -o rust_sys-upgrade.bin rust_sys-upgrade.rs
+./rust_sys-upgrade.bin
+```
